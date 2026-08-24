@@ -60,7 +60,75 @@ initial_output_mw_at_23_45_previous_day (energia_parametres-temporels-nuclerls.j
 
 
 available_flexibility()
+ #retourne les MW réellement modifiables pendant un pas de 15 minutes
+    # calculons d’abord la place disponible avant la puissance maximale
+
+cette fonction répond à une question
+combien de MW cette centrale peut-elle modifier pendant les prochaines 15 minutes
+plant = les paramètres de la centrale
+current_output = sa production actuelle
+direction = "up" pour monter ou "down" pour descendre
+
+si la centrale est indisponible
+"available": False
+
+elle ne peut fournir aucune flexibilité
+return 0.0
+Cas d’une montée
+
+if direction == "up"
+nous calculons d’abord la place disponible avant la puissance maximale
+margin = maximum - current_output
+puis nous récupérons la vitesse maximale de montée
+ramp = max_ramp_up_mw_per_15_min
+
+
+Elle reçoit :
+- plant : les paramètres de la centrale ;
+- current_output : sa production actuelle ;
+- direction : "up" pour monter ou "down" pour descendre
+
+
+
+
 simulate_step()
+    # enchaîne les états de la journée, jusqu'à 96 quarts d'heure
+
+calcule un seul quart d’heure
+Elle reçoit
+les paramètres des centrales
+la production précédente de toutes les centrales
+la nouvelle consommation nationale
+Vérification de la demande
+demand_mw = float(demand_mw)
+
+previous_total = sum(previous_state.values())
+si l’état précédent est
+
+    "centrale_a": 1000,
+    "centrale_b": 1500,
+    "centrale_c": 2000
+
+la somme est  1000 + 1500 + 2000 = 4500 MW
+
+
+
+
+
+Différence avec la demande
+difference = demand_mw - previous_total
+exm.
+demande  5 000 MW
+production précédente  4 500 MW
+différence 500 MW
+le parc doit augmenter sa production de 500 MW
+Autre exemple :
+Demande :               4 000 MW
+Production précédente : 4 500 MW
+Différence :              -500 MW
+Le parc doit diminuer sa production de 500 MW.
+
+
 simulate_day()
 
 
