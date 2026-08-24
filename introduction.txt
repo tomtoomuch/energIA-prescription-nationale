@@ -125,11 +125,11 @@ le parc doit augmenter sa production de 500 MW
 Autre exemple :
 Demande :               4 000 MW
 Production précédente : 4 500 MW
-Différence :              -500 MW
+Différence :-500 MW
 Le parc doit diminuer sa production de 500 MW.
 
 
 simulate_day()
 
-
+cette fonction enchaîne tous les quarts d’heure
 

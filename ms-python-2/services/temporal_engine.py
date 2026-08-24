@@ -5,6 +5,8 @@ EPSILON = 0.000001
 
 def build_initial_state(plants):
     #l'état de 23 h 45 qui précède la journée simulée
+
+    # les centrales une par une,a chaque tour plant représente une centrale
     state = {}
     for plant in plants:
         plant_id = plant["plant_id"]
@@ -12,6 +14,7 @@ def build_initial_state(plants):
         minimum = float(plant["minimum_operating_power_mw"])
         maximum = float(plant["maximum_power_mw"])
         if not minimum <= output <= maximum:
+         # minimum ≤ production initiale ≤ maximum   520 ≤ 1493 ≤ 2620
             raise ValueError(f"Production initiale de {plant_id} hors limites: {output} MW")
         state[plant_id] = output
     return state
@@ -21,6 +24,7 @@ def available_flexibility(plant, current_output, direction):
     #retourne les MW réellement modifiables pendant un pas de 15 minutes
     if not plant.get("available", True):
         return 0.0
+    # calculons d’abord la place disponible avant la puissance maximale
     if direction == "up":
         margin = float(plant["maximum_power_mw"]) - current_output
         ramp = float(plant["max_ramp_up_mw_per_15_min"])
@@ -38,6 +42,7 @@ def simulate_step(plants, previous_state, demand_mw):
 
     previous_total = sum(previous_state.values())
     difference = demand_mw - previous_total
+
     direction = "up" if difference >= 0 else "down"
     flexibilities = {
         plant["plant_id"]: available_flexibility(
