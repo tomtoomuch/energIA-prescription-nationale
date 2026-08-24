@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "project": "EnergIA",
+    "dataset": "temporal_simulation_parameters",
+    "description": "Supplement to the brief 1 nuclear fleet JSON for stateful 15-minute simulations.",
+    "step_minutes": 15,
+    "values_are_simulated": true
+  },
+  "simulation": {
+    "step_minutes": 15,
+    "carry_state_forward": true,
+    "global_nuclear_reserve": {
+      "enabled_from_phase": 2,
+      "minimum_reserve_percent": 8.0,
+      "rule": "Try to keep at least this share of total available nuclear capacity unused. Demand coverage remains the primary objective; if reserve drops below the threshold, return a degraded-state warning."
+    }
+  },
+  "plants": [
+    {
+      "plant_id": "belleville",
+      "plant_name": "Belleville-sur-Loire",
+      "initial_output_mw_at_23_45_previous_day": 1493,
+      "minimum_operating_power_mw": 520,
+      "maximum_power_mw": 2620,
+      "max_ramp_up_mw_per_15_min": 240,
+      "max_ramp_down_mw_per_15_min": 264,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "blayais",
+      "plant_name": "Le Blayais",
+      "initial_output_mw_at_23_45_previous_day": 2075,
+      "minimum_operating_power_mw": 720,
+      "maximum_power_mw": 3640,
+      "max_ramp_up_mw_per_15_min": 360,
+      "max_ramp_down_mw_per_15_min": 396,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "bugey",
+      "plant_name": "Bugey",
+      "initial_output_mw_at_23_45_previous_day": 2041,
+      "minimum_operating_power_mw": 720,
+      "maximum_power_mw": 3580,
+      "max_ramp_up_mw_per_15_min": 360,
+      "max_ramp_down_mw_per_15_min": 396,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "cattenom",
+      "plant_name": "Cattenom",
+      "initial_output_mw_at_23_45_previous_day": 2964,
+      "minimum_operating_power_mw": 1040,
+      "maximum_power_mw": 5200,
+      "max_ramp_up_mw_per_15_min": 480,
+      "max_ramp_down_mw_per_15_min": 528,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "chinon",
+      "plant_name": "Chinon",
+      "initial_output_mw_at_23_45_previous_day": 2063,
+      "minimum_operating_power_mw": 720,
+      "maximum_power_mw": 3620,
+      "max_ramp_up_mw_per_15_min": 360,
+      "max_ramp_down_mw_per_15_min": 396,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "chooz",
+      "plant_name": "Chooz",
+      "initial_output_mw_at_23_45_previous_day": 1710,
+      "minimum_operating_power_mw": 740,
+      "maximum_power_mw": 3000,
+      "max_ramp_up_mw_per_15_min": 270,
+      "max_ramp_down_mw_per_15_min": 297,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "civaux",
+      "plant_name": "Civaux",
+      "initial_output_mw_at_23_45_previous_day": 1704,
+      "minimum_operating_power_mw": 740,
+      "maximum_power_mw": 2990,
+      "max_ramp_up_mw_per_15_min": 270,
+      "max_ramp_down_mw_per_15_min": 297,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "cruas",
+      "plant_name": "Cruas-Meysse",
+      "initial_output_mw_at_23_45_previous_day": 2086,
+      "minimum_operating_power_mw": 720,
+      "maximum_power_mw": 3660,
+      "max_ramp_up_mw_per_15_min": 360,
+      "max_ramp_down_mw_per_15_min": 396,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "dampierre",
+      "plant_name": "Dampierre-en-Burly",
+      "initial_output_mw_at_23_45_previous_day": 2029,
+      "minimum_operating_power_mw": 720,
+      "maximum_power_mw": 3560,
+      "max_ramp_up_mw_per_15_min": 360,
+      "max_ramp_down_mw_per_15_min": 396,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "flamanville",
+      "plant_name": "Flamanville",
+      "initial_output_mw_at_23_45_previous_day": 2445,
+      "minimum_operating_power_mw": 846,
+      "maximum_power_mw": 4290,
+      "max_ramp_up_mw_per_15_min": 390,
+      "max_ramp_down_mw_per_15_min": 429,
+      "available": true,
+      "minimum_power_fallback_used": true,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "golfech",
+      "plant_name": "Golfech",
+      "initial_output_mw_at_23_45_previous_day": 1493,
+      "minimum_operating_power_mw": 520,
+      "maximum_power_mw": 2620,
+      "max_ramp_up_mw_per_15_min": 240,
+      "max_ramp_down_mw_per_15_min": 264,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "gravelines",
+      "plant_name": "Gravelines",
+      "initial_output_mw_at_23_45_previous_day": 3112,
+      "minimum_operating_power_mw": 1080,
+      "maximum_power_mw": 5460,
+      "max_ramp_up_mw_per_15_min": 540,
+      "max_ramp_down_mw_per_15_min": 594,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "nogent",
+      "plant_name": "Nogent-sur-Seine",
+      "initial_output_mw_at_23_45_previous_day": 1493,
+      "minimum_operating_power_mw": 520,
+      "maximum_power_mw": 2620,
+      "max_ramp_up_mw_per_15_min": 240,
+      "max_ramp_down_mw_per_15_min": 264,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "paluel",
+      "plant_name": "Paluel",
+      "initial_output_mw_at_23_45_previous_day": 3032,
+      "minimum_operating_power_mw": 1040,
+      "maximum_power_mw": 5320,
+      "max_ramp_up_mw_per_15_min": 480,
+      "max_ramp_down_mw_per_15_min": 528,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "penly",
+      "plant_name": "Penly",
+      "initial_output_mw_at_23_45_previous_day": 1516,
+      "minimum_operating_power_mw": 520,
+      "maximum_power_mw": 2660,
+      "max_ramp_up_mw_per_15_min": 240,
+      "max_ramp_down_mw_per_15_min": 264,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "saint_alban",
+      "plant_name": "Saint-Alban",
+      "initial_output_mw_at_23_45_previous_day": 1522,
+      "minimum_operating_power_mw": 520,
+      "maximum_power_mw": 2670,
+      "max_ramp_up_mw_per_15_min": 240,
+      "max_ramp_down_mw_per_15_min": 264,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "saint_laurent",
+      "plant_name": "Saint-Laurent-des-Eaux",
+      "initial_output_mw_at_23_45_previous_day": 1043,
+      "minimum_operating_power_mw": 360,
+      "maximum_power_mw": 1830,
+      "max_ramp_up_mw_per_15_min": 180,
+      "max_ramp_down_mw_per_15_min": 198,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    },
+    {
+      "plant_id": "tricastin",
+      "plant_name": "Tricastin",
+      "initial_output_mw_at_23_45_previous_day": 2086,
+      "minimum_operating_power_mw": 720,
+      "maximum_power_mw": 3660,
+      "max_ramp_up_mw_per_15_min": 360,
+      "max_ramp_down_mw_per_15_min": 396,
+      "available": true,
+      "minimum_power_fallback_used": false,
+      "values_are_simulated_except_maximum_power": true
+    }
+  ]
+}

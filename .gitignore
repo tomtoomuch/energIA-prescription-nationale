@@ -2,11 +2,8 @@ docs/brief/**
 gateway/node_modules
 .obsidian/
 .env
-ms-python/services/__pycache__
-ms-python/app/__pycache__
-app/__pycache__
-ms-python/app/__pycache__/__init__.cpython-311.pyc
-ms-python/app/__pycache__/main.cpython-311.pyc
-ms-python/__pycache__/main.cpython-311.pyc
-ms-python/data/parc-nucleaire-prescriptif-france.json
+ms-python/services/__pycache__/**
+ms-python/app/__pycache__/**
+app/__pycache__/**
+ms-python/data/**
 tests/__pycache__/**

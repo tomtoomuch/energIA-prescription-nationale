@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "project": "EnergIA",
+    "dataset": "phase3_consumption_event_examples",
+    "description": "Ready-to-use examples showing a simple expected format for temporary regional consumption variations.",
+    "values_are_simulated": true,
+    "event_semantics": "Events apply from start inclusive to end exclusive. Simultaneous events are cumulative."
+  },
+  "event_schema_examples": {
+    "absolute_delta": {
+      "type": "consumption_delta",
+      "region_id": "occitanie",
+      "start": "17:30",
+      "end": "21:00",
+      "delta_mw": 850
+    },
+    "percentage_delta": {
+      "type": "consumption_delta",
+      "region_id": "grand_est",
+      "start": "10:00",
+      "end": "12:30",
+      "delta_percent": -12
+    }
+  },
+  "scenarios": [
+    {
+      "id": "evening_peak_occitanie",
+      "name": "Pic de consommation en Occitanie",
+      "events": [
+        {
+          "type": "consumption_delta",
+          "region_id": "occitanie",
+          "start": "17:30",
+          "end": "21:00",
+          "delta_mw": 850
+        }
+      ]
+    },
+    {
+      "id": "midday_drop_grand_est",
+      "name": "Baisse temporaire dans le Grand Est",
+      "events": [
+        {
+          "type": "consumption_delta",
+          "region_id": "grand_est",
+          "start": "10:00",
+          "end": "12:30",
+          "delta_percent": -12
+        }
+      ]
+    },
+    {
+      "id": "multi_region_evening_stress",
+      "name": "Tension simultanée sur plusieurs régions",
+      "events": [
+        {
+          "type": "consumption_delta",
+          "region_id": "ile_de_france",
+          "start": "18:00",
+          "end": "20:30",
+          "delta_mw": 1200
+        },
+        {
+          "type": "consumption_delta",
+          "region_id": "auvergne_rhone_alpes",
+          "start": "18:30",
+          "end": "21:00",
+          "delta_percent": 10
+        },
+        {
+          "type": "consumption_delta",
+          "region_id": "provence_alpes_cote_d_azur",
+          "start": "19:00",
+          "end": "22:00",
+          "delta_mw": 650
+        }
+      ]
+    }
+  ]
+}
