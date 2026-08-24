@@ -1,15 +1,12 @@
-"""
-Répartit une demande supplémentaire entre plusieurs centrales.
 
-Les centrales sont triées selon leur score.
-La demande est distribuée jusqu'à satisfaction ou épuisement
-des capacités disponibles.
-"""
+try:
+    from .capacity import available_capacity
+    from .score import candidate_score
+except ImportError:
+    from capacity import available_capacity
+    from score import candidate_score
 
-
-
-
-# Déclaration de la fonction dispatch_power qui prend en entrée
+# déclaration de la fonction dispatch_power qui prend en entrée
 # l'index des centrales, les candidates, les paramètres de simulation et la demande en MW.
 def dispatch_power(
     plants_index,
@@ -17,10 +14,10 @@ def dispatch_power(
     simulation_parameters,
     requested_mw
 ):
-    # Déclaration d'une liste vide pour stocker le classement des centrales.
+    # déclaration d'une liste vide pour stocker le classement des centrales.
     allocations = []
 
-    # Construction de la liste des candidates avec leur score.
+    # construction de la liste des candidates avec leur score.
     for plant_id, candidate in candidates.items():
 
         plant = plants_index[plant_id]
@@ -45,12 +42,12 @@ def dispatch_power(
             "capacity": capacity
         })
 
-    # Les meilleures centrales en premier.
+    # les meilleures centrales en premier.
     allocations.sort(key=lambda x: x["score"])
 
     remaining = requested_mw
 
-    # Déclaration d'une liste vide pour stocker la répartition de la demande.
+    # déclaration d'une liste vide pour stocker la répartition de la demande
     dispatch = []
 
     for plant in allocations:
@@ -75,10 +72,6 @@ def dispatch_power(
         "dispatch": dispatch,
         "remaining_mw": remaining
     }
-
-# POINT D'ENTREE DU SCRIPT ms-python/services/dispatch.py
-# Si le script est exécuté directement, on charge les données, on construit le graphe
-# et les index, puis on appelle la fonction dispatch_power avec une demande de 500 MW pour la région Occitanie.
 if __name__ == "__main__":
 
     from graph_loader import (
