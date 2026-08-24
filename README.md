@@ -1,6 +1,6 @@
 # Projet ENERGIA : Système d'aide à la décision pour le pilotage de parc nucléaire
 
-Ce projet est une intervention complète visant à moderniser le système d'aide à la décision (SAD) d'un grand compte du secteur de l'énergie. Son objectif principal est de déterminer, en temps réel et de manière optimale, un ajustement des ressources de production capable de satisfaire les besoins énergétiques fluctuants observés sur le réseau nucléaire, ou de quantifier précisément le déficit en cas d'impossibilité de couverture.
+Ce projet est une intervention complète visant à moderniser le système d'aide à la décision (SAD) d'un grand compte du secteur de l'énergie. Son objectif principal est de déterminer, en temps réel et de manière optimale, un ajustement des ressources de production capable de satisfaire les besoins énergétiques fluctuants observés sur le réseau électrique français, ou de quantifier précisément le déficit en cas d'impossibilité de couverture. La production d'électricité est assurée, immuablement, par les parcs éoliens et solaires. La production assurée par le parc nucléaire est pilotable et sert donc de variable d'ajustement quant à la couverture du besoin.
 
 ## Table des matières
 
@@ -99,13 +99,35 @@ treeView-beta
         "score.py"
         "tests/"
             "test-engine.py"
+"ms-python-2/"
+    "dockerfile"
+    "main.py"
+    "requirements.txt"
+    "data/"
+        "energia-journee-reference-consommation.json"
+        "energia-parametres-temporels-nucleaire.json"
+        "energia-production-non-pilotable.json"
+        "energia-scenarios-phase3-exemples.json"
+    "services/"
+        "allocation.py"
+        "candidates.py"
+        "capacity.py"
+        "dijkstra.py"
+        "dispatch.py"
+        "graph_loader.py"
+        "priority.py"
+        "score.py"
+        "tests/"
+            "test-engine.py"
 ```
 
-Dépôt GitHub : https://github.com/tomtoomuch/energIA
+Dépôt GitHub : https://github.com/tomtoomuch/energIA-prescription-nationale
 
 Image de la passerelle : https://hub.docker.com/r/tomtoomuch/energia-gateway
 
 Image du micro-service 'Moteur prescriptif' : https://hub.docker.com/r/tomtoomuch/energia-ms-python
+
+Image du micro-service 'Prescription nationale" : https://hub.docker.com/r/tomtoomuch/energia-ms-python-2
 
 ## Application
 
