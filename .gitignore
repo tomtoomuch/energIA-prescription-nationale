@@ -2,6 +2,7 @@ docs/brief/**
 gateway/node_modules
 .obsidian/
 .env
+ms-python-2//services/__pycache__/
 ms-python/services/__pycache__/**
 ms-python/app/__pycache__/**
 app/__pycache__/**
