@@ -1,0 +1,67 @@
+
+services / graph_loader.py
+Je n’ai pas changé les anciennes fonctions allocate(), dispatchable_margin() ou
+candidate_score().
+J’ai just ajouté de nouvelles fonctions pour la Phase 1 temporelle.
+
+Dans graph_loader.py
+
+load_reference_consumption()
+def load_reference_consumption(path=REFERENCE_CONSUMPTION_PATH):
+Cette fonction charge :
+energia-journee-reference-consommation.json
+
+Pourquoi
+récupérer les 96 horaires ;
+récupérer les 96 consommations nationales
+vérifier que chaque région possède aussi 96 valeurs
+détecter immédiatement un JSON incomplet
+elle vérifie notamment
+if len(timestamps) != 96 or len(totals) != 96:
+    raise ValueError( ... )
+
+une journée contient
+24 heures × 4 quarts d’heure = 96 pas
+
+load_temporal_nuclear_parameters()
+
+
+def load_temporal_nuclear_parameters(
+    path=TEMPORAL_NUCLEAR_PARAMETERS_PATH
+)
+Cette fonction charge
+energia-parametres-temporels-nucleaire.json
+
+pourquoi
+Chaque centrale doit posséder les informations nécessaires à une simulation temporelle
+initial_output_mw_at_23_45_previous_day
+minimum_operating_power_mw
+maximum_power_mw
+max_ramp_up_mw_per_15_min
+max_ramp_down_mw_per_15_min
+
+
+
+
+temporal_engine.py
+
+constante
+EPSILON = 0.000001
+Les nombres décimaux peuvent produire de très petites imprécisions ex. Python peut obtenir 0.0000000003 au lieu de 0
+
+
+def build_initial_state(plants):
+construit l’état de départ des centrales
+pourquoi avons-nous besoin d’un état initial
+
+Pour calculer la production de 00:00, nous devons connaître la production précédente, c’est-à-dire celle de 23:45 la veille
+e JSON fournit :
+initial_output_mw_at_23_45_previous_day (energia_parametres-temporels-nuclerls.json)
+
+
+available_flexibility()
+simulate_step()
+simulate_day()
+
+
+

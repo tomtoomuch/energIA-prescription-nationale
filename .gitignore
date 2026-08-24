@@ -7,3 +7,6 @@ ms-python/app/__pycache__/**
 app/__pycache__/**
 ms-python/data/**
 tests/__pycache__/**
+ms-python-2/services/__pycache__/temporal_engine.cpython-311.pyc
+ms-python-2/services/__pycache__/graph_loader.cpython-311.pyc
+ms-python-2/services/__pycache__/__init__.cpython-311.pyc
