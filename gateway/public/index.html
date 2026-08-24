@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EnergIA — Moteur prescriptif</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; }
+      #app { display: flex; height: 100vh; }
+      #sidebar { width: 360px; padding: 20px; background: #111827; overflow-y: auto; border-right: 1px solid #1f2937; }
+      #map { flex: 1; }
+      h1 { font-size: 18px; margin: 0 0 4px; }
+      p.subtitle { font-size: 13px; color: #94a3b8; margin: 0 0 20px; }
+      label { display: block; font-size: 13px; margin: 12px 0 4px; color: #cbd5e1; }
+      select, input {
+        width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155;
+        background: #1e293b; color: #e2e8f0; font-size: 14px;
+      }
+      button {
+        width: 100%; margin-top: 16px; padding: 10px; border: none; border-radius: 8px;
+        background: #3b82f6; color: white; font-weight: 600; cursor: pointer; font-size: 14px;
+      }
+      button:hover { background: #2563eb; }
+      #error-box { color: #f87171; font-size: 13px; margin-top: 8px; min-height: 16px; }
+      #results { margin-top: 20px; }
+      .status { padding: 10px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+      .status.ok { background: #14532d; color: #86efac; }
+      .status.warn { background: #7c2d12; color: #fdba74; }
+      table { width: 100%; border-collapse: collapse; font-size: 12px; }
+      th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid #1f2937; }
+      th { color: #94a3b8; font-weight: 500; }
+      .legend { display: flex; gap: 10px; margin-top: 16px; font-size: 11px; color: #94a3b8; flex-wrap: wrap; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+    </style>
+  </head>
+<body>
+<div id="app">
+  <div id="sidebar">
+    <h1>EnergIA</h1>
+    <p class="subtitle">Répartition prescriptive de la production nucléaire</p>
+
+    <form id="sim-form">
+      <label for="region-select">Région en surconsommation</label>
+      <select id="region-select" required>
+        <option value="" disabled selected>Choisir une région</option>
+      </select>
+
+      <label for="demand-input">Hausse de consommation (MW)</label>
+      <input id="demand-input" type="number" min="1" step="1" placeholder="ex: 500" required />
+
+      <button type="submit">Lancer la simulation</button>
+    </form>
+    <div id="error-box"></div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:#22c55e"></span>Marge confortable</span>
+      <span><span class="dot" style="background:#f59e0b"></span>Charge élevée</span>
+      <span><span class="dot" style="background:#ef4444"></span>Presque saturée</span>
+      <span><span class="dot" style="background:#9ca3af"></span>Indisponible</span>
+    </div>
+
+    <div id="results"></div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  let map;
+  let plantMarkers = {};
+  let plantsById = {};
+  let routeLayers = [];
+
+  async function fetchJSON(url, options) {
+    const res = await fetch(url, options);
+    const body = await res.json();
+    if (!res.ok || body.success === false) {
+      throw new Error(body?.error?.detail || body?.error?.message || "Erreur inconnue");
+    }
+    return body.response;
+  }
+
+  function initMap() {
+    map = L.map("map").setView([46.6, 2.5], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(map);
+  }
+
+  function plantColor(plant) {
+    if (!plant.simulation?.available) return "#9ca3af";
+    const ratio = plant.simulation.initial_load_ratio ?? 0;
+    if (ratio > 0.9) return "#ef4444";
+    if (ratio > 0.75) return "#f59e0b";
+    return "#22c55e";
+  }
+
+  async function loadPlants() {
+    const plants = await fetchJSON("/plants");
+    plants.forEach((plant) => {
+      plantsById[plant.id] = plant;
+      const marker = L.circleMarker([plant.location.latitude, plant.location.longitude], {
+        radius: 7,
+        color: "#0f172a",
+        weight: 1,
+        fillColor: plantColor(plant),
+        fillOpacity: 0.9,
+      }).addTo(map);
+
+      marker.bindPopup(`
+        <strong>${plant.name}</strong><br>
+        Puissance installée: ${plant.installed_power_mw} MW<br>
+        Production actuelle: ${plant.simulation.initial_output_mw} MW<br>
+        Marge disponible: ${plant.simulation.initial_dispatchable_margin_mw} MW<br>
+        Taux de charge: ${(plant.simulation.initial_load_ratio * 100).toFixed(1)}%
+      `);
+
+      plantMarkers[plant.id] = marker;
+    });
+  }
+
+  async function loadRegions() {
+    const regions = await fetchJSON("/regions");
+    const select = document.getElementById("region-select");
+    regions
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .forEach((region) => {
+        const option = document.createElement("option");
+        option.value = region.id;
+        option.textContent = region.name;
+        select.appendChild(option);
+      });
+  }
+
+  function clearRoutes() {
+    routeLayers.forEach((layer) => map.removeLayer(layer));
+    routeLayers = [];
+    Object.values(plantMarkers).forEach((marker) => marker.setStyle({ radius: 7, weight: 1 }));
+  }
+
+  function drawAllocation(allocation) {
+    const coords = allocation.path
+      .map((id) => plantsById[id])
+      .filter(Boolean)
+      .map((p) => [p.location.latitude, p.location.longitude]);
+
+    if (coords.length > 1) {
+      const line = L.polyline(coords, {
+        color: allocation.distance_km === 0 ? "#22c55e" : "#3b82f6",
+        weight: Math.max(2, Math.min(8, allocation.allocated_mw / 50)),
+        opacity: 0.85,
+      }).addTo(map);
+      routeLayers.push(line);
+    }
+
+    const marker = plantMarkers[allocation.plant_id];
+    if (marker) {
+      marker.setStyle({ radius: 11, weight: 3 });
+    }
+  }
+
+  function renderResults(result, demand) {
+    const panel = document.getElementById("results");
+    const statusClass = result.fully_satisfied ? "ok" : "warn";
+    const statusText = result.fully_satisfied
+      ? "Demande entièrement couverte"
+      : `${result.missing_mw.toFixed(1)} MW manquants sur ${demand} MW`;
+
+    const rows = result.allocations
+      .map(
+        (a) => `
+        <tr>
+          <td>${plantsById[a.plant_id]?.name ?? a.plant_id}</td>
+          <td>${a.allocated_mw.toFixed(1)} MW</td>
+          <td>${(a.final_load_ratio * 100).toFixed(1)}%</td>
+          <td>${a.distance_km.toFixed(0)} km</td>
+          <td>${a.loss_percent.toFixed(2)}%</td>
+        </tr>`
+      )
+      .join("");
+
+    panel.innerHTML = `
+      <div class="status ${statusClass}">${statusText}</div>
+      <table>
+        <thead>
+          <tr><th>Centrale</th><th>Alloué</th><th>Taux final</th><th>Distance</th><th>Pertes</th></tr>
+        </thead>
+        <tbody>${rows || "<tr><td colspan='5'>Aucune centrale disponible</td></tr>"}</tbody>
+      </table>
+    `;
+  }
+
+  async function runSimulation(event) {
+    event.preventDefault();
+    const region = document.getElementById("region-select").value;
+    const demand = parseFloat(document.getElementById("demand-input").value);
+    const errorBox = document.getElementById("error-box");
+    errorBox.textContent = "";
+
+    if (!region || !demand || demand <= 0) {
+      errorBox.textContent = "Choisis une région et une demande valide.";
+      return;
+    }
+
+    clearRoutes();
+
+    try {
+      const result = await fetchJSON("/simulate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ region, additional_demand_mw: demand }),
+      });
+      result.allocations.forEach(drawAllocation);
+      renderResults(result, demand);
+    } catch (err) {
+      errorBox.textContent = err.message;
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    initMap();
+    loadPlants();
+    loadRegions();
+    document.getElementById("sim-form").addEventListener("submit", runSimulation);
+  });
+</script>
+</body>
+</html>

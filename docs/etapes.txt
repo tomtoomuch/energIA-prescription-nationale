@@ -1,0 +1,73 @@
+18 étapes
+Comprendre les données
+1.	18 centrales, 13 régions, 33 liaisons
+Les deux projets
+2.	gateway/ (fichier principal : index.js) et
+ ms-python/ (fichier principal : app.py, technologie : Flask).
+3 Docker
+docker-compose.yml
+ lance gateway (port 3000) et ms-python (port 8000). .env et .env.example créés.
+tester avec docker compose up --build.
+4 Faire communiquer les deux services
+Le navigateur appelle http://localhost:3000 (la gateway).
+La gateway appelle le service Python avec http://ms-python:8000 — jamais localhost:8000
+5. Charger le JSON  (fichier placé
+Fichier JSON ms-python/data/parc_nucleaire_prescriptif_france.json.
+créer un fichier Python (ex. ms-python/graph_loader.py) qui charge ce JSON et affiche les 3 nombres pour vérifier.
+6. Construire le graphe
+Chaque centrale = un sommet. Chaque liaison (plant_edges) = une arête avec un poids (distance, pertes, capacité max).
+7. Programmer Dijkstra
+Fichier séparé des routes (ex. ms-python/services/dijkstra.py). Entrée : graphe + centrale de départ + centrale d'arrivée. Sortie : chemin le plus court, ou message clair si aucun chemin n'existe.
+8. Calculer la puissance disponible
+disponible = minimum(soft_upper_bound_mw − initial_output_mw, max_ramp_up_mw_per_15_min). Vérifier aussi que la centrale est available: true.
+9. Chercher les centrales locales en priorité
+Utiliser local_plant_ids de la région d'abord, puis external_entry_plant_ids, puis tout le graphe via Dijkstra si besoin.
+10. Créer le score (formule officielle, pas inventée)
+score = distance_km × 1.0 + pertes_% × 45.0 + (taux_de_charge_final)⁴ × 900.0 + pénalité_technique × 200.0 − 250 si locale. Le plus petit score gagne.
+
+
+
+11. Répartir la demande
+Trier les candidates par score croissant, donner à chacune jusqu'à sa marge disponible (sans dépasser la rampe ni la capacité de la liaison), continuer jusqu'à demande couverte ou plus de candidates.
+
+
+
+12. Cas impossible
+Si le total disponible est inférieur à la demande, répondre clairement avec le nombre de MW manquants.
+13. Routes du service Python (Flask)
+GET /plants, GET /regions, GET /network, POST /simulate.
+14. Passer par la gateway Express
+Client → gateway (3000) → ms-python via http://ms-python:8000 → gateway → client. Jamais le client ne parle directement au service Python.
+15. Tests unitaires (5 comportements)
+Chemin simple Dijkstra, absence de chemin, calcul de capacité disponible, demande satisfaisable, demande impossible.
+16. Logs
+Afficher dans le terminal : requête reçue, réponse envoyée (dans la gateway).
+17. README
+Prérequis, installation, configuration (.env), lancement, tests, routes, formats, algorithme, limites.
+18. Schéma d'architecture
+
+
+Client → Gateway Express → Service Python (Flask) → Algorithme (graphe + Dijkstra + score).
+
+ms-python/services/ — le cœur algorithmique, chaque fichier a un seul rôle
+ git commit "
+graph_loader.py lit le JSON et construit le graphe (qui est voisin de qui).
+dijkstra.py calcule les chemins les plus courts entre centrales.
+capacity.py calcule combien de MW une centrale peut encore fournir.
+priority.py décide l'ordre de recherche (locale d'abord).
+candidates.py combine tout ça pour lister, pour une région donnée, toutes les centrales candidates avec leur distance et pertes.
+score.py calcule la note de chaque candidate (plus bas = meilleur).
+allocation.py est le chef d'orchestre : il répartit la demande MW par MW en choisissant à chaque tour la meilleure candidate.
+
+ms-python/tests/test_engine.py : les 5 tests unitaires qui vérifient que les briques essentielles ne cassent pas.
+"
+
+
+
+
+
+Rien de compliqué : juste un fichier HTML avec du CSS et du JavaScript "vanilla"
+— un seul fichier, gateway/public/index.html, servi directement par ta gateway Express.
+
+Pour la carte, j'ai utilisé Leaflet — une bibliothèque JavaScript légère et gratuite pour afficher des cartes interactives (fond de carte OpenStreetMap),
+ chargée depuis un CDN donc pas besoin de l'installer avec npm. Le JS fait juste des appels fetch() vers /plants, /regions et /simulate — les mêmes routes que ta gateway expose déjà, rien de nouveau côté backend à part deux lignes ajoutées dans index.js pour que la gateway serve ce fichier HTML.
