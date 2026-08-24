@@ -56,7 +56,7 @@ pourquoi avons-nous besoin d’un état initial
 
 Pour calculer la production de 00:00, nous devons connaître la production précédente, c’est-à-dire celle de 23:45 la veille
 e JSON fournit :
-initial_output_mw_at_23_45_previous_day (energia_parametres-temporels-nuclerls.json)
+initial_output_mw_at_23_45_previous_day (energia_parametres-temporels-nucleires.json)
 
 
 available_flexibility()
