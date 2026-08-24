@@ -1,65 +1,36 @@
-import os
-from fastapi import FastAPI, HTTPException, Header, Depends
-from pydantic import BaseModel
-from services.graph_loader import load_data, build_plants_index, build_regions_index, build_graph
-from services.allocation import allocate
-
-app = FastAPI()
-
-data = load_data()
-plants_index = build_plants_index(data)
-regions_index = build_regions_index(data)
-graph = build_graph(data)
-simulation_parameters = data["simulation_parameters"]
-
-SECURITY_TOKEN = os.getenv("SECURITY_TOKEN")
 
 
-def verify_api_key(x_api_key: str = Header(alias="x-api-key")):
-    if not SECURITY_TOKEN or x_api_key != SECURITY_TOKEN:
-        raise HTTPException(status_code=401, detail="Cle API invalide")
+import argparse
+
+from services.graph_loader import (
+    load_reference_consumption,
+    load_temporal_nuclear_parameters,
+)
+from services.temporal_engine import simulate_day
 
 
-class SimulationRequest(BaseModel):
-    region: str
-    additional_demand_mw: float
+def run_phase1(number_of_steps=96):
+    consumption = load_reference_consumption()
+    nuclear_parameters = load_temporal_nuclear_parameters()
+    return simulate_day(consumption, nuclear_parameters, number_of_steps)
 
 
-@app.get("/health")
-def read_health():
-    return {"status": "Python MS Up and running"}
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Simulation temporelle EnergIA - Phase 1")
+    parser.add_argument("--steps", type=int, default=96, help="Nombre de quarts d'heure")
+    arguments = parser.parse_args()
 
-
-@app.get("/plants", dependencies=[Depends(verify_api_key)])
-def read_plants():
-    return list(plants_index.values())
-
-@app.get("/regions", dependencies=[Depends(verify_api_key)])
-def read_regions():
-    return list(regions_index.values())
-
-
-
-@app.get("/network", dependencies=[Depends(verify_api_key)])
-def read_network():
-    return graph
-
-
-
-@app.post("/simulate", dependencies=[Depends(verify_api_key)])
-def simulate(request: SimulationRequest):
-    region = regions_index.get(request.region)
-
-    if region is None:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Region inconnue: {request.region}"
+    simulation = run_phase1(arguments.steps)
+    for step in simulation["steps"]:
+        print(
+            f"{step['timestamp']} | demande={step['demand_mw']:.0f} MW | "
+            f"nucléaire={step['production_mw']:.0f} MW | "
+            f"manquant={step['missing_mw']:.0f} MW | "
+            f"surplus={step['forced_surplus_mw']:.0f} MW"
         )
 
-    return allocate(
-        region,
-        request.additional_demand_mw,
-        graph,
-        plants_index,
-        simulation_parameters
+    print(
+        f"Résumé : {simulation['steps_count']} pas, "
+        f"journée complète={simulation['complete_day']}, "
+        f"demande toujours satisfaite={simulation['all_demand_satisfied']}"
     )

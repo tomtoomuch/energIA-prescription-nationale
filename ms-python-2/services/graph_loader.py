@@ -2,25 +2,72 @@
 import json
 import os
 
-# Chemin par défaut du fichier de données, relatif à ce fichier.
+
 DEFAULT_DATA_PATH = os.path.join(
     os.path.dirname(__file__), "..", "data", "parc_nucleaire_prescriptif_france.json"
 )
 
+REFERENCE_CONSUMPTION_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data", "energia-journee-reference-consommation.json"
+)
+
+TEMPORAL_NUCLEAR_PARAMETERS_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data", "energia-parametres-temporels-nucleaire.json"
+)
+
 
 def load_data(path=DEFAULT_DATA_PATH):
-    """
-    Ouvre le fichier JSON et retourne son contenu sous forme de dictionnaire Python.
-    """
+
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def build_graph(data):
-    """
-    Construit un graphe à partir de data["plant_edges"].
+def load_reference_consumption(path=REFERENCE_CONSUMPTION_PATH):
+    data = load_data(path)
+    timestamps = data.get("timestamps", [])
+    totals = data.get("national_total_consumption_mw", [])
 
-"""
+    if len(timestamps) != 96 or len(totals) != 96:
+        raise ValueError(
+            "La journée de référence doit contenir 96 horaires et 96 consommations"
+        )
+
+    for region in data.get("regions", []):
+        if len(region.get("consumption_mw", [])) != 96:
+            raise ValueError(
+                f"La région {region.get('id', 'inconnue')} ne contient pas 96 valeurs"
+            )
+
+    return data
+
+
+def load_temporal_nuclear_parameters(path=TEMPORAL_NUCLEAR_PARAMETERS_PATH):
+    data = load_data(path)
+    plants = data.get("plants", [])
+    if not plants:
+        raise ValueError("Aucun paramètre temporel de centrale trouvé")
+
+    required_fields = {
+        "plant_id",
+        "initial_output_mw_at_23_45_previous_day",
+        "minimum_operating_power_mw",
+        "maximum_power_mw",
+        "max_ramp_up_mw_per_15_min",
+        "max_ramp_down_mw_per_15_min",
+    }
+    for plant in plants:
+        missing = required_fields - plant.keys()
+        if missing:
+            raise ValueError(
+                f"Paramètres manquants pour {plant.get('plant_id', 'centrale inconnue')}: "
+                f"{', '.join(sorted(missing))}"
+            )
+    return data
+
+
+def build_graph(data):
+    #un graphe à partir de data["plant_edges"].
+
     graph = {}
 
     for edge in data["plant_edges"]:
@@ -54,12 +101,10 @@ def build_graph(data):
 
 
 def build_plants_index(data):
-    """Dictionnaire {plant_id: plant_dict}, utile pour les étapes suivantes."""
     return {plant["id"]: plant for plant in data["plants"]}
 
 
 def build_regions_index(data):
-    """Pareil que build_plants_index, mais pour les régions."""
     return {region["id"]: region for region in data["regions"]}
 
 
