@@ -16,3 +16,11 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+
+  ms-python-2:
+    image: tomtoomuch/energia-ms-python-2
+    ports:
+      - "${PYTHON_PORT:-8002}:8002"
+    env_file:
+      - .env
+    restart: unless-stopped
