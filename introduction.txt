@@ -1,135 +1,535 @@
+services/graph_loader.py
 
-services / graph_loader.py
-Je n’ai pas changé les anciennes fonctions allocate(), dispatchable_margin() ou
-candidate_score().
-J’ai just ajouté de nouvelles fonctions pour la Phase 1 temporelle.
+le premier parent remonte vers services
+le deuxième parent remonte vers ms-python-2
+data correspond au dossier contenant les fichiers JSON
 
-Dans graph_loader.py
+les chemins construits permettent de retrouver les fichiers de données depuis le fichier Python
 
-load_reference_consumption()
-def load_reference_consumption(path=REFERENCE_CONSUMPTION_PATH):
-Cette fonction charge :
+
+parc_nucleaire_prescriptif_france.json
+
+ce fichier contient
+
+les centrales nucléaires
+les régions
+les liaisons entre les centrales
+les paramètres de simulation
+
+
 energia-journee-reference-consommation.json
 
-Pourquoi
-récupérer les 96 horaires ;
-récupérer les 96 consommations nationales
-vérifier que chaque région possède aussi 96 valeurs
-détecter immédiatement un JSON incomplet
-elle vérifie notamment
-if len(timestamps) != 96 or len(totals) != 96:
-    raise ValueError( ... )
+ce fichier contient
 
-une journée contient
-24 heures × 4 quarts d’heure = 96 pas
+les 96 horaires de la journée
+la consommation nationale pour chaque quart d’heure
+la consommation de chaque région pour chaque quart d’heure
 
-load_temporal_nuclear_parameters()
 
+energia-parametres-temporels-nucleaire.json
+
+ce fichier contient
+
+les centrales
+leur production initiale
+leur puissance minimale
+leur puissance maximale
+leur rampe de montée
+leur rampe de descente
+leur disponibilité
+
+
+charger un fichier JSON
+
+def load_json(path)
+
+cette fonction ouvre un fichier JSON
+elle transforme ensuite son contenu en dictionnaire Python
+
+return json.load(file)
+
+
+charger les données historiques du parc
+
+def load_data(path=FLEET_PATH)
+
+cette fonction charge le fichier historique du parc nucléaire
+elle vérifie que le fichier contient des centrales
+elle vérifie que le fichier contient des régions
+elle vérifie que le fichier contient des liaisons entre les centrales
+
+
+construire l’index des centrales
+
+def build_plants_index(data)
+
+cette fonction transforme la liste des centrales en dictionnaire
+chaque centrale devient accessible directement avec son identifiant
+
+exemple
+
+{
+    "belleville": {
+        "id": "belleville",
+        "name": "Belleville-sur-Loire"
+    }
+}
+
+
+construire l’index des régions
+
+def build_regions_index(data)
+
+cette fonction transforme la liste des régions en dictionnaire
+chaque région devient accessible directement avec son identifiant
+
+exemple
+
+{
+    "occitanie": {
+        "id": "occitanie",
+        "name": "Occitanie"
+    }
+}
+
+
+construire le graphe des centrales
+
+def build_graph(data)
+
+cette fonction construit le graphe des liaisons entre les centrales
+chaque centrale possède une liste de centrales voisines
+
+pour chaque liaison elle conserve
+
+l’identifiant de la liaison
+la centrale de départ
+la centrale d’arrivée
+la distance
+le pourcentage de perte
+la capacité maximale de transfert
+la disponibilité
+
+si une liaison est bidirectionnelle la fonction ajoute également le chemin inverse
+
+
+charger la consommation
+
+def load_reference_consumption(
+    path=REFERENCE_CONSUMPTION_PATH
+)
+
+cette fonction charge le fichier de consommation
+
+data = load_json(path)
+
+elle récupère ensuite
+
+timestamps
+national_total_consumption_mw
+regions
+
+elle vérifie que la liste des horaires contient 96 valeurs
+elle vérifie que la consommation nationale contient 96 valeurs
+
+24 heures × 4 quarts d’heure = 96
+
+elle vérifie également que chaque région possède 96 consommations
+si les données sont incorrectes elle produit une erreur claire
+
+
+charger les paramètres temporels des centrales
 
 def load_temporal_nuclear_parameters(
     path=TEMPORAL_NUCLEAR_PARAMETERS_PATH
 )
-Cette fonction charge
-energia-parametres-temporels-nucleaire.json
 
-pourquoi
-Chaque centrale doit posséder les informations nécessaires à une simulation temporelle
+cette fonction charge les paramètres temporels des centrales nucléaires
+elle vérifie la présence des champs importants
+
+plant_id
 initial_output_mw_at_23_45_previous_day
 minimum_operating_power_mw
 maximum_power_mw
 max_ramp_up_mw_per_15_min
 max_ramp_down_mw_per_15_min
 
+elle vérifie également
+
+que les identifiants des centrales ne sont pas dupliqués
+que la puissance minimale ne dépasse pas la puissance maximale
+que la production initiale reste entre le minimum et le maximum
+que les rampes de montée et de descente ne sont pas négatives
 
 
+services/nuclear_dataframe.py
 
-temporal_engine.py
+ce fichier rassemble les données historiques et les paramètres temporels des centrales
 
-constante
+la fonction principale est
+
+def build_nuclear_dataframe(
+    fleet_path=FLEET_PATH,
+    temporal_path=TEMPORAL_PARAMETERS_PATH
+)
+
+la fonction charge les deux fichiers JSON
+
+parc_nucleaire_prescriptif_france.json
+energia-parametres-temporels-nucleaire.json
+
+elle transforme les centrales historiques en DataFrame
+
+fleet_dataframe = pd.json_normalize(
+    fleet_plants,
+    sep="_"
+)
+
+elle transforme les paramètres temporels en DataFrame
+
+temporal_dataframe = pd.DataFrame(
+    temporal_plants
+)
+
+elle fusionne ensuite les deux DataFrames avec plant_id
+
+dataframe = fleet_dataframe.merge(
+    temporal_dataframe,
+    on="plant_id"
+)
+
+la DataFrame finale contient notamment
+
+plant_id
+plant_name
+location_region_id
+plant_edges
+initial_output_mw_at_23_45_previous_day
+minimum_operating_power_mw
+maximum_power_mw
+max_ramp_up_mw_per_15_min
+max_ramp_down_mw_per_15_min
+available
+
+chaque ligne représente une centrale
+la colonne plant_edges contient les liaisons associées à la centrale
+
+
+services/temporal_engine.py
+
+ce fichier calcule la production nucléaire toutes les 15 minutes
+
+
+constante EPSILON
+
 EPSILON = 0.000001
-Les nombres décimaux peuvent produire de très petites imprécisions ex. Python peut obtenir 0.0000000003 au lieu de 0
+
+cette petite valeur évite les problèmes d’arrondi avec les nombres décimaux
+une différence plus petite que EPSILON est considérée comme nulle
 
 
-def build_initial_state(plants):
-construit l’état de départ des centrales
-pourquoi avons-nous besoin d’un état initial
+construire l’état initial
 
-Pour calculer la production de 00:00, nous devons connaître la production précédente, c’est-à-dire celle de 23:45 la veille
-e JSON fournit :
-initial_output_mw_at_23_45_previous_day (energia_parametres-temporels-nuclerls.json)
+def build_initial_state(plants)
 
+cette fonction prépare la production initiale des centrales à 23 h 45 avant le début de la journée
+elle crée un dictionnaire contenant l’identifiant et la production de chaque centrale
 
-available_flexibility()
- #retourne les MW réellement modifiables pendant un pas de 15 minutes
-    # calculons d’abord la place disponible avant la puissance maximale
+exemple
 
-cette fonction répond à une question
-combien de MW cette centrale peut-elle modifier pendant les prochaines 15 minutes
-plant = les paramètres de la centrale
-current_output = sa production actuelle
-direction = "up" pour monter ou "down" pour descendre
+{
+    "belleville": 1493,
+    "blayais": 2075
+}
 
-si la centrale est indisponible
-"available": False
-
-elle ne peut fournir aucune flexibilité
-return 0.0
-Cas d’une montée
-
-if direction == "up"
-nous calculons d’abord la place disponible avant la puissance maximale
-margin = maximum - current_output
-puis nous récupérons la vitesse maximale de montée
-ramp = max_ramp_up_mw_per_15_min
+elle vérifie que la puissance minimale ne dépasse pas la puissance maximale
+elle vérifie que chaque production initiale se trouve entre le minimum et le maximum de la centrale
 
 
-Elle reçoit :
-- plant : les paramètres de la centrale ;
-- current_output : sa production actuelle ;
-- direction : "up" pour monter ou "down" pour descendre
+récupérer la consommation régionale
+
+def get_regional_consumption(
+    consumption_data,
+    index
+)
+
+cette fonction récupère la consommation de chaque région pour un quart d’heure
+
+exemple de résultat pour 00:00
+
+{
+    "ile_de_france": 5335,
+    "occitanie": 2450
+}
+
+l’index représente la position du quart d’heure dans les données
+
+0 → 00:00
+1 → 00:15
+2 → 00:30
 
 
+calculer les limites accessibles d’une centrale
+
+def calculate_plant_limits(
+    plant,
+    current_output_mw
+)
+
+cette fonction calcule les puissances minimale et maximale accessibles pendant le prochain quart d’heure
+
+pour calculer la limite minimale accessible
+
+minimum_reachable_mw = max(
+    minimum_mw,
+    current_output_mw - ramp_down_mw
+)
+
+pour calculer la limite maximale accessible
+
+maximum_reachable_mw = min(
+    maximum_mw,
+    current_output_mw + ramp_up_mw
+)
+
+la flexibilité de montée correspond à
+
+maximum_reachable_mw - current_output_mw
+
+la flexibilité de descente correspond à
+
+current_output_mw - minimum_reachable_mw
+
+si la centrale est indisponible ses flexibilités de montée et de descente sont égales à zéro
 
 
-simulate_step()
-    # enchaîne les états de la journée, jusqu'à 96 quarts d'heure
+répartir la variation
 
-calcule un seul quart d’heure
-Elle reçoit
-les paramètres des centrales
-la production précédente de toutes les centrales
-la nouvelle consommation nationale
-Vérification de la demande
-demand_mw = float(demand_mw)
+def distribute_change(
+    plants,
+    previous_state,
+    requested_change_mw,
+    direction,
+    plant_limits
+)
 
-previous_total = sum(previous_state.values())
-si l’état précédent est
+cette fonction répartit la variation demandée entre les centrales
+la répartition est proportionnelle à la flexibilité disponible de chaque centrale
 
-    "centrale_a": 1000,
-    "centrale_b": 1500,
-    "centrale_c": 2000
+si la demande augmente elle utilise la flexibilité de montée
+si la demande diminue elle utilise la flexibilité de descente
 
-la somme est  1000 + 1500 + 2000 = 4500 MW
+la variation totale ne peut pas dépasser la flexibilité totale disponible
 
+possible_change_mw = min(
+    requested_change_mw,
+    total_flexibility_mw
+)
 
+la fonction crée une copie de l’état précédent
 
+next_state = previous_state.copy()
 
-
-Différence avec la demande
-difference = demand_mw - previous_total
-exm.
-demande  5 000 MW
-production précédente  4 500 MW
-différence 500 MW
-le parc doit augmenter sa production de 500 MW
-Autre exemple :
-Demande :               4 000 MW
-Production précédente : 4 500 MW
-Différence :-500 MW
-Le parc doit diminuer sa production de 500 MW.
+elle applique ensuite la variation à chaque centrale
+elle retourne le nouvel état du parc
 
 
-simulate_day()
+simuler un quart d’heure
 
-cette fonction enchaîne tous les quarts d’heure
+def simulate_step(
+    plants,
+    previous_state,
+    demand_mw
+)
 
+cette fonction calcule un seul quart d’heure
+
+1 elle calcule la production nucléaire précédente
+
+2 elle compare cette production avec la demande nationale
+
+3 elle décide s’il faut monter descendre ou rester stable
+
+4 elle calcule les limites accessibles de chaque centrale
+
+5 elle répartit la variation entre les centrales
+
+6 elle calcule la nouvelle production nucléaire totale
+
+7 elle calcule les MW manquants
+
+8 elle calcule le surplus éventuel
+
+9 elle vérifie les limites minimales et maximales
+
+10 elle vérifie les rampes de montée et de descente
+
+11 elle retourne le nouvel état du parc
+
+le résultat contient pour chaque centrale
+
+plant_id
+plant_name
+region_id
+available
+previous_output_mw
+output_mw
+change_mw
+minimum_operating_power_mw
+maximum_power_mw
+max_ramp_up_mw_per_15_min
+max_ramp_down_mw_per_15_min
+minimum_reachable_mw
+maximum_reachable_mw
+respects_minimum
+respects_maximum
+respects_ramp_up
+respects_ramp_down
+constraints_respected
+plant_edges
+
+
+simuler une journée
+
+def simulate_day(
+    consumption_data,
+    nuclear_dataframe,
+    number_of_steps=None
+)
+
+cette fonction répète simulate_step pour toute la journée
+
+consumption_data contient les consommations nationales et régionales
+nuclear_dataframe contient les données des centrales provenant des fichiers JSON
+
+la DataFrame est transformée en liste de dictionnaires
+
+plants = nuclear_dataframe.to_dict(
+    orient="records"
+)
+
+chaque dictionnaire représente une centrale
+
+la fonction construit ensuite l’état initial
+
+current_state = build_initial_state(
+    plants
+)
+
+pour chaque quart d’heure elle récupère la consommation régionale
+elle additionne les consommations régionales
+elle compare cette somme avec la consommation nationale
+elle lance ensuite simulate_step
+
+le nouvel état devient le point de départ du quart d’heure suivant
+
+current_state = result.pop(
+    "state"
+)
+
+exemple
+
+état de 23:45 → calcul de 00:00
+état de 00:00 → calcul de 00:15
+état de 00:15 → calcul de 00:30
+
+la fonction ajoute au résultat
+
+l’index du quart d’heure
+l’heure
+la consommation de chaque région
+la consommation régionale totale
+la production nucléaire nécessaire
+la production nucléaire réelle
+la production de chaque centrale
+les MW manquants
+le surplus éventuel
+le respect des contraintes
+
+
+main.py
+
+ce fichier connecte les données la DataFrame le moteur temporel et l’API
+
+
+lancer la phase 1
+
+def run_phase1(number_of_steps=96)
+
+cette fonction charge les consommations
+
+consumption_data = load_reference_consumption()
+
+elle construit ensuite la DataFrame nucléaire
+
+nuclear_dataframe = build_nuclear_dataframe()
+
+elle transmet les deux éléments au moteur temporel
+
+simulation = simulate_day(
+    consumption_data=consumption_data,
+    nuclear_dataframe=nuclear_dataframe,
+    number_of_steps=number_of_steps
+)
+
+
+route de vérification
+
+GET /health
+
+cette route vérifie que le service fonctionne
+
+
+route des centrales
+
+GET /phase1/plants
+
+cette route affiche les centrales
+elle affiche également leurs limites leurs rampes leur disponibilité et leurs liaisons
+
+
+route des consommations
+
+GET /phase1/consumption
+
+cette route affiche les 96 horaires
+elle affiche la consommation nationale
+elle affiche la consommation de chaque région
+
+
+route de simulation
+
+GET /phase1/simulate-day
+
+cette route lance la simulation de la phase 1 sur 96 quarts d’heure
+
+il est possible de limiter le nombre de pas
+
+GET /phase1/simulate-day?number_of_steps=4
+
+
+résumé du fonctionnement
+
+1 construction de la DataFrame nucléaire
+
+2 création de l’état initial du parc
+
+3 lecture de la consommation de chaque région
+
+4 calcul de la demande nucléaire nationale
+
+5 calcul des limites accessibles des centrales
+
+6 répartition de la production entre les centrales
+
+7 vérification des puissances minimales et maximales
+
+8 vérification des rampes de montée et de descente
+
+9 création du nouvel état du parc
+
+10 utilisation du nouvel état au quart d’heure suivant
+
+11 répétition du calcul jusqu’aux 96 états
+
+12 affichage du résultat dans l’API ou dans le terminal
