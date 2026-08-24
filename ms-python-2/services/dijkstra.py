@@ -1,14 +1,6 @@
-# Ce fichier trouve le chemin le moins cher entre deux centrales
-#
-# Le "poids" utilisé ici est la distance en kilomètres (distance_km).
-
 
 def dijkstra(graph, start, end):
-    #  Cherche le chemin  entre `start` et `end`
-    #
-    #     tourne un tuple (chemin, distance_totale) :
-    #         - chemin : liste des identifiants de centrales, de start à end inclus
-    #         - distance_totale : somme des distance_km sur ce chemin
+
     if start not in graph:
         raise ValueError(f"Centrale de départ inconnue dans le graphe : {start}")
     if end not in graph:
@@ -18,13 +10,11 @@ def dijkstra(graph, start, end):
     distances = {node: float("inf") for node in graph}
     distances[start] = 0
 
-    # pour reconstruire le chemin à la fin
     previous = {}
 
     visited = set()
 
     while len(visited) < len(graph):
-        # on choisit la centrale non visitée avec la plus petite distance connue
         current = None
         current_distance = float("inf")
         for node, dist in distances.items():
@@ -36,13 +26,11 @@ def dijkstra(graph, start, end):
         if current is None:
             break
 
-        # arrivée trouvée
         if current == end:
             break
 
         visited.add(current)
 
-        # on essaie d'améliorer la distance de chaque voisin
         for edge in graph[current]:
             if not edge["available"]:
                 continue
@@ -72,11 +60,6 @@ def dijkstra(graph, start, end):
 
 
 def shortest_paths_from(graph, start):
-   #Calcule, depuis `start`, le chemin le plus court (en distance) vers
-
-    # Les centrales non disponible depuis `start` ne sont pas incluses.
-    # `loss_percent` est la somme des pertes des liaisons traversées sur ce
-    # chemin précis
     if start not in graph:
         raise ValueError(f"Centrale de départ inconnue dans le graphe : {start}")
 

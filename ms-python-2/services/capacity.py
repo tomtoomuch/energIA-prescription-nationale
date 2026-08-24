@@ -1,4 +1,4 @@
-# Calcul de la puissance mobilisable pour une centrale
+# calcul de la puissance mobilisable pour une centrale
 
 
 def dispatchable_margin(plant):
@@ -14,19 +14,17 @@ def dispatchable_margin(plant):
 
 
 def ramp_limit(plant):
-    """Vitesse maximale de montée en puissance (MW / 15 minutes) pour cette centrale."""
+    # vitesse maximale de montée en puissance (MW / 15 minutes) pour cette centrale
     return plant["simulation"]["max_ramp_up_mw_per_15_min"]
 
 
 def dispatchable_margins_all(data):
-    """Pareil que dispatchable_margin, mais pour toutes les centrales à la fois."""
+    # pareil que dispatchable_margin, mais pour toutes les centrales à la fois
     return {plant["id"]: dispatchable_margin(plant) for plant in data["plants"]}
 
 def available_capacity(plant):
-    """
-    Calcule la puissance réellement mobilisable par une centrale
-    pendant une période de 15 minutes.
-    """
+    # calcule la puissance mobilisable par une centrale pendant une période de 15 minutes
+
 
     sim = plant["simulation"]
 
@@ -40,10 +38,9 @@ def available_capacity(plant):
 
 
 def available_capacities_all(data):
-    """
-    Calcule la puissance réellement mobilisable
-    pour toutes les centrales.
-    """
+    #
+    # Calcule la puissance mobilisable
+    # pour toutes les centrales.
 
     return {
         plant["id"]: available_capacity(plant)

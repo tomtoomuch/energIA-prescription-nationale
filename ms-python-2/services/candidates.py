@@ -1,6 +1,3 @@
-# Assemble priority.py (locale/externe) et dijkstra.shortest_paths_from
-# pour donner, pour une région, TOUTES les centrales
-# candidates avec leur distance et leurs pertes
 
 try:
     from .priority import local_plant_ids, external_entry_plant_ids

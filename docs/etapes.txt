@@ -11,7 +11,7 @@ tester avec docker compose up --build.
 4 Faire communiquer les deux services
 Le navigateur appelle http://localhost:3000 (la gateway).
 La gateway appelle le service Python avec http://ms-python:8000 — jamais localhost:8000
-5. Charger le JSON  (fichier placé
+5. charger le JSON  (fichier placé
 Fichier JSON ms-python/data/parc_nucleaire_prescriptif_france.json.
 créer un fichier Python (ex. ms-python/graph_loader.py) qui charge ce JSON et affiche les 3 nombres pour vérifier.
 6. Construire le graphe

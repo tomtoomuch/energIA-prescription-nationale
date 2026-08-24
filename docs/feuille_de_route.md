@@ -35,7 +35,7 @@ La passerelle envoie, à son tour, une requête au micro-service Python avec
 http://ms-python:8000 — jamais localhost:8000
 ```
 
-## Charger le JSON
+## charger le JSON
 
 Fichier JSON ms-python/data/parc_nucleaire_prescriptif_france.json.
 créer un fichier Python (ex. ms-python/graph_loader.py) qui charge ce JSON et affiche les 3 nombres pour vérifier.

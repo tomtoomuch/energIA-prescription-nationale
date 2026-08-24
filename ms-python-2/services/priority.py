@@ -1,28 +1,23 @@
-"""
-Détermine, pour une région donnée, quelles centrales chercher en priorité.
-"""
 
 
 def get_region(regions_index, region_id):
-# Retourne le dictionnaire complet d'une région à partir de son id.
+
     if region_id not in regions_index:
         raise ValueError(f"Région inconnue : {region_id}")
     return regions_index[region_id]
 
 
 def local_plant_ids(region):
-    #Centrales situées  dans la région (priorite 1)
+
     return region["local_plant_ids"]
 
 
 def external_entry_plant_ids(region):
-    #entrales voisines connues(priorite 2).
+
     return region["external_entry_plant_ids"]
 
 
 def candidate_search_order(region):
-  # Retourne la liste des centrales à examiner, dans l'ordre de priorité :
-  #d'abord les centrales locales, ensuite les centrales d'entrée externes.
 
     ordered = []
     seen = set()

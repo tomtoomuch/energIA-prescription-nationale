@@ -50,7 +50,7 @@ participant A as Algorithm Core (modélisation graph et scoring)
 C->>G: 1. Requête HTTP (Nécessité énergétique)
 Note over G: Traitement de l'authentification et du formatage des données.
 G->>P: 2. Transfert de la requête au micro-service Python (http://ms-python:8000)
-P->>A: 3. Initialisation du traitement (Chargement Graphique + Calcul)
+P->>A: 3. Initialisation du traitement (chargement Graphique + Calcul)
 Note over A: Dijkstra, Calcul des capacités disponibles, Scoring multi-critères.
 A-->>P: 4. Résultat calculé (Plan de répartition optimal ou déficit).
 P-->>G: 5. Réponse structurée et formatée.
@@ -359,7 +359,7 @@ L'algorithme principal est une cascade séquentielle de calculs visant à produi
 **Calcul du score global :** Chaque centrale candidate reçoit un score composite pour évaluer son rôle dans la réponse énergétique :
 
 ```py
-text{Score} = (\text{Distance}_{\text{km}} \times 1.0) + (\text{Pertes}_{\%} \times 45.0) + ((\text{Taux de Charge Final})^4 \times 900.0) + \text{Pénalité technique} \times 200.0 - [250 \text{ si centrale locale}
+text{Score} = (\text{Distance}_{\text{km}} \times 1.0) + (\text{Pertes}_{\%} \times 45.0) + ((\text{Taux de charge Final})^4 \times 900.0) + \text{Pénalité technique} \times 200.0 - [250 \text{ si centrale locale}
 ```
 
 Le plus petit score indique la candidate la plus performante pour répondre au besoin global.

@@ -57,7 +57,7 @@ if __name__ == "__main__":
     from candidates import region_candidates
     from capacity import dispatchable_margin
 
-    # Chargement des données et construction des index.
+    # chargement des données et construction des index.
     data = load_data()
     graph = build_graph(data)
     plants_index = build_plants_index(data)
