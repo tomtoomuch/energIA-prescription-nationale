@@ -3,3 +3,5 @@ services:
     build: ./gateway
   ms-python:
     build: ./ms-python
+  ms-python-2:
+    build: ./ms-python-2
