@@ -1,10 +1,12 @@
 import argparse
+import os
 
 from fastapi import (
     FastAPI,
     HTTPException,
     Query,
-    Header
+    Header,
+    Depends
 )
 
 from services.graph_loader import (
