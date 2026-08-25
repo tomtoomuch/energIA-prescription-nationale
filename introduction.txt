@@ -536,8 +536,6 @@ résumé du fonctionnement
 
 
 
-
-
 les  services
 Après ces corrections
 graph_loader.py charge les JSON et construit les index
@@ -559,3 +557,26 @@ main.py
 Les anciens capacity.py, allocation.py, score.py et dispatch.py utilisent toujours simulation.initial_output_mw
  Ils ne conservent donc pas l’état entre deux quarts d’heure.
   Il ne faut pas les appeler directement dans temporal_engine.py sans les adapter, sinon tu violeras la règle
+
+
+Modification capacity.py
+def dispatchable_margin
+La fonction dispatchable_margin() actuelle calcula la marge disponible d’une centrale depuis sa production initiale :
+
+soft_upper_bound_mw - initial_output_mw
+
+Il n’est plus suffisant pour une simulation temporelle. À partir du deuxième quart d’heure, la capacité d’une centrale doit être
+calculée depuis la production obtenue au quart d’heure précédent.
+
+La fonction accepte désormais un paramètre facultatif :
+
+current_output_mw
+
+Lorsque ce paramètre est fourni, la marge est calculée ainsi :
+
+soft_upper_bound_mw - current_output_mw
+
+Lorsque le paramètre n’est pas fourni, la fonction utilise encore initial_output_mw. Ce comportement de secours conserve la compatibilité avec le moteur et les tests du premier brief.
+Cette modification prépare l’intégration des contraintes régionales dans le moteur temporel. Elle permettra aux fonctions d’allocation de travailler avec l’état courant du parc au lieu
+de revenir systématiquement à l’état initial.
+Les anciens tests unitaires continuent de fonctionner après cette modification.
