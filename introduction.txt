@@ -603,3 +603,14 @@ La fonction allocate() accepte maintenant un état temporel facultatif appelé c
 Lorsqu’il est fourni, la marge disponible et la production finale d’une centrale sont calculées depuis sa production du quart d’heure précédent.
 
 Sans current_state, la fonction continue d’utiliser initial_output_mw afin de rester compatible avec le moteur et les tests du premier brief.
+
+--Adaptation du score à l’état temporel
+
+La fonction candidate_score() peut maintenant recevoir la production courante d’une centrale avec current_output_mw.
+
+Le taux de charge final est calculé à partir de la production du quart d’heure précédent et de la nouvelle allocation proposée. Le score pénalise ainsi correctement une centrale déjà proche de sa puissance maximale.
+
+Si current_output_mw n’est pas fourni, la fonction utilise encore initial_output_mw afin de conserver la compatibilité avec le premier brief.
+
+L’étape suivante consistera à transmettre effectivement cet état courant depuis allocation.py.
+
