@@ -46,20 +46,34 @@ def dispatchable_margins_all(data):
     # pareil que dispatchable_margin, mais pour toutes les centrales à la fois
     return {plant["id"]: dispatchable_margin(plant) for plant in data["plants"]}
 
-def available_capacity(plant):
-    # calcule la puissance mobilisable par une centrale pendant une période de 15 minutes
 
+def available_capacity(
+    plant,
+    current_output_mw=None,
+):
+    """
+    Calcule la puissance mobilisable par une centrale
+    pendant les 15 prochaines minutes.
+    """
 
     sim = plant["simulation"]
 
     if not sim.get("available", False):
         return 0.0
 
-    margin = dispatchable_margin(plant)
-    ramp = ramp_limit(plant)
+    margin = dispatchable_margin(
+        plant,
+        current_output_mw=current_output_mw,
+    )
 
-    return max(0.0, min(margin, ramp))
+    ramp = float(
+        ramp_limit(plant)
+    )
 
+    return max(
+        0.0,
+        min(margin, ramp),
+    )
 
 def available_capacities_all(data):
     #

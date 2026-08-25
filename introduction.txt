@@ -558,9 +558,11 @@ Les anciens capacity.py, allocation.py, score.py et dispatch.py utilisent toujou
  Ils ne conservent donc pas l’état entre deux quarts d’heure.
   Il ne faut pas les appeler directement dans temporal_engine.py sans les adapter, sinon tu violeras la règle
 
-
+========================================================
 Modification capacity.py
-def dispatchable_margin
+==========================================================
+--def dispatchable_margin-
+
 La fonction dispatchable_margin() actuelle calcula la marge disponible d’une centrale depuis sa production initiale :
 
 soft_upper_bound_mw - initial_output_mw
@@ -580,3 +582,16 @@ Lorsque le paramètre n’est pas fourni, la fonction utilise encore initial_out
 Cette modification prépare l’intégration des contraintes régionales dans le moteur temporel. Elle permettra aux fonctions d’allocation de travailler avec l’état courant du parc au lieu
 de revenir systématiquement à l’état initial.
 Les anciens tests unitaires continuent de fonctionner après cette modification.
+
+--available_capacity()
+
+La fonction available_capacity() accepte maintenant la production courante de la centrale.
+
+Elle calcule la puissance réellement mobilisable pendant les 15 prochaines minutes en prenant la plus petite valeur entre :
+
+la marge restante avant la puissance maximale ;
+
+la rampe maximale de montée en 15 minutes.
+
+Cette modification permet de calculer la capacité depuis l’état du quart d’heure précédent, tout en conservant la compatibilité avec le moteur initial.
+
