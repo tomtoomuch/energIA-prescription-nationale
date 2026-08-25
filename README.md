@@ -86,7 +86,8 @@ G-->>C: 6. Retour à l'utilisateur final.
 
 ### Déploiement de la phase 1 du projet EnergIA : prescription nationale en temps réel
 
-
+La phase 1 modifie un certain nombre de points du workflow :
+Utilisateur déclenche la simulation via la route GET /phase1/simulate-day -> le micro service récupère les données, les agrègent. Il détermine la consommation de chaque région et calcule, via Dijkstra, l'approvisionnement nécessaire en énergie pour pallier aux manques.
 
 ### Arborescence projet
 
@@ -168,6 +169,7 @@ Notre API expose 10 routes sur la passerelle (_gateway_) qui écoute le port 300
 Les routes sont documentées ci-dessous.
 Par ailleurs, vous pouvez trouver la [documentation générée avec Bruno](./docs/Tests-EnergIA-documentation.html "Documentation générée par Bruno sur les tests de routes de notre API") après avoir tester le fonctionnement des différentes routes exposées.
 De plus, FastAPI documente automatiquement les routes exposées via openAPI et [cette documentation sur une page html](http://localhost:8000/docs").
+Par ailleurs, les routes du second micro-service sont documentées [ici](http://localhost:8002/docs).
 
 #### **Routes de monitoring**
 
