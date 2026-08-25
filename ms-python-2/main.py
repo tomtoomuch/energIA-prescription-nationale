@@ -4,6 +4,7 @@ from fastapi import (
     FastAPI,
     HTTPException,
     Query,
+    Header
 )
 
 from services.graph_loader import (
@@ -27,6 +28,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
+SECURITY_TOKEN = os.getenv("SECURITY_TOKEN")
+
+def verify_api_key(x_api_key: str = Header(alias="x-api-key")):
+    if not SECURITY_TOKEN or x_api_key != SECURITY_TOKEN:
+        raise HTTPException(status_code=401, detail="Cle API invalide")
 
 def run_phase1(number_of_steps=96):
     # les données et lance la simulation
@@ -65,7 +71,7 @@ def health():
     }
 
 
-@app.get("/phase1/plants")
+@app.get("/phase1/plants", dependencies=[Depends(verify_api_key)])
 def get_nuclear_plants():
     # ffiche toutes les centrales et leurs contraintes
     try:
@@ -93,7 +99,7 @@ def get_nuclear_plants():
         ) from error
 
 
-@app.get("/phase1/consumption")
+@app.get("/phase1/consumption", dependencies=[Depends(verify_api_key)])
 def get_consumption():
     # affiche la consommation nationale et régionale
     #     pour les 96 quarts d'heure
@@ -157,7 +163,7 @@ def get_consumption():
         ) from error
 
 
-@app.get("/phase1/simulate-day")
+@app.get("/phase1/simulate-day", dependencies=[Depends(verify_api_key)])
 def simulate_phase1_api(
     number_of_steps: int = Query(
         default=96,
