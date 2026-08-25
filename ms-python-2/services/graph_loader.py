@@ -22,6 +22,11 @@ TEMPORAL_NUCLEAR_PARAMETERS_PATH = (
     / "energia-parametres-temporels-nucleaire.json"
 )
 
+SOLAR_WIND_PRODUCTION_PATH = (
+    DATA_DIRECTORY
+    / "energia-production-non-pilotable.json"
+)
+
 
 def load_json(path):
 
@@ -171,7 +176,25 @@ def load_reference_consumption(
 
     return data
 
+def load_solar_wind_production(
+    path=SOLAR_WIND_PRODUCTION_PATH
+):
 
+    data = load_json(path)
+
+    er_production = data.get()
+
+    if not er_production["timestamps"]:
+        raise ValueError(
+            "Aucun paramêtre temporel de production solaire et éolienne trouvé."
+        )
+
+    required_fiels = {
+        "timestamps",
+        "regions",
+        "national_total_production_mw"
+    }
+    
 def load_temporal_nuclear_parameters(
     path=TEMPORAL_NUCLEAR_PARAMETERS_PATH
 ):
