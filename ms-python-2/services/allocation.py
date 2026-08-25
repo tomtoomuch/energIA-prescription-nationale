@@ -29,8 +29,14 @@ def path_capacity(graph, path):
     return min(capacities)
 
 
-def allocate(region, additional_demand_mw, graph, plants_index, simulation_parameters):
-
+def allocate(
+    region,
+    additional_demand_mw,
+    graph,
+    plants_index,
+    simulation_parameters,
+    current_state=None,
+):
     candidates = region_candidates(graph, region)
     remaining_demand = additional_demand_mw
     allocations = []
@@ -46,7 +52,20 @@ def allocate(region, additional_demand_mw, graph, plants_index, simulation_param
                 continue
 
             plant = plants_index[plant_id]
-            margin = dispatchable_margin(plant)
+            if current_state is None:
+                current_output_mw = float(
+                plant["simulation"]["initial_output_mw"])
+            else:
+                current_output_mw = float(
+                  current_state.get(
+                 plant_id,
+                plant["simulation"]["initial_output_mw"],))
+        
+            margin = dispatchable_margin(
+                plant,
+                current_output_mw=current_output_mw,
+                )
+
             ramp = ramp_limit(plant)
             link_capacity = path_capacity(graph, info["path"])
 
@@ -73,8 +92,28 @@ def allocate(region, additional_demand_mw, graph, plants_index, simulation_param
             break  # plus aucune centrale ne peut contribuer
 
         plant = plants_index[best_plant_id]
-        final_output_mw = plant["simulation"]["initial_output_mw"] + best_amount
-        final_load_ratio = final_output_mw / plant["installed_power_mw"]
+
+        if current_state is None:
+            current_output_mw = float(
+                plant["simulation"]["initial_output_mw"]
+            )
+        else:
+            current_output_mw = float(
+                current_state.get(
+                    best_plant_id,
+                    plant["simulation"]["initial_output_mw"],
+                )
+            )
+
+        final_output_mw = (
+            current_output_mw
+            + best_amount
+        )
+
+        final_load_ratio = (
+            final_output_mw
+            / plant["installed_power_mw"]
+        )
 
         allocations.append({
             "plant_id": best_plant_id,

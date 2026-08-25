@@ -595,3 +595,11 @@ la rampe maximale de montée en 15 minutes.
 
 Cette modification permet de calculer la capacité depuis l’état du quart d’heure précédent, tout en conservant la compatibilité avec le moteur initial.
 
+
+--Adaptation de allocation.py à l’état temporel
+
+La fonction allocate() accepte maintenant un état temporel facultatif appelé current_state.
+
+Lorsqu’il est fourni, la marge disponible et la production finale d’une centrale sont calculées depuis sa production du quart d’heure précédent.
+
+Sans current_state, la fonction continue d’utiliser initial_output_mw afin de rester compatible avec le moteur et les tests du premier brief.
