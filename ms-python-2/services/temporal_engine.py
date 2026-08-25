@@ -2,12 +2,7 @@ EPSILON = 0.000001
 
 
 def build_initial_state(plants):
-    """
-    Construit l'état initial du parc nucléaire.
 
-    Cet état correspond à la production des centrales
-    à 23 h 45 la veille de la simulation.
-    """
 
     state = {}
 
@@ -50,10 +45,7 @@ def get_regional_consumption(
     consumption_data,
     index
 ):
-    """
-    Retourne la consommation de chaque région
-    pour un quart d'heure.
-    """
+
 
     regional_consumption = {}
 
@@ -75,17 +67,6 @@ def calculate_plant_limits(
     plant,
     current_output_mw
 ):
-    """
-    Calcule les limites réellement accessibles par une
-    centrale pendant le prochain quart d'heure.
-
-    Les limites dépendent :
-    - de la puissance minimale ;
-    - de la puissance maximale ;
-    - de la rampe de montée ;
-    - de la rampe de descente ;
-    - de la disponibilité.
-    """
 
     minimum_mw = float(
         plant["minimum_operating_power_mw"]
@@ -157,13 +138,8 @@ def distribute_change(
     direction,
     plant_limits
 ):
-    """
-    Répartit une hausse ou une baisse de production
-    entre les centrales.
 
-    La répartition est proportionnelle à la flexibilité
-    disponible de chaque centrale.
-    """
+
 
     next_state = previous_state.copy()
 

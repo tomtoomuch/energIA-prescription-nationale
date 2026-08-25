@@ -185,15 +185,15 @@ def build_nuclear_dataframe(
 
         return connected_edges
 
-    # ajoute les liaisons dans une colonne.
-    # chaque cellule contient une liste de dictionnaires.
+    # ajoute les liaisons dans une colonne
+    # chaque cellule contient une liste de dictionnaires
     dataframe["plant_edges"] = (
         dataframe["plant_id"].apply(
             get_plant_edges
         )
     )
 
-    # tous les paramètres de simulationnsous la forme de colonnes
+    # tous les paramètres de simulation sous la forme de colonnes
 
     # les valeurs sont identiques pour toutes les centrales
     parameter_columns = []
@@ -219,22 +219,17 @@ def build_nuclear_dataframe(
     first_columns = [
         "plant_id",
         "plant_name",
-
         "location_latitude",
         "location_longitude",
         "location_commune",
         "location_department",
         "location_region_id",
         "location_region_name",
-
         # liaisons de la centrale
         "plant_edges",
-
         "reactor_count",
         "reactors",
-
         "installed_power_mw",
-
         "initial_output_mw_at_23_45_previous_day",
         "minimum_operating_power_mw",
         "maximum_power_mw",
