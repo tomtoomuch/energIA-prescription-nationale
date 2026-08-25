@@ -33,8 +33,35 @@ Ce projet est une intervention complète visant à moderniser le système d'aide
 
 Ce système d'information est conçu selon une architecture orientée micro-services pour garantir la scalabilité et l'isolation des préoccupations (_separation of concerns_). Le flux de données suit un chemin strict, passant toujours par une passerelle unique.
 
-### Schéma de flux séquentiel
+### Déploiement initial du moteur prescriptif ponctuel
+```mermaid
+---
+config:
+  layout: elk
+---
+flowchart TB
+ subgraph s1["microService Python"]
+        Service["Moteur prescriptif"]
+  end
+    User["Utilisateur"] -- Request --> Gateway["Gateway Express"]
+    JSON["JSON statique"] -- Response --> Service
+    Gateway -- Response --> User
+    s1 -- Fetch --> JSON
+    s1 -- Return --> Gateway
 
+    Service@{ shape: proc}
+     Service:::serviceStyle
+     User:::userStyle
+     Gateway:::gatewayStyle
+     JSON:::dataStyle
+
+    classDef userStyle stroke:#38bdf8, fill:#f0f9ff
+    classDef gatewayStyle stroke:#fb923c, fill:#fff7ed
+    classDef serviceStyle stroke:#a78bfa, fill:#f5f3ff
+    classDef dataStyle stroke:#4ade80, fill:#f0fdf4
+```
+
+#### Schéma de flux séquentiel
 ```mermaid
 ---
 config:
@@ -56,6 +83,11 @@ A-->>P: 4. Résultat calculé (Plan de répartition optimal ou déficit).
 P-->>G: 5. Réponse structurée et formatée.
 G-->>C: 6. Retour à l'utilisateur final.
 ```
+
+### Déploiement de la phase 1 du projet EnergIA : prescription nationale en temps réel
+
+La phase 1 modifie un certain nombre de points du workflow :
+Utilisateur déclenche la simulation via la route GET /phase1/simulate-day -> le micro service récupère les données, les agrègent. Il détermine la consommation de chaque région et calcule, via Dijkstra, l'approvisionnement nécessaire en énergie pour pallier aux manques.
 
 ### Arborescence projet
 
@@ -133,10 +165,11 @@ Image du micro-service 'Prescription nationale" : https://hub.docker.com/r/tomto
 
 ### Routes
 
-Notre API expose 6 routes sur la passerelle (_gateway_) qui écoute le port 3000.
+Notre API expose 10 routes sur la passerelle (_gateway_) qui écoute le port 3000.
 Les routes sont documentées ci-dessous.
 Par ailleurs, vous pouvez trouver la [documentation générée avec Bruno](./docs/Tests-EnergIA-documentation.html "Documentation générée par Bruno sur les tests de routes de notre API") après avoir tester le fonctionnement des différentes routes exposées.
 De plus, FastAPI documente automatiquement les routes exposées via openAPI et [cette documentation sur une page html](http://localhost:8000/docs").
+Par ailleurs, les routes du second micro-service sont documentées [ici](http://localhost:8002/docs).
 
 #### **Routes de monitoring**
 
@@ -153,8 +186,14 @@ GET <http://localhost:3000/health-ms>
 Interroge le serveur python/FastAPI (port 8000) sur son _endpoint_ /health via la passerelle et répond au client via la passerelle également et vérifie son fonctionnement.
 <!-- AMELIORATION : Prévoir d'afficher un·e page/onglet/surcouche modale qui affiche l'état du réseau et de ses éléments. On peu y ajouter les métriques des conteneurs -->
 
+##### GET /health-ms-2
+
+GET <http://localhost:3000/health-ms-2>
+
+Interroge le serveur python/FastAPI (port 8002) sur son _endpoint_ /health via la passerelle et répond au client via la passerelle également et vérifie son fonctionnement.
 #### **Routes d'opérations**
 
+**Déploiement initial**
 GET <http://localhost:3000/plants>
 
 Envoie une requête au micro-service du moteur prescriptif pour extraire et traiter les données pour afficher la liste des centrales électriques du parc nucléaire français métropolitain.
@@ -169,7 +208,7 @@ Envoie une requête au micro-service du moteur prescriptif pour extraire et trai
 
 POST <http://localhost:3000/simulate>
 
-Envoie une requête au micro-service du moteur prescriptif pour lancer l'exécution des scripts du moteur prescriptif qui simule unen demande liée à une hausse de consommation d'une région.
+Envoie une requête au micro-service du moteur prescriptif pour lancer l'exécution des scripts du moteur prescriptif qui simule une demande liée à une hausse de consommation d'une région.
 
 ```json
 body: {
@@ -177,6 +216,19 @@ body: {
  "additional_demand_mw": 500
 }
 ```
+
+**Déploiement Phase 1**
+GET <http://localhost:3000/phase1/plants>
+
+Envoie une requête au micro-service du moteur de prescription nationale pour extraire et traiter les données pour afficher la liste des centrales électriques du parc nucléaire français métropolitain.
+
+GET <http://localhost:3000/phase1/consumption>
+
+Envoie une requête au micro-service du moteur de prescription nationale pour extraire et traiter les données pour afficher la liste des régions nomenclaturés, du parc français nucléaire métropolitain.
+
+GET <http://localhost:3000/phase1/simulate-day>
+
+Envoie une requête au micro-service du moteur de prescription nationale pour lancer l'exécution de la simulation de pilotage du réseau de distribution énergétique.
 
 Port 8000 (service Python direct) — réservé au debug uniquement, pas pour l'usage normal :
 
@@ -419,7 +471,7 @@ Pour lancer les tests unitaires sur le micro-service Python :
 
 ### Prérequis techniques
 
-- **Python :** les dépendances spécifiques sont listées dans ms-python/requirements.txt.
+- **Python :** les dépendances spécifiques sont listées dans ms-python/requirements.txt et dans ms-python-2/requirements.txt
 - **Node.js :** la passerelle d'API requiert un environnement Node.js actif.
 
 ### Lancement de l'environnement (via Docker)
@@ -431,18 +483,22 @@ L'environnement complet est géré via le fichier docker-compose.yml à la racin
 
 **Ce processus lance simultanément :**
 
+- Le micro-service Python (ms-python-2) écoutant sur le port 8002 (interne).
 - Le micro-service Python (ms-python) écoutant sur le port 8000 (interne).
 - La passerelle Node.js (gateway) écoutant sur le port 3000 (externe).
 
 ### Terminaisons _(Endpoints)_ de l'API  exposé(e)s
 
-| Service                   | Endpoint  | Méthode  | Description                                                   |
-| ------------------------- | --------- | -------- | ------------------------------------------------------------- |
-| Gateway Express - HTML UI | /         | GET/POST | Point d'entrée client pour toute simulation                   |
-| ms Python                 | /plants   | GET      | Récupère la liste de toutes les centrales du parc             |
-| ms Python                 | /regions  | GET      | Liste des régions géographiques couvertes                     |
-| ms Python                 | /network  | GET      | Détails structurels et topologiques du réseau                 |
-| ms Python                 | /simulate | POST     | Endpoint principal. Reçoit un besoin énergétique et déclenche |
+| Service                   | Endpoint             | Méthode  | Description                                                                                      |
+| ------------------------- | -------------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| Gateway Express - HTML UI | /                    | GET/POST | Point d'entrée client pour toute simulation                                                      |
+| ms Python                 | /plants              | GET      | Récupère la liste de toutes les centrales du parc                                                |
+| ms Python                 | /regions             | GET      | Liste des régions géographiques couvertes                                                        |
+| ms Python                 | /network             | GET      | Détails structurels et topologiques du réseau                                                    |
+| ms Python                 | /simulate            | POST     | Endpoint principal. Reçoit un besoin énergétique et déclenche la simulation                      |
+| ms Python 2               | /phase1/plants       | GET      | Liste des centrales                                                                              |
+| ms Python 2               | /phase1/consumption  | GET      | Liste des consommations par région                                                               |
+| ms Python 2               | /phase1/simulate-day | GET      | Déclenche la simulation de pilotage de la distribution énergétique en fonction des consommations |
 
 **Important :**
 Le client ne doit **jamais** communiquer directement avec le service Python.
