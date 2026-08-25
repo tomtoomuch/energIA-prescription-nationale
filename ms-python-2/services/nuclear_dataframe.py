@@ -25,35 +25,35 @@ def build_nuclear_dataframe(
     fleet_path=FLEET_PATH,
     temporal_path=TEMPORAL_PARAMETERS_PATH,
 ):
-    # charge le fichier historique du parc
+    #historique du parc
     fleet_data = load_json(
         fleet_path
     )
 
-    # charge les paramètres temporels
+    #paramètres temporels
     temporal_data = load_json(
         temporal_path
     )
 
-    # récupère les centrales du premier JSON
+    #les centralesde  premier JSON
     fleet_plants = fleet_data.get(
         "plants",
         []
     )
 
-    # récupère les centrales du second JSON
+    #les centrales du second JSON
     temporal_plants = temporal_data.get(
         "plants",
         []
     )
 
-    # récupère les paramètres communs au parc
+    #paramètres communs au parc
     simulation_parameters = fleet_data.get(
         "simulation_parameters",
         {}
     )
 
-    # récupère les liaisons entre centrales
+    #liaisons entre centrales
     plant_edges = fleet_data.get(
         "plant_edges",
         []
@@ -80,11 +80,10 @@ def build_nuclear_dataframe(
             "Aucune liaison entre centrales trouvée"
         )
 
-    # transforme les centrales historiques
-    # en DataFrame
-    #
+    # transforme les centrales historiques en DataFrame
     # sep="_" transforme par exemple
     # location.region_id en location_region_id
+
     fleet_dataframe = pd.json_normalize(
         fleet_plants,
         sep="_"
@@ -100,8 +99,7 @@ def build_nuclear_dataframe(
         )
     )
 
-    # transforme les paramètres temporels
-    # en DataFrame
+    # les paramètres temporels en DataFrame
     temporal_dataframe = pd.DataFrame(
         temporal_plants
     )
@@ -195,11 +193,9 @@ def build_nuclear_dataframe(
         )
     )
 
-    # ajoute tous les paramètres de simulation
-    # sous la forme de colonnes.
+    # tous les paramètres de simulationnsous la forme de colonnes
 
-    # ces valeurs sont identiques pour toutes
-    # les centrales.
+    # les valeurs sont identiques pour toutes les centrales
     parameter_columns = []
 
     for (
@@ -231,7 +227,7 @@ def build_nuclear_dataframe(
         "location_region_id",
         "location_region_name",
 
-        # Liaisons de la centrale
+        # liaisons de la centrale
         "plant_edges",
 
         "reactor_count",
@@ -247,8 +243,7 @@ def build_nuclear_dataframe(
         "available",
     ]
 
-    # place les paramètres de simulation
-    # après les données principales
+    # place les paramètres de simulation après les données principales
     first_columns.extend(
         parameter_columns
     )
@@ -274,7 +269,7 @@ def build_nuclear_dataframe(
 
 
 if __name__ == "__main__":
-    # permet d’afficher toutes les colonnes
+    #toutes les colonnes
     pd.set_option(
         "display.max_columns",
         None

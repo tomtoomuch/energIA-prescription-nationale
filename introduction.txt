@@ -164,7 +164,7 @@ que les rampes de montée et de descente ne sont pas négatives
 
 services/nuclear_dataframe.py
 
-ce fichier rassemble les données historiques et les paramètres temporels des centrales
+ici les données historiques et les paramètres temporels des centrales
 
 la fonction principale est
 
@@ -533,3 +533,29 @@ résumé du fonctionnement
 11 répétition du calcul jusqu’aux 96 états
 
 12 affichage du résultat dans l’API ou dans le terminal
+
+
+
+
+
+les  services
+Après ces corrections
+graph_loader.py charge les JSON et construit les index
+priority.py identifie les centrales locales et externes
+dijkstra.py cherche les chemins entre centrales
+candidates.py trouve les centrales candidates pour une région
+capacity.py calcule la capacité mobilisable
+score.py classe les centrales
+allocation.py répartit une demande régionale supplémentaire
+dispatch.py fait une répartition simplifiée
+nuclear_dataframe.py rassemble les données historiques et temporelles
+
+temporal_engine.py réalise la nouvelle simulation sur 96 quarts d’heure
+
+graph_loader.py
+nuclear_dataframe.py
+temporal_engine.py
+main.py
+Les anciens capacity.py, allocation.py, score.py et dispatch.py utilisent toujours simulation.initial_output_mw
+ Ils ne conservent donc pas l’état entre deux quarts d’heure.
+  Il ne faut pas les appeler directement dans temporal_engine.py sans les adapter, sinon tu violeras la règle
