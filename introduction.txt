@@ -304,19 +304,27 @@ Après chaque allocation, next_state est mis à jour. step_initial_state reste f
 
 Les puissances impossibles à attribuer sont additionnées dans missing_mw. Un test confirme qu’une hausse de 3 000 MW sans centrale candidate produit bien 3 000 MW manquants.
 
-Modifier
-
-
-
 
 ===================================
-test_engine
+Modification test_engine
 ==========================================
-Connexion avec les données du premier brief
-Un test utilise maintenant les véritables centrales (test_allocation_reelle_modifie_etat), régions, paramètres temporels et liaisons du projet.
+////Connexion avec les données du premier brief////
+Un test utilise maintenant les véritables centrales, régions, paramètres temporels et liaisons du projet.
 À partir de l’état réel de 23:45, il demande une hausse de 100 MW pour l’Occitanie. Le moteur utilise l’allocation du premier brief et vérifie que next_state augmente réellement de 100 MW sans puissance manquante.
 Ce test confirme la connexion entre l’état temporel, les candidates, Dijkstra, les capacités et le score.
 
+===========================================
+Modification allocate_regional_demands()
+===========================================
+///--Respect des rampes de descente--///
+
+La fonction distribute_down_change() répartit une baisse de production entre les centrales selon leur flexibilité de descente.
+
+Elle utilise les limites temporelles calculées pour respecter la rampe de descente et la puissance minimale accessible pendant le quart d’heure.
+
+Si la baisse demandée dépasse la flexibilité totale du parc, la puissance impossible à supprimer est enregistrée dans forced_surplus_mw.
+
+Un test vérifie qu’une baisse de 300 MW est correctement répartie entre deux centrales pouvant descendre respectivement de 200 MW et 100 MW.
 
 
 -----------------------------------------------------------

@@ -34,6 +34,91 @@ def distribute_change_between_regions(
         in regional_demands.items()
     }
 
+def distribute_down_change(
+    current_state,
+    requested_change_mw,
+    plant_limits,
+):
+    """
+    Répartit une baisse entre les centrales selon
+    leur flexibilité de descente.
+    """
+
+    next_state = current_state.copy()
+
+    total_down_flexibility_mw = sum(
+        float(
+            limits.get(
+                "down_flexibility_mw",
+                0.0,
+            )
+        )
+        for limits in plant_limits.values()
+    )
+
+    possible_change_mw = min(
+        float(requested_change_mw),
+        total_down_flexibility_mw,
+    )
+
+    plant_changes = {}
+
+    if total_down_flexibility_mw <= 0:
+        return {
+            "state": next_state,
+            "plant_changes": plant_changes,
+            "applied_change_mw": 0.0,
+            "forced_surplus_mw": float(
+                requested_change_mw
+            ),
+        }
+
+    for plant_id, limits in plant_limits.items():
+        flexibility_mw = float(
+            limits.get(
+                "down_flexibility_mw",
+                0.0,
+            )
+        )
+
+        if flexibility_mw <= 0:
+            continue
+
+        allocated_change_mw = (
+            possible_change_mw
+            * flexibility_mw
+            / total_down_flexibility_mw
+        )
+
+        allocated_change_mw = min(
+            allocated_change_mw,
+            flexibility_mw,
+        )
+
+        next_state[plant_id] -= (
+            allocated_change_mw
+        )
+
+        plant_changes[plant_id] = (
+            -allocated_change_mw
+        )
+
+    applied_change_mw = sum(
+        abs(change_mw)
+        for change_mw in plant_changes.values()
+    )
+
+    return {
+        "state": next_state,
+        "plant_changes": plant_changes,
+        "applied_change_mw": applied_change_mw,
+        "forced_surplus_mw": max(
+            0.0,
+            float(requested_change_mw)
+            - applied_change_mw,
+        ),
+    }
+
 def allocate_regional_demands(
     regional_demands,
     current_state,
@@ -41,11 +126,14 @@ def allocate_regional_demands(
     plants_index,
     regions_index,
     simulation_parameters,
+    plant_limits=None,
 ):
 
 
     next_state = current_state.copy()
     regional_results = {}
+    if plant_limits is None:
+        plant_limits = {}
 
     total_demand_mw = sum(
         float(demand_mw)
@@ -90,8 +178,10 @@ def allocate_regional_demands(
         }
 
     total_missing_mw = 0.0
+    forced_surplus_mw = 0.0
 
     if direction == "up":
+
         step_initial_state = (
             current_state.copy()
         )
@@ -146,7 +236,25 @@ def allocate_regional_demands(
                 allocation_result["missing_mw"]
             )
 
-        
+    elif direction == "down":
+        down_result = distribute_down_change(
+            current_state=current_state,
+            requested_change_mw=(
+                requested_change_mw
+            ),
+            plant_limits=plant_limits,
+        )
+
+        next_state = down_result["state"]
+
+        regional_results[
+            "production_down"
+        ] = down_result
+
+        forced_surplus_mw = float(
+            down_result["forced_surplus_mw"]
+        )
+    
     return {
         "state": next_state,
         "regional_results": regional_results,
@@ -156,5 +264,7 @@ def allocate_regional_demands(
         "requested_change_mw": requested_change_mw,
         "regional_requested_changes":regional_requested_changes,
         "missing_mw": total_missing_mw,
+        "forced_surplus_mw":forced_surplus_mw,
+
     }
     

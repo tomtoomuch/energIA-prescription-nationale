@@ -194,7 +194,60 @@ class TestTemporalAllocation(unittest.TestCase):
             "occitanie",
             result["regional_results"],
         )
+        
+    def test_descente_respecte_les_flexibilites(self):
+        regional_demands = {
+            "region_test": 1700.0,
+        }
 
+        current_state = {
+            "centrale_a": 1000.0,
+            "centrale_b": 1000.0,
+        }
+
+        plant_limits = {
+            "centrale_a": {
+                "down_flexibility_mw": 200.0,
+            },
+            "centrale_b": {
+                "down_flexibility_mw": 100.0,
+            },
+        }
+
+        result = allocate_regional_demands(
+            regional_demands=regional_demands,
+            current_state=current_state,
+            graph={},
+            plants_index={},
+            regions_index={},
+            simulation_parameters={},
+            plant_limits=plant_limits,
+        )
+
+        self.assertEqual(
+            result["direction"],
+            "down",
+        )
+
+        self.assertEqual(
+            result["requested_change_mw"],
+            300.0,
+        )
+
+        self.assertAlmostEqual(
+            result["state"]["centrale_a"],
+            800.0,
+        )
+
+        self.assertAlmostEqual(
+            result["state"]["centrale_b"],
+            900.0,
+        )
+
+        self.assertAlmostEqual(
+            result["forced_surplus_mw"],
+            0.0,
+        )
 if __name__ == "__main__":
 
     unittest.main()
