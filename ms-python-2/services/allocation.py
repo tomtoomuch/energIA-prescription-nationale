@@ -29,7 +29,19 @@ def path_capacity(graph, path):
     return min(capacities)
 
 
-def allocate(region, additional_demand_mw, graph, plants_index, simulation_parameters):
+def allocate(
+    region,
+    additional_demand_mw,
+    graph,
+    plants_index,
+    simulation_parameters,
+    current_state=None,
+    step_initial_state=None,
+    plant_limits=None,
+):
+
+    if plant_limits is None:
+        plant_limits = {}
 
     candidates = region_candidates(graph, region)
     remaining_demand = additional_demand_mw
@@ -46,11 +58,72 @@ def allocate(region, additional_demand_mw, graph, plants_index, simulation_param
                 continue
 
             plant = plants_index[plant_id]
-            margin = dispatchable_margin(plant)
-            ramp = ramp_limit(plant)
+            if current_state is None:
+                current_output_mw = float(
+                plant["simulation"]["initial_output_mw"])
+            else:
+                current_output_mw = float(
+                  current_state.get(
+                 plant_id,
+                plant["simulation"]["initial_output_mw"],))
+        
+            margin = dispatchable_margin(
+                plant,
+                current_output_mw=current_output_mw,
+                )
+
+            ramp = float(
+                ramp_limit(plant)
+            )
+
+            already_added_mw = 0.0
+
+            if step_initial_state is None:
+                remaining_ramp_mw = ramp
+            else:
+                output_at_step_start_mw = float(
+                    step_initial_state.get(
+                        plant_id,
+                        current_output_mw,
+                    )
+                )
+
+                already_added_mw = max(
+                    0.0,
+                    current_output_mw
+                    - output_at_step_start_mw,
+                )
+
+                remaining_ramp_mw = max(
+                    0.0,
+                    ramp - already_added_mw,
+                )
             link_capacity = path_capacity(graph, info["path"])
 
-            max_deliverable = min(margin, ramp, link_capacity, remaining_demand)
+            temporal_up_flexibility_mw = float(
+                plant_limits.get(
+                    plant_id,
+                    {},
+                ).get(
+                    "up_flexibility_mw",
+                    float("inf"),
+                )
+            )
+
+            remaining_temporal_up_mw = max(
+                0.0,
+                temporal_up_flexibility_mw
+                - already_added_mw,
+            )
+
+
+            max_deliverable = min(
+                margin,
+                remaining_ramp_mw,
+                remaining_temporal_up_mw,
+                link_capacity,
+                remaining_demand,
+            )
 
             if max_deliverable <= 0:
                 continue
@@ -62,6 +135,7 @@ def allocate(region, additional_demand_mw, graph, plants_index, simulation_param
                 max_deliverable,
                 info["is_local"],
                 simulation_parameters,
+                current_output_mw=current_output_mw,
             )
 
             if best_score is None or score < best_score:
@@ -73,8 +147,28 @@ def allocate(region, additional_demand_mw, graph, plants_index, simulation_param
             break  # plus aucune centrale ne peut contribuer
 
         plant = plants_index[best_plant_id]
-        final_output_mw = plant["simulation"]["initial_output_mw"] + best_amount
-        final_load_ratio = final_output_mw / plant["installed_power_mw"]
+
+        if current_state is None:
+            current_output_mw = float(
+                plant["simulation"]["initial_output_mw"]
+            )
+        else:
+            current_output_mw = float(
+                current_state.get(
+                    best_plant_id,
+                    plant["simulation"]["initial_output_mw"],
+                )
+            )
+
+        final_output_mw = (
+            current_output_mw
+            + best_amount
+        )
+
+        final_load_ratio = (
+            final_output_mw
+            / plant["installed_power_mw"]
+        )
 
         allocations.append({
             "plant_id": best_plant_id,

@@ -1,15 +1,39 @@
 # calcul de la puissance mobilisable pour une centrale
 
 
-def dispatchable_margin(plant):
-
-
+# Auparavant, la marge était toujours calculée depuis
+# l’état initial du premier brief
+# Le paramètre facultatif permet maintenant d’utiliser
+# la production du quart d’heure précédent.
+def dispatchable_margin(
+    plant,
+    current_output_mw=None,
+):
     sim = plant["simulation"]
 
     if not sim["available"]:
         return 0.0
 
-    margin = sim["soft_upper_bound_mw"] - sim["initial_output_mw"]
+    # Compatibilité avec le premier brief :
+    # sans état temporel fourni, on utilise l’état initial.
+    if current_output_mw is None:
+        current_output_mw = float(
+            sim["initial_output_mw"]
+        )
+    else:
+        current_output_mw = float(
+            current_output_mw
+        )
+
+    maximum_output_mw = float(
+        sim["soft_upper_bound_mw"]
+    )
+
+    margin = (
+        maximum_output_mw
+        - current_output_mw
+    )
+
     return max(0.0, margin)
 
 
@@ -22,20 +46,34 @@ def dispatchable_margins_all(data):
     # pareil que dispatchable_margin, mais pour toutes les centrales à la fois
     return {plant["id"]: dispatchable_margin(plant) for plant in data["plants"]}
 
-def available_capacity(plant):
-    # calcule la puissance mobilisable par une centrale pendant une période de 15 minutes
 
+def available_capacity(
+    plant,
+    current_output_mw=None,
+):
+    """
+    Calcule la puissance mobilisable par une centrale
+    pendant les 15 prochaines minutes.
+    """
 
     sim = plant["simulation"]
 
     if not sim.get("available", False):
         return 0.0
 
-    margin = dispatchable_margin(plant)
-    ramp = ramp_limit(plant)
+    margin = dispatchable_margin(
+        plant,
+        current_output_mw=current_output_mw,
+    )
 
-    return max(0.0, min(margin, ramp))
+    ramp = float(
+        ramp_limit(plant)
+    )
 
+    return max(
+        0.0,
+        min(margin, ramp),
+    )
 
 def available_capacities_all(data):
     #
