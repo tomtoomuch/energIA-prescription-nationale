@@ -272,6 +272,170 @@ python main.py --phase 2 --steps 96 --minimum-reserve-mw 5000
 cette fonction permet de lancer la phase 1 ou la phase 2 avec le même fichier main.py
 
 
+========================================================
+Modification capacity.py
+==========================================================
+///--def dispatchable_margin-///
+
+La fonction dispatchable_margin() actuelle calcula la marge disponible d’une centrale depuis sa production initiale :
+
+soft_upper_bound_mw - initial_output_mw
+
+Il n’est plus suffisant pour une simulation temporelle. À partir du deuxième quart d’heure, la capacité d’une centrale doit être
+calculée depuis la production obtenue au quart d’heure précédent.
+
+La fonction accepte désormais un paramètre facultatif :
+
+current_output_mw
+
+Lorsque ce paramètre est fourni, la marge est calculée ainsi :
+
+soft_upper_bound_mw - current_output_mw
+
+Lorsque le paramètre n’est pas fourni, la fonction utilise encore initial_output_mw. Ce comportement de secours conserve la compatibilité avec le moteur et les tests du premier brief.
+Cette modification prépare l’intégration des contraintes régionales dans le moteur temporel. Elle permettra aux fonctions d’allocation de travailler avec l’état courant du parc au lieu
+de revenir systématiquement à l’état initial.
+Les anciens tests unitaires continuent de fonctionner après cette modification.
+
+///--available_capacity()///
+
+La fonction available_capacity() accepte maintenant la production courante de la centrale.
+
+Elle calcule la puissance réellement mobilisable pendant les 15 prochaines minutes en prenant la plus petite valeur entre :
+
+la marge restante avant la puissance maximale ;
+
+la rampe maximale de montée en 15 minutes.
+
+Cette modification permet de calculer la capacité depuis l’état du quart d’heure précédent, tout en conservant la compatibilité avec le moteur initial.
+
+========================================================
+Modification allocation.py
+==========================================================
+////--Adaptation de allocation.py à l’état temporel////
+
+La fonction allocate() accepte maintenant un état temporel facultatif appelé current_state.
+
+Lorsqu’il est fourni, la marge disponible et la production finale d’une centrale sont calculées depuis sa production du quart d’heure précédent.
+
+Sans current_state, la fonction continue d’utiliser initial_output_mw afin de rester compatible avec le moteur et les tests du premier brief.
+
+
+========================================================
+Modification score.py
+==========================================================
+///--Adaptation du score à l’état temporel///
+
+La fonction candidate_score() peut maintenant recevoir la production courante d’une centrale avec current_output_mw.
+
+Le taux de charge final est calculé à partir de la production du quart d’heure précédent et de la nouvelle allocation proposée. Le score pénalise ainsi correctement une centrale déjà proche de sa puissance maximale.
+
+Si current_output_mw n’est pas fourni, la fonction utilise encore initial_output_mw afin de conserver la compatibilité avec le premier brief.
+
+L’étape suivante consistera à transmettre effectivement cet état courant depuis allocation.py.
+
+========================================================
+Modification allocation.py
+==========================================================
+///--Transmission de l’état courant au calcul du score--///
+
+La fonction allocate() transmet maintenant current_output_mw à candidate_score().
+
+Le calcul de la marge disponible et le calcul du score utilisent ainsi la même production issue du quart d’heure précédent.
+
+Cela permet de classer correctement les centrales selon leur état réel : une centrale déjà proche de sa puissance maximale reçoit une pénalité de saturation plus importante.
+
+Cette modification prépare la connexion entre l’allocation régionale du premier brief et le moteur temporel.
+
+==========================================
+Test de dispatchable_margin()
+===============================================
+Un test vérifie maintenant que la marge disponible est calculée depuis la production courante de la centrale.
+
+Le test récupère la limite maximale de Golfech dans le JSON, puis simule une production située 100 MW sous cette limite.
+
+La fonction dispatchable_margin() doit alors retourner une marge de 100 MW.
+
+Ce test confirme que le calcul utilise bien current_output_mw, c’est-à-dire la production du quart d’heure précédent, et non systématiquement la production initiale.
+
+
+==============================================
+Connexion entre le temps et l’allocation régionales
+====================================================
+
+Le fichier temporal_allocation.py a été créé pour relier le moteur temporel à la fonction allocate() du premier brief.
+
+Il recevra les consommations régionales et l’état des centrales au quart d’heure précédent. Il coordonnera ensuite l’allocation de chaque région sans remplacer la logique déjà présente dans allocation.py.
+
+Pour le moment, la structure de la fonction allocate_regional_demands() et ses données d’entrée et de sortie ont été définies. La logique d’allocation régionale sera ajoutée à l’étape suivante.
+
+==================================================
+Changement en temporal_allocation
+==================================================
+////////Évolution entre deux quarts d’heure///////
+
+La fonction allocate_regional_demands() additionne les consommations régionales et les compare à la production nucléaire du quart d’heure précédent.
+
+Elle détermine ainsi si le parc doit monter, descendre ou rester stable, puis calcule la variation nécessaire en MW.
+
+Un test vérifie qu’une demande de 34 000 MW comparée à une production précédente de 31 000 MW produit une demande de montée de 3 000 MW.
+
+
+///Calcul des variations régionales////////
+
+La fonction distribute_change_between_regions() répartit la hausse nationale nécessaire entre les régions proportionnellement à leur consommation.
+
+Seule la variation à produire est répartie, et non la consommation totale, afin de ne pas ajouter une seconde fois la production déjà disponible.
+
+La somme des variations régionales correspond à la variation nationale demandée. Ces valeurs seront ensuite transmises à allocate() pour sélectionner les centrales.
+
+
+========================================================
+Modification allocation.py
+==========================================================
+///--Éviter la réutilisation de la même rampe--///
+
+La fonction allocate() accepte maintenant step_initial_state, qui représente la production des centrales au début du quart d’heure.
+
+Lorsqu’une centrale participe à plusieurs allocations régionales pendant le même pas, la fonction déduit la puissance déjà attribuée de sa rampe de montée.
+
+La rampe ne peut donc pas être réutilisée entièrement pour chaque région. La variation totale d’une centrale reste limitée à sa rampe maximale pendant les 15 minutes.
+
+========================================================
+Modification temporal_allocation.py
+==========================================================
+///--Appel du moteur d’allocation existant--///
+
+La fonction allocate_regional_demands() appelle maintenant allocate() pour chaque région ayant besoin d’une hausse de production.
+
+Chaque appel réutilise les candidates locales et externes, Dijkstra, la capacité des chemins et le score du premier brief.
+
+Après chaque allocation, next_state est mis à jour. step_initial_state reste fixe afin que la rampe maximale d’une centrale ne puisse pas être réutilisée pour plusieurs régions pendant le même quart d’heure.
+
+Les puissances impossibles à attribuer sont additionnées dans missing_mw. Un test confirme qu’une hausse de 3 000 MW sans centrale candidate produit bien 3 000 MW manquants.
+
+
+===================================
+Modification test_engine
+==========================================
+////Connexion avec les données du premier brief////
+Un test utilise maintenant les véritables centrales, régions, paramètres temporels et liaisons du projet.
+À partir de l’état réel de 23:45, il demande une hausse de 100 MW pour l’Occitanie. Le moteur utilise l’allocation du premier brief et vérifie que next_state augmente réellement de 100 MW sans puissance manquante.
+Ce test confirme la connexion entre l’état temporel, les candidates, Dijkstra, les capacités et le score.
+
+===========================================
+Modification allocate_regional_demands()
+===========================================
+///--Respect des rampes de descente--///
+
+La fonction distribute_down_change() répartit une baisse de production entre les centrales selon leur flexibilité de descente.
+
+Elle utilise les limites temporelles calculées pour respecter la rampe de descente et la puissance minimale accessible pendant le quart d’heure.
+
+Si la baisse demandée dépasse la flexibilité totale du parc, la puissance impossible à supprimer est enregistrée dans forced_surplus_mw.
+
+Un test vérifie qu’une baisse de 300 MW est correctement répartie entre deux centrales pouvant descendre respectivement de 200 MW et 100 MW.
+
 
 -----****start résumé phase 2******---------------------
   lancer phase 2 python main.py --phase 2
