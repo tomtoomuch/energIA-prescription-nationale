@@ -6,15 +6,27 @@ def candidate_score(
     loss_percent,
     allocated_mw,
     is_local,
-    simulation_parameters
+    simulation_parameters,
+    current_output_mw=None,
 ):
     simulation = plant["simulation"]
 
-    # production après l'ajout proposé
+    # Sans état temporel, on conserve le comportement du premier brief.
+    if current_output_mw is None:
+            current_output_mw = float(
+                simulation["initial_output_mw"]
+            )
+    else:
+            current_output_mw = float(
+                current_output_mw
+            )
+
+    # Production prévue après l'allocation.
     final_output_mw = (
-        simulation["initial_output_mw"]
-        + allocated_mw
-    )
+        current_output_mw
+        + float(allocated_mw)
+)
+
 
     # taux de saturation final de la centrale
     final_load_ratio = (
