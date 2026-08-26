@@ -115,6 +115,26 @@ app.get("/phase1/simulate-day", async (req, res) => {
     }
 });
 
+app.get("/phase2/simulate-day", async (req, res) => {
+    try {
+        console.log(`[GET] /regions -> ${PYTHON_API_URL_2}/phase2/simulate-day`);
+        const response = await axios.get(`${PYTHON_API_URL_2}/phase2/simulate-day`, { headers: pythonHeaders() });
+        return res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        return handlePythonError(error, res);
+    }
+});
+
+app.get("/phase3/simulate-day", async (req, res) => {
+    try {
+        console.log(`[GET] /regions -> ${PYTHON_API_URL_2}/phase3/simulate-day`);
+        const response = await axios.get(`${PYTHON_API_URL_2}/phase3/simulate-day`, { headers: pythonHeaders() });
+        return res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        return handlePythonError(error, res);
+    }
+});
+
 app.listen(port, () => {
     console.log(`Gateway service listening at http://localhost:${port}`);
 });
