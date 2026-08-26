@@ -259,7 +259,15 @@ Il recevra les consommations régionales et l’état des centrales au quart d�
 
 Pour le moment, la structure de la fonction allocate_regional_demands() et ses données d’entrée et de sortie ont été définies. La logique d’allocation régionale sera ajoutée à l’étape suivante.
 
+==================================================
+/Évolution entre deux quarts d’heure
+==================================================
 
+La fonction allocate_regional_demands() additionne les consommations régionales et les compare à la production nucléaire du quart d’heure précédent.
+
+Elle détermine ainsi si le parc doit monter, descendre ou rester stable, puis calcule la variation nécessaire en MW.
+
+Un test vérifie qu’une demande de 34 000 MW comparée à une production précédente de 31 000 MW produit une demande de montée de 3 000 MW.
 -----------------------------------------------------------
 changement phase 2
 

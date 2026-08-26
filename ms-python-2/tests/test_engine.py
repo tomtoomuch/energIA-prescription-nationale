@@ -3,6 +3,8 @@ from services.graph_loader import load_data, build_graph, build_plants_index, bu
 from services.dijkstra import dijkstra
 from services.capacity import dispatchable_margin
 from services.allocation import allocate
+from services.temporal_allocation import (allocate_regional_demands,)
+
 
 class TestDijkstra(unittest.TestCase):
     @classmethod
@@ -68,6 +70,48 @@ class TestAllocation(unittest.TestCase):
         result = allocate(region, 300, self.graph, self.plants_index, self.simulation_parameters)
         self.assertFalse(result["fully_satisfied"])
         self.assertGreater(result["missing_mw"], 0)
+
+class TestTemporalAllocation(unittest.TestCase):
+
+    def test_calcul_de_la_montee_necessaire(self):
+        regional_demands = {
+            "occitanie": 18000.0,
+            "grand_est": 16000.0,
+        }
+
+        current_state = {
+            "golfech": 15000.0,
+            "cattenom": 16000.0,
+        }
+
+        result = allocate_regional_demands(
+            regional_demands=regional_demands,
+            current_state=current_state,
+            graph={},
+            plants_index={},
+            regions_index={},
+            simulation_parameters={},
+        )
+
+        self.assertEqual(
+            result["total_demand_mw"],
+            34000.0,
+        )
+
+        self.assertEqual(
+            result["current_production_mw"],
+            31000.0,
+        )
+
+        self.assertEqual(
+            result["direction"],
+            "up",
+        )
+
+        self.assertEqual(
+            result["requested_change_mw"],
+            3000.0,
+        )
 
 if __name__ == "__main__":
 
