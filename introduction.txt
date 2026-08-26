@@ -303,6 +303,22 @@ Chaque appel réutilise les candidates locales et externes, Dijkstra, la capacit
 Après chaque allocation, next_state est mis à jour. step_initial_state reste fixe afin que la rampe maximale d’une centrale ne puisse pas être réutilisée pour plusieurs régions pendant le même quart d’heure.
 
 Les puissances impossibles à attribuer sont additionnées dans missing_mw. Un test confirme qu’une hausse de 3 000 MW sans centrale candidate produit bien 3 000 MW manquants.
+
+Modifier
+
+
+
+
+===================================
+test_engine
+==========================================
+Connexion avec les données du premier brief
+Un test utilise maintenant les véritables centrales (test_allocation_reelle_modifie_etat), régions, paramètres temporels et liaisons du projet.
+À partir de l’état réel de 23:45, il demande une hausse de 100 MW pour l’Occitanie. Le moteur utilise l’allocation du premier brief et vérifie que next_state augmente réellement de 100 MW sans puissance manquante.
+Ce test confirme la connexion entre l’état temporel, les candidates, Dijkstra, les capacités et le score.
+
+
+
 -----------------------------------------------------------
 changement phase 2
 

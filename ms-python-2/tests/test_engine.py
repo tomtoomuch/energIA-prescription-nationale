@@ -1,9 +1,12 @@
 import unittest
-from services.graph_loader import load_data, build_graph, build_plants_index, build_regions_index
+from services.graph_loader import load_data, build_graph, build_plants_index, build_regions_index, load_temporal_nuclear_parameters
 from services.dijkstra import dijkstra
 from services.capacity import dispatchable_margin
 from services.allocation import allocate
-from services.temporal_allocation import (allocate_regional_demands,)
+from services.temporal_allocation import allocate_regional_demands
+from services.temporal_engine import build_initial_state
+
+
 
 
 class TestDijkstra(unittest.TestCase):
@@ -125,6 +128,71 @@ class TestTemporalAllocation(unittest.TestCase):
         self.assertEqual(
             result["missing_mw"],
             3000.0,
+        )
+
+    def test_allocation_reelle_modifie_etat(self):
+        data = load_data()
+
+        graph = build_graph(data)
+
+        plants_index = build_plants_index(
+            data
+        )
+
+        regions_index = build_regions_index(
+            data
+        )
+
+        temporal_data = (
+            load_temporal_nuclear_parameters()
+        )
+
+        current_state = build_initial_state(
+            temporal_data["plants"]
+        )
+
+        initial_total_mw = sum(
+            current_state.values()
+        )
+
+        # Le parc doit produire 100 MW supplémentaires.
+        regional_demands = {
+            "occitanie": initial_total_mw + 100.0
+        }
+
+        result = allocate_regional_demands(
+            regional_demands=regional_demands,
+            current_state=current_state,
+            graph=graph,
+            plants_index=plants_index,
+            regions_index=regions_index,
+            simulation_parameters=(
+                data["simulation_parameters"]
+            ),
+        )
+
+        final_total_mw = sum(
+            result["state"].values()
+        )
+
+        self.assertAlmostEqual(
+            result["requested_change_mw"],
+            100.0,
+        )
+
+        self.assertAlmostEqual(
+            final_total_mw,
+            initial_total_mw + 100.0,
+        )
+
+        self.assertAlmostEqual(
+            result["missing_mw"],
+            0.0,
+        )
+
+        self.assertIn(
+            "occitanie",
+            result["regional_results"],
         )
 
 if __name__ == "__main__":
