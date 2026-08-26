@@ -33,24 +33,29 @@ Ce projet est une intervention complète visant à moderniser le système d'aide
 
 Ce système d'information est conçu selon une architecture orientée micro-services pour garantir la scalabilité et l'isolation des préoccupations (_separation of concerns_). Le flux de données suit un chemin strict, passant toujours par une passerelle unique.
 
-### Déploiement initial du moteur prescriptif ponctuel
 ```mermaid
 ---
 config:
   layout: elk
 ---
 flowchart TB
- subgraph s1["microService Python"]
-        Service["Moteur prescriptif"]
+ subgraph s1["microService Python/FastAPI"]
+        Service1["Moteur prescriptif régional"]
+ subgraph s2["microService Python/FastAPI 2"]
+        Service2["Moteur prescriptif national"]
   end
-    User["Utilisateur"] -- Request --> Gateway["Gateway Express"]
-    JSON["JSON statique"] -- Response --> Service
-    Gateway -- Response --> User
-    s1 -- Fetch --> JSON
-    s1 -- Return --> Gateway
+    User["Utilisateur"] -- Requête --> Gateway["Gateway Node/Express"]
+    JSON["JSON statiques"] -- Réponse --> Service1
+    JSON["JSON statiques"] -- Réponse --> Service2
+    Gateway -- Réponse --> User
+    s1 -- Récupère --> JSON
+    s2 -- Récupère --> JSON
+    Service1 -- Renvoie --> Gateway
+    Service2 -- Renvoie --> Gateway
 
     Service@{ shape: proc}
-     Service:::serviceStyle
+     Service1:::serviceStyle
+     Service2:::serviceStyle
      User:::userStyle
      Gateway:::gatewayStyle
      JSON:::dataStyle

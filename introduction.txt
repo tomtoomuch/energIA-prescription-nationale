@@ -363,6 +363,7 @@ elle additionne les puissances maximales des centrales disponibles
 elle retire ensuite la production nucléaire actuelle
 le calcul utilisé est
 réserve nucléaire = puissance maximale du parc - production nucléaire actuelle
+
 cette fonction permet de vérifier si la réserve disponible respecte la réserve minimale configurée
 
 fonction modifiée dans temporal_engine.py
@@ -375,12 +376,15 @@ def simulate_day(
     minimum_reserve_mw=0
 )
 cette fonction existait déjà pendant la phase 1
+
 elle a été modifiée pour recevoir les productions solaire et éolienne
 elle récupère la production solaire et la production éolienne de chaque quart d’heure
 elle calcule la production non pilotable totale
 
 production non pilotable =production solaire + production éolienne
+
 elle calcule ensuite la demande résiduelle
+
 demande résiduelle = consommation totale - production non pilotable
 elle transmet cette demande résiduelle à simulate_step
 
@@ -858,3 +862,110 @@ main.py
 Les anciens capacity.py, allocation.py, score.py et dispatch.py utilisent toujours simulation.initial_output_mw
  Ils ne conservent donc pas l’état entre deux quarts d’heure.
   Il ne faut pas les appeler directement dans temporal_engine.py sans les adapter, sinon tu violeras la règle
+
+
+
+
+  ---------**************Phase 3 start********************-----------
+
+  fonctions
+validate_consumption_event vérifie un seul événement
+
+cette fonction vérifie un seul événement
+elle ne modifie pas l’événement
+elle déclenche une erreur si l’événement est incorrect
+elle retourne True si toutes les vérifications réussissen
+event ce la représentant une modification temporaire de consommation
+
+la variation en MW  "delta_mw": 850
+la variation en pourcenta     "delta_percent": -12
+
+vérifier les champs obligatoires required_fields
+chaque événement doit contenir
+type
+region_id
+start
+end
+rechercher les champs manquants missing_fields
+event.keys() retourne les clés présentes dans l’événement
+vérifier le type de l’événement if event["type"] != "consumption_delta"
+.....
+autoriser 24:00 comme horaire de fin
+valid_end_timestamps = (
+    list(known_timestamps)
+    + ["24:00"]
+)
+
+
+load_consumption_scenarios charge et vérifie tous les scénarios du fichier
+charger et récupérer les scénarios,
+recherche la clé scenarios,
+charger la consommation de référence
+construire l’ensemble des régions
+known_region_ids = {
+    region["id"]
+    for region in consumption_data[
+        "regions"
+    ]
+}
+récupérer les horaires connus
+préparer les identifiants de scénarios
+known_scenario_ids = set()
+
+cet est vide au début
+il mémorisera progressivement les identifiants déjà rencontrés
+ {
+    "evening_peak_occitanie",
+    "midday_drop_grand_est"
+}
+
+ parcourir les scénarios
+for scenario in scenarios
+la boucle traite les scénarios un par un
+
+
+récupérer l’identifiant du scénario
+scenario_id = scenario.get(
+    "id"
+)
+si id est absent, scenario_id vaut None
+
+la condition suivante produit alors une erreur
+if not scenario_id:
+chaque scénario doit posséder un identifiant
+
+
+détecter les identifiants dupliqués
+if scenario_id in known_scenario_ids
+cette condition vérifie si l’identifiant a déjà été rencontré
+si oui, deux scénarios utilisent le même identifiant
+
+après la vérification, l’identifiant est mémorisé
+known_scenario_ids.add(
+    scenario_id
+)
+
+
+
+récupérer les événements
+events = scenario.get(
+    "events",
+    []
+)
+cette instruction récupère la liste des événements du scénario
+si la liste est absente ou vide, le scénario est refusé
+if not events:
+un scénario sans événement ne modifierait aucune consommation
+
+valider chaque événement
+
+
+
+
+get_consumption_scenario retrouve un scénario grâce à son identifiant
+
+for scenario in scenarios_data.get la boucle regarde chaque scénario
+
+
+
+exemple d’identifiant est evening_peak_occitanie

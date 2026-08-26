@@ -31,6 +31,12 @@ NON_DISPATCHABLE_PRODUCTION_PATH = (
     / "energia-production-non-pilotable.json"
 )
 
+CONSUMPTION_SCENARIOS_PATH = (
+    DATA_DIRECTORY
+    / "energia-scenarios-phase3-exemples.json"
+)
+
+
 
 def load_json(path):
     with Path(path).open(
@@ -566,6 +572,205 @@ def validate_phase2_compatibility(
         )
 
     return True
+
+
+
+
+# --------Start Phase3-----
+
+def validate_consumption_event(
+    event,
+    known_region_ids,
+    known_timestamps
+):
+    required_fields = {
+        "type",
+        "region_id",
+        "start",
+        "end",
+    }
+
+    missing_fields = (
+        required_fields
+        - event.keys()
+    )
+
+    if missing_fields:
+        raise ValueError(
+            "champs manquants dans un événement "
+            f"{', '.join(sorted(missing_fields))}"
+        )
+
+    if event["type"] != "consumption_delta":
+        raise ValueError(
+            "type d'événement inconnu "
+            f"{event['type']}"
+        )
+
+    region_id = event["region_id"]
+
+    if region_id not in known_region_ids:
+        raise ValueError(
+            "région inconnue dans un événement  "
+            f"{region_id}"
+        )
+
+    start = event["start"]
+    end = event["end"]
+
+    valid_end_timestamps = (
+        list(known_timestamps)
+        + ["24:00"]
+    )
+
+    if start not in known_timestamps:
+        raise ValueError(
+            "horaire de début invalide "
+            f"{start}"
+        )
+
+    if end not in valid_end_timestamps:
+        raise ValueError(
+            "horaire de fin invalide "
+            f"{end}"
+        )
+
+    if start >= end:
+        raise ValueError(
+            "l'horaire de début doit être "
+            "antérieur à l'horaire de fin"
+        )
+
+    has_delta_mw = (
+        "delta_mw" in event
+    )
+
+    has_delta_percent = (
+        "delta_percent" in event
+    )
+
+    if (
+        has_delta_mw
+        == has_delta_percent
+    ):
+        raise ValueError(
+            "Un événement doit contenir "
+            "delta_mw ou delta_percent"
+        )
+
+    if has_delta_mw:
+        float(
+            event["delta_mw"]
+        )
+
+    if has_delta_percent:
+        float(
+            event["delta_percent"]
+        )
+
+    return True
+
+
+def load_consumption_scenarios(
+    path=CONSUMPTION_SCENARIOS_PATH
+):
+    data = load_json(path)
+
+    scenarios = data.get(
+        "scenarios",
+        []
+    )
+
+    if not scenarios:
+        raise ValueError(
+            "Aucun scénario de consommation trouvé"
+        )
+
+    consumption_data = (
+        load_reference_consumption()
+    )
+
+    known_region_ids = {
+        region["id"]
+        for region in consumption_data[
+            "regions"
+        ]
+    }
+
+    known_timestamps = (
+        consumption_data[
+            "timestamps"
+        ]
+    )
+
+    known_scenario_ids = set()
+
+    for scenario in scenarios:
+        scenario_id = scenario.get(
+            "id"
+        )
+
+        if not scenario_id:
+            raise ValueError(
+                "Un scénario ne possède pas "
+                "d'identifiant"
+            )
+
+        if scenario_id in known_scenario_ids:
+            raise ValueError(
+                "Identifiant de scénario dupliqué : "
+                f"{scenario_id}"
+            )
+
+        known_scenario_ids.add(
+            scenario_id
+        )
+
+        events = scenario.get(
+            "events",
+            []
+        )
+
+        if not events:
+            raise ValueError(
+                f"Le scénario {scenario_id} "
+                "ne contient aucun événement"
+            )
+
+        for event in events:
+            validate_consumption_event(
+                event=event,
+                known_region_ids=known_region_ids,
+                known_timestamps=known_timestamps,
+            )
+
+    return data
+
+
+def get_consumption_scenario(
+    scenarios_data,
+    scenario_id
+):
+    for scenario in scenarios_data.get(
+        "scenarios",
+        []
+    ):
+        if scenario["id"] == scenario_id:
+            return scenario
+
+    raise ValueError(
+        "Scénario inconnu : "
+        f"{scenario_id}"
+    )
+
+
+
+
+
+
+
+
+# ----------End Phase 3------
 
 if __name__ == "__main__":
     consumption_data = (
