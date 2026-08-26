@@ -162,6 +162,141 @@ que la production initiale reste entre le minimum et le maximum
 que les rampes de montée et de descente ne sont pas négatives
 
 
+
+-----------------------------------------------------------
+changement phase 2
+
+
+
+fonctions nouvelles dans graph_loader.py
+
+
+
+def load_non_dispatchable_production()
+
+cette fonction charge le fichier de production non pilotable
+elle récupère les 96 horaires, la production solaire, la production éolienne et les productions régionales
+elle vérifie que chaque série contient 96 valeurs,vérifie aussi que les productions ne sont pas négatives
+cette fonction est nécessaire pour fournir les données solaires et éoliennes au moteur
+
+
+def validate_phase2_compatibility(
+    consumption_data,
+    non_dispatchable_data
+)
+cette fonction compare les données de consommation avec les données de production non pilotable
+elle vérifie que les deux fichiers possèdent les mêmes horaires et les mêmes régions
+cette vérification évite de comparer une consommation et une production qui ne correspondent pas au même quart d’heure
+fonction nouvelle dans temporal_engine.py
+
+calculate_nuclear_reserve
+def calculate_nuclear_reserve(
+    plants,
+    production_mw
+)
+cette fonction calcule la capacité nucléaire encore disponible
+elle additionne les puissances maximales des centrales disponibles
+elle retire ensuite la production nucléaire actuelle
+le calcul utilisé est
+réserve nucléaire = puissance maximale du parc - production nucléaire actuelle
+cette fonction permet de vérifier si la réserve disponible respecte la réserve minimale configurée
+
+fonction modifiée dans temporal_engine.py
+simulate_day
+def simulate_day(
+    consumption_data,
+    nuclear_dataframe,
+    number_of_steps=None,
+    non_dispatchable_data=None,
+    minimum_reserve_mw=0
+)
+cette fonction existait déjà pendant la phase 1
+elle a été modifiée pour recevoir les productions solaire et éolienne
+elle récupère la production solaire et la production éolienne de chaque quart d’heure
+elle calcule la production non pilotable totale
+
+production non pilotable =production solaire + production éolienne
+elle calcule ensuite la demande résiduelle
+demande résiduelle = consommation totale - production non pilotable
+elle transmet cette demande résiduelle à simulate_step
+
+simulate_step adapte la production nucléaire en respectant les puissances minimales, les puissances maximales et les rampes
+simulate_day calcule aussi la réserve nucléaire
+elle compare la réserve disponible avec la réserve minimale configurée
+elle détermine ensuite la situation du quart d’heure normale dégradée demande non satisfaite
+cette fonction relie les nouvelles données de la phase 2 au moteur nucléaire développé pendant la phase 1
+fonction nouvelle dans main.py
+
+run_phase2
+def run_phase2(
+    number_of_steps=96,
+    minimum_reserve_mw=5000
+)
+cette fonction charge les données nécessaires à la phase 2
+elle charge la consommation, la production solaire, la production éolienne et la DataFrame nucléaire
+elle transmet ensuite les données à simulate_day
+elle transmet aussi la valeur configurable de la réserve minimale
+cette fonction prépare et lance la simulation complète de la phase 2
+fonction nouvelle dans main.py pour l’api
+
+
+simulate_phase2_api
+def simulate_phase2_api(
+    number_of_steps,
+    minimum_reserve_mw
+)
+cette fonction expose la simulation de la phase 2 avec FastAPI
+la route utilisée est
+/phase2/simulate-day
+elle permet de choisir le nombre de quarts d’heure et la réserve minimale
+cette fonction appelle run_phase2 et retourne les résultats au format JSON
+fonction modifiée dans main.py
+
+run_command_line
+def run_command_line()
+cette fonction permet maintenant de choisir la phase à exécuter dans le terminal
+elle accepte les paramètres suivants
+
+--phase
+--steps
+--minimum-reserve-mw
+exemple
+
+pour lanse phase 2 sans les paramettre python main.py --phase 2
+python main.py --phase 2 --steps 96 --minimum-reserve-mw 5000
+
+cette fonction permet de lancer la phase 1 ou la phase 2 avec le même fichier main.py
+
+
+
+-----****start résumé phase 2******---------------------
+  lancer phase 2 python main.py --phase 2
+
+load_non_dispatchable_production
+charge et vérifie le solaire et l’éolien
+
+validate_phase2_compatibility
+vérifie la compatibilité des horaires et des régions
+
+calculate_nuclear_reserve
+calcule la capacité nucléaire encore disponible
+
+simulate_day
+calcule la demande résiduelle, adapte le nucléaire et contrôle la réserve
+
+run_phase2
+charge les données et lance la phase 2
+
+simulate_phase2_api
+expose la phase 2 avec FastAPI
+
+run_command_line
+permet de choisir la phase et la réserve dans le terminal
+----------******end résumé phase 2********----------------
+
+
+
+---------------------------------------------------------
 services/nuclear_dataframe.py
 
 ici les données historiques et les paramètres temporels des centrales
