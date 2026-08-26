@@ -18,6 +18,10 @@ from services.nuclear_dataframe import (
     build_nuclear_dataframe,
 )
 
+from services.apply_consumption_events import (
+    apply_consumption_events,
+)
+
 from services.temporal_engine import (
     simulate_day,
 )
@@ -97,6 +101,37 @@ def run_phase2(
         minimum_reserve_mw=minimum_reserve_mw,
     )
 
+def run_phase3(
+    scenario_id,
+    number_of_steps=96,
+    minimum_reserve_mw=5000
+):
+    # Chargement des données de la phase 3
+    consumption_data = (
+        load_reference_consumption()
+    )
+
+    non_dispatchable_data = (
+        load_non_dispatchable_production()
+    )
+
+    nuclear_dataframe = (
+        build_nuclear_dataframe()
+    )
+
+    scenario = (
+        apply_consumption_events()
+    )
+
+    return simulate_day(
+        consumption_data=consumption_data,
+        nuclear_dataframe=nuclear_dataframe,
+        number_of_steps=number_of_steps,
+        non_dispatchable_data=non_dispatchable_data,
+        minimum_reserve_mw=0,
+        consumption_events=scenario
+    )
+
 
 @app.get("/")
 def home():
@@ -106,6 +141,7 @@ def home():
         "phases": [
             1,
             2,
+            3,
         ],
 
         "documentation": "/docs",
@@ -115,6 +151,9 @@ def home():
 
         "phase2_simulation":
             "/phase2/simulate-day",
+
+        "phase3_simulation":
+            "/phase3/simulate-day",
 
         "fleet":
             "/phase1/plants",
@@ -132,6 +171,7 @@ def health():
         "phases": [
             1,
             2,
+            3
         ],
     }
 
