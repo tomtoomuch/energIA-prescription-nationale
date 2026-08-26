@@ -1,7 +1,13 @@
 
-from services.apply_consumption_events import (
-    apply_consumption_events,
-)
+try:
+    from .temporal_allocation import (
+        allocate_regional_demands,
+    )
+except ImportError:
+    from temporal_allocation import (
+        allocate_regional_demands,
+    )
+
 EPSILON = 0.000001
 
 
@@ -269,8 +275,14 @@ def calculate_nuclear_reserve(
 def simulate_step(
     plants,
     previous_state,
-    demand_mw
+    demand_mw,
+    regional_demands=None,
+    graph=None,
+    plants_index=None,
+    regions_index=None,
+    simulation_parameters=None,
 ):
+
     demand_mw = float(
         demand_mw
     )
