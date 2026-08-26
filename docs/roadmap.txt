@@ -1,0 +1,375 @@
+phase 1
+production nucléaire et contraintes temporelles
+        +
+phase 2
+solaire, éolien, demande résiduelle et réserve
+        +
+phase 3
+événements de consommation
+objectif de la phase 3
+pour chaque quart d’heure, le moteur devra
+1 récupérer la consommation régionale de référence
+2 trouver les événements actifs
+3 modifier la consommation des régions concernées
+4 recalculer la consommation nationale
+5 retirer le solaire et l’éolien
+6 obtenir la nouvelle demande résiduelle
+7 adapter la production nucléaire
+8 respecter les rampes et les limites
+9 afficher les MW manquants
+10 conserver le nouvel état pour le quart d’heure suivant
+données déjà disponibles
+le projet contient déjà ce fichier
+data/energia-scenarios-phase3-exemples.json
+il faut commencer par lire sa structure exacte
+il peut contenir des événements avec une variation en MW
+{
+    "regionId": "occitanie",
+    "start": "17:30",
+    "end": "21:00",
+    "deltaMw": 850
+}
+ou une variation en pourcentage
+{
+    "regionId": "grand_est",
+    "start": "10:00",
+    "end": "12:30",
+    "deltaPercent": -12
+}
+attention aux identifiants régionaux
+dans tes données, l’identifiant est probablement
+grand_est
+et non
+grand-est
+le moteur devra refuser clairement un identifiant inconnu
+fichiers nécessaires
+graph_loader.py
+ce fichier devra charger et vérifier les événements
+fonction nouvelle possible
+def load_consumption_events(path)
+elle devra vérifier
+la présence de regionId
+la présence de start
+la présence de end
+la présence de deltaMw ou deltaPercent
+l’existence de la région
+la validité des horaires
+l’absence de variation invalide
+un événement doit utiliser soit deltaMw, soit deltaPercent
+il ne doit pas utiliser les deux en même temps
+temporal_engine.py
+ce fichier devra appliquer les événements aux consommations régionales
+fonctions nouvelles recommandées
+def is_event_active(
+    event,
+    timestamp
+)
+def apply_consumption_events(
+    regional_consumption,
+    timestamp,
+    events
+)
+la fonction simulate_day devra aussi recevoir les événements
+def simulate_day(
+    consumption_data,
+    nuclear_dataframe,
+    number_of_steps=None,
+    non_dispatchable_data=None,
+    minimum_reserve_mw=0,
+    consumption_events=None
+)
+main.py
+ce fichier devra charger les événements et lancer la phase 3
+fonction nouvelle possible
+def run_phase3(
+    consumption_events,
+    number_of_steps=96,
+    minimum_reserve_mw=5000
+)
+route FastAPI possible
+POST /phase3/simulate-day
+POST est préférable à GET car le client doit envoyer une liste d’événements dans le corps de la requête
+tests
+un nouveau fichier est recommandé
+tests/test_temporal_engine.py
+ou
+tests/test_phase3.py
+étape 1 valider un événement
+une fonction de validation doit vérifier les champs obligatoires
+def validate_consumption_event(
+    event,
+    known_region_ids,
+    known_timestamps
+):
+elle devra contrôler
+regionId existe
+start existe dans les horaires
+end existe dans les horaires
+start se trouve avant end
+la région existe
+deltaMw ou deltaPercent existe
+un seul type de variation est utilisé
+exemples invalides
+{
+    "regionId": "region_inconnue",
+    "start": "10:00",
+    "end": "12:00",
+    "deltaMw": 500
+}
+{
+    "regionId": "occitanie",
+    "start": "10:00",
+    "end": "12:00",
+    "deltaMw": 500,
+    "deltaPercent": 10
+}
+étape 2 déterminer si un événement est actif
+fonction recommandée
+def is_event_active(
+    event,
+    timestamp
+):
+    return (
+        event["start"]
+        <= timestamp
+        < event["end"]
+    )
+je recommande cette règle
+start inclus
+end exclu
+pour un événement de 10:00 à 12:00
+10:00 est inclus
+11:45 est inclus
+12:00 est exclu
+cela évite d’appliquer un quart d’heure supplémentaire
+étape 3 appliquer une variation en MW
+exemple
+{
+    "regionId": "occitanie",
+    "start": "17:30",
+    "end": "21:00",
+    "deltaMw": 850
+}
+si la consommation de référence est
+4000 MW
+la nouvelle consommation devient
+4000 + 850 = 4850 MW
+calcul
+modified_consumption_mw = (
+    reference_consumption_mw
+    + float(event["deltaMw"])
+)
+étape 4 appliquer une variation en pourcentage
+exemple
+{
+    "regionId": "grand_est",
+    "start": "10:00",
+    "end": "12:30",
+    "deltaPercent": -12
+}
+si la consommation de référence est
+5000 MW
+le calcul devient
+5000 × -12 ÷ 100 = -600 MW
+la nouvelle consommation devient
+5000 - 600 = 4400 MW
+calcul
+delta_mw = (
+    reference_consumption_mw
+    * float(event["deltaPercent"])
+    / 100
+)
+étape 5 gérer plusieurs événements
+plusieurs événements peuvent être actifs au même moment
+exemple
+événement 1
+occitanie +850 MW
+
+événement 2
+grand_est -12 pour cent
+
+événement 3
+occitanie +200 MW
+les événements doivent tous être appliqués
+pour l’Occitanie
+consommation de référence
++
+850 MW
++
+200 MW
+pour le Grand Est
+consommation de référence
+-
+12 pour cent
+il faut définir clairement l’ordre lorsque plusieurs événements touchent la même région
+la solution la plus simple est
+appliquer les événements dans l’ordre de la liste
+cela est important lorsqu’un événement en MW et un événement en pourcentage concernent la même région
+étape 6 recalculer la consommation nationale
+dans la phase 1 et la phase 2, le moteur utilise le total national du fichier
+dans la phase 3, ce total doit être recalculé après les événements
+modified_national_total_mw = sum(
+    modified_regional_consumption.values()
+)
+il ne faut plus utiliser directement
+national_consumptions[index]
+pour la demande finale de la phase 3
+le total du fichier reste utile comme consommation nationale de référence
+étape 7 recalculer la demande résiduelle
+après les événements
+residual_demand_mw = max(
+    0.0,
+    modified_national_total_mw
+    - non_dispatchable_production_mw
+)
+exemple
+consommation de référence          50 000 MW
+événements                         +1 000 MW
+consommation modifiée              51 000 MW
+solaire et éolien                  15 000 MW
+demande résiduelle                 36 000 MW
+étape 8 utiliser le moteur nucléaire existant
+la demande résiduelle modifiée est envoyée à simulate_step
+result = simulate_step(
+    plants=plants,
+    previous_state=current_state,
+    demand_mw=residual_demand_mw,
+)
+simulate_step continuera à respecter
+la puissance minimale
+la puissance maximale
+la rampe de montée
+la rampe de descente
+l’état précédent
+il ne faut pas créer un nouveau moteur nucléaire pour la phase 3
+étape 9 détecter une demande impossible
+cette partie existe déjà dans simulate_step
+missing_mw = max(
+    0.0,
+    demand_mw
+    - production_mw
+)
+si la puissance maximale totale est suffisante mais que les centrales ne peuvent pas monter assez vite, la rampe limite la production accessible
+le résultat contiendra alors
+fully_satisfied = False
+missing_mw supérieur à 0
+situation = demande non satisfaite
+cela correspond exactement à la difficulté demandée dans le brief
+informations à afficher
+pour chaque quart d’heure, ajoute
+consommation nationale de référence
+événements actifs
+variation totale en MW
+consommation régionale modifiée
+consommation nationale modifiée
+solaire
+éolien
+demande résiduelle
+production nucléaire
+MW manquants
+réserve
+situation
+exemple
+18:00
+
+consommation de référence       52 000 MW
+variation des événements          +850 MW
+consommation modifiée           52 850 MW
+solaire                          5 876 MW
+éolien                           7 057 MW
+demande résiduelle              39 917 MW
+production nucléaire            39 500 MW
+puissance manquante                417 MW
+situation                       demande non satisfaite
+indépendance du moteur
+le moteur ne doit pas ouvrir directement un fichier JSON
+il doit recevoir les événements comme paramètre
+simulate_day(
+    consumption_data=consumption_data,
+    nuclear_dataframe=nuclear_dataframe,
+    non_dispatchable_data=non_dispatchable_data,
+    consumption_events=events,
+)
+cela permet de remplacer plus tard le fichier JSON par
+une base de données
+une API
+un autre service
+un formulaire frontend
+sans modifier les calculs de temporal_engine.py
+graph_loader.py s’occupe de la source des données
+temporal_engine.py s’occupe seulement des calculs
+tests unitaires nécessaires
+hausse en MW
+une région reçoit +850 MW pendant la période demandée
+baisse en pourcentage
+une région reçoit -12 pour cent pendant la période demandée
+événement hors période
+la consommation reste inchangée avant start et après end
+événements simultanés
+deux régions sont modifiées au même quart d’heure
+événements qui se chevauchent
+deux événements sont appliqués à la même région
+consommation jamais négative
+une baisse importante ne produit pas une consommation inférieure à zéro
+demande impossible à cause des rampes
+la puissance maximale est suffisante
+mais la production accessible au prochain quart d’heure est insuffisante
+le test doit vérifier
+result["fully_satisfied"] is False
+result["missing_mw"] > 0
+ordre recommandé du développement
+1 lire le fichier de scénarios
+2 définir le format exact des événements
+3 créer la validation
+4 appliquer un événement deltaMw
+5 appliquer un événement deltaPercent
+6 gérer plusieurs événements
+7 recalculer le total national
+8 intégrer le calcul dans simulate_day
+9 ajouter run_phase3 dans main.py
+10 ajouter la route FastAPI
+11 ajouter les tests unitaires
+fichiers probablement modifiés
+services/graph_loader.py
+services/temporal_engine.py
+main.py
+tests/test_phase3.py
+un nouveau fichier métier peut aussi rendre le code plus clair
+services/consumption_events.py
+il pourrait contenir
+validate_consumption_event
+is_event_active
+apply_consumption_events
+cela permettrait de ne pas rendre temporal_engine.py trop long
+aucun fichier n’a été modifié
+
+
+10:11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Demander l’approbation
+
+
+
+
+
+
+
+5.6 TerraTrès élevé5.6 SolLéger
