@@ -2,8 +2,6 @@ EPSILON = 0.000001
 
 
 def build_initial_state(plants):
-
-
     state = {}
 
     for plant in plants:
@@ -30,7 +28,11 @@ def build_initial_state(plants):
                 f"maximum={maximum_mw} MW"
             )
 
-        if not minimum_mw <= output_mw <= maximum_mw:
+        if not (
+            minimum_mw
+            <= output_mw
+            <= maximum_mw
+        ):
             raise ValueError(
                 f"Production initiale de {plant_id} "
                 f"hors limites : {output_mw} MW"
@@ -45,8 +47,6 @@ def get_regional_consumption(
     consumption_data,
     index
 ):
-
-
     regional_consumption = {}
 
     for region in consumption_data["regions"]:
@@ -56,9 +56,9 @@ def get_regional_consumption(
             region["consumption_mw"][index]
         )
 
-        regional_consumption[region_id] = (
-            consumption_mw
-        )
+        regional_consumption[
+            region_id
+        ] = consumption_mw
 
     return regional_consumption
 
@@ -67,7 +67,6 @@ def calculate_plant_limits(
     plant,
     current_output_mw
 ):
-
     minimum_mw = float(
         plant["minimum_operating_power_mw"]
     )
@@ -85,7 +84,10 @@ def calculate_plant_limits(
     )
 
     available = bool(
-        plant.get("available", True)
+        plant.get(
+            "available",
+            True
+        )
     )
 
     if not available:
@@ -97,6 +99,7 @@ def calculate_plant_limits(
                 current_output_mw,
 
             "up_flexibility_mw": 0.0,
+
             "down_flexibility_mw": 0.0,
         }
 
@@ -138,35 +141,39 @@ def distribute_change(
     direction,
     plant_limits
 ):
-
-
-
     next_state = previous_state.copy()
 
     if requested_change_mw <= EPSILON:
         return next_state
 
     if direction == "up":
-        flexibility_key = "up_flexibility_mw"
+        flexibility_key = (
+            "up_flexibility_mw"
+        )
     else:
-        flexibility_key = "down_flexibility_mw"
+        flexibility_key = (
+            "down_flexibility_mw"
+        )
 
     total_flexibility_mw = sum(
-        plant_limits[plant["plant_id"]][
-            flexibility_key
-        ]
+        plant_limits[
+            plant["plant_id"]
+        ][flexibility_key]
         for plant in plants
     )
+
+    if total_flexibility_mw <= EPSILON:
+        return next_state
 
     possible_change_mw = min(
         requested_change_mw,
         total_flexibility_mw
     )
 
-    if total_flexibility_mw <= EPSILON:
-        return next_state
+    remaining_change_mw = (
+        possible_change_mw
+    )
 
-    remaining_change_mw = possible_change_mw
     flexible_plants = []
 
     for plant in plants:
@@ -177,7 +184,9 @@ def distribute_change(
         ][flexibility_key]
 
         if flexibility_mw > EPSILON:
-            flexible_plants.append(plant)
+            flexible_plants.append(
+                plant
+            )
 
     for index, plant in enumerate(
         flexible_plants
@@ -189,7 +198,8 @@ def distribute_change(
         ][flexibility_key]
 
         is_last_plant = (
-            index == len(flexible_plants) - 1
+            index
+            == len(flexible_plants) - 1
         )
 
         if is_last_plant:
@@ -197,6 +207,7 @@ def distribute_change(
                 remaining_change_mw,
                 flexibility_mw
             )
+
         else:
             allocated_change_mw = (
                 possible_change_mw
@@ -214,6 +225,7 @@ def distribute_change(
             next_state[plant_id] += (
                 allocated_change_mw
             )
+
         else:
             next_state[plant_id] -= (
                 allocated_change_mw
@@ -226,18 +238,42 @@ def distribute_change(
     return next_state
 
 
+def calculate_nuclear_reserve(
+    plants,
+    production_mw
+):
+    maximum_capacity_mw = sum(
+        float(
+            plant["maximum_power_mw"]
+        )
+        for plant in plants
+        if plant.get(
+            "available",
+            True
+        )
+    )
+
+    reserve_mw = max(
+        0.0,
+        maximum_capacity_mw
+        - float(production_mw)
+    )
+
+    return reserve_mw
+
+
 def simulate_step(
     plants,
     previous_state,
     demand_mw
 ):
-
-
-    demand_mw = float(demand_mw)
+    demand_mw = float(
+        demand_mw
+    )
 
     if demand_mw < 0:
         raise ValueError(
-            "La consommation ne peut pas être négative"
+            "La demande ne peut pas être négative"
         )
 
     plant_ids = {
@@ -282,7 +318,8 @@ def simulate_step(
     )
 
     difference_mw = (
-        demand_mw - previous_total_mw
+        demand_mw
+        - previous_total_mw
     )
 
     if difference_mw > EPSILON:
@@ -311,7 +348,10 @@ def simulate_step(
 
     else:
         direction = "stable"
-        next_state = previous_state.copy()
+
+        next_state = (
+            previous_state.copy()
+        )
 
     production_mw = sum(
         next_state.values()
@@ -336,18 +376,25 @@ def simulate_step(
             previous_state[plant_id]
         )
 
-        output_mw = next_state[plant_id]
+        output_mw = next_state[
+            plant_id
+        ]
 
         change_mw = (
-            output_mw - previous_output_mw
+            output_mw
+            - previous_output_mw
         )
 
         minimum_mw = float(
-            plant["minimum_operating_power_mw"]
+            plant[
+                "minimum_operating_power_mw"
+            ]
         )
 
         maximum_mw = float(
-            plant["maximum_power_mw"]
+            plant[
+                "maximum_power_mw"
+            ]
         )
 
         ramp_up_mw = float(
@@ -363,11 +410,13 @@ def simulate_step(
         )
 
         respects_minimum = (
-            output_mw >= minimum_mw - EPSILON
+            output_mw
+            >= minimum_mw - EPSILON
         )
 
         respects_maximum = (
-            output_mw <= maximum_mw + EPSILON
+            output_mw
+            <= maximum_mw + EPSILON
         )
 
         respects_ramp_up = (
@@ -388,31 +437,42 @@ def simulate_step(
         ])
 
         plant_states.append({
-            "plant_id": plant_id,
-            "plant_name": plant["plant_name"],
+            "plant_id":
+                plant_id,
 
-            "region_id": plant.get(
-                "location_region_id"
-            ),
+            "plant_name":
+                plant["plant_name"],
 
-            "available": bool(
-                plant.get("available", True)
-            ),
+            "region_id":
+                plant.get(
+                    "location_region_id"
+                ),
 
-            "previous_output_mw": round(
-                previous_output_mw,
-                3
-            ),
+            "available":
+                bool(
+                    plant.get(
+                        "available",
+                        True
+                    )
+                ),
 
-            "output_mw": round(
-                output_mw,
-                3
-            ),
+            "previous_output_mw":
+                round(
+                    previous_output_mw,
+                    3
+                ),
 
-            "change_mw": round(
-                change_mw,
-                3
-            ),
+            "output_mw":
+                round(
+                    output_mw,
+                    3
+                ),
+
+            "change_mw":
+                round(
+                    change_mw,
+                    3
+                ),
 
             "minimum_operating_power_mw":
                 minimum_mw,
@@ -426,19 +486,25 @@ def simulate_step(
             "max_ramp_down_mw_per_15_min":
                 ramp_down_mw,
 
-            "minimum_reachable_mw": round(
-                plant_limits[plant_id][
-                    "minimum_reachable_mw"
-                ],
-                3
-            ),
+            "minimum_reachable_mw":
+                round(
+                    plant_limits[
+                        plant_id
+                    ][
+                        "minimum_reachable_mw"
+                    ],
+                    3
+                ),
 
-            "maximum_reachable_mw": round(
-                plant_limits[plant_id][
-                    "maximum_reachable_mw"
-                ],
-                3
-            ),
+            "maximum_reachable_mw":
+                round(
+                    plant_limits[
+                        plant_id
+                    ][
+                        "maximum_reachable_mw"
+                    ],
+                    3
+                ),
 
             "respects_minimum":
                 respects_minimum,
@@ -455,10 +521,11 @@ def simulate_step(
             "constraints_respected":
                 constraints_respected,
 
-            "plant_edges": plant.get(
-                "plant_edges",
-                []
-            ),
+            "plant_edges":
+                plant.get(
+                    "plant_edges",
+                    []
+                ),
         })
 
     all_constraints_respected = all(
@@ -467,46 +534,53 @@ def simulate_step(
     )
 
     return {
-        "nuclear_required_mw": round(
-            demand_mw,
-            3
-        ),
+        "nuclear_required_mw":
+            round(
+                demand_mw,
+                3
+            ),
 
-        "previous_production_mw": round(
-            previous_total_mw,
-            3
-        ),
+        "previous_production_mw":
+            round(
+                previous_total_mw,
+                3
+            ),
 
-        "production_mw": round(
-            production_mw,
-            3
-        ),
+        "production_mw":
+            round(
+                production_mw,
+                3
+            ),
 
-        "minimum_reachable_total_mw": round(
-            minimum_reachable_total_mw,
-            3
-        ),
+        "minimum_reachable_total_mw":
+            round(
+                minimum_reachable_total_mw,
+                3
+            ),
 
-        "maximum_reachable_total_mw": round(
-            maximum_reachable_total_mw,
-            3
-        ),
+        "maximum_reachable_total_mw":
+            round(
+                maximum_reachable_total_mw,
+                3
+            ),
 
-        "direction": direction,
+        "direction":
+            direction,
 
-        "missing_mw": round(
-            missing_mw,
-            3
-        ),
+        "missing_mw":
+            round(
+                missing_mw,
+                3
+            ),
 
-        "forced_surplus_mw": round(
-            forced_surplus_mw,
-            3
-        ),
+        "forced_surplus_mw":
+            round(
+                forced_surplus_mw,
+                3
+            ),
 
-        "fully_satisfied": (
-            missing_mw <= EPSILON
-        ),
+        "fully_satisfied":
+            missing_mw <= EPSILON,
 
         "production_balanced": (
             missing_mw <= EPSILON
@@ -516,31 +590,42 @@ def simulate_step(
         "all_constraints_respected":
             all_constraints_respected,
 
-        "plants": plant_states,
+        "plants":
+            plant_states,
 
-        # Cet état sera utilisé pour calculer
-        # le prochain quart d'heure.
-        "state": next_state,
+        # cet état sera utilisé pour calculer
+        # le prochain quart d'heure
+        "state":
+            next_state,
     }
 
 
 def simulate_day(
     consumption_data,
     nuclear_dataframe,
-    number_of_steps=None
+    number_of_steps=None,
+    non_dispatchable_data=None,
+    minimum_reserve_mw=0
 ):
-    """
-    Simule une journée complète ou un nombre limité
-    de quarts d'heure.
-    """
-
     timestamps = consumption_data[
         "timestamps"
     ]
 
-    national_consumptions = consumption_data[
-        "national_total_consumption_mw"
-    ]
+    national_consumptions = (
+        consumption_data[
+            "national_total_consumption_mw"
+        ]
+    )
+
+    minimum_reserve_mw = float(
+        minimum_reserve_mw
+    )
+
+    if minimum_reserve_mw < 0:
+        raise ValueError(
+            "La réserve minimale "
+            "ne peut pas être négative"
+        )
 
     if not hasattr(
         nuclear_dataframe,
@@ -560,8 +645,71 @@ def simulate_day(
             "La DataFrame des centrales est vide"
         )
 
+    if len(national_consumptions) != len(
+        timestamps
+    ):
+        raise ValueError(
+            "Le nombre de consommations nationales "
+            "ne correspond pas aux horaires"
+        )
+
+    if non_dispatchable_data is not None:
+        production_timestamps = (
+            non_dispatchable_data.get(
+                "timestamps",
+                []
+            )
+        )
+
+        if timestamps != production_timestamps:
+            raise ValueError(
+                "Les horaires de consommation et de "
+                "production non pilotable "
+                "ne correspondent pas"
+            )
+
+        national_production = (
+            non_dispatchable_data.get(
+                "national_total_production_mw",
+                {}
+            )
+        )
+
+        solar_productions = (
+            national_production.get(
+                "solar",
+                []
+            )
+        )
+
+        wind_productions = (
+            national_production.get(
+                "wind",
+                []
+            )
+        )
+
+        if len(solar_productions) != len(
+            timestamps
+        ):
+            raise ValueError(
+                "Le nombre de productions solaires "
+                "ne correspond pas aux horaires"
+            )
+
+        if len(wind_productions) != len(
+            timestamps
+        ):
+            raise ValueError(
+                "Le nombre de productions éoliennes "
+                "ne correspond pas aux horaires"
+            )
+
     if number_of_steps is None:
-        steps_to_simulate = len(timestamps)
+        steps_to_simulate = len(
+            timestamps
+        )
+
     else:
         steps_to_simulate = int(
             number_of_steps
@@ -580,7 +728,9 @@ def simulate_day(
 
     results = []
 
-    for index in range(steps_to_simulate):
+    for index in range(
+        steps_to_simulate
+    ):
         regional_consumption = (
             get_regional_consumption(
                 consumption_data,
@@ -607,14 +757,79 @@ def simulate_day(
                 f"national={national_total_mw} MW"
             )
 
+        solar_production_mw = 0.0
+        wind_production_mw = 0.0
+
+        if non_dispatchable_data is not None:
+            national_production = (
+                non_dispatchable_data[
+                    "national_total_production_mw"
+                ]
+            )
+
+            solar_production_mw = float(
+                national_production[
+                    "solar"
+                ][index]
+            )
+
+            wind_production_mw = float(
+                national_production[
+                    "wind"
+                ][index]
+            )
+
+        non_dispatchable_production_mw = (
+            solar_production_mw
+            + wind_production_mw
+        )
+
+        residual_demand_mw = max(
+            0.0,
+            national_total_mw
+            - non_dispatchable_production_mw
+        )
+
+        non_dispatchable_surplus_mw = max(
+            0.0,
+            non_dispatchable_production_mw
+            - national_total_mw
+        )
+
         result = simulate_step(
             plants=plants,
             previous_state=current_state,
-            demand_mw=national_total_mw,
+            demand_mw=residual_demand_mw,
         )
 
-        # Le résultat du quart d'heure actuel devient
-        # le point de départ du quart d'heure suivant.
+        nuclear_reserve_mw = (
+            calculate_nuclear_reserve(
+                plants=plants,
+                production_mw=result[
+                    "production_mw"
+                ],
+            )
+        )
+
+        reserve_sufficient = (
+            nuclear_reserve_mw
+            + EPSILON
+            >= minimum_reserve_mw
+        )
+
+        if result["missing_mw"] > EPSILON:
+            situation = (
+                "demande non satisfaite"
+            )
+
+        elif not reserve_sufficient:
+            situation = "dégradée"
+
+        else:
+            situation = "normale"
+
+        # le résultat du quart d'heure actuel devient
+        # le point de départ du quart d'heure suivant
         current_state = result.pop(
             "state"
         )
@@ -629,48 +844,207 @@ def simulate_day(
             regional_consumption
         )
 
-        result["regional_total_consumption_mw"] = (
-            round(
-                regional_total_mw,
-                3
-            )
+        result[
+            "regional_total_consumption_mw"
+        ] = round(
+            regional_total_mw,
+            3
         )
 
-        results.append(result)
+        result["total_consumption_mw"] = round(
+            national_total_mw,
+            3
+        )
+
+        result["solar_production_mw"] = round(
+            solar_production_mw,
+            3
+        )
+
+        result["wind_production_mw"] = round(
+            wind_production_mw,
+            3
+        )
+
+        result[
+            "non_dispatchable_production_mw"
+        ] = round(
+            non_dispatchable_production_mw,
+            3
+        )
+
+        result["residual_demand_mw"] = round(
+            residual_demand_mw,
+            3
+        )
+
+        result[
+            "non_dispatchable_surplus_mw"
+        ] = round(
+            non_dispatchable_surplus_mw,
+            3
+        )
+
+        result["nuclear_reserve_mw"] = round(
+            nuclear_reserve_mw,
+            3
+        )
+
+        result["minimum_reserve_mw"] = round(
+            minimum_reserve_mw,
+            3
+        )
+
+        result["reserve_sufficient"] = (
+            reserve_sufficient
+        )
+
+        result["situation"] = situation
+
+        results.append(
+            result
+        )
+
+    phase = 1
+
+    energy_sources = [
+        "nuclear"
+    ]
+
+    if non_dispatchable_data is not None:
+        phase = 2
+
+        energy_sources = [
+            "nuclear",
+            "solar",
+            "wind",
+        ]
 
     return {
-        "phase": 1,
-        "energy_source": "nuclear",
-        "step_minutes": 15,
+        "phase":
+            phase,
 
-        "steps_count": len(results),
+        "energy_sources":
+            energy_sources,
 
-        "complete_day": (
-            len(results) == 96
-        ),
+        "step_minutes":
+            15,
 
-        "all_demand_satisfied": all(
-            step["fully_satisfied"]
-            for step in results
-        ),
+        "steps_count":
+            len(results),
 
-        "all_production_balanced": all(
-            step["production_balanced"]
-            for step in results
-        ),
+        "complete_day":
+            len(results) == 96,
 
-        "all_constraints_respected": all(
-            step["all_constraints_respected"]
-            for step in results
-        ),
-
-        "total_missing_mw": round(
-            sum(
-                step["missing_mw"]
+        "all_demand_satisfied":
+            all(
+                step["fully_satisfied"]
                 for step in results
             ),
-            3
-        ),
 
-        "steps": results,
+        "all_production_balanced":
+            all(
+                step["production_balanced"]
+                for step in results
+            ),
+
+        "all_constraints_respected":
+            all(
+                step[
+                    "all_constraints_respected"
+                ]
+                for step in results
+            ),
+
+        "reserve_always_sufficient":
+            all(
+                step["reserve_sufficient"]
+                for step in results
+            ),
+
+        "degraded_steps_count":
+            sum(
+                1
+                for step in results
+                if step["situation"]
+                == "dégradée"
+            ),
+
+        "total_consumption_mw":
+            round(
+                sum(
+                    step[
+                        "total_consumption_mw"
+                    ]
+                    for step in results
+                ),
+                3
+            ),
+
+        "total_solar_production_mw":
+            round(
+                sum(
+                    step[
+                        "solar_production_mw"
+                    ]
+                    for step in results
+                ),
+                3
+            ),
+
+        "total_wind_production_mw":
+            round(
+                sum(
+                    step[
+                        "wind_production_mw"
+                    ]
+                    for step in results
+                ),
+                3
+            ),
+
+        "total_non_dispatchable_production_mw":
+            round(
+                sum(
+                    step[
+                        "non_dispatchable_production_mw"
+                    ]
+                    for step in results
+                ),
+                3
+            ),
+
+        "total_residual_demand_mw":
+            round(
+                sum(
+                    step[
+                        "residual_demand_mw"
+                    ]
+                    for step in results
+                ),
+                3
+            ),
+
+        "total_missing_mw":
+            round(
+                sum(
+                    step["missing_mw"]
+                    for step in results
+                ),
+                3
+            ),
+
+        "total_non_dispatchable_surplus_mw":
+            round(
+                sum(
+                    step[
+                        "non_dispatchable_surplus_mw"
+                    ]
+                    for step in results
+                ),
+                3
+            ),
+
+        "steps":
+            results,
     }
