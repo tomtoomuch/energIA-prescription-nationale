@@ -6,11 +6,12 @@ from fastapi import (
     HTTPException,
     Query,
     Header,
-    Depends
+    Depends,
 )
 
 from services.graph_loader import (
     load_reference_consumption,
+    load_non_dispatchable_production,
 )
 
 from services.nuclear_dataframe import (
@@ -25,19 +26,37 @@ from services.temporal_engine import (
 app = FastAPI(
     title="EnergIA",
     description=(
-        "Simulation temporelle du parc nucléaire pour la phase 1"
+        "Simulation temporelle du parc électrique "
+        "pour les phases 1 et 2"
     ),
-    version="1.0.0",
+    version="2.0.0",
 )
 
-SECURITY_TOKEN = os.getenv("SECURITY_TOKEN")
 
-def verify_api_key(x_api_key: str = Header(alias="x-api-key")):
-    if not SECURITY_TOKEN or x_api_key != SECURITY_TOKEN:
-        raise HTTPException(status_code=401, detail="Cle API invalide")
+SECURITY_TOKEN = os.getenv(
+    "SECURITY_TOKEN"
+)
 
-def run_phase1(number_of_steps=96):
-    # les données et lance la simulation
+
+def verify_api_key(
+    x_api_key: str = Header(
+        alias="x-api-key"
+    )
+):
+    if (
+        not SECURITY_TOKEN
+        or x_api_key != SECURITY_TOKEN
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Clé API invalide",
+        )
+
+
+def run_phase1(
+    number_of_steps=96
+):
+    # charge les données de la phase 1
     consumption_data = (
         load_reference_consumption()
     )
@@ -53,15 +72,55 @@ def run_phase1(number_of_steps=96):
     )
 
 
+def run_phase2(
+    number_of_steps=96,
+    minimum_reserve_mw=5000
+):
+    # charge les données de la phase 2
+    consumption_data = (
+        load_reference_consumption()
+    )
+
+    non_dispatchable_data = (
+        load_non_dispatchable_production()
+    )
+
+    nuclear_dataframe = (
+        build_nuclear_dataframe()
+    )
+
+    return simulate_day(
+        consumption_data=consumption_data,
+        nuclear_dataframe=nuclear_dataframe,
+        number_of_steps=number_of_steps,
+        non_dispatchable_data=non_dispatchable_data,
+        minimum_reserve_mw=minimum_reserve_mw,
+    )
+
+
 @app.get("/")
 def home():
     return {
         "application": "EnergIA",
-        "phase": 1,
+
+        "phases": [
+            1,
+            2,
+        ],
+
         "documentation": "/docs",
-        "simulation": "/phase1/simulate-day",
-        "fleet": "/phase1/plants",
-        "consumption": "/phase1/consumption",
+
+        "phase1_simulation":
+            "/phase1/simulate-day",
+
+        "phase2_simulation":
+            "/phase2/simulate-day",
+
+        "fleet":
+            "/phase1/plants",
+
+        "consumption":
+            "/phase1/consumption",
     }
 
 
@@ -69,13 +128,22 @@ def home():
 def health():
     return {
         "status": "ok",
-        "service": "EnergIA Phase 1",
+        "service": "EnergIA",
+        "phases": [
+            1,
+            2,
+        ],
     }
 
 
-@app.get("/phase1/plants", dependencies=[Depends(verify_api_key)])
+@app.get(
+    "/phase1/plants",
+    dependencies=[
+        Depends(verify_api_key)
+    ],
+)
 def get_nuclear_plants():
-    # ffiche toutes les centrales et leurs contraintes
+    # affiche les centrales et leurs contraintes
     try:
         nuclear_dataframe = (
             build_nuclear_dataframe()
@@ -86,7 +154,10 @@ def get_nuclear_plants():
         )
 
         return {
-            "plants_count": len(plants),
+            "plants_count": len(
+                plants
+            ),
+
             "plants": plants,
         }
 
@@ -101,11 +172,14 @@ def get_nuclear_plants():
         ) from error
 
 
-@app.get("/phase1/consumption", dependencies=[Depends(verify_api_key)])
+@app.get(
+    "/phase1/consumption",
+    dependencies=[
+        Depends(verify_api_key)
+    ],
+)
 def get_consumption():
-    # affiche la consommation nationale et régionale
-    #     pour les 96 quarts d'heure
-
+    # affiche les consommations des 96 quarts d'heure
     try:
         consumption_data = (
             load_reference_consumption()
@@ -117,9 +191,11 @@ def get_consumption():
             "timestamps"
         ]
 
-        national_consumptions = consumption_data[
-            "national_total_consumption_mw"
-        ]
+        national_consumptions = (
+            consumption_data[
+                "national_total_consumption_mw"
+            ]
+        )
 
         regions = consumption_data[
             "regions"
@@ -131,18 +207,28 @@ def get_consumption():
             regional_consumption = {}
 
             for region in regions:
-                regional_consumption[
-                    region["id"]
-                ] = region[
+                region_id = region[
+                    "id"
+                ]
+
+                consumption_mw = region[
                     "consumption_mw"
                 ][index]
 
+                regional_consumption[
+                    region_id
+                ] = consumption_mw
+
             steps.append({
                 "index": index,
-                "timestamp": timestamp,
+
+                "timestamp":
+                    timestamp,
 
                 "national_consumption_mw":
-                    national_consumptions[index],
+                    national_consumptions[
+                        index
+                    ],
 
                 "regional_consumption_mw":
                     regional_consumption,
@@ -150,7 +236,11 @@ def get_consumption():
 
         return {
             "step_minutes": 15,
-            "steps_count": len(steps),
+
+            "steps_count": len(
+                steps
+            ),
+
             "steps": steps,
         }
 
@@ -165,22 +255,98 @@ def get_consumption():
         ) from error
 
 
-@app.get("/phase1/simulate-day", dependencies=[Depends(verify_api_key)])
+@app.get(
+    "/phase2/non-dispatchable-production",
+    dependencies=[
+        Depends(verify_api_key)
+    ],
+)
+def get_non_dispatchable_production():
+    # affiche les productions solaire et éolienne
+    try:
+        production_data = (
+            load_non_dispatchable_production()
+        )
+
+        timestamps = production_data[
+            "timestamps"
+        ]
+
+        national_production = (
+            production_data[
+                "national_total_production_mw"
+            ]
+        )
+
+        steps = []
+
+        for index, timestamp in enumerate(
+            timestamps
+        ):
+            steps.append({
+                "index": index,
+
+                "timestamp":
+                    timestamp,
+
+                "solar_production_mw":
+                    national_production[
+                        "solar"
+                    ][index],
+
+                "wind_production_mw":
+                    national_production[
+                        "wind"
+                    ][index],
+
+                "non_dispatchable_production_mw":
+                    national_production[
+                        "solar_plus_wind"
+                    ][index],
+            })
+
+        return {
+            "step_minutes": 15,
+
+            "steps_count": len(
+                steps
+            ),
+
+            "steps": steps,
+        }
+
+    except (
+        ValueError,
+        FileNotFoundError,
+        KeyError,
+    ) as error:
+        raise HTTPException(
+            status_code=422,
+            detail=str(error),
+        ) from error
+
+
+@app.get(
+    "/phase1/simulate-day",
+    dependencies=[
+        Depends(verify_api_key)
+    ],
+)
 def simulate_phase1_api(
     number_of_steps: int = Query(
         default=96,
         ge=1,
         le=96,
         description=(
-            "Nombre de quarts d'heure à simuler"
+            "Nombre de quarts d'heure "
+            "à simuler"
         ),
     )
 ):
-    # lance la simulation temporelle de la phase 1
-
+    # lance la simulation de la phase 1
     try:
         return run_phase1(
-            number_of_steps
+            number_of_steps=number_of_steps
         )
 
     except (
@@ -195,23 +361,113 @@ def simulate_phase1_api(
         ) from error
 
 
-def display_simulation(simulation):
+@app.get(
+    "/phase2/simulate-day",
+    dependencies=[
+        Depends(verify_api_key)
+    ],
+)
+def simulate_phase2_api(
+    number_of_steps: int = Query(
+        default=96,
+        ge=1,
+        le=96,
+        description=(
+            "Nombre de quarts d'heure "
+            "à simuler"
+        ),
+    ),
+
+    minimum_reserve_mw: float = Query(
+        default=5000,
+        ge=0,
+        description=(
+            "Réserve nucléaire minimale "
+            "en MW"
+        ),
+    ),
+):
+    # lance la simulation de la phase 2
+    try:
+        return run_phase2(
+            number_of_steps=number_of_steps,
+
+            minimum_reserve_mw=(
+                minimum_reserve_mw
+            ),
+        )
+
+    except (
+        ValueError,
+        FileNotFoundError,
+        KeyError,
+        TypeError,
+    ) as error:
+        raise HTTPException(
+            status_code=422,
+            detail=str(error),
+        ) from error
+
+
+def display_simulation(
+    simulation
+):
     # affiche la simulation dans le terminal
     print()
-    print("=== EnergIA — Phase 1 ===")
+    print(
+        f"=== EnergIA phase "
+        f"{simulation['phase']} ==="
+    )
     print()
 
     for step in simulation["steps"]:
+        if simulation["phase"] == 2:
+            print(
+                f"{step['timestamp']} | "
+                f"consommation="
+                f"{step['total_consumption_mw']:.0f} MW | "
+                f"solaire="
+                f"{step['solar_production_mw']:.0f} MW | "
+                f"éolien="
+                f"{step['wind_production_mw']:.0f} MW | "
+                f"demande résiduelle="
+                f"{step['residual_demand_mw']:.0f} MW | "
+                f"nucléaire="
+                f"{step['production_mw']:.0f} MW"
+            )
+
+            print(
+                f"  réserve="
+                f"{step['nuclear_reserve_mw']:.0f} MW | "
+                f"réserve minimale="
+                f"{step['minimum_reserve_mw']:.0f} MW | "
+                f"réserve suffisante="
+                f"{step['reserve_sufficient']} | "
+                f"situation="
+                f"{step['situation']}"
+            )
+
+        else:
+            print(
+                f"{step['timestamp']} | "
+                f"demande="
+                f"{step['nuclear_required_mw']:.0f} MW | "
+                f"production="
+                f"{step['production_mw']:.0f} MW"
+            )
+
         print(
-            f"{step['timestamp']} | "
-            f"demande={step['nuclear_required_mw']:.0f} MW | "
-            f"production={step['production_mw']:.0f} MW | "
-            f"manquant={step['missing_mw']:.0f} MW | "
-            f"surplus={step['forced_surplus_mw']:.0f} MW | "
-            f"direction={step['direction']}"
+            f"  manquant="
+            f"{step['missing_mw']:.0f} MW | "
+            f"surplus="
+            f"{step['forced_surplus_mw']:.0f} MW | "
+            f"direction="
+            f"{step['direction']}"
         )
 
-        print("  Consommation régionale :")
+        print(
+            "  consommation régionale"
+        )
 
         for (
             region_id,
@@ -224,66 +480,96 @@ def display_simulation(simulation):
                 f"{consumption_mw:.0f} MW"
             )
 
-        print("  Répartition des centrales :")
+        print(
+            "  répartition des centrales"
+        )
 
         for plant in step["plants"]:
             print(
-                f"    - {plant['plant_name']} "
+                f"    - "
+                f"{plant['plant_name']} "
                 f"({plant['plant_id']}): "
                 f"{plant['previous_output_mw']:.1f} "
-                f"-> {plant['output_mw']:.1f} MW "
+                f"-> "
+                f"{plant['output_mw']:.1f} MW "
                 f"(variation "
                 f"{plant['change_mw']:+.1f} MW)"
             )
 
         print()
 
-    print("=== Résumé ===")
+    print("=== résumé ===")
 
     print(
-        f"Nombre de pas : "
+        f"nombre de pas : "
         f"{simulation['steps_count']}"
     )
 
     print(
-        f"Journée complète : "
+        f"journée complète : "
         f"{simulation['complete_day']}"
     )
 
     print(
-        f"Demande toujours satisfaite : "
+        f"demande toujours satisfaite : "
         f"{simulation['all_demand_satisfied']}"
     )
 
     print(
-        f"Contraintes toujours respectées : "
+        f"contraintes toujours respectées : "
         f"{simulation['all_constraints_respected']}"
     )
 
     print(
-        f"Production toujours équilibrée : "
+        f"production toujours équilibrée : "
         f"{simulation['all_production_balanced']}"
     )
 
     print(
-        f"Puissance totale manquante : "
+        f"puissance totale manquante : "
         f"{simulation['total_missing_mw']:.1f} MW"
     )
+
+    if simulation["phase"] == 2:
+        print(
+            f"réserve toujours suffisante : "
+            f"{simulation['reserve_always_sufficient']}"
+        )
+
+        print(
+            f"nombre de situations dégradées : "
+            f"{simulation['degraded_steps_count']}"
+        )
 
 
 def run_command_line():
     parser = argparse.ArgumentParser(
         description=(
-            "Simulation temporelle "
-            "- Phase 1"
+            "Simulation temporelle EnergIA"
         )
+    )
+
+    parser.add_argument(
+        "--phase",
+        type=int,
+        default=1,
+        choices=[
+            1,
+            2,
+        ],
+        help=(
+            "Phase à simuler"
+        ),
     )
 
     parser.add_argument(
         "--steps",
         type=int,
         default=96,
-        choices=range(1, 97),
+        choices=range(
+            1,
+            97
+        ),
         metavar="[1-96]",
         help=(
             "Nombre de quarts d'heure "
@@ -291,11 +577,35 @@ def run_command_line():
         ),
     )
 
+    parser.add_argument(
+        "--minimum-reserve-mw",
+        type=float,
+        default=5000,
+        help=(
+            "Réserve nucléaire minimale "
+            "en MW pour la phase 2"
+        ),
+    )
+
     arguments = parser.parse_args()
 
-    simulation = run_phase1(
-        arguments.steps
-    )
+    if arguments.phase == 2:
+        simulation = run_phase2(
+            number_of_steps=(
+                arguments.steps
+            ),
+
+            minimum_reserve_mw=(
+                arguments.minimum_reserve_mw
+            ),
+        )
+
+    else:
+        simulation = run_phase1(
+            number_of_steps=(
+                arguments.steps
+            )
+        )
 
     display_simulation(
         simulation
@@ -304,3 +614,6 @@ def run_command_line():
 
 if __name__ == "__main__":
     run_command_line()
+
+
+
