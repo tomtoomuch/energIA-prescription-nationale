@@ -327,6 +327,14 @@ Si la baisse demandée dépasse la flexibilité totale du parc, la puissance imp
 Un test vérifie qu’une baisse de 300 MW est correctement répartie entre deux centrales pouvant descendre respectivement de 200 MW et 100 MW.
 
 
+
+///--Connexion des limites temporelles à l’allocation--///
+
+La fonction allocate() peut maintenant recevoir plant_limits et limiter chaque allocation avec up_flexibility_mw.
+
+La puissance attribuée respecte simultanément la marge disponible, la rampe du premier brief, la flexibilité temporelle, la capacité du chemin et la demande restante.
+
+Un test limite Golfech à une hausse de 25 MW pour une demande de 100 MW. Le moteur attribue 25 MW et signale correctement 75 MW manquants.
 -----------------------------------------------------------
 changement phase 2
 

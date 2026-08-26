@@ -37,7 +37,12 @@ def allocate(
     simulation_parameters,
     current_state=None,
     step_initial_state=None,
+    plant_limits=None,
 ):
+
+    if plant_limits is None:
+        plant_limits = {}
+
     candidates = region_candidates(graph, region)
     remaining_demand = additional_demand_mw
     allocations = []
@@ -71,6 +76,8 @@ def allocate(
                 ramp_limit(plant)
             )
 
+            already_added_mw = 0.0
+
             if step_initial_state is None:
                 remaining_ramp_mw = ramp
             else:
@@ -93,9 +100,27 @@ def allocate(
                 )
             link_capacity = path_capacity(graph, info["path"])
 
+            temporal_up_flexibility_mw = float(
+                plant_limits.get(
+                    plant_id,
+                    {},
+                ).get(
+                    "up_flexibility_mw",
+                    float("inf"),
+                )
+            )
+
+            remaining_temporal_up_mw = max(
+                0.0,
+                temporal_up_flexibility_mw
+                - already_added_mw,
+            )
+
+
             max_deliverable = min(
                 margin,
                 remaining_ramp_mw,
+                remaining_temporal_up_mw,
                 link_capacity,
                 remaining_demand,
             )

@@ -213,6 +213,7 @@ def allocate_regional_demands(
                 step_initial_state=(
                     step_initial_state
                 ),
+                plant_limits=plant_limits,
             )
 
             for allocation in allocation_result[

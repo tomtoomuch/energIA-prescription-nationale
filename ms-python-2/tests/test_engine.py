@@ -74,6 +74,61 @@ class TestAllocation(unittest.TestCase):
         self.assertFalse(result["fully_satisfied"])
         self.assertGreater(result["missing_mw"], 0)
 
+
+    def test_allocation_respecte_flexibilite_temporelle(self):
+        region = self.regions_index["occitanie"]
+
+        current_state = {
+            plant_id: float(
+                plant["simulation"]["initial_output_mw"]
+            )
+            for plant_id, plant
+            in self.plants_index.items()
+        }
+
+        # Toutes les centrales sont bloquées,
+        # sauf Golfech qui peut monter de 25 MW.
+        plant_limits = {
+            plant_id: {
+                "up_flexibility_mw": 0.0,
+            }
+            for plant_id in self.plants_index
+        }
+
+        plant_limits["golfech"][
+            "up_flexibility_mw"
+        ] = 25.0
+
+        result = allocate(
+            region=region,
+            additional_demand_mw=100.0,
+            graph=self.graph,
+            plants_index=self.plants_index,
+            simulation_parameters=(
+                self.simulation_parameters
+            ),
+            current_state=current_state,
+            step_initial_state=(
+                current_state.copy()
+            ),
+            plant_limits=plant_limits,
+        )
+
+        allocated_total_mw = sum(
+            allocation["allocated_mw"]
+            for allocation in result["allocations"]
+        )
+
+        self.assertAlmostEqual(
+            allocated_total_mw,
+            25.0,
+        )
+
+        self.assertAlmostEqual(
+            result["missing_mw"],
+            75.0,
+        )
+
 class TestTemporalAllocation(unittest.TestCase):
 
     def test_calcul_de_la_montee_necessaire(self):
