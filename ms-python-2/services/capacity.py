@@ -2,7 +2,7 @@
 
 
 # Auparavant, la marge était toujours calculée depuis
-# l’état initial du premier brief.
+# l’état initial du premier brief
 # Le paramètre facultatif permet maintenant d’utiliser
 # la production du quart d’heure précédent.
 def dispatchable_margin(

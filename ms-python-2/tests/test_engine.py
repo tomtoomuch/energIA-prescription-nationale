@@ -31,9 +31,22 @@ class TestCapacity(unittest.TestCase):
 
     def test_calcul_marge_disponible(self):
         plant = self.plants_index["golfech"]
+        
         margin = dispatchable_margin(plant)
         attendu = plant["simulation"]["initial_dispatchable_margin_mw"]
         self.assertEqual(margin, attendu)
+
+    def test_calcul_marge_depuis_production_courante(self):
+        plant = self.plants_index["golfech"]
+        maximum = float(
+            plant["simulation"]["soft_upper_bound_mw"]
+        )
+        current_output_mw = maximum - 100.0
+        margin = dispatchable_margin(
+            plant,
+            current_output_mw=current_output_mw,
+        )
+        self.assertEqual(margin, 100.0)
 
 class TestAllocation(unittest.TestCase):
     @classmethod

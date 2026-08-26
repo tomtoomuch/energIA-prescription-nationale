@@ -224,6 +224,31 @@ Si current_output_mw n’est pas fourni, la fonction utilise encore initial_outp
 
 L’étape suivante consistera à transmettre effectivement cet état courant depuis allocation.py.
 
+========================================================
+Modification allocation.py
+==========================================================
+///--Transmission de l’état courant au calcul du score--///
+
+La fonction allocate() transmet maintenant current_output_mw à candidate_score().
+
+Le calcul de la marge disponible et le calcul du score utilisent ainsi la même production issue du quart d’heure précédent.
+
+Cela permet de classer correctement les centrales selon leur état réel : une centrale déjà proche de sa puissance maximale reçoit une pénalité de saturation plus importante.
+
+Cette modification prépare la connexion entre l’allocation régionale du premier brief et le moteur temporel.
+
+==========================================
+Test de dispatchable_margin()
+===============================================
+Un test vérifie maintenant que la marge disponible est calculée depuis la production courante de la centrale.
+
+Le test récupère la limite maximale de Golfech dans le JSON, puis simule une production située 100 MW sous cette limite.
+
+La fonction dispatchable_margin() doit alors retourner une marge de 100 MW.
+
+Ce test confirme que le calcul utilise bien current_output_mw, c’est-à-dire la production du quart d’heure précédent, et non systématiquement la production initiale.
+
+
 
 -----------------------------------------------------------
 changement phase 2
