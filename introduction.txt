@@ -561,7 +561,7 @@ Les anciens capacity.py, allocation.py, score.py et dispatch.py utilisent toujou
 ========================================================
 Modification capacity.py
 ==========================================================
---def dispatchable_margin-
+///--def dispatchable_margin-///
 
 La fonction dispatchable_margin() actuelle calcula la marge disponible d’une centrale depuis sa production initiale :
 
@@ -583,7 +583,7 @@ Cette modification prépare l’intégration des contraintes régionales dans le
 de revenir systématiquement à l’état initial.
 Les anciens tests unitaires continuent de fonctionner après cette modification.
 
---available_capacity()
+///--available_capacity()///
 
 La fonction available_capacity() accepte maintenant la production courante de la centrale.
 
@@ -595,8 +595,10 @@ la rampe maximale de montée en 15 minutes.
 
 Cette modification permet de calculer la capacité depuis l’état du quart d’heure précédent, tout en conservant la compatibilité avec le moteur initial.
 
-
---Adaptation de allocation.py à l’état temporel
+========================================================
+Modification allocation.py
+==========================================================
+////--Adaptation de allocation.py à l’état temporel////
 
 La fonction allocate() accepte maintenant un état temporel facultatif appelé current_state.
 
@@ -604,7 +606,11 @@ Lorsqu’il est fourni, la marge disponible et la production finale d’une cent
 
 Sans current_state, la fonction continue d’utiliser initial_output_mw afin de rester compatible avec le moteur et les tests du premier brief.
 
---Adaptation du score à l’état temporel
+
+========================================================
+Modification score.py
+==========================================================
+///--Adaptation du score à l’état temporel///
 
 La fonction candidate_score() peut maintenant recevoir la production courante d’une centrale avec current_output_mw.
 
@@ -613,4 +619,6 @@ Le taux de charge final est calculé à partir de la production du quart d’heu
 Si current_output_mw n’est pas fourni, la fonction utilise encore initial_output_mw afin de conserver la compatibilité avec le premier brief.
 
 L’étape suivante consistera à transmettre effectivement cet état courant depuis allocation.py.
+
+
 

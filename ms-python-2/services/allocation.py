@@ -81,6 +81,7 @@ def allocate(
                 max_deliverable,
                 info["is_local"],
                 simulation_parameters,
+                current_output_mw=current_output_mw,
             )
 
             if best_score is None or score < best_score:
