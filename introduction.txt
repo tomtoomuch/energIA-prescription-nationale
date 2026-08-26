@@ -280,7 +280,16 @@ Seule la variation à produire est répartie, et non la consommation totale, afi
 La somme des variations régionales correspond à la variation nationale demandée. Ces valeurs seront ensuite transmises à allocate() pour sélectionner les centrales.
 
 
+========================================================
+Modification allocation.py
+==========================================================
+///--Éviter la réutilisation de la même rampe--///
 
+La fonction allocate() accepte maintenant step_initial_state, qui représente la production des centrales au début du quart d’heure.
+
+Lorsqu’une centrale participe à plusieurs allocations régionales pendant le même pas, la fonction déduit la puissance déjà attribuée de sa rampe de montée.
+
+La rampe ne peut donc pas être réutilisée entièrement pour chaque région. La variation totale d’une centrale reste limitée à sa rampe maximale pendant les 15 minutes.
 -----------------------------------------------------------
 changement phase 2
 
