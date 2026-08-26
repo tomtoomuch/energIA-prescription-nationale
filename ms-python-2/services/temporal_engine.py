@@ -1,3 +1,7 @@
+
+from services.apply_consumption_events import (
+    apply_consumption_events,
+)
 EPSILON = 0.000001
 
 
@@ -605,7 +609,8 @@ def simulate_day(
     nuclear_dataframe,
     number_of_steps=None,
     non_dispatchable_data=None,
-    minimum_reserve_mw=0
+    minimum_reserve_mw=0,
+    apply_consumption_events=None,
 ):
     timestamps = consumption_data[
         "timestamps"
