@@ -290,6 +290,19 @@ La fonction allocate() accepte maintenant step_initial_state, qui représente la
 Lorsqu’une centrale participe à plusieurs allocations régionales pendant le même pas, la fonction déduit la puissance déjà attribuée de sa rampe de montée.
 
 La rampe ne peut donc pas être réutilisée entièrement pour chaque région. La variation totale d’une centrale reste limitée à sa rampe maximale pendant les 15 minutes.
+
+========================================================
+Modification temporal_allocation.py
+==========================================================
+///--Appel du moteur d’allocation existant--///
+
+La fonction allocate_regional_demands() appelle maintenant allocate() pour chaque région ayant besoin d’une hausse de production.
+
+Chaque appel réutilise les candidates locales et externes, Dijkstra, la capacité des chemins et le score du premier brief.
+
+Après chaque allocation, next_state est mis à jour. step_initial_state reste fixe afin que la rampe maximale d’une centrale ne puisse pas être réutilisée pour plusieurs régions pendant le même quart d’heure.
+
+Les puissances impossibles à attribuer sont additionnées dans missing_mw. Un test confirme qu’une hausse de 3 000 MW sans centrale candidate produit bien 3 000 MW manquants.
 -----------------------------------------------------------
 changement phase 2
 

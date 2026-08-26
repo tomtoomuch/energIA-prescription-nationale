@@ -84,12 +84,21 @@ class TestTemporalAllocation(unittest.TestCase):
             "cattenom": 16000.0,
         }
 
+        # Régions fictives sans aucune centrale candidate.
+        empty_region = {
+            "local_plant_ids": [],
+            "external_entry_plant_ids": [],
+        }
+
         result = allocate_regional_demands(
             regional_demands=regional_demands,
             current_state=current_state,
             graph={},
             plants_index={},
-            regions_index={},
+            regions_index={
+                "occitanie": empty_region,
+                "grand_est": empty_region,
+            },
             simulation_parameters={},
         )
 
@@ -110,6 +119,11 @@ class TestTemporalAllocation(unittest.TestCase):
 
         self.assertEqual(
             result["requested_change_mw"],
+            3000.0,
+        )
+
+        self.assertEqual(
+            result["missing_mw"],
             3000.0,
         )
 

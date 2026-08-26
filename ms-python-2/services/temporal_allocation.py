@@ -88,6 +88,64 @@ def allocate_regional_demands(
             region_id: 0.0
             for region_id in regional_demands
         }
+
+    total_missing_mw = 0.0
+
+    if direction == "up":
+        step_initial_state = (
+            current_state.copy()
+        )
+
+        for (
+            region_id,
+            regional_change_mw,
+        ) in regional_requested_changes.items():
+
+            if regional_change_mw <= 0:
+                continue
+
+            if region_id not in regions_index:
+                raise ValueError(
+                    f"Région inconnue : {region_id}"
+                )
+
+            region = regions_index[region_id]
+
+            allocation_result = allocate(
+                region=region,
+                additional_demand_mw=regional_change_mw,
+                graph=graph,
+                plants_index=plants_index,
+                simulation_parameters=(
+                    simulation_parameters
+                ),
+                current_state=next_state,
+                step_initial_state=(
+                    step_initial_state
+                ),
+            )
+
+            for allocation in allocation_result[
+                "allocations"
+            ]:
+                plant_id = allocation["plant_id"]
+                allocated_mw = float(
+                    allocation["allocated_mw"]
+                )
+
+                next_state[plant_id] = (
+                    next_state[plant_id]
+                    + allocated_mw
+                )
+
+            regional_results[region_id] = (
+                allocation_result
+            )
+
+            total_missing_mw += float(
+                allocation_result["missing_mw"]
+            )
+
         
     return {
         "state": next_state,
@@ -97,6 +155,6 @@ def allocate_regional_demands(
         "direction": direction,
         "requested_change_mw": requested_change_mw,
         "regional_requested_changes":regional_requested_changes,
-        "missing_mw": 0.0,
+        "missing_mw": total_missing_mw,
     }
     
