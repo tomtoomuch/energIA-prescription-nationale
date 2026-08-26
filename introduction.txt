@@ -249,6 +249,16 @@ La fonction dispatchable_margin() doit alors retourner une marge de 100 MW.
 Ce test confirme que le calcul utilise bien current_output_mw, c’est-à-dire la production du quart d’heure précédent, et non systématiquement la production initiale.
 
 
+==============================================
+Connexion entre le temps et l’allocation régionales
+====================================================
+
+Le fichier temporal_allocation.py a été créé pour relier le moteur temporel à la fonction allocate() du premier brief.
+
+Il recevra les consommations régionales et l’état des centrales au quart d’heure précédent. Il coordonnera ensuite l’allocation de chaque région sans remplacer la logique déjà présente dans allocation.py.
+
+Pour le moment, la structure de la fonction allocate_regional_demands() et ses données d’entrée et de sortie ont été définies. La logique d’allocation régionale sera ajoutée à l’étape suivante.
+
 
 -----------------------------------------------------------
 changement phase 2
