@@ -4,30 +4,20 @@ Ce projet est une intervention complète visant à moderniser le système d'aide
 
 ## Table des matières
 
-- [[#Architecture globale|Architecture globale]]
-	- [[#Architecture globale#Schéma de flux séquentiel|Schéma de flux séquentiel]]
-	- [[#Architecture globale#Arborescence projet|Arborescence projet]]
-- [[#Application|Application]]
-	- [[#Application#Routes|Routes]]
-		- [[#Routes#**Routes de monitoring**|**Routes de monitoring**]]
-		- [[#Routes#**Routes d'opérations**|**Routes d'opérations**]]
-	- [[#Application#Composants techniques principaux|Composants techniques principaux]]
-		- [[#Composants techniques principaux#Fonctionnement du moteur prescriptif|Fonctionnement du moteur prescriptif]]
-			- [[#Fonctionnement du moteur prescriptif#Formule d'attribution de score|Formule d'attribution de score]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**graph_loader.py**|ms-python/services/**graph_loader.py**]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**dijkstra.py**|ms-python/services/**dijkstra.py**]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**capacity.py**|ms-python/services/**capacity.py**]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**priority.py**|ms-python/services/**priority.py**]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**candidates.py**|ms-python/services/**candidates.py**]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**score.py**|ms-python/services/**score.py**]]
-			- [[#Fonctionnement du moteur prescriptif#ms-python/services/**allocation.py**|ms-python/services/**allocation.py**]]
-	- [[#Application#Données utilisées|Données utilisées]]
-	- [[#Application#Méthodologie algorithmique détaillée|Méthodologie algorithmique détaillée]]
-	- [[#Application#Tests Unitaires|Tests Unitaires]]
-- [[#Démarrage et utilisation|Démarrage et utilisation]]
-	- [[#Démarrage et utilisation#Prérequis techniques|Prérequis techniques]]
-	- [[#Démarrage et utilisation#Lancement de l'environnement (via Docker)|Lancement de l'environnement (via Docker)]]
-	- [[#Démarrage et utilisation#Terminaisons _(Endpoints)_ de l'API  exposé(e)s|Terminaisons _(Endpoints)_ de l'API  exposé(e)s]]
+- [Architecture globale](#architecture-globale)
+- [Application](#application)
+  - [Routes](#routes)
+    - [Routes de monitoring](#routes-de-monitoring)
+    - [Routes d'opérations](#routes-dopérations)
+  - [Composants techniques principaux](#composants-techniques-principaux)
+    - [Fonctionnement du moteur prescriptif](#fonctionnement-du-moteur-prescriptif)
+    - [Données utilisées](#données-utilisées)
+    - [Méthodologie algorithmique détaillée](#méthodologie-algorithmique-détaillée)
+    - [Tests Unitaires](#tests-unitaires)
+- [Démarrage et utilisation](#démarrage-et-utilisation)
+  - [Prérequis techniques](#prérequis-techniques)
+  - [Lancement de l'environnement (via Docker)](#lancement-de-lenvironnement-via-docker)
+    - [Terminaisons _(Endpoints)_ de l'API exposé(e)s](#terminaisons-endpoints-de-lapi-exposes)
 
 ## Architecture globale
 
@@ -67,6 +57,7 @@ flowchart TB
 ```
 
 #### Schéma de flux séquentiel
+
 ```mermaid
 ---
 config:
@@ -158,13 +149,13 @@ treeView-beta
             "test-engine.py"
 ```
 
-Dépôt GitHub : https://github.com/tomtoomuch/energIA-prescription-nationale
+Dépôt GitHub : <https://github.com/tomtoomuch/energIA-prescription-nationale>
 
-Image de la passerelle : https://hub.docker.com/r/tomtoomuch/energia-gateway
+Image de la passerelle : <https://hub.docker.com/r/tomtoomuch/energia-gateway>
 
-Image du micro-service 'Moteur prescriptif' : https://hub.docker.com/r/tomtoomuch/energia-ms-python
+Image du micro-service 'Moteur prescriptif' : <https://hub.docker.com/r/tomtoomuch/energia-ms-python>
 
-Image du micro-service 'Prescription nationale" : https://hub.docker.com/r/tomtoomuch/energia-ms-python-2
+Image du micro-service 'Prescription nationale" : <https://hub.docker.com/r/tomtoomuch/energia-ms-python-2>
 
 ## Application
 
@@ -196,6 +187,7 @@ Interroge le serveur python/FastAPI (port 8000) sur son _endpoint_ /health via l
 GET <http://localhost:3000/health-ms-2>
 
 Interroge le serveur python/FastAPI (port 8002) sur son _endpoint_ /health via la passerelle et répond au client via la passerelle également et vérifie son fonctionnement.
+
 #### **Routes d'opérations**
 
 **Déploiement initial**
@@ -266,13 +258,13 @@ Le format des réponses json
 
 ### Composants techniques principaux
 
-* **Gateway Express (gateway/) :** la passerelle API (NodeJS/Express).
+- **Gateway Express (gateway/) :** la passerelle API (NodeJS/Express).
 C'est le seul point d'entrée autorisé pour tout client externe. Elle gère le routage, la validation des requêtes et assure que les communications internes se font via un protocole strict vers le backend Python.
 
-* **Service Python (ms-python/) :** le cœur de la logique métier.
+- **Service Python (ms-python/) :** le cœur de la logique métier.
 Ce micro-service implémente l'ensemble des calculs complexes : modélisation du réseau, algorithmes de cheminement et d'optimisation. Il est construit en utilisant FastAPI pour exposer ses fonctionnalités via une API REST interne.
 
-* **Moteur algorithmique prescriptif (ms_python/) :** les traitements lourds
+- **Moteur algorithmique prescriptif (ms_python/) :** les traitements lourds
 **Modélisation :** Traitement des données du parc nucléaire (_nodes_/sommets = centrales, _edges_/arêtes = liaisons).
 **Optimisation de cheminement :** Implémentation de l'algorithme de Dijkstra pour trouver le chemin le plus court entre deux points dans le réseau maillé.
 **Calcul des capacités disponibles :** Détermination de la puissance disponible en fonction du minimum entre les limites supérieures (_soft upper bound_) et la rampe de montée maximale (_max_ramp_up_mw_per_15_min_).
@@ -417,17 +409,17 @@ et on choisit la meilleure. On lui donne le maximum qu'elle peut fournir - pas p
 
 Les **3 plafonds** qu'on ne dépasse jamais, à bien retenir :
 
-* la marge de la centrale (elle ne peut pas produire plus que sa limite de sécurité),
-* la montée en puissance, ou _ramp_ in english (elle ne peut pas monter en puissance instantanément),
-* la capacité de la liaison empruntée
+- la marge de la centrale (elle ne peut pas produire plus que sa limite de sécurité),
+- la montée en puissance, ou _ramp_ in english (elle ne peut pas monter en puissance instantanément),
+- la capacité de la liaison empruntée
 
 ### Données utilisées
 
 Les données sont structurées autour des trois piliers suivants :
 
-* **Graphe du réseau :** Représentation physique des centrales et liaisons (pondérées par la distance, les pertes techniques et la capacité maximale).
-* **Données géographiques :** Incluant la segmentation en régions et un inventaire de centrales.
-* **Besoin régional :** Le flux d'entrée qui déclenche toute simulation (le besoin en MW).
+- **Graphe du réseau :** Représentation physique des centrales et liaisons (pondérées par la distance, les pertes techniques et la capacité maximale).
+- **Données géographiques :** Incluant la segmentation en régions et un inventaire de centrales.
+- **Besoin régional :** Le flux d'entrée qui déclenche toute simulation (le besoin en MW).
 
 ### Méthodologie algorithmique détaillée
 
