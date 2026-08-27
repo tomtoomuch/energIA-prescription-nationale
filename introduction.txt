@@ -1215,3 +1215,101 @@ for scenario in scenarios_data.get la boucle regarde chaque scénario
 
 
 exemple d’identifiant est evening_peak_occitanie
+
+
+Changement du code pour la BONUS
+
+bonus demande
+
+1  exporter et réimporter un scénario complet en json
+2 générer des courbes
+3  simuler une semaine, un mois ou une année
+4  réfléchir aux performances pour les longues simulations
+
+
+
+
+
+le fichier utilisé est charts.py
+
+
+
+ consommation totale
+roduction solaire
+production éolienne
+production non pilotable totale
+demande résiduelle
+ production nucléaire
+  réserve nucléaire disponible
+ réserve minimale demandée
+ surplus nucléaire
+ puissance manquante
+
+
+
+def validate_chart_data(
+    simulation
+):
+cette function vérifie que la simulation possède des résultats
+elle contrôle également que chaque quart d’heure contient les données nécessaires comme la consommation, le solaire, l’éolien, la réserve et les MW manquants
+elle évite de produire une courbe incorrecte avec des données incomplètes
+get_chart_values
+def get_chart_values(
+    steps,
+    field_name
+)
+cette fonction récupère une même information pour les 96 quarts d’heure
+par exemple
+solar_productions = get_chart_values(
+    steps,
+    "solar_production_mw"
+)
+elle retourne une liste contenant les 96 productions solaires
+configure_time_axis
+def configure_time_axis(
+    axis,
+    timestamps
+):
+cette fonction prépare l’axe horizontal des graphiques
+elle place les horaires sur l’axe et ajoute une grille pour faciliter la lecture
+generate_phase2_charts
+
+
+def generate_phase2_charts(
+    simulation,
+    output_directory=OUTPUT_DIRECTORY
+):
+c’est la fonction principale du bonus
+
+
+elle reçoit le résultat complet de simulate_day
+ récupère les différentes valeurs
+construit quatre graphiques
+enregistre finalement une image dans le dossier generated_charts
+les quatre graphiques
+
+le premier graphique compare
+la consommation totale
+la demande résiduelle
+la production nucléaire
+il montre comment le nucléaire s’adapte après avoir retiré le solaire et l’éolien
+
+le deuxième graphique affiche
+le solaire
+l’éolien
+le total non pilotable
+il permet de voir l’évolution des énergies non pilotables pendant la journée
+
+le troisième graphique compare
+la réserve nucléaire disponible
+la réserve minimale configurable
+si la réserve disponible passe sous la réserve minimale, la zone est affichée en rouge
+le quatrième graphique affiche
+ le surplus nucléaire
+la puissance manquante
+il permet d’identifier les quarts d’heure pendant lesquels la demande ne peut pas être satisfaite
+
+comment exécuter le bonus
+depuis le dossier ms-python-2
+
+python -m services.charts
