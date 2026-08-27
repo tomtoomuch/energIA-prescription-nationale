@@ -25,9 +25,6 @@ from services.nuclear_dataframe import (
     build_nuclear_dataframe,
 )
 
-from services.apply_consumption_events import (
-    apply_consumption_events, 
-)
 
 from services.temporal_engine import (
     simulate_day,
@@ -522,20 +519,20 @@ def simulate_phase3_api(
         ),
     ),
 
-    scenario: str = Query(
-        default="evening_peak_occitanie",
-        description=(
-            "Intitulé du scénario de "
-            "demande exceptionnelle à appliquer"
+        scenario_id: str = Query(
+            default="evening_peak_occitanie",
+            description=(
+                    "Identifiant du scénario "
+                    "de consommation"
+            ),
         ),
-    ),
 ):
     # lance la simulation de la phase 3
     try:
         return run_phase3(
+            scenario_id=scenario_id,
             number_of_steps=number_of_steps,
             minimum_reserve_mw=minimum_reserve_mw,
-            scenario=scenario,
         )
 
     except (
@@ -613,10 +610,18 @@ def display_simulation(
 
         if simulation["phase"] == 3:
             print(
-                f"  variation des événements="
-                f"{step['event_delta_mw']:+.0f} MW | "
-                f"événements actifs="
-                f"{len(step['active_events'])}"
+                f"nombre d'événements : "
+                f"{simulation['events_count']}"
+            )
+
+            print(
+                f"quarts d'heure avec événements : "
+                f"{simulation['steps_with_active_events']}"
+            )
+
+            print(
+                f"variation cumulée des événements : "
+                f"{simulation['total_event_delta_mw']:.1f} MW"
             )
             
         for (
@@ -680,7 +685,7 @@ def display_simulation(
         f"{simulation['total_missing_mw']:.1f} MW"
     )
 
-    if simulation["phase"] == 2:
+    if simulation["phase"] >= 2:
         print(
             f"réserve toujours suffisante : "
             f"{simulation['reserve_always_sufficient']}"
