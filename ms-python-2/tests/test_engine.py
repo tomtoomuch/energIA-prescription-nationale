@@ -5,6 +5,7 @@ from services.capacity import dispatchable_margin
 from services.allocation import allocate
 from services.temporal_allocation import allocate_regional_demands
 from services.temporal_engine import build_initial_state
+from main import run_phase1
 
 
 
@@ -303,6 +304,96 @@ class TestTemporalAllocation(unittest.TestCase):
             result["forced_surplus_mw"],
             0.0,
         )
-if __name__ == "__main__":
 
+class TestPhase1Integration(
+    unittest.TestCase
+):
+
+    def test_journee_complete_phase1(
+        self
+    ):
+        result = run_phase1(96)
+
+        # La journée contient bien 96 quarts d'heure.
+        self.assertEqual(
+            result["steps_count"],
+            96,
+        )
+
+        self.assertTrue(
+            result["complete_day"]
+        )
+
+        # Les centrales respectent toujours
+        # minimums, maximums et rampes.
+        self.assertTrue(
+            result[
+                "all_constraints_respected"
+            ]
+        )
+
+        # La Corse n'est pas connectée au réseau
+        # continental dans les données du projet.
+        # La demande ne peut donc pas être
+        # entièrement satisfaite.
+        self.assertFalse(
+            result[
+                "all_demand_satisfied"
+            ]
+        )
+
+        self.assertFalse(
+            result[
+                "all_production_balanced"
+            ]
+        )
+
+        self.assertGreater(
+            result["total_missing_mw"],
+            0.0,
+        )
+
+        # Récupérer uniquement les quarts d'heure
+        # qui contiennent des MW manquants.
+        problematic_steps = [
+            step
+            for step in result["steps"]
+            if step["missing_mw"] > 0
+        ]
+
+        self.assertTrue(
+            problematic_steps
+        )
+
+        # Vérifier que tous les MW manquants
+        # proviennent uniquement de la Corse.
+        for step in problematic_steps:
+            missing_regions = {
+                region_id
+                for (
+                    region_id,
+                    regional_result,
+                )
+                in step[
+                    "regional_allocations"
+                ].items()
+                if (
+                    isinstance(
+                        regional_result,
+                        dict,
+                    )
+                    and regional_result.get(
+                        "missing_mw",
+                        0.0,
+                    ) > 0
+                )
+            }
+
+            self.assertEqual(
+                missing_regions,
+                {"corse"},
+            )
+
+
+if __name__ == "__main__":
     unittest.main()

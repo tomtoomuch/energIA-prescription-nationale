@@ -10,9 +10,14 @@ from fastapi import (
 )
 
 from services.graph_loader import (
+    load_data,
+    build_graph,
+    build_plants_index,
+    build_regions_index,
     load_reference_consumption,
     load_non_dispatchable_production,
 )
+
 
 from services.nuclear_dataframe import (
     build_nuclear_dataframe,
@@ -65,6 +70,25 @@ def run_phase1(
         load_reference_consumption()
     )
 
+    fleet_data = load_data()
+
+    graph = build_graph(
+        fleet_data
+    )
+
+    plants_index = build_plants_index(
+        fleet_data
+    )
+
+    regions_index = build_regions_index(
+        fleet_data
+    )
+
+    simulation_parameters = fleet_data[
+        "simulation_parameters"
+    ]
+
+
     nuclear_dataframe = (
         build_nuclear_dataframe()
     )
@@ -73,7 +97,14 @@ def run_phase1(
         consumption_data=consumption_data,
         nuclear_dataframe=nuclear_dataframe,
         number_of_steps=number_of_steps,
+        graph=graph,
+        plants_index=plants_index,
+        regions_index=regions_index,
+        simulation_parameters=(
+            simulation_parameters
+        ),
     )
+
 
 
 def run_phase2(
