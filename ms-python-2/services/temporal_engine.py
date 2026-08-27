@@ -338,13 +338,72 @@ def simulate_step(
         - previous_total_mw
     )
 
-    if difference_mw > EPSILON:
+    regional_allocation_result = None
+
+    # Si les consommations régionales sont fournies,
+    # la Phase 1 utilise les contraintes du premier brief.
+    if regional_demands is not None:
+        required_context = {
+            "graph": graph,
+            "plants_index": plants_index,
+            "regions_index": regions_index,
+            "simulation_parameters":
+                simulation_parameters,
+        }
+
+        missing_context = [
+            name
+            for name, value
+            in required_context.items()
+            if value is None
+        ]
+
+        if missing_context:
+            raise ValueError(
+                "Contexte régional manquant : "
+                + ", ".join(missing_context)
+            )
+
+        regional_allocation_result = (
+            allocate_regional_demands(
+                regional_demands=regional_demands,
+                current_state=previous_state,
+                graph=graph,
+                plants_index=plants_index,
+                regions_index=regions_index,
+                simulation_parameters=(
+                    simulation_parameters
+                ),
+                plant_limits=plant_limits,
+            )
+        )
+
+        # L’état calculé avec candidates, Dijkstra,
+        # les capacités, les pertes et le score
+        # devient l’état final du quart d’heure.
+        next_state = (
+            regional_allocation_result[
+                "state"
+            ]
+        )
+
+        direction = (
+            regional_allocation_result[
+                "direction"
+            ]
+        )
+
+    # Comportement de secours utilisé lorsque
+    # le contexte régional n’est pas fourni.
+    elif difference_mw > EPSILON:
         direction = "up"
 
         next_state = distribute_change(
             plants=plants,
             previous_state=previous_state,
-            requested_change_mw=difference_mw,
+            requested_change_mw=(
+                difference_mw
+            ),
             direction=direction,
             plant_limits=plant_limits,
         )
@@ -609,6 +668,16 @@ def simulate_step(
         "plants":
             plant_states,
 
+
+        "regional_allocations": (
+            regional_allocation_result[
+                "regional_results"
+            ]
+            if regional_allocation_result
+            is not None
+            else {}
+        ),
+
         # cet état sera utilisé pour calculer
         # le prochain quart d'heure
         "state":
@@ -623,6 +692,10 @@ def simulate_day(
     non_dispatchable_data=None,
     minimum_reserve_mw=0,
     apply_consumption_events=None,
+    graph=None,
+    plants_index=None,
+    regions_index=None,
+    simulation_parameters=None,
 ):
     timestamps = consumption_data[
         "timestamps"
@@ -659,8 +732,41 @@ def simulate_day(
 
     if not plants:
         raise ValueError(
-            "La DataFrame des centrales est vide"
+            "La DataFrame des centrales est vide"  )
+
+
+
+    regional_context = {
+        "graph": graph,
+        "plants_index": plants_index,
+        "regions_index": regions_index,
+        "simulation_parameters":
+            simulation_parameters,
+    }
+
+    provided_context_values = [
+        value is not None
+        for value in regional_context.values()
+    ]
+
+    if any(provided_context_values) and not all(
+        provided_context_values
+    ):
+        missing_context = [
+            name
+            for name, value
+            in regional_context.items()
+            if value is None
+        ]
+
+        raise ValueError(
+            "Contexte régional incomplet : "
+            + ", ".join(missing_context)
         )
+
+    regional_allocation_enabled = all(
+        provided_context_values
+    )
 
     if len(national_consumptions) != len(
         timestamps
@@ -813,10 +919,31 @@ def simulate_day(
             - national_total_mw
         )
 
+        regional_demands_for_step = None
+
+        # Pour le moment, l'allocation régionale
+        # est activée uniquement pour la Phase 1.
+        if (
+            regional_allocation_enabled
+            and non_dispatchable_data is None
+        ):
+            regional_demands_for_step = (
+                regional_consumption
+            )
+
         result = simulate_step(
             plants=plants,
             previous_state=current_state,
             demand_mw=residual_demand_mw,
+            regional_demands=(
+                regional_demands_for_step
+            ),
+            graph=graph,
+            plants_index=plants_index,
+            regions_index=regions_index,
+            simulation_parameters=(
+                simulation_parameters
+            ),
         )
 
         nuclear_reserve_mw = (
