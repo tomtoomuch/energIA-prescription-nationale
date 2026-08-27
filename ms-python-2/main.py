@@ -12,6 +12,8 @@ from fastapi import (
 from services.graph_loader import (
     load_reference_consumption,
     load_non_dispatchable_production,
+    load_consumption_scenarios,
+    get_consumption_scenario,
 )
 
 from services.nuclear_dataframe import (
@@ -19,7 +21,7 @@ from services.nuclear_dataframe import (
 )
 
 from services.apply_consumption_events import (
-    apply_consumption_events,
+    apply_consumption_events, 
 )
 
 from services.temporal_engine import (
@@ -104,7 +106,7 @@ def run_phase2(
 def run_phase3(
     scenario_id,
     number_of_steps=96,
-    minimum_reserve_mw=5000
+    minimum_reserve_mw=5000,
 ):
     # Chargement des données de la phase 3
     consumption_data = (
@@ -119,19 +121,31 @@ def run_phase3(
         build_nuclear_dataframe()
     )
 
-    scenario = (
-        apply_consumption_events()
+    scenarios_data = (
+        load_consumption_scenarios()
     )
+
+    scenario = (
+        get_consumption_scenario(
+            scenarios_data,
+            scenario_id,
+        )
+    )
+
+    events_list = (
+        list(scenario.get("events"))
+    )
+
+    print("Events list : ", events_list)
 
     return simulate_day(
         consumption_data=consumption_data,
         nuclear_dataframe=nuclear_dataframe,
         number_of_steps=number_of_steps,
         non_dispatchable_data=non_dispatchable_data,
-        minimum_reserve_mw=0,
-        consumption_events=scenario
+        minimum_reserve_mw=minimum_reserve_mw,
+        apply_consumption_events=events_list
     )
-
 
 @app.get("/")
 def home():
@@ -448,6 +462,61 @@ def simulate_phase2_api(
             detail=str(error),
         ) from error
 
+@app.get(
+    "/phase3/simulate-day",
+    dependencies=[
+        Depends(verify_api_key)
+    ],
+)
+def simulate_phase3_api(
+    number_of_steps: int = Query(
+        default=96,
+        ge=1,
+        le=96,
+        description=(
+            "Nombre de quarts d'heure "
+            "à simuler"
+        ),
+    ),
+
+    minimum_reserve_mw: float = Query(
+        default=5000,
+        ge=0,
+        description=(
+            "Réserve nucléaire minimale "
+            "en MW"
+        ),
+    ),
+
+    scenario_id: str = Query(
+        default="evening_peak_occitanie",
+        description=(
+            "Intitulé du scénario de "
+            "demande exceptionnelle à appliquer"
+        ),
+    ),
+):
+    # lance la simulation de la phase 3
+    try:
+        return run_phase3(
+            scenario_id,
+            number_of_steps=number_of_steps,
+            minimum_reserve_mw=minimum_reserve_mw,
+        
+        )
+
+    except (
+        ValueError,
+        FileNotFoundError,
+        KeyError,
+        TypeError,
+    ) as error:
+        raise HTTPException(
+            status_code=422,
+            detail=str(error),
+        ) from error
+
+
 
 def display_simulation(
     simulation
@@ -509,16 +578,28 @@ def display_simulation(
             "  consommation régionale"
         )
 
-        for (
-            region_id,
-            consumption_mw
-        ) in step[
-            "regional_consumption_mw"
-        ].items():
-            print(
-                f"    - {region_id}: "
-                f"{consumption_mw:.0f} MW"
-            )
+        if simulation["phase"] == 3:
+            for (
+                region_id,
+                modified_consumption_mw
+            ) in step[
+                "regional_consumption_mw"
+            ].items():
+                print(
+                    f"    - {region_id}: "
+                    f"{modified_consumption_mw:.0f} MW"
+                )
+        else:
+            for (
+                region_id,
+                consumption_mw
+            ) in step[
+                "regional_consumption_mw"
+            ].items():
+                print(
+                    f"    - {region_id}: "
+                    f"{consumption_mw:.0f} MW"
+                )
 
         print(
             "  répartition des centrales"
@@ -596,6 +677,7 @@ def run_command_line():
         choices=[
             1,
             2,
+            3
         ],
         help=(
             "Phase à simuler"
@@ -627,6 +709,16 @@ def run_command_line():
         ),
     )
 
+    parser.add_argument(
+        "--scenario-id",
+        type=str,
+        default="evening_peak_occitanie",
+        help=(
+            "Chaîne de caractères qui "
+            "identifie le scénario"
+        ),
+    )
+
     arguments = parser.parse_args()
 
     if arguments.phase == 2:
@@ -640,6 +732,18 @@ def run_command_line():
             ),
         )
 
+    elif arguments.phase == 3:
+        simulation = run_phase3(
+            number_of_steps=(
+                arguments.steps
+            ),
+            minimum_reserve_mw=(
+                arguments.minimum_reserve_mw
+            ),
+            scenario_id=(
+                arguments.scenario_id or "evening_peak_occitanie"
+            )
+        )
     else:
         simulation = run_phase1(
             number_of_steps=(

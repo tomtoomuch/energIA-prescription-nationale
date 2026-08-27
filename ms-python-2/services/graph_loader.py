@@ -859,3 +859,6 @@ if __name__ == "__main__":
             f"demande résiduelle="
             f"{residual_demand_mw:.0f} MW"
         )
+
+        print("------phase 3------")
+        print()
