@@ -855,6 +855,10 @@ def simulate_day(
 
     results = []
 
+    if consumption_events is None:
+        consumption_events = []
+
+
     for index in range(
         steps_to_simulate
     ):
@@ -892,12 +896,12 @@ def simulate_day(
             events=consumption_events,
         )
 
-        reference_regional_consumption = event_result[
+        regional_consumption = event_result[
             "regional_consumption_mw"
         ]
 
         regional_total_mw = sum(
-            reference_regional_consumption.values()
+            regional_consumption.values()
         )
 
         national_total_mw = (
@@ -1009,13 +1013,19 @@ def simulate_day(
         )
 
         result["regional_consumption_mw"] = (
-            reference_regional_consumption
+            regional_consumption
         )
 
         result[
-            "regional_total_consumption_mw"
+            "reference_regional_consumption_mw"
+        ] = reference_regional_consumption
+
+        result[
+            "reference_total_consumption_mw"
         ] = round(
-            regional_total_mw,
+            float(
+                national_consumptions[index]
+            ),
             3
         )
 
@@ -1229,7 +1239,24 @@ def simulate_day(
                 ),
                 3
             ),
+        "events_count":
+            len(consumption_events),
 
+        "steps_with_active_events":
+            sum(
+                1
+                for step in results
+                if step["active_events"]
+            ),
+
+        "total_event_delta_mw":
+            round(
+                sum(
+                    step["event_delta_mw"]
+                    for step in results
+                ),
+                3
+            ),
         "steps":
             results,
     }
