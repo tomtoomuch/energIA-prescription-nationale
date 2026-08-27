@@ -8,6 +8,10 @@ except ImportError:
         allocate_regional_demands,
     )
 
+from services.apply_consumption_events import (
+    apply_consumption_events,
+)
+
 EPSILON = 0.000001
 
 
@@ -691,7 +695,7 @@ def simulate_day(
     number_of_steps=None,
     non_dispatchable_data=None,
     minimum_reserve_mw=0,
-    apply_consumption_events=None,
+    consumption_events=None,
     graph=None,
     plants_index=None,
     regions_index=None,
@@ -854,7 +858,7 @@ def simulate_day(
     for index in range(
         steps_to_simulate
     ):
-        regional_consumption = (
+        reference_regional_consumption = (
             get_regional_consumption(
                 consumption_data,
                 index
@@ -862,7 +866,7 @@ def simulate_day(
         )
 
         regional_total_mw = sum(
-            regional_consumption.values()
+            reference_regional_consumption.values()
         )
 
         national_total_mw = float(
@@ -879,6 +883,26 @@ def simulate_day(
                 f"régions={regional_total_mw} MW, "
                 f"national={national_total_mw} MW"
             )
+
+        event_result = apply_consumption_events(
+            regional_consumption=(
+                reference_regional_consumption
+            ),
+            timestamp=timestamps[index],
+            events=consumption_events,
+        )
+
+        reference_regional_consumption = event_result[
+            "regional_consumption_mw"
+        ]
+
+        regional_total_mw = sum(
+            reference_regional_consumption.values()
+        )
+
+        national_total_mw = (
+            regional_total_mw
+        )
 
         solar_production_mw = 0.0
         wind_production_mw = 0.0
@@ -928,22 +952,22 @@ def simulate_day(
             and non_dispatchable_data is None
         ):
             regional_demands_for_step = (
-                regional_consumption
+                reference_regional_consumption
             )
 
         result = simulate_step(
             plants=plants,
             previous_state=current_state,
             demand_mw=residual_demand_mw,
-            regional_demands=(
-                regional_demands_for_step
-            ),
-            graph=graph,
-            plants_index=plants_index,
-            regions_index=regions_index,
-            simulation_parameters=(
-                simulation_parameters
-            ),
+#            regional_demands=(
+#                regional_demands_for_step
+#            ),
+#            graph=graph,
+#            plants_index=plants_index,
+#            regions_index=regions_index,
+#            simulation_parameters=(
+#                simulation_parameters
+#            ),
         )
 
         nuclear_reserve_mw = (
@@ -985,7 +1009,7 @@ def simulate_day(
         )
 
         result["regional_consumption_mw"] = (
-            regional_consumption
+            reference_regional_consumption
         )
 
         result[
@@ -1045,6 +1069,19 @@ def simulate_day(
 
         result["situation"] = situation
 
+        result["event_delta_mw"] = round(
+            event_result["total_delta_mw"],
+            3
+        )
+
+        result["regional_delta_mw"] = (
+            event_result["regional_delta_mw"]
+        )
+
+        result["active_events"] = (
+            event_result["active_events"]
+        )
+
         results.append(
             result
         )
@@ -1063,6 +1100,10 @@ def simulate_day(
             "solar",
             "wind",
         ]
+
+    if consumption_events:
+        phase = 3
+        
 
     return {
         "phase":

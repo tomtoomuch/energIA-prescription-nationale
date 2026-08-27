@@ -139,6 +139,7 @@ def run_phase3(
     number_of_steps=96,
     minimum_reserve_mw=5000,
 ):
+
     # Chargement des données de la phase 3
     consumption_data = (
         load_reference_consumption()
@@ -163,20 +164,22 @@ def run_phase3(
         )
     )
 
-    events_list = (
-        list(scenario.get("events"))
-    )
-
-    print("Events list : ", events_list)
-
-    return simulate_day(
+    simulation = simulate_day(
         consumption_data=consumption_data,
         nuclear_dataframe=nuclear_dataframe,
         number_of_steps=number_of_steps,
         non_dispatchable_data=non_dispatchable_data,
         minimum_reserve_mw=minimum_reserve_mw,
-        apply_consumption_events=events_list
+        consumption_events=scenario["events"],
     )
+
+    simulation["scenario"] = {
+        "scenario_id":scenario["id"],
+        "name":scenario["name"]
+    }
+
+    return simulation
+
 
 @app.get("/")
 def home():
@@ -519,7 +522,7 @@ def simulate_phase3_api(
         ),
     ),
 
-    scenario_id: str = Query(
+    scenario: str = Query(
         default="evening_peak_occitanie",
         description=(
             "Intitulé du scénario de "
@@ -530,10 +533,9 @@ def simulate_phase3_api(
     # lance la simulation de la phase 3
     try:
         return run_phase3(
-            scenario_id,
             number_of_steps=number_of_steps,
             minimum_reserve_mw=minimum_reserve_mw,
-        
+            scenario=scenario,
         )
 
     except (
@@ -561,7 +563,7 @@ def display_simulation(
     print()
 
     for step in simulation["steps"]:
-        if simulation["phase"] == 2:
+        if simulation["phase"] == 2 or simulation["phase"] == 3:
             print(
                 f"{step['timestamp']} | "
                 f"consommation="
@@ -610,27 +612,23 @@ def display_simulation(
         )
 
         if simulation["phase"] == 3:
-            for (
-                region_id,
-                modified_consumption_mw
-            ) in step[
-                "regional_consumption_mw"
-            ].items():
-                print(
-                    f"    - {region_id}: "
-                    f"{modified_consumption_mw:.0f} MW"
-                )
-        else:
-            for (
-                region_id,
-                consumption_mw
-            ) in step[
-                "regional_consumption_mw"
-            ].items():
-                print(
-                    f"    - {region_id}: "
-                    f"{consumption_mw:.0f} MW"
-                )
+            print(
+                f"  variation des événements="
+                f"{step['event_delta_mw']:+.0f} MW | "
+                f"événements actifs="
+                f"{len(step['active_events'])}"
+            )
+            
+        for (
+            region_id,
+            consumption_mw
+        ) in step[
+            "regional_consumption_mw"
+        ].items():
+            print(
+                f"    - {region_id}: "
+                f"{consumption_mw:.0f} MW"
+            )
 
         print(
             "  répartition des centrales"

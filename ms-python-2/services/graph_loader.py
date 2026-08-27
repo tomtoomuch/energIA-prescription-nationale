@@ -861,4 +861,4 @@ if __name__ == "__main__":
         )
 
         print("------phase 3------")
-        print()
+        print(f"{modified_consumption_mw}")

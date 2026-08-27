@@ -1,0 +1,3564 @@
+
+=== EnergIA phase 2 ===
+
+00:00 | consommation=35816 MW | solaire=0 MW | éolien=9216 MW | demande résiduelle=26600 MW | nucléaire=29340 MW
+  réserve=33660 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=2740 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1493.0 -> 1229.0 MW (variation -264.0 MW)
+    - Le Blayais (blayais): 2075.0 -> 1679.0 MW (variation -396.0 MW)
+    - Bugey (bugey): 2041.0 -> 1645.0 MW (variation -396.0 MW)
+    - Cattenom (cattenom): 2964.0 -> 2436.0 MW (variation -528.0 MW)
+    - Chinon (chinon): 2063.0 -> 1667.0 MW (variation -396.0 MW)
+    - Chooz (chooz): 1710.0 -> 1413.0 MW (variation -297.0 MW)
+    - Civaux (civaux): 1704.0 -> 1407.0 MW (variation -297.0 MW)
+    - Cruas-Meysse (cruas): 2086.0 -> 1690.0 MW (variation -396.0 MW)
+    - Dampierre-en-Burly (dampierre): 2029.0 -> 1633.0 MW (variation -396.0 MW)
+    - Flamanville (flamanville): 2445.0 -> 2016.0 MW (variation -429.0 MW)
+    - Golfech (golfech): 1493.0 -> 1229.0 MW (variation -264.0 MW)
+    - Gravelines (gravelines): 3112.0 -> 2518.0 MW (variation -594.0 MW)
+    - Nogent-sur-Seine (nogent): 1493.0 -> 1229.0 MW (variation -264.0 MW)
+    - Paluel (paluel): 3032.0 -> 2504.0 MW (variation -528.0 MW)
+    - Penly (penly): 1516.0 -> 1252.0 MW (variation -264.0 MW)
+    - Saint-Alban (saint_alban): 1522.0 -> 1258.0 MW (variation -264.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1043.0 -> 845.0 MW (variation -198.0 MW)
+    - Tricastin (tricastin): 2086.0 -> 1690.0 MW (variation -396.0 MW)
+
+00:15 | consommation=35816 MW | solaire=0 MW | éolien=9231 MW | demande résiduelle=26585 MW | nucléaire=26585 MW
+  réserve=36415 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1229.0 -> 1118.2 MW (variation -110.8 MW)
+    - Le Blayais (blayais): 1679.0 -> 1512.9 MW (variation -166.1 MW)
+    - Bugey (bugey): 1645.0 -> 1478.9 MW (variation -166.1 MW)
+    - Cattenom (cattenom): 2436.0 -> 2214.5 MW (variation -221.5 MW)
+    - Chinon (chinon): 1667.0 -> 1500.9 MW (variation -166.1 MW)
+    - Chooz (chooz): 1413.0 -> 1288.4 MW (variation -124.6 MW)
+    - Civaux (civaux): 1407.0 -> 1282.4 MW (variation -124.6 MW)
+    - Cruas-Meysse (cruas): 1690.0 -> 1523.9 MW (variation -166.1 MW)
+    - Dampierre-en-Burly (dampierre): 1633.0 -> 1466.9 MW (variation -166.1 MW)
+    - Flamanville (flamanville): 2016.0 -> 1836.0 MW (variation -180.0 MW)
+    - Golfech (golfech): 1229.0 -> 1118.2 MW (variation -110.8 MW)
+    - Gravelines (gravelines): 2518.0 -> 2268.8 MW (variation -249.2 MW)
+    - Nogent-sur-Seine (nogent): 1229.0 -> 1118.2 MW (variation -110.8 MW)
+    - Paluel (paluel): 2504.0 -> 2282.5 MW (variation -221.5 MW)
+    - Penly (penly): 1252.0 -> 1141.2 MW (variation -110.8 MW)
+    - Saint-Alban (saint_alban): 1258.0 -> 1147.2 MW (variation -110.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 845.0 -> 761.9 MW (variation -83.1 MW)
+    - Tricastin (tricastin): 1690.0 -> 1523.9 MW (variation -166.1 MW)
+
+00:30 | consommation=35816 MW | solaire=0 MW | éolien=9170 MW | demande résiduelle=26646 MW | nucléaire=26646 MW
+  réserve=36354 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1118.2 -> 1120.7 MW (variation +2.5 MW)
+    - Le Blayais (blayais): 1512.9 -> 1516.5 MW (variation +3.7 MW)
+    - Bugey (bugey): 1478.9 -> 1482.5 MW (variation +3.7 MW)
+    - Cattenom (cattenom): 2214.5 -> 2219.4 MW (variation +4.9 MW)
+    - Chinon (chinon): 1500.9 -> 1504.5 MW (variation +3.7 MW)
+    - Chooz (chooz): 1288.4 -> 1291.2 MW (variation +2.8 MW)
+    - Civaux (civaux): 1282.4 -> 1285.2 MW (variation +2.8 MW)
+    - Cruas-Meysse (cruas): 1523.9 -> 1527.5 MW (variation +3.7 MW)
+    - Dampierre-en-Burly (dampierre): 1466.9 -> 1470.5 MW (variation +3.7 MW)
+    - Flamanville (flamanville): 1836.0 -> 1840.0 MW (variation +4.0 MW)
+    - Golfech (golfech): 1118.2 -> 1120.7 MW (variation +2.5 MW)
+    - Gravelines (gravelines): 2268.8 -> 2274.3 MW (variation +5.5 MW)
+    - Nogent-sur-Seine (nogent): 1118.2 -> 1120.7 MW (variation +2.5 MW)
+    - Paluel (paluel): 2282.5 -> 2287.4 MW (variation +4.9 MW)
+    - Penly (penly): 1141.2 -> 1143.7 MW (variation +2.5 MW)
+    - Saint-Alban (saint_alban): 1147.2 -> 1149.7 MW (variation +2.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 761.9 -> 763.8 MW (variation +1.8 MW)
+    - Tricastin (tricastin): 1523.9 -> 1527.5 MW (variation +3.7 MW)
+
+00:45 | consommation=35816 MW | solaire=0 MW | éolien=9051 MW | demande résiduelle=26765 MW | nucléaire=26765 MW
+  réserve=36235 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1120.7 -> 1125.5 MW (variation +4.8 MW)
+    - Le Blayais (blayais): 1516.5 -> 1523.7 MW (variation +7.2 MW)
+    - Bugey (bugey): 1482.5 -> 1489.7 MW (variation +7.2 MW)
+    - Cattenom (cattenom): 2219.4 -> 2229.0 MW (variation +9.6 MW)
+    - Chinon (chinon): 1504.5 -> 1511.7 MW (variation +7.2 MW)
+    - Chooz (chooz): 1291.2 -> 1296.5 MW (variation +5.4 MW)
+    - Civaux (civaux): 1285.2 -> 1290.5 MW (variation +5.4 MW)
+    - Cruas-Meysse (cruas): 1527.5 -> 1534.7 MW (variation +7.2 MW)
+    - Dampierre-en-Burly (dampierre): 1470.5 -> 1477.7 MW (variation +7.2 MW)
+    - Flamanville (flamanville): 1840.0 -> 1847.8 MW (variation +7.8 MW)
+    - Golfech (golfech): 1120.7 -> 1125.5 MW (variation +4.8 MW)
+    - Gravelines (gravelines): 2274.3 -> 2285.1 MW (variation +10.8 MW)
+    - Nogent-sur-Seine (nogent): 1120.7 -> 1125.5 MW (variation +4.8 MW)
+    - Paluel (paluel): 2287.4 -> 2297.0 MW (variation +9.6 MW)
+    - Penly (penly): 1143.7 -> 1148.5 MW (variation +4.8 MW)
+    - Saint-Alban (saint_alban): 1149.7 -> 1154.5 MW (variation +4.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 763.8 -> 767.4 MW (variation +3.6 MW)
+    - Tricastin (tricastin): 1527.5 -> 1534.7 MW (variation +7.2 MW)
+
+01:00 | consommation=35816 MW | solaire=0 MW | éolien=8911 MW | demande résiduelle=26905 MW | nucléaire=26905 MW
+  réserve=36095 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1125.5 -> 1131.1 MW (variation +5.6 MW)
+    - Le Blayais (blayais): 1523.7 -> 1532.2 MW (variation +8.4 MW)
+    - Bugey (bugey): 1489.7 -> 1498.2 MW (variation +8.4 MW)
+    - Cattenom (cattenom): 2229.0 -> 2240.2 MW (variation +11.3 MW)
+    - Chinon (chinon): 1511.7 -> 1520.2 MW (variation +8.4 MW)
+    - Chooz (chooz): 1296.5 -> 1302.9 MW (variation +6.3 MW)
+    - Civaux (civaux): 1290.5 -> 1296.9 MW (variation +6.3 MW)
+    - Cruas-Meysse (cruas): 1534.7 -> 1543.2 MW (variation +8.4 MW)
+    - Dampierre-en-Burly (dampierre): 1477.7 -> 1486.2 MW (variation +8.4 MW)
+    - Flamanville (flamanville): 1847.8 -> 1856.9 MW (variation +9.1 MW)
+    - Golfech (golfech): 1125.5 -> 1131.1 MW (variation +5.6 MW)
+    - Gravelines (gravelines): 2285.1 -> 2297.7 MW (variation +12.7 MW)
+    - Nogent-sur-Seine (nogent): 1125.5 -> 1131.1 MW (variation +5.6 MW)
+    - Paluel (paluel): 2297.0 -> 2308.2 MW (variation +11.3 MW)
+    - Penly (penly): 1148.5 -> 1154.1 MW (variation +5.6 MW)
+    - Saint-Alban (saint_alban): 1154.5 -> 1160.1 MW (variation +5.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 767.4 -> 771.6 MW (variation +4.2 MW)
+    - Tricastin (tricastin): 1534.7 -> 1543.2 MW (variation +8.4 MW)
+
+01:15 | consommation=35816 MW | solaire=0 MW | éolien=8793 MW | demande résiduelle=27023 MW | nucléaire=27023 MW
+  réserve=35977 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1131.1 -> 1135.9 MW (variation +4.7 MW)
+    - Le Blayais (blayais): 1532.2 -> 1539.3 MW (variation +7.1 MW)
+    - Bugey (bugey): 1498.2 -> 1505.3 MW (variation +7.1 MW)
+    - Cattenom (cattenom): 2240.2 -> 2249.7 MW (variation +9.5 MW)
+    - Chinon (chinon): 1520.2 -> 1527.3 MW (variation +7.1 MW)
+    - Chooz (chooz): 1302.9 -> 1308.2 MW (variation +5.3 MW)
+    - Civaux (civaux): 1296.9 -> 1302.2 MW (variation +5.3 MW)
+    - Cruas-Meysse (cruas): 1543.2 -> 1550.3 MW (variation +7.1 MW)
+    - Dampierre-en-Burly (dampierre): 1486.2 -> 1493.3 MW (variation +7.1 MW)
+    - Flamanville (flamanville): 1856.9 -> 1864.6 MW (variation +7.7 MW)
+    - Golfech (golfech): 1131.1 -> 1135.9 MW (variation +4.7 MW)
+    - Gravelines (gravelines): 2297.7 -> 2308.4 MW (variation +10.7 MW)
+    - Nogent-sur-Seine (nogent): 1131.1 -> 1135.9 MW (variation +4.7 MW)
+    - Paluel (paluel): 2308.2 -> 2317.7 MW (variation +9.5 MW)
+    - Penly (penly): 1154.1 -> 1158.9 MW (variation +4.7 MW)
+    - Saint-Alban (saint_alban): 1160.1 -> 1164.9 MW (variation +4.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 771.6 -> 775.1 MW (variation +3.6 MW)
+    - Tricastin (tricastin): 1543.2 -> 1550.3 MW (variation +7.1 MW)
+
+01:30 | consommation=35816 MW | solaire=0 MW | éolien=8719 MW | demande résiduelle=27097 MW | nucléaire=27097 MW
+  réserve=35903 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5335 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3038 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1135.9 -> 1138.8 MW (variation +3.0 MW)
+    - Le Blayais (blayais): 1539.3 -> 1543.7 MW (variation +4.5 MW)
+    - Bugey (bugey): 1505.3 -> 1509.7 MW (variation +4.5 MW)
+    - Cattenom (cattenom): 2249.7 -> 2255.7 MW (variation +6.0 MW)
+    - Chinon (chinon): 1527.3 -> 1531.7 MW (variation +4.5 MW)
+    - Chooz (chooz): 1308.2 -> 1311.6 MW (variation +3.3 MW)
+    - Civaux (civaux): 1302.2 -> 1305.6 MW (variation +3.3 MW)
+    - Cruas-Meysse (cruas): 1550.3 -> 1554.7 MW (variation +4.5 MW)
+    - Dampierre-en-Burly (dampierre): 1493.3 -> 1497.7 MW (variation +4.5 MW)
+    - Flamanville (flamanville): 1864.6 -> 1869.5 MW (variation +4.8 MW)
+    - Golfech (golfech): 1135.9 -> 1138.8 MW (variation +3.0 MW)
+    - Gravelines (gravelines): 2308.4 -> 2315.1 MW (variation +6.7 MW)
+    - Nogent-sur-Seine (nogent): 1135.9 -> 1138.8 MW (variation +3.0 MW)
+    - Paluel (paluel): 2317.7 -> 2323.7 MW (variation +6.0 MW)
+    - Penly (penly): 1158.9 -> 1161.8 MW (variation +3.0 MW)
+    - Saint-Alban (saint_alban): 1164.9 -> 1167.8 MW (variation +3.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 775.1 -> 777.4 MW (variation +2.2 MW)
+    - Tricastin (tricastin): 1550.3 -> 1554.7 MW (variation +4.5 MW)
+
+01:45 | consommation=35818 MW | solaire=0 MW | éolien=8707 MW | demande résiduelle=27111 MW | nucléaire=27111 MW
+  réserve=35889 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5336 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3039 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1138.8 -> 1139.4 MW (variation +0.6 MW)
+    - Le Blayais (blayais): 1543.7 -> 1544.6 MW (variation +0.8 MW)
+    - Bugey (bugey): 1509.7 -> 1510.6 MW (variation +0.8 MW)
+    - Cattenom (cattenom): 2255.7 -> 2256.8 MW (variation +1.1 MW)
+    - Chinon (chinon): 1531.7 -> 1532.6 MW (variation +0.8 MW)
+    - Chooz (chooz): 1311.6 -> 1312.2 MW (variation +0.6 MW)
+    - Civaux (civaux): 1305.6 -> 1306.2 MW (variation +0.6 MW)
+    - Cruas-Meysse (cruas): 1554.7 -> 1555.6 MW (variation +0.8 MW)
+    - Dampierre-en-Burly (dampierre): 1497.7 -> 1498.6 MW (variation +0.8 MW)
+    - Flamanville (flamanville): 1869.5 -> 1870.4 MW (variation +0.9 MW)
+    - Golfech (golfech): 1138.8 -> 1139.4 MW (variation +0.6 MW)
+    - Gravelines (gravelines): 2315.1 -> 2316.4 MW (variation +1.3 MW)
+    - Nogent-sur-Seine (nogent): 1138.8 -> 1139.4 MW (variation +0.6 MW)
+    - Paluel (paluel): 2323.7 -> 2324.8 MW (variation +1.1 MW)
+    - Penly (penly): 1161.8 -> 1162.4 MW (variation +0.6 MW)
+    - Saint-Alban (saint_alban): 1167.8 -> 1168.4 MW (variation +0.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 777.4 -> 777.8 MW (variation +0.4 MW)
+    - Tricastin (tricastin): 1554.7 -> 1555.6 MW (variation +0.8 MW)
+
+02:00 | consommation=35818 MW | solaire=0 MW | éolien=8741 MW | demande résiduelle=27077 MW | nucléaire=27077 MW
+  réserve=35923 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5336 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3774 MW
+    - grand_est: 3333 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2894 MW
+    - auvergne_rhone_alpes: 5029 MW
+    - provence_alpes_cote_d_azur: 3039 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1139.4 -> 1138.0 MW (variation -1.4 MW)
+    - Le Blayais (blayais): 1544.6 -> 1542.5 MW (variation -2.0 MW)
+    - Bugey (bugey): 1510.6 -> 1508.5 MW (variation -2.0 MW)
+    - Cattenom (cattenom): 2256.8 -> 2254.1 MW (variation -2.7 MW)
+    - Chinon (chinon): 1532.6 -> 1530.5 MW (variation -2.0 MW)
+    - Chooz (chooz): 1312.2 -> 1310.7 MW (variation -1.5 MW)
+    - Civaux (civaux): 1306.2 -> 1304.7 MW (variation -1.5 MW)
+    - Cruas-Meysse (cruas): 1555.6 -> 1553.5 MW (variation -2.0 MW)
+    - Dampierre-en-Burly (dampierre): 1498.6 -> 1496.5 MW (variation -2.0 MW)
+    - Flamanville (flamanville): 1870.4 -> 1868.2 MW (variation -2.2 MW)
+    - Golfech (golfech): 1139.4 -> 1138.0 MW (variation -1.4 MW)
+    - Gravelines (gravelines): 2316.4 -> 2313.3 MW (variation -3.1 MW)
+    - Nogent-sur-Seine (nogent): 1139.4 -> 1138.0 MW (variation -1.4 MW)
+    - Paluel (paluel): 2324.8 -> 2322.1 MW (variation -2.7 MW)
+    - Penly (penly): 1162.4 -> 1161.0 MW (variation -1.4 MW)
+    - Saint-Alban (saint_alban): 1168.4 -> 1167.0 MW (variation -1.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 777.8 -> 776.8 MW (variation -1.0 MW)
+    - Tricastin (tricastin): 1555.6 -> 1553.5 MW (variation -2.0 MW)
+
+02:15 | consommation=35822 MW | solaire=0 MW | éolien=8801 MW | demande résiduelle=27021 MW | nucléaire=27021 MW
+  réserve=35979 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5336 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2105 MW
+    - hauts_de_france: 3775 MW
+    - grand_est: 3334 MW
+    - pays_de_la_loire: 2060 MW
+    - bretagne: 1783 MW
+    - nouvelle_aquitaine: 3311 MW
+    - occitanie: 2895 MW
+    - auvergne_rhone_alpes: 5030 MW
+    - provence_alpes_cote_d_azur: 3039 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1138.0 -> 1135.8 MW (variation -2.3 MW)
+    - Le Blayais (blayais): 1542.5 -> 1539.2 MW (variation -3.4 MW)
+    - Bugey (bugey): 1508.5 -> 1505.2 MW (variation -3.4 MW)
+    - Cattenom (cattenom): 2254.1 -> 2249.5 MW (variation -4.5 MW)
+    - Chinon (chinon): 1530.5 -> 1527.2 MW (variation -3.4 MW)
+    - Chooz (chooz): 1310.7 -> 1308.1 MW (variation -2.5 MW)
+    - Civaux (civaux): 1304.7 -> 1302.1 MW (variation -2.5 MW)
+    - Cruas-Meysse (cruas): 1553.5 -> 1550.2 MW (variation -3.4 MW)
+    - Dampierre-en-Burly (dampierre): 1496.5 -> 1493.2 MW (variation -3.4 MW)
+    - Flamanville (flamanville): 1868.2 -> 1864.5 MW (variation -3.7 MW)
+    - Golfech (golfech): 1138.0 -> 1135.8 MW (variation -2.3 MW)
+    - Gravelines (gravelines): 2313.3 -> 2308.2 MW (variation -5.1 MW)
+    - Nogent-sur-Seine (nogent): 1138.0 -> 1135.8 MW (variation -2.3 MW)
+    - Paluel (paluel): 2322.1 -> 2317.5 MW (variation -4.5 MW)
+    - Penly (penly): 1161.0 -> 1158.8 MW (variation -2.3 MW)
+    - Saint-Alban (saint_alban): 1167.0 -> 1164.8 MW (variation -2.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 776.8 -> 775.1 MW (variation -1.7 MW)
+    - Tricastin (tricastin): 1553.5 -> 1550.2 MW (variation -3.4 MW)
+
+02:30 | consommation=35827 MW | solaire=0 MW | éolien=8852 MW | demande résiduelle=26975 MW | nucléaire=26975 MW
+  réserve=36025 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5337 MW
+    - centre_val_de_loire: 1381 MW
+    - bourgogne_franche_comte: 1595 MW
+    - normandie: 2106 MW
+    - hauts_de_france: 3775 MW
+    - grand_est: 3334 MW
+    - pays_de_la_loire: 2061 MW
+    - bretagne: 1784 MW
+    - nouvelle_aquitaine: 3312 MW
+    - occitanie: 2895 MW
+    - auvergne_rhone_alpes: 5030 MW
+    - provence_alpes_cote_d_azur: 3039 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1135.8 -> 1133.9 MW (variation -1.8 MW)
+    - Le Blayais (blayais): 1539.2 -> 1536.4 MW (variation -2.8 MW)
+    - Bugey (bugey): 1505.2 -> 1502.4 MW (variation -2.8 MW)
+    - Cattenom (cattenom): 2249.5 -> 2245.8 MW (variation -3.7 MW)
+    - Chinon (chinon): 1527.2 -> 1524.4 MW (variation -2.8 MW)
+    - Chooz (chooz): 1308.1 -> 1306.0 MW (variation -2.1 MW)
+    - Civaux (civaux): 1302.1 -> 1300.0 MW (variation -2.1 MW)
+    - Cruas-Meysse (cruas): 1550.2 -> 1547.4 MW (variation -2.8 MW)
+    - Dampierre-en-Burly (dampierre): 1493.2 -> 1490.4 MW (variation -2.8 MW)
+    - Flamanville (flamanville): 1864.5 -> 1861.5 MW (variation -3.0 MW)
+    - Golfech (golfech): 1135.8 -> 1133.9 MW (variation -1.8 MW)
+    - Gravelines (gravelines): 2308.2 -> 2304.1 MW (variation -4.2 MW)
+    - Nogent-sur-Seine (nogent): 1135.8 -> 1133.9 MW (variation -1.8 MW)
+    - Paluel (paluel): 2317.5 -> 2313.8 MW (variation -3.7 MW)
+    - Penly (penly): 1158.8 -> 1156.9 MW (variation -1.8 MW)
+    - Saint-Alban (saint_alban): 1164.8 -> 1162.9 MW (variation -1.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 775.1 -> 773.7 MW (variation -1.4 MW)
+    - Tricastin (tricastin): 1550.2 -> 1547.4 MW (variation -2.8 MW)
+
+02:45 | consommation=35838 MW | solaire=0 MW | éolien=8862 MW | demande résiduelle=26976 MW | nucléaire=26976 MW
+  réserve=36024 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5339 MW
+    - centre_val_de_loire: 1382 MW
+    - bourgogne_franche_comte: 1596 MW
+    - normandie: 2106 MW
+    - hauts_de_france: 3776 MW
+    - grand_est: 3335 MW
+    - pays_de_la_loire: 2061 MW
+    - bretagne: 1784 MW
+    - nouvelle_aquitaine: 3313 MW
+    - occitanie: 2896 MW
+    - auvergne_rhone_alpes: 5032 MW
+    - provence_alpes_cote_d_azur: 3040 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1133.9 -> 1134.0 MW (variation +0.0 MW)
+    - Le Blayais (blayais): 1536.4 -> 1536.4 MW (variation +0.1 MW)
+    - Bugey (bugey): 1502.4 -> 1502.4 MW (variation +0.1 MW)
+    - Cattenom (cattenom): 2245.8 -> 2245.9 MW (variation +0.1 MW)
+    - Chinon (chinon): 1524.4 -> 1524.4 MW (variation +0.1 MW)
+    - Chooz (chooz): 1306.0 -> 1306.1 MW (variation +0.0 MW)
+    - Civaux (civaux): 1300.0 -> 1300.1 MW (variation +0.0 MW)
+    - Cruas-Meysse (cruas): 1547.4 -> 1547.4 MW (variation +0.1 MW)
+    - Dampierre-en-Burly (dampierre): 1490.4 -> 1490.4 MW (variation +0.1 MW)
+    - Flamanville (flamanville): 1861.5 -> 1861.6 MW (variation +0.1 MW)
+    - Golfech (golfech): 1133.9 -> 1134.0 MW (variation +0.0 MW)
+    - Gravelines (gravelines): 2304.1 -> 2304.2 MW (variation +0.1 MW)
+    - Nogent-sur-Seine (nogent): 1133.9 -> 1134.0 MW (variation +0.0 MW)
+    - Paluel (paluel): 2313.8 -> 2313.9 MW (variation +0.1 MW)
+    - Penly (penly): 1156.9 -> 1157.0 MW (variation +0.0 MW)
+    - Saint-Alban (saint_alban): 1162.9 -> 1163.0 MW (variation +0.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 773.7 -> 773.7 MW (variation +0.0 MW)
+    - Tricastin (tricastin): 1547.4 -> 1547.4 MW (variation +0.1 MW)
+
+03:00 | consommation=35853 MW | solaire=0 MW | éolien=8813 MW | demande résiduelle=27040 MW | nucléaire=27040 MW
+  réserve=35960 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5342 MW
+    - centre_val_de_loire: 1382 MW
+    - bourgogne_franche_comte: 1596 MW
+    - normandie: 2107 MW
+    - hauts_de_france: 3778 MW
+    - grand_est: 3337 MW
+    - pays_de_la_loire: 2062 MW
+    - bretagne: 1785 MW
+    - nouvelle_aquitaine: 3314 MW
+    - occitanie: 2897 MW
+    - auvergne_rhone_alpes: 5034 MW
+    - provence_alpes_cote_d_azur: 3041 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1134.0 -> 1136.5 MW (variation +2.6 MW)
+    - Le Blayais (blayais): 1536.4 -> 1540.3 MW (variation +3.9 MW)
+    - Bugey (bugey): 1502.4 -> 1506.3 MW (variation +3.9 MW)
+    - Cattenom (cattenom): 2245.9 -> 2251.1 MW (variation +5.1 MW)
+    - Chinon (chinon): 1524.4 -> 1528.3 MW (variation +3.9 MW)
+    - Chooz (chooz): 1306.1 -> 1309.0 MW (variation +2.9 MW)
+    - Civaux (civaux): 1300.1 -> 1303.0 MW (variation +2.9 MW)
+    - Cruas-Meysse (cruas): 1547.4 -> 1551.3 MW (variation +3.9 MW)
+    - Dampierre-en-Burly (dampierre): 1490.4 -> 1494.3 MW (variation +3.9 MW)
+    - Flamanville (flamanville): 1861.6 -> 1865.7 MW (variation +4.2 MW)
+    - Golfech (golfech): 1134.0 -> 1136.5 MW (variation +2.6 MW)
+    - Gravelines (gravelines): 2304.2 -> 2310.0 MW (variation +5.8 MW)
+    - Nogent-sur-Seine (nogent): 1134.0 -> 1136.5 MW (variation +2.6 MW)
+    - Paluel (paluel): 2313.9 -> 2319.1 MW (variation +5.1 MW)
+    - Penly (penly): 1157.0 -> 1159.5 MW (variation +2.6 MW)
+    - Saint-Alban (saint_alban): 1163.0 -> 1165.5 MW (variation +2.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 773.7 -> 775.7 MW (variation +1.9 MW)
+    - Tricastin (tricastin): 1547.4 -> 1551.3 MW (variation +3.9 MW)
+
+03:15 | consommation=35879 MW | solaire=0 MW | éolien=8690 MW | demande résiduelle=27189 MW | nucléaire=27189 MW
+  réserve=35811 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5346 MW
+    - centre_val_de_loire: 1383 MW
+    - bourgogne_franche_comte: 1597 MW
+    - normandie: 2109 MW
+    - hauts_de_france: 3781 MW
+    - grand_est: 3339 MW
+    - pays_de_la_loire: 2064 MW
+    - bretagne: 1786 MW
+    - nouvelle_aquitaine: 3316 MW
+    - occitanie: 2899 MW
+    - auvergne_rhone_alpes: 5038 MW
+    - provence_alpes_cote_d_azur: 3043 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1136.5 -> 1142.5 MW (variation +6.0 MW)
+    - Le Blayais (blayais): 1540.3 -> 1549.3 MW (variation +9.0 MW)
+    - Bugey (bugey): 1506.3 -> 1515.3 MW (variation +9.0 MW)
+    - Cattenom (cattenom): 2251.1 -> 2263.1 MW (variation +12.0 MW)
+    - Chinon (chinon): 1528.3 -> 1537.3 MW (variation +9.0 MW)
+    - Chooz (chooz): 1309.0 -> 1315.7 MW (variation +6.7 MW)
+    - Civaux (civaux): 1303.0 -> 1309.7 MW (variation +6.7 MW)
+    - Cruas-Meysse (cruas): 1551.3 -> 1560.3 MW (variation +9.0 MW)
+    - Dampierre-en-Burly (dampierre): 1494.3 -> 1503.3 MW (variation +9.0 MW)
+    - Flamanville (flamanville): 1865.7 -> 1875.5 MW (variation +9.7 MW)
+    - Golfech (golfech): 1136.5 -> 1142.5 MW (variation +6.0 MW)
+    - Gravelines (gravelines): 2310.0 -> 2323.4 MW (variation +13.5 MW)
+    - Nogent-sur-Seine (nogent): 1136.5 -> 1142.5 MW (variation +6.0 MW)
+    - Paluel (paluel): 2319.1 -> 2331.1 MW (variation +12.0 MW)
+    - Penly (penly): 1159.5 -> 1165.5 MW (variation +6.0 MW)
+    - Saint-Alban (saint_alban): 1165.5 -> 1171.5 MW (variation +6.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 775.7 -> 780.1 MW (variation +4.5 MW)
+    - Tricastin (tricastin): 1551.3 -> 1560.3 MW (variation +9.0 MW)
+
+03:30 | consommation=35922 MW | solaire=0 MW | éolien=8495 MW | demande résiduelle=27427 MW | nucléaire=27427 MW
+  réserve=35573 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5354 MW
+    - centre_val_de_loire: 1385 MW
+    - bourgogne_franche_comte: 1599 MW
+    - normandie: 2111 MW
+    - hauts_de_france: 3786 MW
+    - grand_est: 3343 MW
+    - pays_de_la_loire: 2066 MW
+    - bretagne: 1788 MW
+    - nouvelle_aquitaine: 3320 MW
+    - occitanie: 2902 MW
+    - auvergne_rhone_alpes: 5044 MW
+    - provence_alpes_cote_d_azur: 3046 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1142.5 -> 1152.1 MW (variation +9.6 MW)
+    - Le Blayais (blayais): 1549.3 -> 1563.6 MW (variation +14.4 MW)
+    - Bugey (bugey): 1515.3 -> 1529.6 MW (variation +14.4 MW)
+    - Cattenom (cattenom): 2263.1 -> 2282.2 MW (variation +19.1 MW)
+    - Chinon (chinon): 1537.3 -> 1551.6 MW (variation +14.4 MW)
+    - Chooz (chooz): 1315.7 -> 1326.5 MW (variation +10.8 MW)
+    - Civaux (civaux): 1309.7 -> 1320.5 MW (variation +10.8 MW)
+    - Cruas-Meysse (cruas): 1560.3 -> 1574.6 MW (variation +14.4 MW)
+    - Dampierre-en-Burly (dampierre): 1503.3 -> 1517.6 MW (variation +14.4 MW)
+    - Flamanville (flamanville): 1875.5 -> 1891.0 MW (variation +15.5 MW)
+    - Golfech (golfech): 1142.5 -> 1152.1 MW (variation +9.6 MW)
+    - Gravelines (gravelines): 2323.4 -> 2345.0 MW (variation +21.5 MW)
+    - Nogent-sur-Seine (nogent): 1142.5 -> 1152.1 MW (variation +9.6 MW)
+    - Paluel (paluel): 2331.1 -> 2350.2 MW (variation +19.1 MW)
+    - Penly (penly): 1165.5 -> 1175.1 MW (variation +9.6 MW)
+    - Saint-Alban (saint_alban): 1171.5 -> 1181.1 MW (variation +9.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 780.1 -> 787.3 MW (variation +7.2 MW)
+    - Tricastin (tricastin): 1560.3 -> 1574.6 MW (variation +14.4 MW)
+
+03:45 | consommation=35985 MW | solaire=0 MW | éolien=8227 MW | demande résiduelle=27758 MW | nucléaire=27758 MW
+  réserve=35242 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5364 MW
+    - centre_val_de_loire: 1387 MW
+    - bourgogne_franche_comte: 1602 MW
+    - normandie: 2115 MW
+    - hauts_de_france: 3793 MW
+    - grand_est: 3350 MW
+    - pays_de_la_loire: 2070 MW
+    - bretagne: 1791 MW
+    - nouvelle_aquitaine: 3325 MW
+    - occitanie: 2906 MW
+    - auvergne_rhone_alpes: 5053 MW
+    - provence_alpes_cote_d_azur: 3051 MW
+    - corse: 178 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1152.1 -> 1165.4 MW (variation +13.3 MW)
+    - Le Blayais (blayais): 1563.6 -> 1583.6 MW (variation +20.0 MW)
+    - Bugey (bugey): 1529.6 -> 1549.6 MW (variation +20.0 MW)
+    - Cattenom (cattenom): 2282.2 -> 2308.8 MW (variation +26.6 MW)
+    - Chinon (chinon): 1551.6 -> 1571.6 MW (variation +20.0 MW)
+    - Chooz (chooz): 1326.5 -> 1341.5 MW (variation +15.0 MW)
+    - Civaux (civaux): 1320.5 -> 1335.5 MW (variation +15.0 MW)
+    - Cruas-Meysse (cruas): 1574.6 -> 1594.6 MW (variation +20.0 MW)
+    - Dampierre-en-Burly (dampierre): 1517.6 -> 1537.6 MW (variation +20.0 MW)
+    - Flamanville (flamanville): 1891.0 -> 1912.7 MW (variation +21.6 MW)
+    - Golfech (golfech): 1152.1 -> 1165.4 MW (variation +13.3 MW)
+    - Gravelines (gravelines): 2345.0 -> 2374.9 MW (variation +29.9 MW)
+    - Nogent-sur-Seine (nogent): 1152.1 -> 1165.4 MW (variation +13.3 MW)
+    - Paluel (paluel): 2350.2 -> 2376.8 MW (variation +26.6 MW)
+    - Penly (penly): 1175.1 -> 1188.4 MW (variation +13.3 MW)
+    - Saint-Alban (saint_alban): 1181.1 -> 1194.4 MW (variation +13.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 787.3 -> 797.3 MW (variation +10.0 MW)
+    - Tricastin (tricastin): 1574.6 -> 1594.6 MW (variation +20.0 MW)
+
+04:00 | consommation=36080 MW | solaire=0 MW | éolien=7898 MW | demande résiduelle=28182 MW | nucléaire=28182 MW
+  réserve=34818 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5381 MW
+    - centre_val_de_loire: 1391 MW
+    - bourgogne_franche_comte: 1606 MW
+    - normandie: 2120 MW
+    - hauts_de_france: 3804 MW
+    - grand_est: 3359 MW
+    - pays_de_la_loire: 2075 MW
+    - bretagne: 1795 MW
+    - nouvelle_aquitaine: 3333 MW
+    - occitanie: 2913 MW
+    - auvergne_rhone_alpes: 5067 MW
+    - provence_alpes_cote_d_azur: 3057 MW
+    - corse: 179 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1165.4 -> 1182.4 MW (variation +17.0 MW)
+    - Le Blayais (blayais): 1583.6 -> 1609.2 MW (variation +25.6 MW)
+    - Bugey (bugey): 1549.6 -> 1575.2 MW (variation +25.6 MW)
+    - Cattenom (cattenom): 2308.8 -> 2342.9 MW (variation +34.1 MW)
+    - Chinon (chinon): 1571.6 -> 1597.2 MW (variation +25.6 MW)
+    - Chooz (chooz): 1341.5 -> 1360.6 MW (variation +19.2 MW)
+    - Civaux (civaux): 1335.5 -> 1354.6 MW (variation +19.2 MW)
+    - Cruas-Meysse (cruas): 1594.6 -> 1620.2 MW (variation +25.6 MW)
+    - Dampierre-en-Burly (dampierre): 1537.6 -> 1563.2 MW (variation +25.6 MW)
+    - Flamanville (flamanville): 1912.7 -> 1940.4 MW (variation +27.7 MW)
+    - Golfech (golfech): 1165.4 -> 1182.4 MW (variation +17.0 MW)
+    - Gravelines (gravelines): 2374.9 -> 2413.3 MW (variation +38.4 MW)
+    - Nogent-sur-Seine (nogent): 1165.4 -> 1182.4 MW (variation +17.0 MW)
+    - Paluel (paluel): 2376.8 -> 2410.9 MW (variation +34.1 MW)
+    - Penly (penly): 1188.4 -> 1205.4 MW (variation +17.0 MW)
+    - Saint-Alban (saint_alban): 1194.4 -> 1211.4 MW (variation +17.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 797.3 -> 810.1 MW (variation +12.8 MW)
+    - Tricastin (tricastin): 1594.6 -> 1620.2 MW (variation +25.6 MW)
+
+04:15 | consommation=36217 MW | solaire=0 MW | éolien=7511 MW | demande résiduelle=28706 MW | nucléaire=28706 MW
+  réserve=34294 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5404 MW
+    - centre_val_de_loire: 1396 MW
+    - bourgogne_franche_comte: 1612 MW
+    - normandie: 2128 MW
+    - hauts_de_france: 3819 MW
+    - grand_est: 3373 MW
+    - pays_de_la_loire: 2083 MW
+    - bretagne: 1802 MW
+    - nouvelle_aquitaine: 3344 MW
+    - occitanie: 2923 MW
+    - auvergne_rhone_alpes: 5086 MW
+    - provence_alpes_cote_d_azur: 3068 MW
+    - corse: 179 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1182.4 -> 1203.5 MW (variation +21.1 MW)
+    - Le Blayais (blayais): 1609.2 -> 1640.8 MW (variation +31.6 MW)
+    - Bugey (bugey): 1575.2 -> 1606.8 MW (variation +31.6 MW)
+    - Cattenom (cattenom): 2342.9 -> 2385.0 MW (variation +42.1 MW)
+    - Chinon (chinon): 1597.2 -> 1628.8 MW (variation +31.6 MW)
+    - Chooz (chooz): 1360.6 -> 1384.3 MW (variation +23.7 MW)
+    - Civaux (civaux): 1354.6 -> 1378.3 MW (variation +23.7 MW)
+    - Cruas-Meysse (cruas): 1620.2 -> 1651.8 MW (variation +31.6 MW)
+    - Dampierre-en-Burly (dampierre): 1563.2 -> 1594.8 MW (variation +31.6 MW)
+    - Flamanville (flamanville): 1940.4 -> 1974.6 MW (variation +34.2 MW)
+    - Golfech (golfech): 1182.4 -> 1203.5 MW (variation +21.1 MW)
+    - Gravelines (gravelines): 2413.3 -> 2460.7 MW (variation +47.4 MW)
+    - Nogent-sur-Seine (nogent): 1182.4 -> 1203.5 MW (variation +21.1 MW)
+    - Paluel (paluel): 2410.9 -> 2453.0 MW (variation +42.1 MW)
+    - Penly (penly): 1205.4 -> 1226.5 MW (variation +21.1 MW)
+    - Saint-Alban (saint_alban): 1211.4 -> 1232.5 MW (variation +21.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 810.1 -> 825.9 MW (variation +15.8 MW)
+    - Tricastin (tricastin): 1620.2 -> 1651.8 MW (variation +31.6 MW)
+
+04:30 | consommation=36414 MW | solaire=0 MW | éolien=7082 MW | demande résiduelle=29332 MW | nucléaire=29332 MW
+  réserve=33668 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5438 MW
+    - centre_val_de_loire: 1403 MW
+    - bourgogne_franche_comte: 1620 MW
+    - normandie: 2139 MW
+    - hauts_de_france: 3841 MW
+    - grand_est: 3392 MW
+    - pays_de_la_loire: 2094 MW
+    - bretagne: 1811 MW
+    - nouvelle_aquitaine: 3361 MW
+    - occitanie: 2938 MW
+    - auvergne_rhone_alpes: 5115 MW
+    - provence_alpes_cote_d_azur: 3082 MW
+    - corse: 180 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1203.5 -> 1228.7 MW (variation +25.2 MW)
+    - Le Blayais (blayais): 1640.8 -> 1678.5 MW (variation +37.7 MW)
+    - Bugey (bugey): 1606.8 -> 1644.5 MW (variation +37.7 MW)
+    - Cattenom (cattenom): 2385.0 -> 2435.4 MW (variation +50.3 MW)
+    - Chinon (chinon): 1628.8 -> 1666.5 MW (variation +37.7 MW)
+    - Chooz (chooz): 1384.3 -> 1412.6 MW (variation +28.3 MW)
+    - Civaux (civaux): 1378.3 -> 1406.6 MW (variation +28.3 MW)
+    - Cruas-Meysse (cruas): 1651.8 -> 1689.5 MW (variation +37.7 MW)
+    - Dampierre-en-Burly (dampierre): 1594.8 -> 1632.5 MW (variation +37.7 MW)
+    - Flamanville (flamanville): 1974.6 -> 2015.5 MW (variation +40.9 MW)
+    - Golfech (golfech): 1203.5 -> 1228.7 MW (variation +25.2 MW)
+    - Gravelines (gravelines): 2460.7 -> 2517.3 MW (variation +56.6 MW)
+    - Nogent-sur-Seine (nogent): 1203.5 -> 1228.7 MW (variation +25.2 MW)
+    - Paluel (paluel): 2453.0 -> 2503.4 MW (variation +50.3 MW)
+    - Penly (penly): 1226.5 -> 1251.7 MW (variation +25.2 MW)
+    - Saint-Alban (saint_alban): 1232.5 -> 1257.7 MW (variation +25.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 825.9 -> 844.8 MW (variation +18.9 MW)
+    - Tricastin (tricastin): 1651.8 -> 1689.5 MW (variation +37.7 MW)
+
+04:45 | consommation=36679 MW | solaire=0 MW | éolien=6634 MW | demande résiduelle=30045 MW | nucléaire=30045 MW
+  réserve=32955 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5483 MW
+    - centre_val_de_loire: 1413 MW
+    - bourgogne_franche_comte: 1631 MW
+    - normandie: 2155 MW
+    - hauts_de_france: 3871 MW
+    - grand_est: 3419 MW
+    - pays_de_la_loire: 2109 MW
+    - bretagne: 1823 MW
+    - nouvelle_aquitaine: 3383 MW
+    - occitanie: 2957 MW
+    - auvergne_rhone_alpes: 5153 MW
+    - provence_alpes_cote_d_azur: 3101 MW
+    - corse: 181 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1228.7 -> 1257.3 MW (variation +28.7 MW)
+    - Le Blayais (blayais): 1678.5 -> 1721.5 MW (variation +43.0 MW)
+    - Bugey (bugey): 1644.5 -> 1687.5 MW (variation +43.0 MW)
+    - Cattenom (cattenom): 2435.4 -> 2492.7 MW (variation +57.3 MW)
+    - Chinon (chinon): 1666.5 -> 1709.5 MW (variation +43.0 MW)
+    - Chooz (chooz): 1412.6 -> 1444.9 MW (variation +32.2 MW)
+    - Civaux (civaux): 1406.6 -> 1438.9 MW (variation +32.2 MW)
+    - Cruas-Meysse (cruas): 1689.5 -> 1732.5 MW (variation +43.0 MW)
+    - Dampierre-en-Burly (dampierre): 1632.5 -> 1675.5 MW (variation +43.0 MW)
+    - Flamanville (flamanville): 2015.5 -> 2062.1 MW (variation +46.6 MW)
+    - Golfech (golfech): 1228.7 -> 1257.3 MW (variation +28.7 MW)
+    - Gravelines (gravelines): 2517.3 -> 2581.8 MW (variation +64.5 MW)
+    - Nogent-sur-Seine (nogent): 1228.7 -> 1257.3 MW (variation +28.7 MW)
+    - Paluel (paluel): 2503.4 -> 2560.7 MW (variation +57.3 MW)
+    - Penly (penly): 1251.7 -> 1280.3 MW (variation +28.7 MW)
+    - Saint-Alban (saint_alban): 1257.7 -> 1286.3 MW (variation +28.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 844.8 -> 866.3 MW (variation +21.5 MW)
+    - Tricastin (tricastin): 1689.5 -> 1732.5 MW (variation +43.0 MW)
+
+05:00 | consommation=37036 MW | solaire=0 MW | éolien=6208 MW | demande résiduelle=30828 MW | nucléaire=30828 MW
+  réserve=32172 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5544 MW
+    - centre_val_de_loire: 1427 MW
+    - bourgogne_franche_comte: 1646 MW
+    - normandie: 2175 MW
+    - hauts_de_france: 3911 MW
+    - grand_est: 3454 MW
+    - pays_de_la_loire: 2129 MW
+    - bretagne: 1840 MW
+    - nouvelle_aquitaine: 3413 MW
+    - occitanie: 2983 MW
+    - auvergne_rhone_alpes: 5204 MW
+    - provence_alpes_cote_d_azur: 3127 MW
+    - corse: 183 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1257.3 -> 1288.8 MW (variation +31.5 MW)
+    - Le Blayais (blayais): 1721.5 -> 1768.7 MW (variation +47.2 MW)
+    - Bugey (bugey): 1687.5 -> 1734.7 MW (variation +47.2 MW)
+    - Cattenom (cattenom): 2492.7 -> 2555.6 MW (variation +63.0 MW)
+    - Chinon (chinon): 1709.5 -> 1756.7 MW (variation +47.2 MW)
+    - Chooz (chooz): 1444.9 -> 1480.3 MW (variation +35.4 MW)
+    - Civaux (civaux): 1438.9 -> 1474.3 MW (variation +35.4 MW)
+    - Cruas-Meysse (cruas): 1732.5 -> 1779.7 MW (variation +47.2 MW)
+    - Dampierre-en-Burly (dampierre): 1675.5 -> 1722.7 MW (variation +47.2 MW)
+    - Flamanville (flamanville): 2062.1 -> 2113.2 MW (variation +51.2 MW)
+    - Golfech (golfech): 1257.3 -> 1288.8 MW (variation +31.5 MW)
+    - Gravelines (gravelines): 2581.8 -> 2652.6 MW (variation +70.8 MW)
+    - Nogent-sur-Seine (nogent): 1257.3 -> 1288.8 MW (variation +31.5 MW)
+    - Paluel (paluel): 2560.7 -> 2623.6 MW (variation +63.0 MW)
+    - Penly (penly): 1280.3 -> 1311.8 MW (variation +31.5 MW)
+    - Saint-Alban (saint_alban): 1286.3 -> 1317.8 MW (variation +31.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 866.3 -> 889.9 MW (variation +23.6 MW)
+    - Tricastin (tricastin): 1732.5 -> 1779.7 MW (variation +47.2 MW)
+
+05:15 | consommation=37494 MW | solaire=0 MW | éolien=5842 MW | demande résiduelle=31652 MW | nucléaire=31652 MW
+  réserve=31348 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5622 MW
+    - centre_val_de_loire: 1444 MW
+    - bourgogne_franche_comte: 1665 MW
+    - normandie: 2202 MW
+    - hauts_de_france: 3962 MW
+    - grand_est: 3499 MW
+    - pays_de_la_loire: 2155 MW
+    - bretagne: 1862 MW
+    - nouvelle_aquitaine: 3451 MW
+    - occitanie: 3016 MW
+    - auvergne_rhone_alpes: 5270 MW
+    - provence_alpes_cote_d_azur: 3161 MW
+    - corse: 185 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1288.8 -> 1321.9 MW (variation +33.1 MW)
+    - Le Blayais (blayais): 1768.7 -> 1818.4 MW (variation +49.7 MW)
+    - Bugey (bugey): 1734.7 -> 1784.4 MW (variation +49.7 MW)
+    - Cattenom (cattenom): 2555.6 -> 2621.9 MW (variation +66.3 MW)
+    - Chinon (chinon): 1756.7 -> 1806.4 MW (variation +49.7 MW)
+    - Chooz (chooz): 1480.3 -> 1517.6 MW (variation +37.3 MW)
+    - Civaux (civaux): 1474.3 -> 1511.6 MW (variation +37.3 MW)
+    - Cruas-Meysse (cruas): 1779.7 -> 1829.4 MW (variation +49.7 MW)
+    - Dampierre-en-Burly (dampierre): 1722.7 -> 1772.4 MW (variation +49.7 MW)
+    - Flamanville (flamanville): 2113.2 -> 2167.0 MW (variation +53.8 MW)
+    - Golfech (golfech): 1288.8 -> 1321.9 MW (variation +33.1 MW)
+    - Gravelines (gravelines): 2652.6 -> 2727.1 MW (variation +74.5 MW)
+    - Nogent-sur-Seine (nogent): 1288.8 -> 1321.9 MW (variation +33.1 MW)
+    - Paluel (paluel): 2623.6 -> 2689.9 MW (variation +66.3 MW)
+    - Penly (penly): 1311.8 -> 1344.9 MW (variation +33.1 MW)
+    - Saint-Alban (saint_alban): 1317.8 -> 1350.9 MW (variation +33.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 889.9 -> 914.7 MW (variation +24.8 MW)
+    - Tricastin (tricastin): 1779.7 -> 1829.4 MW (variation +49.7 MW)
+
+05:30 | consommation=38067 MW | solaire=0 MW | éolien=5589 MW | demande résiduelle=32478 MW | nucléaire=32478 MW
+  réserve=30522 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5720 MW
+    - centre_val_de_loire: 1466 MW
+    - bourgogne_franche_comte: 1689 MW
+    - normandie: 2235 MW
+    - hauts_de_france: 4026 MW
+    - grand_est: 3556 MW
+    - pays_de_la_loire: 2187 MW
+    - bretagne: 1889 MW
+    - nouvelle_aquitaine: 3499 MW
+    - occitanie: 3058 MW
+    - auvergne_rhone_alpes: 5352 MW
+    - provence_alpes_cote_d_azur: 3203 MW
+    - corse: 187 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1321.9 -> 1355.2 MW (variation +33.2 MW)
+    - Le Blayais (blayais): 1818.4 -> 1868.2 MW (variation +49.8 MW)
+    - Bugey (bugey): 1784.4 -> 1834.2 MW (variation +49.8 MW)
+    - Cattenom (cattenom): 2621.9 -> 2688.3 MW (variation +66.4 MW)
+    - Chinon (chinon): 1806.4 -> 1856.2 MW (variation +49.8 MW)
+    - Chooz (chooz): 1517.6 -> 1554.9 MW (variation +37.4 MW)
+    - Civaux (civaux): 1511.6 -> 1548.9 MW (variation +37.4 MW)
+    - Cruas-Meysse (cruas): 1829.4 -> 1879.2 MW (variation +49.8 MW)
+    - Dampierre-en-Burly (dampierre): 1772.4 -> 1822.2 MW (variation +49.8 MW)
+    - Flamanville (flamanville): 2167.0 -> 2221.0 MW (variation +54.0 MW)
+    - Golfech (golfech): 1321.9 -> 1355.2 MW (variation +33.2 MW)
+    - Gravelines (gravelines): 2727.1 -> 2801.8 MW (variation +74.7 MW)
+    - Nogent-sur-Seine (nogent): 1321.9 -> 1355.2 MW (variation +33.2 MW)
+    - Paluel (paluel): 2689.9 -> 2756.3 MW (variation +66.4 MW)
+    - Penly (penly): 1344.9 -> 1378.2 MW (variation +33.2 MW)
+    - Saint-Alban (saint_alban): 1350.9 -> 1384.2 MW (variation +33.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 914.7 -> 939.6 MW (variation +24.9 MW)
+    - Tricastin (tricastin): 1829.4 -> 1879.2 MW (variation +49.8 MW)
+
+05:45 | consommation=38759 MW | solaire=0 MW | éolien=5473 MW | demande résiduelle=33286 MW | nucléaire=33286 MW
+  réserve=29714 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5838 MW
+    - centre_val_de_loire: 1492 MW
+    - bourgogne_franche_comte: 1718 MW
+    - normandie: 2275 MW
+    - hauts_de_france: 4104 MW
+    - grand_est: 3625 MW
+    - pays_de_la_loire: 2226 MW
+    - bretagne: 1921 MW
+    - nouvelle_aquitaine: 3556 MW
+    - occitanie: 3109 MW
+    - auvergne_rhone_alpes: 5452 MW
+    - provence_alpes_cote_d_azur: 3253 MW
+    - corse: 190 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1355.2 -> 1387.6 MW (variation +32.5 MW)
+    - Le Blayais (blayais): 1868.2 -> 1917.0 MW (variation +48.7 MW)
+    - Bugey (bugey): 1834.2 -> 1883.0 MW (variation +48.7 MW)
+    - Cattenom (cattenom): 2688.3 -> 2753.3 MW (variation +65.0 MW)
+    - Chinon (chinon): 1856.2 -> 1905.0 MW (variation +48.7 MW)
+    - Chooz (chooz): 1554.9 -> 1591.5 MW (variation +36.5 MW)
+    - Civaux (civaux): 1548.9 -> 1585.5 MW (variation +36.5 MW)
+    - Cruas-Meysse (cruas): 1879.2 -> 1928.0 MW (variation +48.7 MW)
+    - Dampierre-en-Burly (dampierre): 1822.2 -> 1871.0 MW (variation +48.7 MW)
+    - Flamanville (flamanville): 2221.0 -> 2273.8 MW (variation +52.8 MW)
+    - Golfech (golfech): 1355.2 -> 1387.6 MW (variation +32.5 MW)
+    - Gravelines (gravelines): 2801.8 -> 2874.9 MW (variation +73.1 MW)
+    - Nogent-sur-Seine (nogent): 1355.2 -> 1387.6 MW (variation +32.5 MW)
+    - Paluel (paluel): 2756.3 -> 2821.3 MW (variation +65.0 MW)
+    - Penly (penly): 1378.2 -> 1410.6 MW (variation +32.5 MW)
+    - Saint-Alban (saint_alban): 1384.2 -> 1416.6 MW (variation +32.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 939.6 -> 964.0 MW (variation +24.4 MW)
+    - Tricastin (tricastin): 1879.2 -> 1928.0 MW (variation +48.7 MW)
+
+06:00 | consommation=39568 MW | solaire=0 MW | éolien=5502 MW | demande résiduelle=34066 MW | nucléaire=34066 MW
+  réserve=28934 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5976 MW
+    - centre_val_de_loire: 1523 MW
+    - bourgogne_franche_comte: 1752 MW
+    - normandie: 2322 MW
+    - hauts_de_france: 4195 MW
+    - grand_est: 3705 MW
+    - pays_de_la_loire: 2272 MW
+    - bretagne: 1959 MW
+    - nouvelle_aquitaine: 3623 MW
+    - occitanie: 3167 MW
+    - auvergne_rhone_alpes: 5568 MW
+    - provence_alpes_cote_d_azur: 3312 MW
+    - corse: 194 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1387.6 -> 1419.0 MW (variation +31.4 MW)
+    - Le Blayais (blayais): 1917.0 -> 1964.0 MW (variation +47.0 MW)
+    - Bugey (bugey): 1883.0 -> 1930.0 MW (variation +47.0 MW)
+    - Cattenom (cattenom): 2753.3 -> 2816.0 MW (variation +62.7 MW)
+    - Chinon (chinon): 1905.0 -> 1952.0 MW (variation +47.0 MW)
+    - Chooz (chooz): 1591.5 -> 1626.7 MW (variation +35.3 MW)
+    - Civaux (civaux): 1585.5 -> 1620.7 MW (variation +35.3 MW)
+    - Cruas-Meysse (cruas): 1928.0 -> 1975.0 MW (variation +47.0 MW)
+    - Dampierre-en-Burly (dampierre): 1871.0 -> 1918.0 MW (variation +47.0 MW)
+    - Flamanville (flamanville): 2273.8 -> 2324.7 MW (variation +51.0 MW)
+    - Golfech (golfech): 1387.6 -> 1419.0 MW (variation +31.4 MW)
+    - Gravelines (gravelines): 2874.9 -> 2945.5 MW (variation +70.6 MW)
+    - Nogent-sur-Seine (nogent): 1387.6 -> 1419.0 MW (variation +31.4 MW)
+    - Paluel (paluel): 2821.3 -> 2884.0 MW (variation +62.7 MW)
+    - Penly (penly): 1410.6 -> 1442.0 MW (variation +31.4 MW)
+    - Saint-Alban (saint_alban): 1416.6 -> 1448.0 MW (variation +31.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 964.0 -> 987.5 MW (variation +23.5 MW)
+    - Tricastin (tricastin): 1928.0 -> 1975.0 MW (variation +47.0 MW)
+
+06:15 | consommation=40477 MW | solaire=0 MW | éolien=5663 MW | demande résiduelle=34814 MW | nucléaire=34814 MW
+  réserve=28186 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6132 MW
+    - centre_val_de_loire: 1557 MW
+    - bourgogne_franche_comte: 1790 MW
+    - normandie: 2374 MW
+    - hauts_de_france: 4297 MW
+    - grand_est: 3795 MW
+    - pays_de_la_loire: 2324 MW
+    - bretagne: 2002 MW
+    - nouvelle_aquitaine: 3699 MW
+    - occitanie: 3233 MW
+    - auvergne_rhone_alpes: 5699 MW
+    - provence_alpes_cote_d_azur: 3378 MW
+    - corse: 197 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1419.0 -> 1449.1 MW (variation +30.1 MW)
+    - Le Blayais (blayais): 1964.0 -> 2009.1 MW (variation +45.1 MW)
+    - Bugey (bugey): 1930.0 -> 1975.1 MW (variation +45.1 MW)
+    - Cattenom (cattenom): 2816.0 -> 2876.1 MW (variation +60.1 MW)
+    - Chinon (chinon): 1952.0 -> 1997.1 MW (variation +45.1 MW)
+    - Chooz (chooz): 1626.7 -> 1660.6 MW (variation +33.8 MW)
+    - Civaux (civaux): 1620.7 -> 1654.6 MW (variation +33.8 MW)
+    - Cruas-Meysse (cruas): 1975.0 -> 2020.1 MW (variation +45.1 MW)
+    - Dampierre-en-Burly (dampierre): 1918.0 -> 1963.1 MW (variation +45.1 MW)
+    - Flamanville (flamanville): 2324.7 -> 2373.6 MW (variation +48.9 MW)
+    - Golfech (golfech): 1419.0 -> 1449.1 MW (variation +30.1 MW)
+    - Gravelines (gravelines): 2945.5 -> 3013.1 MW (variation +67.7 MW)
+    - Nogent-sur-Seine (nogent): 1419.0 -> 1449.1 MW (variation +30.1 MW)
+    - Paluel (paluel): 2884.0 -> 2944.1 MW (variation +60.1 MW)
+    - Penly (penly): 1442.0 -> 1472.1 MW (variation +30.1 MW)
+    - Saint-Alban (saint_alban): 1448.0 -> 1478.1 MW (variation +30.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 987.5 -> 1010.0 MW (variation +22.6 MW)
+    - Tricastin (tricastin): 1975.0 -> 2020.1 MW (variation +45.1 MW)
+
+06:30 | consommation=41464 MW | solaire=0 MW | éolien=5931 MW | demande résiduelle=35533 MW | nucléaire=35533 MW
+  réserve=27467 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6302 MW
+    - centre_val_de_loire: 1595 MW
+    - bourgogne_franche_comte: 1831 MW
+    - normandie: 2431 MW
+    - hauts_de_france: 4408 MW
+    - grand_est: 3893 MW
+    - pays_de_la_loire: 2379 MW
+    - bretagne: 2048 MW
+    - nouvelle_aquitaine: 3780 MW
+    - occitanie: 3305 MW
+    - auvergne_rhone_alpes: 5841 MW
+    - provence_alpes_cote_d_azur: 3449 MW
+    - corse: 202 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1449.1 -> 1478.0 MW (variation +28.9 MW)
+    - Le Blayais (blayais): 2009.1 -> 2052.4 MW (variation +43.4 MW)
+    - Bugey (bugey): 1975.1 -> 2018.4 MW (variation +43.4 MW)
+    - Cattenom (cattenom): 2876.1 -> 2933.9 MW (variation +57.8 MW)
+    - Chinon (chinon): 1997.1 -> 2040.4 MW (variation +43.4 MW)
+    - Chooz (chooz): 1660.6 -> 1693.1 MW (variation +32.5 MW)
+    - Civaux (civaux): 1654.6 -> 1687.1 MW (variation +32.5 MW)
+    - Cruas-Meysse (cruas): 2020.1 -> 2063.4 MW (variation +43.4 MW)
+    - Dampierre-en-Burly (dampierre): 1963.1 -> 2006.4 MW (variation +43.4 MW)
+    - Flamanville (flamanville): 2373.6 -> 2420.6 MW (variation +47.0 MW)
+    - Golfech (golfech): 1449.1 -> 1478.0 MW (variation +28.9 MW)
+    - Gravelines (gravelines): 3013.1 -> 3078.2 MW (variation +65.0 MW)
+    - Nogent-sur-Seine (nogent): 1449.1 -> 1478.0 MW (variation +28.9 MW)
+    - Paluel (paluel): 2944.1 -> 3001.9 MW (variation +57.8 MW)
+    - Penly (penly): 1472.1 -> 1501.0 MW (variation +28.9 MW)
+    - Saint-Alban (saint_alban): 1478.1 -> 1507.0 MW (variation +28.9 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1010.0 -> 1031.7 MW (variation +21.7 MW)
+    - Tricastin (tricastin): 2020.1 -> 2063.4 MW (variation +43.4 MW)
+
+06:45 | consommation=42487 MW | solaire=249 MW | éolien=6258 MW | demande résiduelle=35980 MW | nucléaire=35980 MW
+  réserve=27020 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6479 MW
+    - centre_val_de_loire: 1633 MW
+    - bourgogne_franche_comte: 1874 MW
+    - normandie: 2490 MW
+    - hauts_de_france: 4524 MW
+    - grand_est: 3995 MW
+    - pays_de_la_loire: 2437 MW
+    - bretagne: 2095 MW
+    - nouvelle_aquitaine: 3865 MW
+    - occitanie: 3378 MW
+    - auvergne_rhone_alpes: 5988 MW
+    - provence_alpes_cote_d_azur: 3523 MW
+    - corse: 206 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1478.0 -> 1495.9 MW (variation +18.0 MW)
+    - Le Blayais (blayais): 2052.4 -> 2079.4 MW (variation +27.0 MW)
+    - Bugey (bugey): 2018.4 -> 2045.4 MW (variation +27.0 MW)
+    - Cattenom (cattenom): 2933.9 -> 2969.9 MW (variation +35.9 MW)
+    - Chinon (chinon): 2040.4 -> 2067.4 MW (variation +27.0 MW)
+    - Chooz (chooz): 1693.1 -> 1713.3 MW (variation +20.2 MW)
+    - Civaux (civaux): 1687.1 -> 1707.3 MW (variation +20.2 MW)
+    - Cruas-Meysse (cruas): 2063.4 -> 2090.4 MW (variation +27.0 MW)
+    - Dampierre-en-Burly (dampierre): 2006.4 -> 2033.4 MW (variation +27.0 MW)
+    - Flamanville (flamanville): 2420.6 -> 2449.8 MW (variation +29.2 MW)
+    - Golfech (golfech): 1478.0 -> 1495.9 MW (variation +18.0 MW)
+    - Gravelines (gravelines): 3078.2 -> 3118.6 MW (variation +40.4 MW)
+    - Nogent-sur-Seine (nogent): 1478.0 -> 1495.9 MW (variation +18.0 MW)
+    - Paluel (paluel): 3001.9 -> 3037.9 MW (variation +35.9 MW)
+    - Penly (penly): 1501.0 -> 1518.9 MW (variation +18.0 MW)
+    - Saint-Alban (saint_alban): 1507.0 -> 1524.9 MW (variation +18.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1031.7 -> 1045.2 MW (variation +13.5 MW)
+    - Tricastin (tricastin): 2063.4 -> 2090.4 MW (variation +27.0 MW)
+
+07:00 | consommation=43498 MW | solaire=725 MW | éolien=6610 MW | demande résiduelle=36163 MW | nucléaire=36163 MW
+  réserve=26837 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6654 MW
+    - centre_val_de_loire: 1672 MW
+    - bourgogne_franche_comte: 1916 MW
+    - normandie: 2548 MW
+    - hauts_de_france: 4638 MW
+    - grand_est: 4096 MW
+    - pays_de_la_loire: 2494 MW
+    - bretagne: 2142 MW
+    - nouvelle_aquitaine: 3948 MW
+    - occitanie: 3451 MW
+    - auvergne_rhone_alpes: 6134 MW
+    - provence_alpes_cote_d_azur: 3595 MW
+    - corse: 210 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1495.9 -> 1503.3 MW (variation +7.4 MW)
+    - Le Blayais (blayais): 2079.4 -> 2090.4 MW (variation +11.0 MW)
+    - Bugey (bugey): 2045.4 -> 2056.4 MW (variation +11.0 MW)
+    - Cattenom (cattenom): 2969.9 -> 2984.6 MW (variation +14.7 MW)
+    - Chinon (chinon): 2067.4 -> 2078.4 MW (variation +11.0 MW)
+    - Chooz (chooz): 1713.3 -> 1721.6 MW (variation +8.3 MW)
+    - Civaux (civaux): 1707.3 -> 1715.6 MW (variation +8.3 MW)
+    - Cruas-Meysse (cruas): 2090.4 -> 2101.4 MW (variation +11.0 MW)
+    - Dampierre-en-Burly (dampierre): 2033.4 -> 2044.4 MW (variation +11.0 MW)
+    - Flamanville (flamanville): 2449.8 -> 2461.7 MW (variation +12.0 MW)
+    - Golfech (golfech): 1495.9 -> 1503.3 MW (variation +7.4 MW)
+    - Gravelines (gravelines): 3118.6 -> 3135.2 MW (variation +16.6 MW)
+    - Nogent-sur-Seine (nogent): 1495.9 -> 1503.3 MW (variation +7.4 MW)
+    - Paluel (paluel): 3037.9 -> 3052.6 MW (variation +14.7 MW)
+    - Penly (penly): 1518.9 -> 1526.3 MW (variation +7.4 MW)
+    - Saint-Alban (saint_alban): 1524.9 -> 1532.3 MW (variation +7.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1045.2 -> 1050.7 MW (variation +5.5 MW)
+    - Tricastin (tricastin): 2090.4 -> 2101.4 MW (variation +11.0 MW)
+
+07:15 | consommation=44443 MW | solaire=1353 MW | éolien=6963 MW | demande résiduelle=36127 MW | nucléaire=36127 MW
+  réserve=26873 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6819 MW
+    - centre_val_de_loire: 1707 MW
+    - bourgogne_franche_comte: 1955 MW
+    - normandie: 2603 MW
+    - hauts_de_france: 4745 MW
+    - grand_est: 4190 MW
+    - pays_de_la_loire: 2547 MW
+    - bretagne: 2186 MW
+    - nouvelle_aquitaine: 4025 MW
+    - occitanie: 3519 MW
+    - auvergne_rhone_alpes: 6270 MW
+    - provence_alpes_cote_d_azur: 3663 MW
+    - corse: 214 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1503.3 -> 1501.8 MW (variation -1.4 MW)
+    - Le Blayais (blayais): 2090.4 -> 2088.3 MW (variation -2.2 MW)
+    - Bugey (bugey): 2056.4 -> 2054.3 MW (variation -2.2 MW)
+    - Cattenom (cattenom): 2984.6 -> 2981.7 MW (variation -2.9 MW)
+    - Chinon (chinon): 2078.4 -> 2076.3 MW (variation -2.2 MW)
+    - Chooz (chooz): 1721.6 -> 1720.0 MW (variation -1.6 MW)
+    - Civaux (civaux): 1715.6 -> 1714.0 MW (variation -1.6 MW)
+    - Cruas-Meysse (cruas): 2101.4 -> 2099.3 MW (variation -2.2 MW)
+    - Dampierre-en-Burly (dampierre): 2044.4 -> 2042.3 MW (variation -2.2 MW)
+    - Flamanville (flamanville): 2461.7 -> 2459.4 MW (variation -2.4 MW)
+    - Golfech (golfech): 1503.3 -> 1501.8 MW (variation -1.4 MW)
+    - Gravelines (gravelines): 3135.2 -> 3131.9 MW (variation -3.3 MW)
+    - Nogent-sur-Seine (nogent): 1503.3 -> 1501.8 MW (variation -1.4 MW)
+    - Paluel (paluel): 3052.6 -> 3049.7 MW (variation -2.9 MW)
+    - Penly (penly): 1526.3 -> 1524.8 MW (variation -1.4 MW)
+    - Saint-Alban (saint_alban): 1532.3 -> 1530.8 MW (variation -1.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1050.7 -> 1049.6 MW (variation -1.1 MW)
+    - Tricastin (tricastin): 2101.4 -> 2099.3 MW (variation -2.2 MW)
+
+07:30 | consommation=45269 MW | solaire=2099 MW | éolien=7291 MW | demande résiduelle=35879 MW | nucléaire=35879 MW
+  réserve=27121 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6962 MW
+    - centre_val_de_loire: 1738 MW
+    - bourgogne_franche_comte: 1990 MW
+    - normandie: 2650 MW
+    - hauts_de_france: 4838 MW
+    - grand_est: 4273 MW
+    - pays_de_la_loire: 2594 MW
+    - bretagne: 2225 MW
+    - nouvelle_aquitaine: 4093 MW
+    - occitanie: 3578 MW
+    - auvergne_rhone_alpes: 6389 MW
+    - provence_alpes_cote_d_azur: 3721 MW
+    - corse: 218 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1501.8 -> 1491.9 MW (variation -10.0 MW)
+    - Le Blayais (blayais): 2088.3 -> 2073.3 MW (variation -15.0 MW)
+    - Bugey (bugey): 2054.3 -> 2039.3 MW (variation -15.0 MW)
+    - Cattenom (cattenom): 2981.7 -> 2961.7 MW (variation -19.9 MW)
+    - Chinon (chinon): 2076.3 -> 2061.3 MW (variation -15.0 MW)
+    - Chooz (chooz): 1720.0 -> 1708.7 MW (variation -11.2 MW)
+    - Civaux (civaux): 1714.0 -> 1702.7 MW (variation -11.2 MW)
+    - Cruas-Meysse (cruas): 2099.3 -> 2084.3 MW (variation -15.0 MW)
+    - Dampierre-en-Burly (dampierre): 2042.3 -> 2027.3 MW (variation -15.0 MW)
+    - Flamanville (flamanville): 2459.4 -> 2443.2 MW (variation -16.2 MW)
+    - Golfech (golfech): 1501.8 -> 1491.9 MW (variation -10.0 MW)
+    - Gravelines (gravelines): 3131.9 -> 3109.5 MW (variation -22.4 MW)
+    - Nogent-sur-Seine (nogent): 1501.8 -> 1491.9 MW (variation -10.0 MW)
+    - Paluel (paluel): 3049.7 -> 3029.7 MW (variation -19.9 MW)
+    - Penly (penly): 1524.8 -> 1514.9 MW (variation -10.0 MW)
+    - Saint-Alban (saint_alban): 1530.8 -> 1520.9 MW (variation -10.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1049.6 -> 1042.2 MW (variation -7.5 MW)
+    - Tricastin (tricastin): 2099.3 -> 2084.3 MW (variation -15.0 MW)
+
+07:45 | consommation=45922 MW | solaire=2943 MW | éolien=7583 MW | demande résiduelle=35396 MW | nucléaire=35396 MW
+  réserve=27604 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7075 MW
+    - centre_val_de_loire: 1763 MW
+    - bourgogne_franche_comte: 2017 MW
+    - normandie: 2688 MW
+    - hauts_de_france: 4912 MW
+    - grand_est: 4338 MW
+    - pays_de_la_loire: 2631 MW
+    - bretagne: 2255 MW
+    - nouvelle_aquitaine: 4147 MW
+    - occitanie: 3625 MW
+    - auvergne_rhone_alpes: 6483 MW
+    - provence_alpes_cote_d_azur: 3768 MW
+    - corse: 220 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1491.9 -> 1472.5 MW (variation -19.4 MW)
+    - Le Blayais (blayais): 2073.3 -> 2044.2 MW (variation -29.1 MW)
+    - Bugey (bugey): 2039.3 -> 2010.2 MW (variation -29.1 MW)
+    - Cattenom (cattenom): 2961.7 -> 2922.9 MW (variation -38.8 MW)
+    - Chinon (chinon): 2061.3 -> 2032.2 MW (variation -29.1 MW)
+    - Chooz (chooz): 1708.7 -> 1686.9 MW (variation -21.8 MW)
+    - Civaux (civaux): 1702.7 -> 1680.9 MW (variation -21.8 MW)
+    - Cruas-Meysse (cruas): 2084.3 -> 2055.2 MW (variation -29.1 MW)
+    - Dampierre-en-Burly (dampierre): 2027.3 -> 1998.2 MW (variation -29.1 MW)
+    - Flamanville (flamanville): 2443.2 -> 2411.6 MW (variation -31.6 MW)
+    - Golfech (golfech): 1491.9 -> 1472.5 MW (variation -19.4 MW)
+    - Gravelines (gravelines): 3109.5 -> 3065.8 MW (variation -43.7 MW)
+    - Nogent-sur-Seine (nogent): 1491.9 -> 1472.5 MW (variation -19.4 MW)
+    - Paluel (paluel): 3029.7 -> 2990.9 MW (variation -38.8 MW)
+    - Penly (penly): 1514.9 -> 1495.5 MW (variation -19.4 MW)
+    - Saint-Alban (saint_alban): 1520.9 -> 1501.5 MW (variation -19.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1042.2 -> 1027.6 MW (variation -14.6 MW)
+    - Tricastin (tricastin): 2084.3 -> 2055.2 MW (variation -29.1 MW)
+
+08:00 | consommation=46357 MW | solaire=3864 MW | éolien=7831 MW | demande résiduelle=34662 MW | nucléaire=34662 MW
+  réserve=28338 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7150 MW
+    - centre_val_de_loire: 1780 MW
+    - bourgogne_franche_comte: 2035 MW
+    - normandie: 2713 MW
+    - hauts_de_france: 4961 MW
+    - grand_est: 4381 MW
+    - pays_de_la_loire: 2655 MW
+    - bretagne: 2275 MW
+    - nouvelle_aquitaine: 4183 MW
+    - occitanie: 3656 MW
+    - auvergne_rhone_alpes: 6546 MW
+    - provence_alpes_cote_d_azur: 3800 MW
+    - corse: 222 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1472.5 -> 1443.0 MW (variation -29.5 MW)
+    - Le Blayais (blayais): 2044.2 -> 1999.9 MW (variation -44.3 MW)
+    - Bugey (bugey): 2010.2 -> 1965.9 MW (variation -44.3 MW)
+    - Cattenom (cattenom): 2922.9 -> 2863.9 MW (variation -59.0 MW)
+    - Chinon (chinon): 2032.2 -> 1987.9 MW (variation -44.3 MW)
+    - Chooz (chooz): 1686.9 -> 1653.7 MW (variation -33.2 MW)
+    - Civaux (civaux): 1680.9 -> 1647.7 MW (variation -33.2 MW)
+    - Cruas-Meysse (cruas): 2055.2 -> 2010.9 MW (variation -44.3 MW)
+    - Dampierre-en-Burly (dampierre): 1998.2 -> 1953.9 MW (variation -44.3 MW)
+    - Flamanville (flamanville): 2411.6 -> 2363.7 MW (variation -48.0 MW)
+    - Golfech (golfech): 1472.5 -> 1443.0 MW (variation -29.5 MW)
+    - Gravelines (gravelines): 3065.8 -> 2999.4 MW (variation -66.4 MW)
+    - Nogent-sur-Seine (nogent): 1472.5 -> 1443.0 MW (variation -29.5 MW)
+    - Paluel (paluel): 2990.9 -> 2931.9 MW (variation -59.0 MW)
+    - Penly (penly): 1495.5 -> 1466.0 MW (variation -29.5 MW)
+    - Saint-Alban (saint_alban): 1501.5 -> 1472.0 MW (variation -29.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1027.6 -> 1005.5 MW (variation -22.1 MW)
+    - Tricastin (tricastin): 2055.2 -> 2010.9 MW (variation -44.3 MW)
+
+08:15 | consommation=46560 MW | solaire=4846 MW | éolien=8024 MW | demande résiduelle=33690 MW | nucléaire=33690 MW
+  réserve=29310 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7183 MW
+    - centre_val_de_loire: 1787 MW
+    - bourgogne_franche_comte: 2044 MW
+    - normandie: 2725 MW
+    - hauts_de_france: 4983 MW
+    - grand_est: 4401 MW
+    - pays_de_la_loire: 2667 MW
+    - bretagne: 2285 MW
+    - nouvelle_aquitaine: 4200 MW
+    - occitanie: 3672 MW
+    - auvergne_rhone_alpes: 6575 MW
+    - provence_alpes_cote_d_azur: 3815 MW
+    - corse: 223 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1443.0 -> 1403.9 MW (variation -39.1 MW)
+    - Le Blayais (blayais): 1999.9 -> 1941.3 MW (variation -58.6 MW)
+    - Bugey (bugey): 1965.9 -> 1907.3 MW (variation -58.6 MW)
+    - Cattenom (cattenom): 2863.9 -> 2785.7 MW (variation -78.2 MW)
+    - Chinon (chinon): 1987.9 -> 1929.3 MW (variation -58.6 MW)
+    - Chooz (chooz): 1653.7 -> 1609.7 MW (variation -44.0 MW)
+    - Civaux (civaux): 1647.7 -> 1603.7 MW (variation -44.0 MW)
+    - Cruas-Meysse (cruas): 2010.9 -> 1952.3 MW (variation -58.6 MW)
+    - Dampierre-en-Burly (dampierre): 1953.9 -> 1895.3 MW (variation -58.6 MW)
+    - Flamanville (flamanville): 2363.7 -> 2300.2 MW (variation -63.5 MW)
+    - Golfech (golfech): 1443.0 -> 1403.9 MW (variation -39.1 MW)
+    - Gravelines (gravelines): 2999.4 -> 2911.5 MW (variation -87.9 MW)
+    - Nogent-sur-Seine (nogent): 1443.0 -> 1403.9 MW (variation -39.1 MW)
+    - Paluel (paluel): 2931.9 -> 2853.7 MW (variation -78.2 MW)
+    - Penly (penly): 1466.0 -> 1426.9 MW (variation -39.1 MW)
+    - Saint-Alban (saint_alban): 1472.0 -> 1432.9 MW (variation -39.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1005.5 -> 976.2 MW (variation -29.3 MW)
+    - Tricastin (tricastin): 2010.9 -> 1952.3 MW (variation -58.6 MW)
+
+08:30 | consommation=46514 MW | solaire=5876 MW | éolien=8157 MW | demande résiduelle=32481 MW | nucléaire=32481 MW
+  réserve=30519 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7172 MW
+    - centre_val_de_loire: 1786 MW
+    - bourgogne_franche_comte: 2042 MW
+    - normandie: 2722 MW
+    - hauts_de_france: 4977 MW
+    - grand_est: 4395 MW
+    - pays_de_la_loire: 2664 MW
+    - bretagne: 2283 MW
+    - nouvelle_aquitaine: 4198 MW
+    - occitanie: 3670 MW
+    - auvergne_rhone_alpes: 6568 MW
+    - provence_alpes_cote_d_azur: 3814 MW
+    - corse: 223 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1403.9 -> 1355.3 MW (variation -48.6 MW)
+    - Le Blayais (blayais): 1941.3 -> 1868.4 MW (variation -72.9 MW)
+    - Bugey (bugey): 1907.3 -> 1834.4 MW (variation -72.9 MW)
+    - Cattenom (cattenom): 2785.7 -> 2688.5 MW (variation -97.2 MW)
+    - Chinon (chinon): 1929.3 -> 1856.4 MW (variation -72.9 MW)
+    - Chooz (chooz): 1609.7 -> 1555.1 MW (variation -54.7 MW)
+    - Civaux (civaux): 1603.7 -> 1549.1 MW (variation -54.7 MW)
+    - Cruas-Meysse (cruas): 1952.3 -> 1879.4 MW (variation -72.9 MW)
+    - Dampierre-en-Burly (dampierre): 1895.3 -> 1822.4 MW (variation -72.9 MW)
+    - Flamanville (flamanville): 2300.2 -> 2221.2 MW (variation -79.0 MW)
+    - Golfech (golfech): 1403.9 -> 1355.3 MW (variation -48.6 MW)
+    - Gravelines (gravelines): 2911.5 -> 2802.1 MW (variation -109.4 MW)
+    - Nogent-sur-Seine (nogent): 1403.9 -> 1355.3 MW (variation -48.6 MW)
+    - Paluel (paluel): 2853.7 -> 2756.5 MW (variation -97.2 MW)
+    - Penly (penly): 1426.9 -> 1378.3 MW (variation -48.6 MW)
+    - Saint-Alban (saint_alban): 1432.9 -> 1384.3 MW (variation -48.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 976.2 -> 939.7 MW (variation -36.5 MW)
+    - Tricastin (tricastin): 1952.3 -> 1879.4 MW (variation -72.9 MW)
+
+08:45 | consommation=46244 MW | solaire=6939 MW | éolien=8230 MW | demande résiduelle=31075 MW | nucléaire=31075 MW
+  réserve=31925 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7120 MW
+    - centre_val_de_loire: 1776 MW
+    - bourgogne_franche_comte: 2032 MW
+    - normandie: 2707 MW
+    - hauts_de_france: 4945 MW
+    - grand_est: 4367 MW
+    - pays_de_la_loire: 2649 MW
+    - bretagne: 2271 MW
+    - nouvelle_aquitaine: 4178 MW
+    - occitanie: 3652 MW
+    - auvergne_rhone_alpes: 6528 MW
+    - provence_alpes_cote_d_azur: 3797 MW
+    - corse: 222 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1355.3 -> 1298.7 MW (variation -56.5 MW)
+    - Le Blayais (blayais): 1868.4 -> 1783.6 MW (variation -84.8 MW)
+    - Bugey (bugey): 1834.4 -> 1749.6 MW (variation -84.8 MW)
+    - Cattenom (cattenom): 2688.5 -> 2575.5 MW (variation -113.0 MW)
+    - Chinon (chinon): 1856.4 -> 1771.6 MW (variation -84.8 MW)
+    - Chooz (chooz): 1555.1 -> 1491.5 MW (variation -63.6 MW)
+    - Civaux (civaux): 1549.1 -> 1485.5 MW (variation -63.6 MW)
+    - Cruas-Meysse (cruas): 1879.4 -> 1794.6 MW (variation -84.8 MW)
+    - Dampierre-en-Burly (dampierre): 1822.4 -> 1737.6 MW (variation -84.8 MW)
+    - Flamanville (flamanville): 2221.2 -> 2129.3 MW (variation -91.8 MW)
+    - Golfech (golfech): 1355.3 -> 1298.7 MW (variation -56.5 MW)
+    - Gravelines (gravelines): 2802.1 -> 2674.9 MW (variation -127.2 MW)
+    - Nogent-sur-Seine (nogent): 1355.3 -> 1298.7 MW (variation -56.5 MW)
+    - Paluel (paluel): 2756.5 -> 2643.5 MW (variation -113.0 MW)
+    - Penly (penly): 1378.3 -> 1321.7 MW (variation -56.5 MW)
+    - Saint-Alban (saint_alban): 1384.3 -> 1327.7 MW (variation -56.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 939.7 -> 897.3 MW (variation -42.4 MW)
+    - Tricastin (tricastin): 1879.4 -> 1794.6 MW (variation -84.8 MW)
+
+09:00 | consommation=45776 MW | solaire=8022 MW | éolien=8261 MW | demande résiduelle=29493 MW | nucléaire=29493 MW
+  réserve=33507 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7034 MW
+    - centre_val_de_loire: 1758 MW
+    - bourgogne_franche_comte: 2013 MW
+    - normandie: 2680 MW
+    - hauts_de_france: 4890 MW
+    - grand_est: 4319 MW
+    - pays_de_la_loire: 2623 MW
+    - bretagne: 2250 MW
+    - nouvelle_aquitaine: 4142 MW
+    - occitanie: 3620 MW
+    - auvergne_rhone_alpes: 6460 MW
+    - provence_alpes_cote_d_azur: 3767 MW
+    - corse: 220 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1298.7 -> 1235.2 MW (variation -63.6 MW)
+    - Le Blayais (blayais): 1783.6 -> 1688.2 MW (variation -95.4 MW)
+    - Bugey (bugey): 1749.6 -> 1654.2 MW (variation -95.4 MW)
+    - Cattenom (cattenom): 2575.5 -> 2448.3 MW (variation -127.2 MW)
+    - Chinon (chinon): 1771.6 -> 1676.2 MW (variation -95.4 MW)
+    - Chooz (chooz): 1491.5 -> 1419.9 MW (variation -71.5 MW)
+    - Civaux (civaux): 1485.5 -> 1413.9 MW (variation -71.5 MW)
+    - Cruas-Meysse (cruas): 1794.6 -> 1699.2 MW (variation -95.4 MW)
+    - Dampierre-en-Burly (dampierre): 1737.6 -> 1642.2 MW (variation -95.4 MW)
+    - Flamanville (flamanville): 2129.3 -> 2026.0 MW (variation -103.3 MW)
+    - Golfech (golfech): 1298.7 -> 1235.2 MW (variation -63.6 MW)
+    - Gravelines (gravelines): 2674.9 -> 2531.8 MW (variation -143.1 MW)
+    - Nogent-sur-Seine (nogent): 1298.7 -> 1235.2 MW (variation -63.6 MW)
+    - Paluel (paluel): 2643.5 -> 2516.3 MW (variation -127.2 MW)
+    - Penly (penly): 1321.7 -> 1258.2 MW (variation -63.6 MW)
+    - Saint-Alban (saint_alban): 1327.7 -> 1264.2 MW (variation -63.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 897.3 -> 849.6 MW (variation -47.7 MW)
+    - Tricastin (tricastin): 1794.6 -> 1699.2 MW (variation -95.4 MW)
+
+09:15 | consommation=45157 MW | solaire=9111 MW | éolien=8272 MW | demande résiduelle=27774 MW | nucléaire=27774 MW
+  réserve=35226 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6920 MW
+    - centre_val_de_loire: 1735 MW
+    - bourgogne_franche_comte: 1988 MW
+    - normandie: 2645 MW
+    - hauts_de_france: 4819 MW
+    - grand_est: 4255 MW
+    - pays_de_la_loire: 2588 MW
+    - bretagne: 2222 MW
+    - nouvelle_aquitaine: 4093 MW
+    - occitanie: 3578 MW
+    - auvergne_rhone_alpes: 6370 MW
+    - provence_alpes_cote_d_azur: 3726 MW
+    - corse: 218 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1235.2 -> 1166.0 MW (variation -69.1 MW)
+    - Le Blayais (blayais): 1688.2 -> 1584.6 MW (variation -103.7 MW)
+    - Bugey (bugey): 1654.2 -> 1550.6 MW (variation -103.7 MW)
+    - Cattenom (cattenom): 2448.3 -> 2310.1 MW (variation -138.2 MW)
+    - Chinon (chinon): 1676.2 -> 1572.6 MW (variation -103.7 MW)
+    - Chooz (chooz): 1419.9 -> 1342.2 MW (variation -77.7 MW)
+    - Civaux (civaux): 1413.9 -> 1336.2 MW (variation -77.7 MW)
+    - Cruas-Meysse (cruas): 1699.2 -> 1595.6 MW (variation -103.7 MW)
+    - Dampierre-en-Burly (dampierre): 1642.2 -> 1538.6 MW (variation -103.7 MW)
+    - Flamanville (flamanville): 2026.0 -> 1913.7 MW (variation -112.3 MW)
+    - Golfech (golfech): 1235.2 -> 1166.0 MW (variation -69.1 MW)
+    - Gravelines (gravelines): 2531.8 -> 2376.4 MW (variation -155.5 MW)
+    - Nogent-sur-Seine (nogent): 1235.2 -> 1166.0 MW (variation -69.1 MW)
+    - Paluel (paluel): 2516.3 -> 2378.1 MW (variation -138.2 MW)
+    - Penly (penly): 1258.2 -> 1189.0 MW (variation -69.1 MW)
+    - Saint-Alban (saint_alban): 1264.2 -> 1195.0 MW (variation -69.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 849.6 -> 797.8 MW (variation -51.8 MW)
+    - Tricastin (tricastin): 1699.2 -> 1595.6 MW (variation -103.7 MW)
+
+09:30 | consommation=44441 MW | solaire=10197 MW | éolien=8297 MW | demande résiduelle=25947 MW | nucléaire=25947 MW
+  réserve=37053 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6790 MW
+    - centre_val_de_loire: 1708 MW
+    - bourgogne_franche_comte: 1959 MW
+    - normandie: 2604 MW
+    - hauts_de_france: 4736 MW
+    - grand_est: 4182 MW
+    - pays_de_la_loire: 2548 MW
+    - bretagne: 2190 MW
+    - nouvelle_aquitaine: 4037 MW
+    - occitanie: 3529 MW
+    - auvergne_rhone_alpes: 6265 MW
+    - provence_alpes_cote_d_azur: 3678 MW
+    - corse: 215 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1166.0 -> 1092.6 MW (variation -73.4 MW)
+    - Le Blayais (blayais): 1584.6 -> 1474.4 MW (variation -110.2 MW)
+    - Bugey (bugey): 1550.6 -> 1440.4 MW (variation -110.2 MW)
+    - Cattenom (cattenom): 2310.1 -> 2163.2 MW (variation -146.9 MW)
+    - Chinon (chinon): 1572.6 -> 1462.4 MW (variation -110.2 MW)
+    - Chooz (chooz): 1342.2 -> 1259.5 MW (variation -82.6 MW)
+    - Civaux (civaux): 1336.2 -> 1253.5 MW (variation -82.6 MW)
+    - Cruas-Meysse (cruas): 1595.6 -> 1485.4 MW (variation -110.2 MW)
+    - Dampierre-en-Burly (dampierre): 1538.6 -> 1428.4 MW (variation -110.2 MW)
+    - Flamanville (flamanville): 1913.7 -> 1794.3 MW (variation -119.4 MW)
+    - Golfech (golfech): 1166.0 -> 1092.6 MW (variation -73.4 MW)
+    - Gravelines (gravelines): 2376.4 -> 2211.1 MW (variation -165.3 MW)
+    - Nogent-sur-Seine (nogent): 1166.0 -> 1092.6 MW (variation -73.4 MW)
+    - Paluel (paluel): 2378.1 -> 2231.2 MW (variation -146.9 MW)
+    - Penly (penly): 1189.0 -> 1115.6 MW (variation -73.4 MW)
+    - Saint-Alban (saint_alban): 1195.0 -> 1121.6 MW (variation -73.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 797.8 -> 742.7 MW (variation -55.1 MW)
+    - Tricastin (tricastin): 1595.6 -> 1485.4 MW (variation -110.2 MW)
+
+09:45 | consommation=43679 MW | solaire=11263 MW | éolien=8370 MW | demande résiduelle=24046 MW | nucléaire=24046 MW
+  réserve=38954 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6652 MW
+    - centre_val_de_loire: 1679 MW
+    - bourgogne_franche_comte: 1928 MW
+    - normandie: 2560 MW
+    - hauts_de_france: 4648 MW
+    - grand_est: 4105 MW
+    - pays_de_la_loire: 2506 MW
+    - bretagne: 2155 MW
+    - nouvelle_aquitaine: 3977 MW
+    - occitanie: 3476 MW
+    - auvergne_rhone_alpes: 6155 MW
+    - provence_alpes_cote_d_azur: 3626 MW
+    - corse: 212 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1092.6 -> 1016.2 MW (variation -76.4 MW)
+    - Le Blayais (blayais): 1474.4 -> 1359.8 MW (variation -114.6 MW)
+    - Bugey (bugey): 1440.4 -> 1325.8 MW (variation -114.6 MW)
+    - Cattenom (cattenom): 2163.2 -> 2010.4 MW (variation -152.8 MW)
+    - Chinon (chinon): 1462.4 -> 1347.8 MW (variation -114.6 MW)
+    - Chooz (chooz): 1259.5 -> 1173.6 MW (variation -86.0 MW)
+    - Civaux (civaux): 1253.5 -> 1167.6 MW (variation -86.0 MW)
+    - Cruas-Meysse (cruas): 1485.4 -> 1370.8 MW (variation -114.6 MW)
+    - Dampierre-en-Burly (dampierre): 1428.4 -> 1313.8 MW (variation -114.6 MW)
+    - Flamanville (flamanville): 1794.3 -> 1670.2 MW (variation -124.2 MW)
+    - Golfech (golfech): 1092.6 -> 1016.2 MW (variation -76.4 MW)
+    - Gravelines (gravelines): 2211.1 -> 2039.1 MW (variation -171.9 MW)
+    - Nogent-sur-Seine (nogent): 1092.6 -> 1016.2 MW (variation -76.4 MW)
+    - Paluel (paluel): 2231.2 -> 2078.4 MW (variation -152.8 MW)
+    - Penly (penly): 1115.6 -> 1039.2 MW (variation -76.4 MW)
+    - Saint-Alban (saint_alban): 1121.6 -> 1045.2 MW (variation -76.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 742.7 -> 685.4 MW (variation -57.3 MW)
+    - Tricastin (tricastin): 1485.4 -> 1370.8 MW (variation -114.6 MW)
+
+10:00 | consommation=42928 MW | solaire=12301 MW | éolien=8509 MW | demande résiduelle=22118 MW | nucléaire=22118 MW
+  réserve=40882 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6516 MW
+    - centre_val_de_loire: 1651 MW
+    - bourgogne_franche_comte: 1897 MW
+    - normandie: 2517 MW
+    - hauts_de_france: 4561 MW
+    - grand_est: 4028 MW
+    - pays_de_la_loire: 2464 MW
+    - bretagne: 2121 MW
+    - nouvelle_aquitaine: 3918 MW
+    - occitanie: 3424 MW
+    - auvergne_rhone_alpes: 6046 MW
+    - provence_alpes_cote_d_azur: 3576 MW
+    - corse: 209 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1016.2 -> 938.7 MW (variation -77.5 MW)
+    - Le Blayais (blayais): 1359.8 -> 1243.5 MW (variation -116.3 MW)
+    - Bugey (bugey): 1325.8 -> 1209.5 MW (variation -116.3 MW)
+    - Cattenom (cattenom): 2010.4 -> 1855.3 MW (variation -155.0 MW)
+    - Chinon (chinon): 1347.8 -> 1231.5 MW (variation -116.3 MW)
+    - Chooz (chooz): 1173.6 -> 1086.4 MW (variation -87.2 MW)
+    - Civaux (civaux): 1167.6 -> 1080.4 MW (variation -87.2 MW)
+    - Cruas-Meysse (cruas): 1370.8 -> 1254.5 MW (variation -116.3 MW)
+    - Dampierre-en-Burly (dampierre): 1313.8 -> 1197.5 MW (variation -116.3 MW)
+    - Flamanville (flamanville): 1670.2 -> 1544.2 MW (variation -126.0 MW)
+    - Golfech (golfech): 1016.2 -> 938.7 MW (variation -77.5 MW)
+    - Gravelines (gravelines): 2039.1 -> 1864.8 MW (variation -174.4 MW)
+    - Nogent-sur-Seine (nogent): 1016.2 -> 938.7 MW (variation -77.5 MW)
+    - Paluel (paluel): 2078.4 -> 1923.3 MW (variation -155.0 MW)
+    - Penly (penly): 1039.2 -> 961.7 MW (variation -77.5 MW)
+    - Saint-Alban (saint_alban): 1045.2 -> 967.7 MW (variation -77.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 685.4 -> 627.3 MW (variation -58.1 MW)
+    - Tricastin (tricastin): 1370.8 -> 1254.5 MW (variation -116.3 MW)
+
+10:15 | consommation=42229 MW | solaire=13301 MW | éolien=8711 MW | demande résiduelle=20217 MW | nucléaire=20217 MW
+  réserve=42783 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6390 MW
+    - centre_val_de_loire: 1625 MW
+    - bourgogne_franche_comte: 1869 MW
+    - normandie: 2477 MW
+    - hauts_de_france: 4481 MW
+    - grand_est: 3957 MW
+    - pays_de_la_loire: 2424 MW
+    - bretagne: 2089 MW
+    - nouvelle_aquitaine: 3862 MW
+    - occitanie: 3376 MW
+    - auvergne_rhone_alpes: 5944 MW
+    - provence_alpes_cote_d_azur: 3529 MW
+    - corse: 206 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 938.7 -> 862.2 MW (variation -76.4 MW)
+    - Le Blayais (blayais): 1243.5 -> 1128.9 MW (variation -114.6 MW)
+    - Bugey (bugey): 1209.5 -> 1094.9 MW (variation -114.6 MW)
+    - Cattenom (cattenom): 1855.3 -> 1702.5 MW (variation -152.8 MW)
+    - Chinon (chinon): 1231.5 -> 1116.9 MW (variation -114.6 MW)
+    - Chooz (chooz): 1086.4 -> 1000.4 MW (variation -86.0 MW)
+    - Civaux (civaux): 1080.4 -> 994.4 MW (variation -86.0 MW)
+    - Cruas-Meysse (cruas): 1254.5 -> 1139.9 MW (variation -114.6 MW)
+    - Dampierre-en-Burly (dampierre): 1197.5 -> 1082.9 MW (variation -114.6 MW)
+    - Flamanville (flamanville): 1544.2 -> 1420.0 MW (variation -124.2 MW)
+    - Golfech (golfech): 938.7 -> 862.2 MW (variation -76.4 MW)
+    - Gravelines (gravelines): 1864.8 -> 1692.8 MW (variation -171.9 MW)
+    - Nogent-sur-Seine (nogent): 938.7 -> 862.2 MW (variation -76.4 MW)
+    - Paluel (paluel): 1923.3 -> 1770.5 MW (variation -152.8 MW)
+    - Penly (penly): 961.7 -> 885.2 MW (variation -76.4 MW)
+    - Saint-Alban (saint_alban): 967.7 -> 891.2 MW (variation -76.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 627.3 -> 569.9 MW (variation -57.3 MW)
+    - Tricastin (tricastin): 1254.5 -> 1139.9 MW (variation -114.6 MW)
+
+10:30 | consommation=41614 MW | solaire=14249 MW | éolien=8952 MW | demande résiduelle=18413 MW | nucléaire=18413 MW
+  réserve=44587 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6278 MW
+    - centre_val_de_loire: 1602 MW
+    - bourgogne_franche_comte: 1844 MW
+    - normandie: 2442 MW
+    - hauts_de_france: 4409 MW
+    - grand_est: 3894 MW
+    - pays_de_la_loire: 2390 MW
+    - bretagne: 2061 MW
+    - nouvelle_aquitaine: 3814 MW
+    - occitanie: 3334 MW
+    - auvergne_rhone_alpes: 5855 MW
+    - provence_alpes_cote_d_azur: 3487 MW
+    - corse: 204 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 862.2 -> 788.2 MW (variation -74.0 MW)
+    - Le Blayais (blayais): 1128.9 -> 1017.8 MW (variation -111.0 MW)
+    - Bugey (bugey): 1094.9 -> 989.8 MW (variation -105.1 MW)
+    - Cattenom (cattenom): 1702.5 -> 1554.4 MW (variation -148.1 MW)
+    - Chinon (chinon): 1116.9 -> 1005.8 MW (variation -111.0 MW)
+    - Chooz (chooz): 1000.4 -> 927.4 MW (variation -73.0 MW)
+    - Civaux (civaux): 994.4 -> 923.1 MW (variation -71.3 MW)
+    - Cruas-Meysse (cruas): 1139.9 -> 1028.8 MW (variation -111.0 MW)
+    - Dampierre-en-Burly (dampierre): 1082.9 -> 981.1 MW (variation -101.8 MW)
+    - Flamanville (flamanville): 1420.0 -> 1299.7 MW (variation -120.3 MW)
+    - Golfech (golfech): 862.2 -> 788.2 MW (variation -74.0 MW)
+    - Gravelines (gravelines): 1692.8 -> 1526.2 MW (variation -166.6 MW)
+    - Nogent-sur-Seine (nogent): 862.2 -> 788.2 MW (variation -74.0 MW)
+    - Paluel (paluel): 1770.5 -> 1622.4 MW (variation -148.1 MW)
+    - Penly (penly): 885.2 -> 811.2 MW (variation -74.0 MW)
+    - Saint-Alban (saint_alban): 891.2 -> 817.2 MW (variation -74.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 569.9 -> 514.4 MW (variation -55.5 MW)
+    - Tricastin (tricastin): 1139.9 -> 1028.8 MW (variation -111.0 MW)
+
+10:45 | consommation=41100 MW | solaire=15142 MW | éolien=9201 MW | demande résiduelle=16757 MW | nucléaire=16757 MW
+  réserve=46243 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6184 MW
+    - centre_val_de_loire: 1582 MW
+    - bourgogne_franche_comte: 1823 MW
+    - normandie: 2412 MW
+    - hauts_de_france: 4350 MW
+    - grand_est: 3842 MW
+    - pays_de_la_loire: 2361 MW
+    - bretagne: 2038 MW
+    - nouvelle_aquitaine: 3774 MW
+    - occitanie: 3299 MW
+    - auvergne_rhone_alpes: 5780 MW
+    - provence_alpes_cote_d_azur: 3453 MW
+    - corse: 202 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 788.2 -> 708.7 MW (variation -79.6 MW)
+    - Le Blayais (blayais): 1017.8 -> 928.1 MW (variation -89.8 MW)
+    - Bugey (bugey): 989.8 -> 908.5 MW (variation -81.3 MW)
+    - Cattenom (cattenom): 1554.4 -> 1399.4 MW (variation -155.0 MW)
+    - Chinon (chinon): 1005.8 -> 919.7 MW (variation -86.1 MW)
+    - Chooz (chooz): 927.4 -> 870.9 MW (variation -56.5 MW)
+    - Civaux (civaux): 923.1 -> 867.9 MW (variation -55.2 MW)
+    - Cruas-Meysse (cruas): 1028.8 -> 935.8 MW (variation -93.1 MW)
+    - Dampierre-en-Burly (dampierre): 981.1 -> 902.4 MW (variation -78.7 MW)
+    - Flamanville (flamanville): 1299.7 -> 1170.4 MW (variation -129.3 MW)
+    - Golfech (golfech): 788.2 -> 708.7 MW (variation -79.6 MW)
+    - Gravelines (gravelines): 1526.2 -> 1391.8 MW (variation -134.5 MW)
+    - Nogent-sur-Seine (nogent): 788.2 -> 708.7 MW (variation -79.6 MW)
+    - Paluel (paluel): 1622.4 -> 1463.3 MW (variation -159.1 MW)
+    - Penly (penly): 811.2 -> 731.7 MW (variation -79.6 MW)
+    - Saint-Alban (saint_alban): 817.2 -> 737.7 MW (variation -79.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 514.4 -> 467.9 MW (variation -46.5 MW)
+    - Tricastin (tricastin): 1028.8 -> 935.8 MW (variation -93.1 MW)
+
+11:00 | consommation=40692 MW | solaire=15961 MW | éolien=9418 MW | demande résiduelle=15313 MW | nucléaire=15313 MW
+  réserve=47687 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6109 MW
+    - centre_val_de_loire: 1567 MW
+    - bourgogne_franche_comte: 1806 MW
+    - normandie: 2389 MW
+    - hauts_de_france: 4302 MW
+    - grand_est: 3800 MW
+    - pays_de_la_loire: 2338 MW
+    - bretagne: 2020 MW
+    - nouvelle_aquitaine: 3742 MW
+    - occitanie: 3271 MW
+    - auvergne_rhone_alpes: 5721 MW
+    - provence_alpes_cote_d_azur: 3427 MW
+    - corse: 200 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 708.7 -> 640.4 MW (variation -68.3 MW)
+    - Le Blayais (blayais): 928.1 -> 852.8 MW (variation -75.3 MW)
+    - Bugey (bugey): 908.5 -> 840.3 MW (variation -68.2 MW)
+    - Cattenom (cattenom): 1399.4 -> 1269.4 MW (variation -130.0 MW)
+    - Chinon (chinon): 919.7 -> 847.4 MW (variation -72.2 MW)
+    - Chooz (chooz): 870.9 -> 823.5 MW (variation -47.4 MW)
+    - Civaux (civaux): 867.9 -> 821.6 MW (variation -46.3 MW)
+    - Cruas-Meysse (cruas): 935.8 -> 857.7 MW (variation -78.1 MW)
+    - Dampierre-en-Burly (dampierre): 902.4 -> 836.4 MW (variation -66.0 MW)
+    - Flamanville (flamanville): 1170.4 -> 1053.1 MW (variation -117.4 MW)
+    - Golfech (golfech): 708.7 -> 640.4 MW (variation -68.3 MW)
+    - Gravelines (gravelines): 1391.8 -> 1279.0 MW (variation -112.8 MW)
+    - Nogent-sur-Seine (nogent): 708.7 -> 640.4 MW (variation -68.3 MW)
+    - Paluel (paluel): 1463.3 -> 1310.2 MW (variation -153.2 MW)
+    - Penly (penly): 731.7 -> 655.1 MW (variation -76.6 MW)
+    - Saint-Alban (saint_alban): 737.7 -> 658.9 MW (variation -78.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 467.9 -> 428.8 MW (variation -39.0 MW)
+    - Tricastin (tricastin): 935.8 -> 857.7 MW (variation -78.1 MW)
+
+11:15 | consommation=40389 MW | solaire=16704 MW | éolien=9568 MW | demande résiduelle=14117 MW | nucléaire=14117 MW
+  réserve=48883 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6052 MW
+    - centre_val_de_loire: 1556 MW
+    - bourgogne_franche_comte: 1794 MW
+    - normandie: 2372 MW
+    - hauts_de_france: 4267 MW
+    - grand_est: 3768 MW
+    - pays_de_la_loire: 2322 MW
+    - bretagne: 2006 MW
+    - nouvelle_aquitaine: 3719 MW
+    - occitanie: 3251 MW
+    - auvergne_rhone_alpes: 5676 MW
+    - provence_alpes_cote_d_azur: 3407 MW
+    - corse: 199 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 640.4 -> 583.9 MW (variation -56.5 MW)
+    - Le Blayais (blayais): 852.8 -> 790.4 MW (variation -62.4 MW)
+    - Bugey (bugey): 840.3 -> 783.8 MW (variation -56.5 MW)
+    - Cattenom (cattenom): 1269.4 -> 1161.7 MW (variation -107.7 MW)
+    - Chinon (chinon): 847.4 -> 787.6 MW (variation -59.8 MW)
+    - Chooz (chooz): 823.5 -> 784.3 MW (variation -39.2 MW)
+    - Civaux (civaux): 821.6 -> 783.3 MW (variation -38.3 MW)
+    - Cruas-Meysse (cruas): 857.7 -> 793.0 MW (variation -64.7 MW)
+    - Dampierre-en-Burly (dampierre): 836.4 -> 781.8 MW (variation -54.7 MW)
+    - Flamanville (flamanville): 1053.1 -> 955.8 MW (variation -97.2 MW)
+    - Golfech (golfech): 640.4 -> 583.9 MW (variation -56.5 MW)
+    - Gravelines (gravelines): 1279.0 -> 1185.5 MW (variation -93.4 MW)
+    - Nogent-sur-Seine (nogent): 640.4 -> 583.9 MW (variation -56.5 MW)
+    - Paluel (paluel): 1310.2 -> 1183.3 MW (variation -126.9 MW)
+    - Penly (penly): 655.1 -> 591.6 MW (variation -63.4 MW)
+    - Saint-Alban (saint_alban): 658.9 -> 593.7 MW (variation -65.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 428.8 -> 396.5 MW (variation -32.3 MW)
+    - Tricastin (tricastin): 857.7 -> 793.0 MW (variation -64.7 MW)
+
+11:30 | consommation=40179 MW | solaire=17367 MW | éolien=9632 MW | demande résiduelle=13180 MW | nucléaire=13180 MW
+  réserve=49820 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6011 MW
+    - centre_val_de_loire: 1548 MW
+    - bourgogne_franche_comte: 1786 MW
+    - normandie: 2360 MW
+    - hauts_de_france: 4242 MW
+    - grand_est: 3746 MW
+    - pays_de_la_loire: 2310 MW
+    - bretagne: 1997 MW
+    - nouvelle_aquitaine: 3704 MW
+    - occitanie: 3237 MW
+    - auvergne_rhone_alpes: 5645 MW
+    - provence_alpes_cote_d_azur: 3395 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 583.9 -> 539.6 MW (variation -44.3 MW)
+    - Le Blayais (blayais): 790.4 -> 741.6 MW (variation -48.9 MW)
+    - Bugey (bugey): 783.8 -> 739.5 MW (variation -44.2 MW)
+    - Cattenom (cattenom): 1161.7 -> 1077.3 MW (variation -84.4 MW)
+    - Chinon (chinon): 787.6 -> 740.7 MW (variation -46.9 MW)
+    - Chooz (chooz): 784.3 -> 753.6 MW (variation -30.7 MW)
+    - Civaux (civaux): 783.3 -> 753.3 MW (variation -30.0 MW)
+    - Cruas-Meysse (cruas): 793.0 -> 742.4 MW (variation -50.7 MW)
+    - Dampierre-en-Burly (dampierre): 781.8 -> 738.9 MW (variation -42.8 MW)
+    - Flamanville (flamanville): 955.8 -> 879.7 MW (variation -76.2 MW)
+    - Golfech (golfech): 583.9 -> 539.6 MW (variation -44.3 MW)
+    - Gravelines (gravelines): 1185.5 -> 1112.3 MW (variation -73.2 MW)
+    - Nogent-sur-Seine (nogent): 583.9 -> 539.6 MW (variation -44.3 MW)
+    - Paluel (paluel): 1183.3 -> 1083.9 MW (variation -99.4 MW)
+    - Penly (penly): 591.6 -> 542.0 MW (variation -49.7 MW)
+    - Saint-Alban (saint_alban): 593.7 -> 542.6 MW (variation -51.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 396.5 -> 371.2 MW (variation -25.3 MW)
+    - Tricastin (tricastin): 793.0 -> 742.4 MW (variation -50.7 MW)
+
+11:45 | consommation=40041 MW | solaire=17938 MW | éolien=9598 MW | demande résiduelle=12505 MW | nucléaire=12766 MW
+  réserve=50234 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=261 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5983 MW
+    - centre_val_de_loire: 1543 MW
+    - bourgogne_franche_comte: 1781 MW
+    - normandie: 2352 MW
+    - hauts_de_france: 4225 MW
+    - grand_est: 3731 MW
+    - pays_de_la_loire: 2302 MW
+    - bretagne: 1991 MW
+    - nouvelle_aquitaine: 3694 MW
+    - occitanie: 3229 MW
+    - auvergne_rhone_alpes: 5625 MW
+    - provence_alpes_cote_d_azur: 3387 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 539.6 -> 520.0 MW (variation -19.6 MW)
+    - Le Blayais (blayais): 741.6 -> 720.0 MW (variation -21.6 MW)
+    - Bugey (bugey): 739.5 -> 720.0 MW (variation -19.5 MW)
+    - Cattenom (cattenom): 1077.3 -> 1040.0 MW (variation -37.3 MW)
+    - Chinon (chinon): 740.7 -> 720.0 MW (variation -20.7 MW)
+    - Chooz (chooz): 753.6 -> 740.0 MW (variation -13.6 MW)
+    - Civaux (civaux): 753.3 -> 740.0 MW (variation -13.3 MW)
+    - Cruas-Meysse (cruas): 742.4 -> 720.0 MW (variation -22.4 MW)
+    - Dampierre-en-Burly (dampierre): 738.9 -> 720.0 MW (variation -18.9 MW)
+    - Flamanville (flamanville): 879.7 -> 846.0 MW (variation -33.7 MW)
+    - Golfech (golfech): 539.6 -> 520.0 MW (variation -19.6 MW)
+    - Gravelines (gravelines): 1112.3 -> 1080.0 MW (variation -32.3 MW)
+    - Nogent-sur-Seine (nogent): 539.6 -> 520.0 MW (variation -19.6 MW)
+    - Paluel (paluel): 1083.9 -> 1040.0 MW (variation -43.9 MW)
+    - Penly (penly): 542.0 -> 520.0 MW (variation -22.0 MW)
+    - Saint-Alban (saint_alban): 542.6 -> 520.0 MW (variation -22.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 371.2 -> 360.0 MW (variation -11.2 MW)
+    - Tricastin (tricastin): 742.4 -> 720.0 MW (variation -22.4 MW)
+
+12:00 | consommation=39965 MW | solaire=18412 MW | éolien=9469 MW | demande résiduelle=12084 MW | nucléaire=12766 MW
+  réserve=50234 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=682 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5966 MW
+    - centre_val_de_loire: 1540 MW
+    - bourgogne_franche_comte: 1778 MW
+    - normandie: 2348 MW
+    - hauts_de_france: 4215 MW
+    - grand_est: 3723 MW
+    - pays_de_la_loire: 2298 MW
+    - bretagne: 1988 MW
+    - nouvelle_aquitaine: 3689 MW
+    - occitanie: 3225 MW
+    - auvergne_rhone_alpes: 5613 MW
+    - provence_alpes_cote_d_azur: 3384 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Le Blayais (blayais): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Bugey (bugey): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Cattenom (cattenom): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Chinon (chinon): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Chooz (chooz): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Civaux (civaux): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Cruas-Meysse (cruas): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Dampierre-en-Burly (dampierre): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Flamanville (flamanville): 846.0 -> 846.0 MW (variation +0.0 MW)
+    - Golfech (golfech): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Gravelines (gravelines): 1080.0 -> 1080.0 MW (variation +0.0 MW)
+    - Nogent-sur-Seine (nogent): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Paluel (paluel): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Penly (penly): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Alban (saint_alban): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 360.0 -> 360.0 MW (variation +0.0 MW)
+    - Tricastin (tricastin): 720.0 -> 720.0 MW (variation +0.0 MW)
+
+12:15 | consommation=39925 MW | solaire=18786 MW | éolien=9240 MW | demande résiduelle=11899 MW | nucléaire=12766 MW
+  réserve=50234 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=867 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5956 MW
+    - centre_val_de_loire: 1539 MW
+    - bourgogne_franche_comte: 1777 MW
+    - normandie: 2346 MW
+    - hauts_de_france: 4210 MW
+    - grand_est: 3718 MW
+    - pays_de_la_loire: 2296 MW
+    - bretagne: 1986 MW
+    - nouvelle_aquitaine: 3687 MW
+    - occitanie: 3223 MW
+    - auvergne_rhone_alpes: 5607 MW
+    - provence_alpes_cote_d_azur: 3382 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Le Blayais (blayais): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Bugey (bugey): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Cattenom (cattenom): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Chinon (chinon): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Chooz (chooz): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Civaux (civaux): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Cruas-Meysse (cruas): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Dampierre-en-Burly (dampierre): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Flamanville (flamanville): 846.0 -> 846.0 MW (variation +0.0 MW)
+    - Golfech (golfech): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Gravelines (gravelines): 1080.0 -> 1080.0 MW (variation +0.0 MW)
+    - Nogent-sur-Seine (nogent): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Paluel (paluel): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Penly (penly): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Alban (saint_alban): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 360.0 -> 360.0 MW (variation +0.0 MW)
+    - Tricastin (tricastin): 720.0 -> 720.0 MW (variation +0.0 MW)
+
+12:30 | consommation=39906 MW | solaire=19057 MW | éolien=8918 MW | demande résiduelle=11931 MW | nucléaire=12766 MW
+  réserve=50234 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=835 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5950 MW
+    - centre_val_de_loire: 1538 MW
+    - bourgogne_franche_comte: 1776 MW
+    - normandie: 2345 MW
+    - hauts_de_france: 4207 MW
+    - grand_est: 3715 MW
+    - pays_de_la_loire: 2295 MW
+    - bretagne: 1986 MW
+    - nouvelle_aquitaine: 3687 MW
+    - occitanie: 3223 MW
+    - auvergne_rhone_alpes: 5604 MW
+    - provence_alpes_cote_d_azur: 3382 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Le Blayais (blayais): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Bugey (bugey): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Cattenom (cattenom): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Chinon (chinon): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Chooz (chooz): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Civaux (civaux): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Cruas-Meysse (cruas): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Dampierre-en-Burly (dampierre): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Flamanville (flamanville): 846.0 -> 846.0 MW (variation +0.0 MW)
+    - Golfech (golfech): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Gravelines (gravelines): 1080.0 -> 1080.0 MW (variation +0.0 MW)
+    - Nogent-sur-Seine (nogent): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Paluel (paluel): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Penly (penly): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Alban (saint_alban): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 360.0 -> 360.0 MW (variation +0.0 MW)
+    - Tricastin (tricastin): 720.0 -> 720.0 MW (variation +0.0 MW)
+
+12:45 | consommation=39897 MW | solaire=19217 MW | éolien=8514 MW | demande résiduelle=12166 MW | nucléaire=12766 MW
+  réserve=50234 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=600 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5947 MW
+    - centre_val_de_loire: 1538 MW
+    - bourgogne_franche_comte: 1776 MW
+    - normandie: 2344 MW
+    - hauts_de_france: 4205 MW
+    - grand_est: 3714 MW
+    - pays_de_la_loire: 2294 MW
+    - bretagne: 1986 MW
+    - nouvelle_aquitaine: 3687 MW
+    - occitanie: 3223 MW
+    - auvergne_rhone_alpes: 5602 MW
+    - provence_alpes_cote_d_azur: 3383 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Le Blayais (blayais): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Bugey (bugey): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Cattenom (cattenom): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Chinon (chinon): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Chooz (chooz): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Civaux (civaux): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Cruas-Meysse (cruas): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Dampierre-en-Burly (dampierre): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Flamanville (flamanville): 846.0 -> 846.0 MW (variation +0.0 MW)
+    - Golfech (golfech): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Gravelines (gravelines): 1080.0 -> 1080.0 MW (variation +0.0 MW)
+    - Nogent-sur-Seine (nogent): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Paluel (paluel): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Penly (penly): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Alban (saint_alban): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 360.0 -> 360.0 MW (variation +0.0 MW)
+    - Tricastin (tricastin): 720.0 -> 720.0 MW (variation +0.0 MW)
+
+13:00 | consommation=39881 MW | solaire=19274 MW | éolien=8042 MW | demande résiduelle=12565 MW | nucléaire=12766 MW
+  réserve=50234 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=201 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5943 MW
+    - centre_val_de_loire: 1537 MW
+    - bourgogne_franche_comte: 1775 MW
+    - normandie: 2343 MW
+    - hauts_de_france: 4203 MW
+    - grand_est: 3712 MW
+    - pays_de_la_loire: 2294 MW
+    - bretagne: 1985 MW
+    - nouvelle_aquitaine: 3686 MW
+    - occitanie: 3222 MW
+    - auvergne_rhone_alpes: 5600 MW
+    - provence_alpes_cote_d_azur: 3383 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Le Blayais (blayais): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Bugey (bugey): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Cattenom (cattenom): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Chinon (chinon): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Chooz (chooz): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Civaux (civaux): 740.0 -> 740.0 MW (variation +0.0 MW)
+    - Cruas-Meysse (cruas): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Dampierre-en-Burly (dampierre): 720.0 -> 720.0 MW (variation +0.0 MW)
+    - Flamanville (flamanville): 846.0 -> 846.0 MW (variation +0.0 MW)
+    - Golfech (golfech): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Gravelines (gravelines): 1080.0 -> 1080.0 MW (variation +0.0 MW)
+    - Nogent-sur-Seine (nogent): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Paluel (paluel): 1040.0 -> 1040.0 MW (variation +0.0 MW)
+    - Penly (penly): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Alban (saint_alban): 520.0 -> 520.0 MW (variation +0.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 360.0 -> 360.0 MW (variation +0.0 MW)
+    - Tricastin (tricastin): 720.0 -> 720.0 MW (variation +0.0 MW)
+
+13:15 | consommation=39864 MW | solaire=19217 MW | éolien=7537 MW | demande résiduelle=13110 MW | nucléaire=13110 MW
+  réserve=49890 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5940 MW
+    - centre_val_de_loire: 1536 MW
+    - bourgogne_franche_comte: 1775 MW
+    - normandie: 2342 MW
+    - hauts_de_france: 4201 MW
+    - grand_est: 3710 MW
+    - pays_de_la_loire: 2293 MW
+    - bretagne: 1984 MW
+    - nouvelle_aquitaine: 3685 MW
+    - occitanie: 3221 MW
+    - auvergne_rhone_alpes: 5597 MW
+    - provence_alpes_cote_d_azur: 3382 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 520.0 -> 533.8 MW (variation +13.8 MW)
+    - Le Blayais (blayais): 720.0 -> 740.7 MW (variation +20.7 MW)
+    - Bugey (bugey): 720.0 -> 740.7 MW (variation +20.7 MW)
+    - Cattenom (cattenom): 1040.0 -> 1067.7 MW (variation +27.7 MW)
+    - Chinon (chinon): 720.0 -> 740.7 MW (variation +20.7 MW)
+    - Chooz (chooz): 740.0 -> 755.6 MW (variation +15.6 MW)
+    - Civaux (civaux): 740.0 -> 755.6 MW (variation +15.6 MW)
+    - Cruas-Meysse (cruas): 720.0 -> 740.7 MW (variation +20.7 MW)
+    - Dampierre-en-Burly (dampierre): 720.0 -> 740.7 MW (variation +20.7 MW)
+    - Flamanville (flamanville): 846.0 -> 868.5 MW (variation +22.5 MW)
+    - Golfech (golfech): 520.0 -> 533.8 MW (variation +13.8 MW)
+    - Gravelines (gravelines): 1080.0 -> 1111.1 MW (variation +31.1 MW)
+    - Nogent-sur-Seine (nogent): 520.0 -> 533.8 MW (variation +13.8 MW)
+    - Paluel (paluel): 1040.0 -> 1067.7 MW (variation +27.7 MW)
+    - Penly (penly): 520.0 -> 533.8 MW (variation +13.8 MW)
+    - Saint-Alban (saint_alban): 520.0 -> 533.8 MW (variation +13.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 360.0 -> 370.4 MW (variation +10.4 MW)
+    - Tricastin (tricastin): 720.0 -> 740.7 MW (variation +20.7 MW)
+
+13:30 | consommation=39841 MW | solaire=19057 MW | éolien=7036 MW | demande résiduelle=13748 MW | nucléaire=13748 MW
+  réserve=49252 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5935 MW
+    - centre_val_de_loire: 1535 MW
+    - bourgogne_franche_comte: 1774 MW
+    - normandie: 2341 MW
+    - hauts_de_france: 4199 MW
+    - grand_est: 3708 MW
+    - pays_de_la_loire: 2291 MW
+    - bretagne: 1983 MW
+    - nouvelle_aquitaine: 3683 MW
+    - occitanie: 3220 MW
+    - auvergne_rhone_alpes: 5594 MW
+    - provence_alpes_cote_d_azur: 3380 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 533.8 -> 559.5 MW (variation +25.6 MW)
+    - Le Blayais (blayais): 740.7 -> 779.2 MW (variation +38.5 MW)
+    - Bugey (bugey): 740.7 -> 779.2 MW (variation +38.5 MW)
+    - Cattenom (cattenom): 1067.7 -> 1119.0 MW (variation +51.3 MW)
+    - Chinon (chinon): 740.7 -> 779.2 MW (variation +38.5 MW)
+    - Chooz (chooz): 755.6 -> 784.4 MW (variation +28.9 MW)
+    - Civaux (civaux): 755.6 -> 784.4 MW (variation +28.9 MW)
+    - Cruas-Meysse (cruas): 740.7 -> 779.2 MW (variation +38.5 MW)
+    - Dampierre-en-Burly (dampierre): 740.7 -> 779.2 MW (variation +38.5 MW)
+    - Flamanville (flamanville): 868.5 -> 910.2 MW (variation +41.7 MW)
+    - Golfech (golfech): 533.8 -> 559.5 MW (variation +25.6 MW)
+    - Gravelines (gravelines): 1111.1 -> 1168.8 MW (variation +57.7 MW)
+    - Nogent-sur-Seine (nogent): 533.8 -> 559.5 MW (variation +25.6 MW)
+    - Paluel (paluel): 1067.7 -> 1119.0 MW (variation +51.3 MW)
+    - Penly (penly): 533.8 -> 559.5 MW (variation +25.6 MW)
+    - Saint-Alban (saint_alban): 533.8 -> 559.5 MW (variation +25.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 370.4 -> 389.6 MW (variation +19.2 MW)
+    - Tricastin (tricastin): 740.7 -> 779.2 MW (variation +38.5 MW)
+
+13:45 | consommation=39811 MW | solaire=18786 MW | éolien=6594 MW | demande résiduelle=14431 MW | nucléaire=14431 MW
+  réserve=48569 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5931 MW
+    - centre_val_de_loire: 1534 MW
+    - bourgogne_franche_comte: 1772 MW
+    - normandie: 2339 MW
+    - hauts_de_france: 4196 MW
+    - grand_est: 3705 MW
+    - pays_de_la_loire: 2289 MW
+    - bretagne: 1982 MW
+    - nouvelle_aquitaine: 3680 MW
+    - occitanie: 3218 MW
+    - auvergne_rhone_alpes: 5589 MW
+    - provence_alpes_cote_d_azur: 3379 MW
+    - corse: 197 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 559.5 -> 586.9 MW (variation +27.5 MW)
+    - Le Blayais (blayais): 779.2 -> 820.4 MW (variation +41.2 MW)
+    - Bugey (bugey): 779.2 -> 820.4 MW (variation +41.2 MW)
+    - Cattenom (cattenom): 1119.0 -> 1173.9 MW (variation +54.9 MW)
+    - Chinon (chinon): 779.2 -> 820.4 MW (variation +41.2 MW)
+    - Chooz (chooz): 784.4 -> 815.3 MW (variation +30.9 MW)
+    - Civaux (civaux): 784.4 -> 815.3 MW (variation +30.9 MW)
+    - Cruas-Meysse (cruas): 779.2 -> 820.4 MW (variation +41.2 MW)
+    - Dampierre-en-Burly (dampierre): 779.2 -> 820.4 MW (variation +41.2 MW)
+    - Flamanville (flamanville): 910.2 -> 954.8 MW (variation +44.6 MW)
+    - Golfech (golfech): 559.5 -> 586.9 MW (variation +27.5 MW)
+    - Gravelines (gravelines): 1168.8 -> 1230.6 MW (variation +61.8 MW)
+    - Nogent-sur-Seine (nogent): 559.5 -> 586.9 MW (variation +27.5 MW)
+    - Paluel (paluel): 1119.0 -> 1173.9 MW (variation +54.9 MW)
+    - Penly (penly): 559.5 -> 586.9 MW (variation +27.5 MW)
+    - Saint-Alban (saint_alban): 559.5 -> 586.9 MW (variation +27.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 389.6 -> 410.2 MW (variation +20.6 MW)
+    - Tricastin (tricastin): 779.2 -> 820.4 MW (variation +41.2 MW)
+
+14:00 | consommation=39784 MW | solaire=18412 MW | éolien=6251 MW | demande résiduelle=15121 MW | nucléaire=15121 MW
+  réserve=47879 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5926 MW
+    - centre_val_de_loire: 1533 MW
+    - bourgogne_franche_comte: 1771 MW
+    - normandie: 2337 MW
+    - hauts_de_france: 4193 MW
+    - grand_est: 3702 MW
+    - pays_de_la_loire: 2288 MW
+    - bretagne: 1981 MW
+    - nouvelle_aquitaine: 3678 MW
+    - occitanie: 3216 MW
+    - auvergne_rhone_alpes: 5585 MW
+    - provence_alpes_cote_d_azur: 3377 MW
+    - corse: 197 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 586.9 -> 614.7 MW (variation +27.7 MW)
+    - Le Blayais (blayais): 820.4 -> 862.0 MW (variation +41.6 MW)
+    - Bugey (bugey): 820.4 -> 862.0 MW (variation +41.6 MW)
+    - Cattenom (cattenom): 1173.9 -> 1229.3 MW (variation +55.5 MW)
+    - Chinon (chinon): 820.4 -> 862.0 MW (variation +41.6 MW)
+    - Chooz (chooz): 815.3 -> 846.5 MW (variation +31.2 MW)
+    - Civaux (civaux): 815.3 -> 846.5 MW (variation +31.2 MW)
+    - Cruas-Meysse (cruas): 820.4 -> 862.0 MW (variation +41.6 MW)
+    - Dampierre-en-Burly (dampierre): 820.4 -> 862.0 MW (variation +41.6 MW)
+    - Flamanville (flamanville): 954.8 -> 999.8 MW (variation +45.1 MW)
+    - Golfech (golfech): 586.9 -> 614.7 MW (variation +27.7 MW)
+    - Gravelines (gravelines): 1230.6 -> 1293.0 MW (variation +62.4 MW)
+    - Nogent-sur-Seine (nogent): 586.9 -> 614.7 MW (variation +27.7 MW)
+    - Paluel (paluel): 1173.9 -> 1229.3 MW (variation +55.5 MW)
+    - Penly (penly): 586.9 -> 614.7 MW (variation +27.7 MW)
+    - Saint-Alban (saint_alban): 586.9 -> 614.7 MW (variation +27.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 410.2 -> 431.0 MW (variation +20.8 MW)
+    - Tricastin (tricastin): 820.4 -> 862.0 MW (variation +41.6 MW)
+
+14:15 | consommation=39772 MW | solaire=17938 MW | éolien=6030 MW | demande résiduelle=15804 MW | nucléaire=15804 MW
+  réserve=47196 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5924 MW
+    - centre_val_de_loire: 1532 MW
+    - bourgogne_franche_comte: 1770 MW
+    - normandie: 2335 MW
+    - hauts_de_france: 4192 MW
+    - grand_est: 3701 MW
+    - pays_de_la_loire: 2287 MW
+    - bretagne: 1980 MW
+    - nouvelle_aquitaine: 3677 MW
+    - occitanie: 3216 MW
+    - auvergne_rhone_alpes: 5584 MW
+    - provence_alpes_cote_d_azur: 3377 MW
+    - corse: 197 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 614.7 -> 642.1 MW (variation +27.5 MW)
+    - Le Blayais (blayais): 862.0 -> 903.2 MW (variation +41.2 MW)
+    - Bugey (bugey): 862.0 -> 903.2 MW (variation +41.2 MW)
+    - Cattenom (cattenom): 1229.3 -> 1284.3 MW (variation +54.9 MW)
+    - Chinon (chinon): 862.0 -> 903.2 MW (variation +41.2 MW)
+    - Chooz (chooz): 846.5 -> 877.4 MW (variation +30.9 MW)
+    - Civaux (civaux): 846.5 -> 877.4 MW (variation +30.9 MW)
+    - Cruas-Meysse (cruas): 862.0 -> 903.2 MW (variation +41.2 MW)
+    - Dampierre-en-Burly (dampierre): 862.0 -> 903.2 MW (variation +41.2 MW)
+    - Flamanville (flamanville): 999.8 -> 1044.5 MW (variation +44.6 MW)
+    - Golfech (golfech): 614.7 -> 642.1 MW (variation +27.5 MW)
+    - Gravelines (gravelines): 1293.0 -> 1354.8 MW (variation +61.8 MW)
+    - Nogent-sur-Seine (nogent): 614.7 -> 642.1 MW (variation +27.5 MW)
+    - Paluel (paluel): 1229.3 -> 1284.3 MW (variation +54.9 MW)
+    - Penly (penly): 614.7 -> 642.1 MW (variation +27.5 MW)
+    - Saint-Alban (saint_alban): 614.7 -> 642.1 MW (variation +27.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 431.0 -> 451.6 MW (variation +20.6 MW)
+    - Tricastin (tricastin): 862.0 -> 903.2 MW (variation +41.2 MW)
+
+14:30 | consommation=39789 MW | solaire=17367 MW | éolien=5938 MW | demande résiduelle=16484 MW | nucléaire=16484 MW
+  réserve=46516 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5926 MW
+    - centre_val_de_loire: 1532 MW
+    - bourgogne_franche_comte: 1771 MW
+    - normandie: 2336 MW
+    - hauts_de_france: 4194 MW
+    - grand_est: 3702 MW
+    - pays_de_la_loire: 2287 MW
+    - bretagne: 1981 MW
+    - nouvelle_aquitaine: 3679 MW
+    - occitanie: 3218 MW
+    - auvergne_rhone_alpes: 5586 MW
+    - provence_alpes_cote_d_azur: 3380 MW
+    - corse: 197 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 642.1 -> 669.5 MW (variation +27.3 MW)
+    - Le Blayais (blayais): 903.2 -> 944.2 MW (variation +41.0 MW)
+    - Bugey (bugey): 903.2 -> 944.2 MW (variation +41.0 MW)
+    - Cattenom (cattenom): 1284.3 -> 1338.9 MW (variation +54.7 MW)
+    - Chinon (chinon): 903.2 -> 944.2 MW (variation +41.0 MW)
+    - Chooz (chooz): 877.4 -> 908.2 MW (variation +30.8 MW)
+    - Civaux (civaux): 877.4 -> 908.2 MW (variation +30.8 MW)
+    - Cruas-Meysse (cruas): 903.2 -> 944.2 MW (variation +41.0 MW)
+    - Dampierre-en-Burly (dampierre): 903.2 -> 944.2 MW (variation +41.0 MW)
+    - Flamanville (flamanville): 1044.5 -> 1088.9 MW (variation +44.4 MW)
+    - Golfech (golfech): 642.1 -> 669.5 MW (variation +27.3 MW)
+    - Gravelines (gravelines): 1354.8 -> 1416.3 MW (variation +61.5 MW)
+    - Nogent-sur-Seine (nogent): 642.1 -> 669.5 MW (variation +27.3 MW)
+    - Paluel (paluel): 1284.3 -> 1338.9 MW (variation +54.7 MW)
+    - Penly (penly): 642.1 -> 669.5 MW (variation +27.3 MW)
+    - Saint-Alban (saint_alban): 642.1 -> 669.5 MW (variation +27.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 451.6 -> 472.1 MW (variation +20.5 MW)
+    - Tricastin (tricastin): 903.2 -> 944.2 MW (variation +41.0 MW)
+
+14:45 | consommation=39850 MW | solaire=16704 MW | éolien=5959 MW | demande résiduelle=17187 MW | nucléaire=17187 MW
+  réserve=45813 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5935 MW
+    - centre_val_de_loire: 1534 MW
+    - bourgogne_franche_comte: 1773 MW
+    - normandie: 2338 MW
+    - hauts_de_france: 4201 MW
+    - grand_est: 3707 MW
+    - pays_de_la_loire: 2290 MW
+    - bretagne: 1985 MW
+    - nouvelle_aquitaine: 3685 MW
+    - occitanie: 3224 MW
+    - auvergne_rhone_alpes: 5594 MW
+    - provence_alpes_cote_d_azur: 3386 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 669.5 -> 697.7 MW (variation +28.3 MW)
+    - Le Blayais (blayais): 944.2 -> 986.6 MW (variation +42.4 MW)
+    - Bugey (bugey): 944.2 -> 986.6 MW (variation +42.4 MW)
+    - Cattenom (cattenom): 1338.9 -> 1395.5 MW (variation +56.5 MW)
+    - Chinon (chinon): 944.2 -> 986.6 MW (variation +42.4 MW)
+    - Chooz (chooz): 908.2 -> 939.9 MW (variation +31.8 MW)
+    - Civaux (civaux): 908.2 -> 939.9 MW (variation +31.8 MW)
+    - Cruas-Meysse (cruas): 944.2 -> 986.6 MW (variation +42.4 MW)
+    - Dampierre-en-Burly (dampierre): 944.2 -> 986.6 MW (variation +42.4 MW)
+    - Flamanville (flamanville): 1088.9 -> 1134.8 MW (variation +45.9 MW)
+    - Golfech (golfech): 669.5 -> 697.7 MW (variation +28.3 MW)
+    - Gravelines (gravelines): 1416.3 -> 1479.9 MW (variation +63.6 MW)
+    - Nogent-sur-Seine (nogent): 669.5 -> 697.7 MW (variation +28.3 MW)
+    - Paluel (paluel): 1338.9 -> 1395.5 MW (variation +56.5 MW)
+    - Penly (penly): 669.5 -> 697.7 MW (variation +28.3 MW)
+    - Saint-Alban (saint_alban): 669.5 -> 697.7 MW (variation +28.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 472.1 -> 493.3 MW (variation +21.2 MW)
+    - Tricastin (tricastin): 944.2 -> 986.6 MW (variation +42.4 MW)
+
+15:00 | consommation=39974 MW | solaire=15961 MW | éolien=6063 MW | demande résiduelle=17950 MW | nucléaire=17950 MW
+  réserve=45050 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5953 MW
+    - centre_val_de_loire: 1538 MW
+    - bourgogne_franche_comte: 1778 MW
+    - normandie: 2344 MW
+    - hauts_de_france: 4214 MW
+    - grand_est: 3719 MW
+    - pays_de_la_loire: 2296 MW
+    - bretagne: 1991 MW
+    - nouvelle_aquitaine: 3697 MW
+    - occitanie: 3235 MW
+    - auvergne_rhone_alpes: 5611 MW
+    - provence_alpes_cote_d_azur: 3399 MW
+    - corse: 199 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 697.7 -> 728.4 MW (variation +30.7 MW)
+    - Le Blayais (blayais): 986.6 -> 1032.6 MW (variation +46.0 MW)
+    - Bugey (bugey): 986.6 -> 1032.6 MW (variation +46.0 MW)
+    - Cattenom (cattenom): 1395.5 -> 1456.8 MW (variation +61.3 MW)
+    - Chinon (chinon): 986.6 -> 1032.6 MW (variation +46.0 MW)
+    - Chooz (chooz): 939.9 -> 974.5 MW (variation +34.5 MW)
+    - Civaux (civaux): 939.9 -> 974.5 MW (variation +34.5 MW)
+    - Cruas-Meysse (cruas): 986.6 -> 1032.6 MW (variation +46.0 MW)
+    - Dampierre-en-Burly (dampierre): 986.6 -> 1032.6 MW (variation +46.0 MW)
+    - Flamanville (flamanville): 1134.8 -> 1184.7 MW (variation +49.8 MW)
+    - Golfech (golfech): 697.7 -> 728.4 MW (variation +30.7 MW)
+    - Gravelines (gravelines): 1479.9 -> 1548.9 MW (variation +69.0 MW)
+    - Nogent-sur-Seine (nogent): 697.7 -> 728.4 MW (variation +30.7 MW)
+    - Paluel (paluel): 1395.5 -> 1456.8 MW (variation +61.3 MW)
+    - Penly (penly): 697.7 -> 728.4 MW (variation +30.7 MW)
+    - Saint-Alban (saint_alban): 697.7 -> 728.4 MW (variation +30.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 493.3 -> 516.3 MW (variation +23.0 MW)
+    - Tricastin (tricastin): 986.6 -> 1032.6 MW (variation +46.0 MW)
+
+15:15 | consommation=40181 MW | solaire=15142 MW | éolien=6211 MW | demande résiduelle=18828 MW | nucléaire=18828 MW
+  réserve=44172 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 5983 MW
+    - centre_val_de_loire: 1545 MW
+    - bourgogne_franche_comte: 1786 MW
+    - normandie: 2355 MW
+    - hauts_de_france: 4237 MW
+    - grand_est: 3738 MW
+    - pays_de_la_loire: 2307 MW
+    - bretagne: 2002 MW
+    - nouvelle_aquitaine: 3717 MW
+    - occitanie: 3253 MW
+    - auvergne_rhone_alpes: 5639 MW
+    - provence_alpes_cote_d_azur: 3419 MW
+    - corse: 200 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 728.4 -> 763.7 MW (variation +35.3 MW)
+    - Le Blayais (blayais): 1032.6 -> 1085.5 MW (variation +52.9 MW)
+    - Bugey (bugey): 1032.6 -> 1085.5 MW (variation +52.9 MW)
+    - Cattenom (cattenom): 1456.8 -> 1527.4 MW (variation +70.6 MW)
+    - Chinon (chinon): 1032.6 -> 1085.5 MW (variation +52.9 MW)
+    - Chooz (chooz): 974.5 -> 1014.2 MW (variation +39.7 MW)
+    - Civaux (civaux): 974.5 -> 1014.2 MW (variation +39.7 MW)
+    - Cruas-Meysse (cruas): 1032.6 -> 1085.5 MW (variation +52.9 MW)
+    - Dampierre-en-Burly (dampierre): 1032.6 -> 1085.5 MW (variation +52.9 MW)
+    - Flamanville (flamanville): 1184.7 -> 1242.0 MW (variation +57.4 MW)
+    - Golfech (golfech): 728.4 -> 763.7 MW (variation +35.3 MW)
+    - Gravelines (gravelines): 1548.9 -> 1628.3 MW (variation +79.4 MW)
+    - Nogent-sur-Seine (nogent): 728.4 -> 763.7 MW (variation +35.3 MW)
+    - Paluel (paluel): 1456.8 -> 1527.4 MW (variation +70.6 MW)
+    - Penly (penly): 728.4 -> 763.7 MW (variation +35.3 MW)
+    - Saint-Alban (saint_alban): 728.4 -> 763.7 MW (variation +35.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 516.3 -> 542.8 MW (variation +26.5 MW)
+    - Tricastin (tricastin): 1032.6 -> 1085.5 MW (variation +52.9 MW)
+
+15:30 | consommation=40489 MW | solaire=14249 MW | éolien=6379 MW | demande résiduelle=19861 MW | nucléaire=19861 MW
+  réserve=43139 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6028 MW
+    - centre_val_de_loire: 1555 MW
+    - bourgogne_franche_comte: 1799 MW
+    - normandie: 2371 MW
+    - hauts_de_france: 4270 MW
+    - grand_est: 3766 MW
+    - pays_de_la_loire: 2324 MW
+    - bretagne: 2018 MW
+    - nouvelle_aquitaine: 3747 MW
+    - occitanie: 3280 MW
+    - auvergne_rhone_alpes: 5682 MW
+    - provence_alpes_cote_d_azur: 3448 MW
+    - corse: 201 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 763.7 -> 805.2 MW (variation +41.5 MW)
+    - Le Blayais (blayais): 1085.5 -> 1147.8 MW (variation +62.3 MW)
+    - Bugey (bugey): 1085.5 -> 1147.8 MW (variation +62.3 MW)
+    - Cattenom (cattenom): 1527.4 -> 1610.5 MW (variation +83.1 MW)
+    - Chinon (chinon): 1085.5 -> 1147.8 MW (variation +62.3 MW)
+    - Chooz (chooz): 1014.2 -> 1060.9 MW (variation +46.7 MW)
+    - Civaux (civaux): 1014.2 -> 1060.9 MW (variation +46.7 MW)
+    - Cruas-Meysse (cruas): 1085.5 -> 1147.8 MW (variation +62.3 MW)
+    - Dampierre-en-Burly (dampierre): 1085.5 -> 1147.8 MW (variation +62.3 MW)
+    - Flamanville (flamanville): 1242.0 -> 1309.5 MW (variation +67.5 MW)
+    - Golfech (golfech): 763.7 -> 805.2 MW (variation +41.5 MW)
+    - Gravelines (gravelines): 1628.3 -> 1721.8 MW (variation +93.4 MW)
+    - Nogent-sur-Seine (nogent): 763.7 -> 805.2 MW (variation +41.5 MW)
+    - Paluel (paluel): 1527.4 -> 1610.5 MW (variation +83.1 MW)
+    - Penly (penly): 763.7 -> 805.2 MW (variation +41.5 MW)
+    - Saint-Alban (saint_alban): 763.7 -> 805.2 MW (variation +41.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 542.8 -> 573.9 MW (variation +31.1 MW)
+    - Tricastin (tricastin): 1085.5 -> 1147.8 MW (variation +62.3 MW)
+
+15:45 | consommation=40918 MW | solaire=13301 MW | éolien=6545 MW | demande résiduelle=21072 MW | nucléaire=21072 MW
+  réserve=41928 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6091 MW
+    - centre_val_de_loire: 1570 MW
+    - bourgogne_franche_comte: 1817 MW
+    - normandie: 2394 MW
+    - hauts_de_france: 4317 MW
+    - grand_est: 3805 MW
+    - pays_de_la_loire: 2347 MW
+    - bretagne: 2039 MW
+    - nouvelle_aquitaine: 3787 MW
+    - occitanie: 3317 MW
+    - auvergne_rhone_alpes: 5741 MW
+    - provence_alpes_cote_d_azur: 3489 MW
+    - corse: 204 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 805.2 -> 853.9 MW (variation +48.7 MW)
+    - Le Blayais (blayais): 1147.8 -> 1220.9 MW (variation +73.0 MW)
+    - Bugey (bugey): 1147.8 -> 1220.9 MW (variation +73.0 MW)
+    - Cattenom (cattenom): 1610.5 -> 1707.8 MW (variation +97.4 MW)
+    - Chinon (chinon): 1147.8 -> 1220.9 MW (variation +73.0 MW)
+    - Chooz (chooz): 1060.9 -> 1115.6 MW (variation +54.8 MW)
+    - Civaux (civaux): 1060.9 -> 1115.6 MW (variation +54.8 MW)
+    - Cruas-Meysse (cruas): 1147.8 -> 1220.9 MW (variation +73.0 MW)
+    - Dampierre-en-Burly (dampierre): 1147.8 -> 1220.9 MW (variation +73.0 MW)
+    - Flamanville (flamanville): 1309.5 -> 1388.6 MW (variation +79.1 MW)
+    - Golfech (golfech): 805.2 -> 853.9 MW (variation +48.7 MW)
+    - Gravelines (gravelines): 1721.8 -> 1831.3 MW (variation +109.5 MW)
+    - Nogent-sur-Seine (nogent): 805.2 -> 853.9 MW (variation +48.7 MW)
+    - Paluel (paluel): 1610.5 -> 1707.8 MW (variation +97.4 MW)
+    - Penly (penly): 805.2 -> 853.9 MW (variation +48.7 MW)
+    - Saint-Alban (saint_alban): 805.2 -> 853.9 MW (variation +48.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 573.9 -> 610.4 MW (variation +36.5 MW)
+    - Tricastin (tricastin): 1147.8 -> 1220.9 MW (variation +73.0 MW)
+
+16:00 | consommation=41477 MW | solaire=12301 MW | éolien=6698 MW | demande résiduelle=22478 MW | nucléaire=22478 MW
+  réserve=40522 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6173 MW
+    - centre_val_de_loire: 1590 MW
+    - bourgogne_franche_comte: 1841 MW
+    - normandie: 2424 MW
+    - hauts_de_france: 4377 MW
+    - grand_est: 3856 MW
+    - pays_de_la_loire: 2378 MW
+    - bretagne: 2068 MW
+    - nouvelle_aquitaine: 3840 MW
+    - occitanie: 3365 MW
+    - auvergne_rhone_alpes: 5818 MW
+    - provence_alpes_cote_d_azur: 3541 MW
+    - corse: 206 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 853.9 -> 910.4 MW (variation +56.5 MW)
+    - Le Blayais (blayais): 1220.9 -> 1305.6 MW (variation +84.8 MW)
+    - Bugey (bugey): 1220.9 -> 1305.6 MW (variation +84.8 MW)
+    - Cattenom (cattenom): 1707.8 -> 1820.9 MW (variation +113.0 MW)
+    - Chinon (chinon): 1220.9 -> 1305.6 MW (variation +84.8 MW)
+    - Chooz (chooz): 1115.6 -> 1179.2 MW (variation +63.6 MW)
+    - Civaux (civaux): 1115.6 -> 1179.2 MW (variation +63.6 MW)
+    - Cruas-Meysse (cruas): 1220.9 -> 1305.6 MW (variation +84.8 MW)
+    - Dampierre-en-Burly (dampierre): 1220.9 -> 1305.6 MW (variation +84.8 MW)
+    - Flamanville (flamanville): 1388.6 -> 1480.5 MW (variation +91.8 MW)
+    - Golfech (golfech): 853.9 -> 910.4 MW (variation +56.5 MW)
+    - Gravelines (gravelines): 1831.3 -> 1958.5 MW (variation +127.2 MW)
+    - Nogent-sur-Seine (nogent): 853.9 -> 910.4 MW (variation +56.5 MW)
+    - Paluel (paluel): 1707.8 -> 1820.9 MW (variation +113.0 MW)
+    - Penly (penly): 853.9 -> 910.4 MW (variation +56.5 MW)
+    - Saint-Alban (saint_alban): 853.9 -> 910.4 MW (variation +56.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 610.4 -> 652.8 MW (variation +42.4 MW)
+    - Tricastin (tricastin): 1220.9 -> 1305.6 MW (variation +84.8 MW)
+
+16:15 | consommation=42175 MW | solaire=11263 MW | éolien=6830 MW | demande résiduelle=24082 MW | nucléaire=24082 MW
+  réserve=38918 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6276 MW
+    - centre_val_de_loire: 1614 MW
+    - bourgogne_franche_comte: 1870 MW
+    - normandie: 2461 MW
+    - hauts_de_france: 4452 MW
+    - grand_est: 3920 MW
+    - pays_de_la_loire: 2416 MW
+    - bretagne: 2104 MW
+    - nouvelle_aquitaine: 3906 MW
+    - occitanie: 3425 MW
+    - auvergne_rhone_alpes: 5915 MW
+    - provence_alpes_cote_d_azur: 3606 MW
+    - corse: 210 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 910.4 -> 974.9 MW (variation +64.5 MW)
+    - Le Blayais (blayais): 1305.6 -> 1402.4 MW (variation +96.7 MW)
+    - Bugey (bugey): 1305.6 -> 1402.4 MW (variation +96.7 MW)
+    - Cattenom (cattenom): 1820.9 -> 1949.8 MW (variation +129.0 MW)
+    - Chinon (chinon): 1305.6 -> 1402.4 MW (variation +96.7 MW)
+    - Chooz (chooz): 1179.2 -> 1251.8 MW (variation +72.5 MW)
+    - Civaux (civaux): 1179.2 -> 1251.8 MW (variation +72.5 MW)
+    - Cruas-Meysse (cruas): 1305.6 -> 1402.4 MW (variation +96.7 MW)
+    - Dampierre-en-Burly (dampierre): 1305.6 -> 1402.4 MW (variation +96.7 MW)
+    - Flamanville (flamanville): 1480.5 -> 1585.2 MW (variation +104.8 MW)
+    - Golfech (golfech): 910.4 -> 974.9 MW (variation +64.5 MW)
+    - Gravelines (gravelines): 1958.5 -> 2103.6 MW (variation +145.1 MW)
+    - Nogent-sur-Seine (nogent): 910.4 -> 974.9 MW (variation +64.5 MW)
+    - Paluel (paluel): 1820.9 -> 1949.8 MW (variation +129.0 MW)
+    - Penly (penly): 910.4 -> 974.9 MW (variation +64.5 MW)
+    - Saint-Alban (saint_alban): 910.4 -> 974.9 MW (variation +64.5 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 652.8 -> 701.2 MW (variation +48.4 MW)
+    - Tricastin (tricastin): 1305.6 -> 1402.4 MW (variation +96.7 MW)
+
+16:30 | consommation=43014 MW | solaire=10197 MW | éolien=6939 MW | demande résiduelle=25878 MW | nucléaire=25878 MW
+  réserve=37122 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6399 MW
+    - centre_val_de_loire: 1644 MW
+    - bourgogne_franche_comte: 1906 MW
+    - normandie: 2506 MW
+    - hauts_de_france: 4543 MW
+    - grand_est: 3997 MW
+    - pays_de_la_loire: 2462 MW
+    - bretagne: 2146 MW
+    - nouvelle_aquitaine: 3985 MW
+    - occitanie: 3496 MW
+    - auvergne_rhone_alpes: 6031 MW
+    - provence_alpes_cote_d_azur: 3684 MW
+    - corse: 215 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 974.9 -> 1047.1 MW (variation +72.2 MW)
+    - Le Blayais (blayais): 1402.4 -> 1510.7 MW (variation +108.3 MW)
+    - Bugey (bugey): 1402.4 -> 1510.7 MW (variation +108.3 MW)
+    - Cattenom (cattenom): 1949.8 -> 2094.2 MW (variation +144.4 MW)
+    - Chinon (chinon): 1402.4 -> 1510.7 MW (variation +108.3 MW)
+    - Chooz (chooz): 1251.8 -> 1333.0 MW (variation +81.2 MW)
+    - Civaux (civaux): 1251.8 -> 1333.0 MW (variation +81.2 MW)
+    - Cruas-Meysse (cruas): 1402.4 -> 1510.7 MW (variation +108.3 MW)
+    - Dampierre-en-Burly (dampierre): 1402.4 -> 1510.7 MW (variation +108.3 MW)
+    - Flamanville (flamanville): 1585.2 -> 1702.6 MW (variation +117.3 MW)
+    - Golfech (golfech): 974.9 -> 1047.1 MW (variation +72.2 MW)
+    - Gravelines (gravelines): 2103.6 -> 2266.0 MW (variation +162.5 MW)
+    - Nogent-sur-Seine (nogent): 974.9 -> 1047.1 MW (variation +72.2 MW)
+    - Paluel (paluel): 1949.8 -> 2094.2 MW (variation +144.4 MW)
+    - Penly (penly): 974.9 -> 1047.1 MW (variation +72.2 MW)
+    - Saint-Alban (saint_alban): 974.9 -> 1047.1 MW (variation +72.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 701.2 -> 755.3 MW (variation +54.2 MW)
+    - Tricastin (tricastin): 1402.4 -> 1510.7 MW (variation +108.3 MW)
+
+16:45 | consommation=43981 MW | solaire=9111 MW | éolien=7013 MW | demande résiduelle=27857 MW | nucléaire=27857 MW
+  réserve=35143 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6541 MW
+    - centre_val_de_loire: 1678 MW
+    - bourgogne_franche_comte: 1947 MW
+    - normandie: 2558 MW
+    - hauts_de_france: 4647 MW
+    - grand_est: 4086 MW
+    - pays_de_la_loire: 2515 MW
+    - bretagne: 2195 MW
+    - nouvelle_aquitaine: 4077 MW
+    - occitanie: 3579 MW
+    - auvergne_rhone_alpes: 6165 MW
+    - provence_alpes_cote_d_azur: 3773 MW
+    - corse: 220 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1047.1 -> 1126.7 MW (variation +79.6 MW)
+    - Le Blayais (blayais): 1510.7 -> 1630.0 MW (variation +119.3 MW)
+    - Bugey (bugey): 1510.7 -> 1630.0 MW (variation +119.3 MW)
+    - Cattenom (cattenom): 2094.2 -> 2253.3 MW (variation +159.1 MW)
+    - Chinon (chinon): 1510.7 -> 1630.0 MW (variation +119.3 MW)
+    - Chooz (chooz): 1333.0 -> 1422.5 MW (variation +89.5 MW)
+    - Civaux (civaux): 1333.0 -> 1422.5 MW (variation +89.5 MW)
+    - Cruas-Meysse (cruas): 1510.7 -> 1630.0 MW (variation +119.3 MW)
+    - Dampierre-en-Burly (dampierre): 1510.7 -> 1630.0 MW (variation +119.3 MW)
+    - Flamanville (flamanville): 1702.6 -> 1831.8 MW (variation +129.3 MW)
+    - Golfech (golfech): 1047.1 -> 1126.7 MW (variation +79.6 MW)
+    - Gravelines (gravelines): 2266.0 -> 2445.0 MW (variation +179.0 MW)
+    - Nogent-sur-Seine (nogent): 1047.1 -> 1126.7 MW (variation +79.6 MW)
+    - Paluel (paluel): 2094.2 -> 2253.3 MW (variation +159.1 MW)
+    - Penly (penly): 1047.1 -> 1126.7 MW (variation +79.6 MW)
+    - Saint-Alban (saint_alban): 1047.1 -> 1126.7 MW (variation +79.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 755.3 -> 815.0 MW (variation +59.7 MW)
+    - Tricastin (tricastin): 1510.7 -> 1630.0 MW (variation +119.3 MW)
+
+17:00 | consommation=45056 MW | solaire=8022 MW | éolien=7057 MW | demande résiduelle=29977 MW | nucléaire=29977 MW
+  réserve=33023 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6699 MW
+    - centre_val_de_loire: 1716 MW
+    - bourgogne_franche_comte: 1992 MW
+    - normandie: 2616 MW
+    - hauts_de_france: 4763 MW
+    - grand_est: 4185 MW
+    - pays_de_la_loire: 2574 MW
+    - bretagne: 2250 MW
+    - nouvelle_aquitaine: 4178 MW
+    - occitanie: 3671 MW
+    - auvergne_rhone_alpes: 6314 MW
+    - provence_alpes_cote_d_azur: 3873 MW
+    - corse: 225 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1126.7 -> 1211.9 MW (variation +85.2 MW)
+    - Le Blayais (blayais): 1630.0 -> 1757.8 MW (variation +127.8 MW)
+    - Bugey (bugey): 1630.0 -> 1757.8 MW (variation +127.8 MW)
+    - Cattenom (cattenom): 2253.3 -> 2423.8 MW (variation +170.5 MW)
+    - Chinon (chinon): 1630.0 -> 1757.8 MW (variation +127.8 MW)
+    - Chooz (chooz): 1422.5 -> 1518.4 MW (variation +95.9 MW)
+    - Civaux (civaux): 1422.5 -> 1518.4 MW (variation +95.9 MW)
+    - Cruas-Meysse (cruas): 1630.0 -> 1757.8 MW (variation +127.8 MW)
+    - Dampierre-en-Burly (dampierre): 1630.0 -> 1757.8 MW (variation +127.8 MW)
+    - Flamanville (flamanville): 1831.8 -> 1970.3 MW (variation +138.5 MW)
+    - Golfech (golfech): 1126.7 -> 1211.9 MW (variation +85.2 MW)
+    - Gravelines (gravelines): 2445.0 -> 2636.8 MW (variation +191.8 MW)
+    - Nogent-sur-Seine (nogent): 1126.7 -> 1211.9 MW (variation +85.2 MW)
+    - Paluel (paluel): 2253.3 -> 2423.8 MW (variation +170.5 MW)
+    - Penly (penly): 1126.7 -> 1211.9 MW (variation +85.2 MW)
+    - Saint-Alban (saint_alban): 1126.7 -> 1211.9 MW (variation +85.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 815.0 -> 878.9 MW (variation +63.9 MW)
+    - Tricastin (tricastin): 1630.0 -> 1757.8 MW (variation +127.8 MW)
+
+17:15 | consommation=46212 MW | solaire=6939 MW | éolien=7079 MW | demande résiduelle=32194 MW | nucléaire=32194 MW
+  réserve=30806 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 6869 MW
+    - centre_val_de_loire: 1757 MW
+    - bourgogne_franche_comte: 2041 MW
+    - normandie: 2678 MW
+    - hauts_de_france: 4887 MW
+    - grand_est: 4291 MW
+    - pays_de_la_loire: 2637 MW
+    - bretagne: 2309 MW
+    - nouvelle_aquitaine: 4288 MW
+    - occitanie: 3770 MW
+    - auvergne_rhone_alpes: 6474 MW
+    - provence_alpes_cote_d_azur: 3980 MW
+    - corse: 231 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1211.9 -> 1301.0 MW (variation +89.1 MW)
+    - Le Blayais (blayais): 1757.8 -> 1891.5 MW (variation +133.7 MW)
+    - Bugey (bugey): 1757.8 -> 1891.5 MW (variation +133.7 MW)
+    - Cattenom (cattenom): 2423.8 -> 2602.1 MW (variation +178.3 MW)
+    - Chinon (chinon): 1757.8 -> 1891.5 MW (variation +133.7 MW)
+    - Chooz (chooz): 1518.4 -> 1618.7 MW (variation +100.3 MW)
+    - Civaux (civaux): 1518.4 -> 1618.7 MW (variation +100.3 MW)
+    - Cruas-Meysse (cruas): 1757.8 -> 1891.5 MW (variation +133.7 MW)
+    - Dampierre-en-Burly (dampierre): 1757.8 -> 1891.5 MW (variation +133.7 MW)
+    - Flamanville (flamanville): 1970.3 -> 2115.2 MW (variation +144.8 MW)
+    - Golfech (golfech): 1211.9 -> 1301.0 MW (variation +89.1 MW)
+    - Gravelines (gravelines): 2636.8 -> 2837.3 MW (variation +200.5 MW)
+    - Nogent-sur-Seine (nogent): 1211.9 -> 1301.0 MW (variation +89.1 MW)
+    - Paluel (paluel): 2423.8 -> 2602.1 MW (variation +178.3 MW)
+    - Penly (penly): 1211.9 -> 1301.0 MW (variation +89.1 MW)
+    - Saint-Alban (saint_alban): 1211.9 -> 1301.0 MW (variation +89.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 878.9 -> 945.8 MW (variation +66.8 MW)
+    - Tricastin (tricastin): 1757.8 -> 1891.5 MW (variation +133.7 MW)
+
+17:30 | consommation=47409 MW | solaire=5876 MW | éolien=7096 MW | demande résiduelle=34437 MW | nucléaire=34437 MW
+  réserve=28563 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7045 MW
+    - centre_val_de_loire: 1799 MW
+    - bourgogne_franche_comte: 2092 MW
+    - normandie: 2742 MW
+    - hauts_de_france: 5016 MW
+    - grand_est: 4401 MW
+    - pays_de_la_loire: 2702 MW
+    - bretagne: 2370 MW
+    - nouvelle_aquitaine: 4401 MW
+    - occitanie: 3872 MW
+    - auvergne_rhone_alpes: 6640 MW
+    - provence_alpes_cote_d_azur: 4091 MW
+    - corse: 238 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1301.0 -> 1391.2 MW (variation +90.2 MW)
+    - Le Blayais (blayais): 1891.5 -> 2026.8 MW (variation +135.3 MW)
+    - Bugey (bugey): 1891.5 -> 2026.8 MW (variation +135.3 MW)
+    - Cattenom (cattenom): 2602.1 -> 2782.4 MW (variation +180.3 MW)
+    - Chinon (chinon): 1891.5 -> 2026.8 MW (variation +135.3 MW)
+    - Chooz (chooz): 1618.7 -> 1720.1 MW (variation +101.4 MW)
+    - Civaux (civaux): 1618.7 -> 1720.1 MW (variation +101.4 MW)
+    - Cruas-Meysse (cruas): 1891.5 -> 2026.8 MW (variation +135.3 MW)
+    - Dampierre-en-Burly (dampierre): 1891.5 -> 2026.8 MW (variation +135.3 MW)
+    - Flamanville (flamanville): 2115.2 -> 2261.7 MW (variation +146.5 MW)
+    - Golfech (golfech): 1301.0 -> 1391.2 MW (variation +90.2 MW)
+    - Gravelines (gravelines): 2837.3 -> 3040.2 MW (variation +202.9 MW)
+    - Nogent-sur-Seine (nogent): 1301.0 -> 1391.2 MW (variation +90.2 MW)
+    - Paluel (paluel): 2602.1 -> 2782.4 MW (variation +180.3 MW)
+    - Penly (penly): 1301.0 -> 1391.2 MW (variation +90.2 MW)
+    - Saint-Alban (saint_alban): 1301.0 -> 1391.2 MW (variation +90.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 945.8 -> 1013.4 MW (variation +67.6 MW)
+    - Tricastin (tricastin): 1891.5 -> 2026.8 MW (variation +135.3 MW)
+
+17:45 | consommation=48589 MW | solaire=4846 MW | éolien=7141 MW | demande résiduelle=36602 MW | nucléaire=36602 MW
+  réserve=26398 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7218 MW
+    - centre_val_de_loire: 1840 MW
+    - bourgogne_franche_comte: 2142 MW
+    - normandie: 2806 MW
+    - hauts_de_france: 5143 MW
+    - grand_est: 4509 MW
+    - pays_de_la_loire: 2767 MW
+    - bretagne: 2430 MW
+    - nouvelle_aquitaine: 4512 MW
+    - occitanie: 3973 MW
+    - auvergne_rhone_alpes: 6803 MW
+    - provence_alpes_cote_d_azur: 4202 MW
+    - corse: 244 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1391.2 -> 1478.2 MW (variation +87.0 MW)
+    - Le Blayais (blayais): 2026.8 -> 2157.3 MW (variation +130.6 MW)
+    - Bugey (bugey): 2026.8 -> 2157.3 MW (variation +130.6 MW)
+    - Cattenom (cattenom): 2782.4 -> 2956.5 MW (variation +174.1 MW)
+    - Chinon (chinon): 2026.8 -> 2157.3 MW (variation +130.6 MW)
+    - Chooz (chooz): 1720.1 -> 1818.0 MW (variation +97.9 MW)
+    - Civaux (civaux): 1720.1 -> 1818.0 MW (variation +97.9 MW)
+    - Cruas-Meysse (cruas): 2026.8 -> 2157.3 MW (variation +130.6 MW)
+    - Dampierre-en-Burly (dampierre): 2026.8 -> 2157.3 MW (variation +130.6 MW)
+    - Flamanville (flamanville): 2261.7 -> 2403.1 MW (variation +141.4 MW)
+    - Golfech (golfech): 1391.2 -> 1478.2 MW (variation +87.0 MW)
+    - Gravelines (gravelines): 3040.2 -> 3236.0 MW (variation +195.8 MW)
+    - Nogent-sur-Seine (nogent): 1391.2 -> 1478.2 MW (variation +87.0 MW)
+    - Paluel (paluel): 2782.4 -> 2956.5 MW (variation +174.1 MW)
+    - Penly (penly): 1391.2 -> 1478.2 MW (variation +87.0 MW)
+    - Saint-Alban (saint_alban): 1391.2 -> 1478.2 MW (variation +87.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1013.4 -> 1078.7 MW (variation +65.3 MW)
+    - Tricastin (tricastin): 2026.8 -> 2157.3 MW (variation +130.6 MW)
+
+18:00 | consommation=49707 MW | solaire=3864 MW | éolien=7242 MW | demande résiduelle=38601 MW | nucléaire=38601 MW
+  réserve=24399 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7382 MW
+    - centre_val_de_loire: 1880 MW
+    - bourgogne_franche_comte: 2189 MW
+    - normandie: 2865 MW
+    - hauts_de_france: 5264 MW
+    - grand_est: 4612 MW
+    - pays_de_la_loire: 2827 MW
+    - bretagne: 2487 MW
+    - nouvelle_aquitaine: 4618 MW
+    - occitanie: 4069 MW
+    - auvergne_rhone_alpes: 6958 MW
+    - provence_alpes_cote_d_azur: 4306 MW
+    - corse: 250 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1478.2 -> 1558.6 MW (variation +80.4 MW)
+    - Le Blayais (blayais): 2157.3 -> 2277.9 MW (variation +120.5 MW)
+    - Bugey (bugey): 2157.3 -> 2277.9 MW (variation +120.5 MW)
+    - Cattenom (cattenom): 2956.5 -> 3117.2 MW (variation +160.7 MW)
+    - Chinon (chinon): 2157.3 -> 2277.9 MW (variation +120.5 MW)
+    - Chooz (chooz): 1818.0 -> 1908.4 MW (variation +90.4 MW)
+    - Civaux (civaux): 1818.0 -> 1908.4 MW (variation +90.4 MW)
+    - Cruas-Meysse (cruas): 2157.3 -> 2277.9 MW (variation +120.5 MW)
+    - Dampierre-en-Burly (dampierre): 2157.3 -> 2277.9 MW (variation +120.5 MW)
+    - Flamanville (flamanville): 2403.1 -> 2533.7 MW (variation +130.6 MW)
+    - Golfech (golfech): 1478.2 -> 1558.6 MW (variation +80.4 MW)
+    - Gravelines (gravelines): 3236.0 -> 3416.8 MW (variation +180.8 MW)
+    - Nogent-sur-Seine (nogent): 1478.2 -> 1558.6 MW (variation +80.4 MW)
+    - Paluel (paluel): 2956.5 -> 3117.2 MW (variation +160.7 MW)
+    - Penly (penly): 1478.2 -> 1558.6 MW (variation +80.4 MW)
+    - Saint-Alban (saint_alban): 1478.2 -> 1558.6 MW (variation +80.4 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1078.7 -> 1138.9 MW (variation +60.3 MW)
+    - Tricastin (tricastin): 2157.3 -> 2277.9 MW (variation +120.5 MW)
+
+18:15 | consommation=50698 MW | solaire=2943 MW | éolien=7432 MW | demande résiduelle=40323 MW | nucléaire=40323 MW
+  réserve=22677 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7528 MW
+    - centre_val_de_loire: 1914 MW
+    - bourgogne_franche_comte: 2231 MW
+    - normandie: 2918 MW
+    - hauts_de_france: 5371 MW
+    - grand_est: 4703 MW
+    - pays_de_la_loire: 2881 MW
+    - bretagne: 2537 MW
+    - nouvelle_aquitaine: 4712 MW
+    - occitanie: 4154 MW
+    - auvergne_rhone_alpes: 7095 MW
+    - provence_alpes_cote_d_azur: 4399 MW
+    - corse: 255 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1558.6 -> 1627.8 MW (variation +69.2 MW)
+    - Le Blayais (blayais): 2277.9 -> 2381.7 MW (variation +103.8 MW)
+    - Bugey (bugey): 2277.9 -> 2381.7 MW (variation +103.8 MW)
+    - Cattenom (cattenom): 3117.2 -> 3255.6 MW (variation +138.5 MW)
+    - Chinon (chinon): 2277.9 -> 2381.7 MW (variation +103.8 MW)
+    - Chooz (chooz): 1908.4 -> 1986.3 MW (variation +77.9 MW)
+    - Civaux (civaux): 1908.4 -> 1986.3 MW (variation +77.9 MW)
+    - Cruas-Meysse (cruas): 2277.9 -> 2381.7 MW (variation +103.8 MW)
+    - Dampierre-en-Burly (dampierre): 2277.9 -> 2381.7 MW (variation +103.8 MW)
+    - Flamanville (flamanville): 2533.7 -> 2646.2 MW (variation +112.5 MW)
+    - Golfech (golfech): 1558.6 -> 1627.8 MW (variation +69.2 MW)
+    - Gravelines (gravelines): 3416.8 -> 3572.6 MW (variation +155.8 MW)
+    - Nogent-sur-Seine (nogent): 1558.6 -> 1627.8 MW (variation +69.2 MW)
+    - Paluel (paluel): 3117.2 -> 3255.6 MW (variation +138.5 MW)
+    - Penly (penly): 1558.6 -> 1627.8 MW (variation +69.2 MW)
+    - Saint-Alban (saint_alban): 1558.6 -> 1627.8 MW (variation +69.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1138.9 -> 1190.9 MW (variation +51.9 MW)
+    - Tricastin (tricastin): 2277.9 -> 2381.7 MW (variation +103.8 MW)
+
+18:30 | consommation=51513 MW | solaire=2099 MW | éolien=7715 MW | demande résiduelle=41699 MW | nucléaire=41699 MW
+  réserve=21301 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7647 MW
+    - centre_val_de_loire: 1943 MW
+    - bourgogne_franche_comte: 2265 MW
+    - normandie: 2962 MW
+    - hauts_de_france: 5459 MW
+    - grand_est: 4777 MW
+    - pays_de_la_loire: 2926 MW
+    - bretagne: 2579 MW
+    - nouvelle_aquitaine: 4789 MW
+    - occitanie: 4224 MW
+    - auvergne_rhone_alpes: 7208 MW
+    - provence_alpes_cote_d_azur: 4475 MW
+    - corse: 259 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1627.8 -> 1683.1 MW (variation +55.3 MW)
+    - Le Blayais (blayais): 2381.7 -> 2464.7 MW (variation +83.0 MW)
+    - Bugey (bugey): 2381.7 -> 2464.7 MW (variation +83.0 MW)
+    - Cattenom (cattenom): 3255.6 -> 3366.3 MW (variation +110.6 MW)
+    - Chinon (chinon): 2381.7 -> 2464.7 MW (variation +83.0 MW)
+    - Chooz (chooz): 1986.3 -> 2048.5 MW (variation +62.2 MW)
+    - Civaux (civaux): 1986.3 -> 2048.5 MW (variation +62.2 MW)
+    - Cruas-Meysse (cruas): 2381.7 -> 2464.7 MW (variation +83.0 MW)
+    - Dampierre-en-Burly (dampierre): 2381.7 -> 2464.7 MW (variation +83.0 MW)
+    - Flamanville (flamanville): 2646.2 -> 2736.1 MW (variation +89.9 MW)
+    - Golfech (golfech): 1627.8 -> 1683.1 MW (variation +55.3 MW)
+    - Gravelines (gravelines): 3572.6 -> 3697.1 MW (variation +124.5 MW)
+    - Nogent-sur-Seine (nogent): 1627.8 -> 1683.1 MW (variation +55.3 MW)
+    - Paluel (paluel): 3255.6 -> 3366.3 MW (variation +110.6 MW)
+    - Penly (penly): 1627.8 -> 1683.1 MW (variation +55.3 MW)
+    - Saint-Alban (saint_alban): 1627.8 -> 1683.1 MW (variation +55.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1190.9 -> 1232.4 MW (variation +41.5 MW)
+    - Tricastin (tricastin): 2381.7 -> 2464.7 MW (variation +83.0 MW)
+
+18:45 | consommation=52098 MW | solaire=1353 MW | éolien=8079 MW | demande résiduelle=42666 MW | nucléaire=42666 MW
+  réserve=20334 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7733 MW
+    - centre_val_de_loire: 1963 MW
+    - bourgogne_franche_comte: 2289 MW
+    - normandie: 2993 MW
+    - hauts_de_france: 5522 MW
+    - grand_est: 4831 MW
+    - pays_de_la_loire: 2957 MW
+    - bretagne: 2609 MW
+    - nouvelle_aquitaine: 4845 MW
+    - occitanie: 4275 MW
+    - auvergne_rhone_alpes: 7289 MW
+    - provence_alpes_cote_d_azur: 4530 MW
+    - corse: 262 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1683.1 -> 1722.0 MW (variation +38.9 MW)
+    - Le Blayais (blayais): 2464.7 -> 2523.0 MW (variation +58.3 MW)
+    - Bugey (bugey): 2464.7 -> 2523.0 MW (variation +58.3 MW)
+    - Cattenom (cattenom): 3366.3 -> 3444.0 MW (variation +77.7 MW)
+    - Chinon (chinon): 2464.7 -> 2523.0 MW (variation +58.3 MW)
+    - Chooz (chooz): 2048.5 -> 2092.3 MW (variation +43.7 MW)
+    - Civaux (civaux): 2048.5 -> 2092.3 MW (variation +43.7 MW)
+    - Cruas-Meysse (cruas): 2464.7 -> 2523.0 MW (variation +58.3 MW)
+    - Dampierre-en-Burly (dampierre): 2464.7 -> 2523.0 MW (variation +58.3 MW)
+    - Flamanville (flamanville): 2736.1 -> 2799.3 MW (variation +63.2 MW)
+    - Golfech (golfech): 1683.1 -> 1722.0 MW (variation +38.9 MW)
+    - Gravelines (gravelines): 3697.1 -> 3784.5 MW (variation +87.5 MW)
+    - Nogent-sur-Seine (nogent): 1683.1 -> 1722.0 MW (variation +38.9 MW)
+    - Paluel (paluel): 3366.3 -> 3444.0 MW (variation +77.7 MW)
+    - Penly (penly): 1683.1 -> 1722.0 MW (variation +38.9 MW)
+    - Saint-Alban (saint_alban): 1683.1 -> 1722.0 MW (variation +38.9 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1232.4 -> 1261.5 MW (variation +29.2 MW)
+    - Tricastin (tricastin): 2464.7 -> 2523.0 MW (variation +58.3 MW)
+
+19:00 | consommation=52424 MW | solaire=725 MW | éolien=8490 MW | demande résiduelle=43209 MW | nucléaire=43209 MW
+  réserve=19791 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7781 MW
+    - centre_val_de_loire: 1974 MW
+    - bourgogne_franche_comte: 2303 MW
+    - normandie: 3010 MW
+    - hauts_de_france: 5557 MW
+    - grand_est: 4861 MW
+    - pays_de_la_loire: 2975 MW
+    - bretagne: 2626 MW
+    - nouvelle_aquitaine: 4876 MW
+    - occitanie: 4303 MW
+    - auvergne_rhone_alpes: 7333 MW
+    - provence_alpes_cote_d_azur: 4561 MW
+    - corse: 264 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1722.0 -> 1743.8 MW (variation +21.8 MW)
+    - Le Blayais (blayais): 2523.0 -> 2555.8 MW (variation +32.7 MW)
+    - Bugey (bugey): 2523.0 -> 2555.8 MW (variation +32.7 MW)
+    - Cattenom (cattenom): 3444.0 -> 3487.7 MW (variation +43.7 MW)
+    - Chinon (chinon): 2523.0 -> 2555.8 MW (variation +32.7 MW)
+    - Chooz (chooz): 2092.3 -> 2116.8 MW (variation +24.6 MW)
+    - Civaux (civaux): 2092.3 -> 2116.8 MW (variation +24.6 MW)
+    - Cruas-Meysse (cruas): 2523.0 -> 2555.8 MW (variation +32.7 MW)
+    - Dampierre-en-Burly (dampierre): 2523.0 -> 2555.8 MW (variation +32.7 MW)
+    - Flamanville (flamanville): 2799.3 -> 2834.7 MW (variation +35.5 MW)
+    - Golfech (golfech): 1722.0 -> 1743.8 MW (variation +21.8 MW)
+    - Gravelines (gravelines): 3784.5 -> 3833.6 MW (variation +49.1 MW)
+    - Nogent-sur-Seine (nogent): 1722.0 -> 1743.8 MW (variation +21.8 MW)
+    - Paluel (paluel): 3444.0 -> 3487.7 MW (variation +43.7 MW)
+    - Penly (penly): 1722.0 -> 1743.8 MW (variation +21.8 MW)
+    - Saint-Alban (saint_alban): 1722.0 -> 1743.8 MW (variation +21.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1261.5 -> 1277.9 MW (variation +16.4 MW)
+    - Tricastin (tricastin): 2523.0 -> 2555.8 MW (variation +32.7 MW)
+
+19:15 | consommation=52463 MW | solaire=249 MW | éolien=8906 MW | demande résiduelle=43308 MW | nucléaire=43308 MW
+  réserve=19692 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=up
+  consommation régionale
+    - ile_de_france: 7786 MW
+    - centre_val_de_loire: 1975 MW
+    - bourgogne_franche_comte: 2305 MW
+    - normandie: 3012 MW
+    - hauts_de_france: 5562 MW
+    - grand_est: 4864 MW
+    - pays_de_la_loire: 2977 MW
+    - bretagne: 2628 MW
+    - nouvelle_aquitaine: 4879 MW
+    - occitanie: 4307 MW
+    - auvergne_rhone_alpes: 7339 MW
+    - provence_alpes_cote_d_azur: 4565 MW
+    - corse: 264 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1743.8 -> 1747.8 MW (variation +4.0 MW)
+    - Le Blayais (blayais): 2555.8 -> 2561.7 MW (variation +6.0 MW)
+    - Bugey (bugey): 2555.8 -> 2561.7 MW (variation +6.0 MW)
+    - Cattenom (cattenom): 3487.7 -> 3495.6 MW (variation +8.0 MW)
+    - Chinon (chinon): 2555.8 -> 2561.7 MW (variation +6.0 MW)
+    - Chooz (chooz): 2116.8 -> 2121.3 MW (variation +4.5 MW)
+    - Civaux (civaux): 2116.8 -> 2121.3 MW (variation +4.5 MW)
+    - Cruas-Meysse (cruas): 2555.8 -> 2561.7 MW (variation +6.0 MW)
+    - Dampierre-en-Burly (dampierre): 2555.8 -> 2561.7 MW (variation +6.0 MW)
+    - Flamanville (flamanville): 2834.7 -> 2841.2 MW (variation +6.5 MW)
+    - Golfech (golfech): 1743.8 -> 1747.8 MW (variation +4.0 MW)
+    - Gravelines (gravelines): 3833.6 -> 3842.6 MW (variation +9.0 MW)
+    - Nogent-sur-Seine (nogent): 1743.8 -> 1747.8 MW (variation +4.0 MW)
+    - Paluel (paluel): 3487.7 -> 3495.6 MW (variation +8.0 MW)
+    - Penly (penly): 1743.8 -> 1747.8 MW (variation +4.0 MW)
+    - Saint-Alban (saint_alban): 1743.8 -> 1747.8 MW (variation +4.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1277.9 -> 1280.9 MW (variation +3.0 MW)
+    - Tricastin (tricastin): 2555.8 -> 2561.7 MW (variation +6.0 MW)
+
+19:30 | consommation=52208 MW | solaire=0 MW | éolien=9289 MW | demande résiduelle=42919 MW | nucléaire=42919 MW
+  réserve=20081 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7749 MW
+    - centre_val_de_loire: 1966 MW
+    - bourgogne_franche_comte: 2294 MW
+    - normandie: 2998 MW
+    - hauts_de_france: 5534 MW
+    - grand_est: 4841 MW
+    - pays_de_la_loire: 2963 MW
+    - bretagne: 2615 MW
+    - nouvelle_aquitaine: 4855 MW
+    - occitanie: 4285 MW
+    - auvergne_rhone_alpes: 7304 MW
+    - provence_alpes_cote_d_azur: 4541 MW
+    - corse: 263 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1747.8 -> 1732.2 MW (variation -15.6 MW)
+    - Le Blayais (blayais): 2561.7 -> 2538.3 MW (variation -23.5 MW)
+    - Bugey (bugey): 2561.7 -> 2538.3 MW (variation -23.5 MW)
+    - Cattenom (cattenom): 3495.6 -> 3464.4 MW (variation -31.3 MW)
+    - Chinon (chinon): 2561.7 -> 2538.3 MW (variation -23.5 MW)
+    - Chooz (chooz): 2121.3 -> 2103.7 MW (variation -17.6 MW)
+    - Civaux (civaux): 2121.3 -> 2103.7 MW (variation -17.6 MW)
+    - Cruas-Meysse (cruas): 2561.7 -> 2538.3 MW (variation -23.5 MW)
+    - Dampierre-en-Burly (dampierre): 2561.7 -> 2538.3 MW (variation -23.5 MW)
+    - Flamanville (flamanville): 2841.2 -> 2815.8 MW (variation -25.4 MW)
+    - Golfech (golfech): 1747.8 -> 1732.2 MW (variation -15.6 MW)
+    - Gravelines (gravelines): 3842.6 -> 3807.4 MW (variation -35.2 MW)
+    - Nogent-sur-Seine (nogent): 1747.8 -> 1732.2 MW (variation -15.6 MW)
+    - Paluel (paluel): 3495.6 -> 3464.4 MW (variation -31.3 MW)
+    - Penly (penly): 1747.8 -> 1732.2 MW (variation -15.6 MW)
+    - Saint-Alban (saint_alban): 1747.8 -> 1732.2 MW (variation -15.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1280.9 -> 1269.1 MW (variation -11.7 MW)
+    - Tricastin (tricastin): 2561.7 -> 2538.3 MW (variation -23.5 MW)
+
+19:45 | consommation=51677 MW | solaire=0 MW | éolien=9599 MW | demande résiduelle=42078 MW | nucléaire=42078 MW
+  réserve=20922 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7671 MW
+    - centre_val_de_loire: 1948 MW
+    - bourgogne_franche_comte: 2271 MW
+    - normandie: 2969 MW
+    - hauts_de_france: 5477 MW
+    - grand_est: 4792 MW
+    - pays_de_la_loire: 2934 MW
+    - bretagne: 2588 MW
+    - nouvelle_aquitaine: 4805 MW
+    - occitanie: 4240 MW
+    - auvergne_rhone_alpes: 7230 MW
+    - provence_alpes_cote_d_azur: 4492 MW
+    - corse: 260 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1732.2 -> 1698.4 MW (variation -33.8 MW)
+    - Le Blayais (blayais): 2538.3 -> 2487.6 MW (variation -50.7 MW)
+    - Bugey (bugey): 2538.3 -> 2487.6 MW (variation -50.7 MW)
+    - Cattenom (cattenom): 3464.4 -> 3396.7 MW (variation -67.6 MW)
+    - Chinon (chinon): 2538.3 -> 2487.6 MW (variation -50.7 MW)
+    - Chooz (chooz): 2103.7 -> 2065.7 MW (variation -38.0 MW)
+    - Civaux (civaux): 2103.7 -> 2065.7 MW (variation -38.0 MW)
+    - Cruas-Meysse (cruas): 2538.3 -> 2487.6 MW (variation -50.7 MW)
+    - Dampierre-en-Burly (dampierre): 2538.3 -> 2487.6 MW (variation -50.7 MW)
+    - Flamanville (flamanville): 2815.8 -> 2760.9 MW (variation -54.9 MW)
+    - Golfech (golfech): 1732.2 -> 1698.4 MW (variation -33.8 MW)
+    - Gravelines (gravelines): 3807.4 -> 3731.3 MW (variation -76.1 MW)
+    - Nogent-sur-Seine (nogent): 1732.2 -> 1698.4 MW (variation -33.8 MW)
+    - Paluel (paluel): 3464.4 -> 3396.7 MW (variation -67.6 MW)
+    - Penly (penly): 1732.2 -> 1698.4 MW (variation -33.8 MW)
+    - Saint-Alban (saint_alban): 1732.2 -> 1698.4 MW (variation -33.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1269.1 -> 1243.8 MW (variation -25.4 MW)
+    - Tricastin (tricastin): 2538.3 -> 2487.6 MW (variation -50.7 MW)
+
+20:00 | consommation=50894 MW | solaire=0 MW | éolien=9815 MW | demande résiduelle=41079 MW | nucléaire=41079 MW
+  réserve=21921 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7556 MW
+    - centre_val_de_loire: 1920 MW
+    - bourgogne_franche_comte: 2238 MW
+    - normandie: 2927 MW
+    - hauts_de_france: 5393 MW
+    - grand_est: 4720 MW
+    - pays_de_la_loire: 2891 MW
+    - bretagne: 2548 MW
+    - nouvelle_aquitaine: 4731 MW
+    - occitanie: 4173 MW
+    - auvergne_rhone_alpes: 7122 MW
+    - provence_alpes_cote_d_azur: 4419 MW
+    - corse: 256 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1698.4 -> 1658.2 MW (variation -40.2 MW)
+    - Le Blayais (blayais): 2487.6 -> 2427.3 MW (variation -60.2 MW)
+    - Bugey (bugey): 2487.6 -> 2427.3 MW (variation -60.2 MW)
+    - Cattenom (cattenom): 3396.7 -> 3316.4 MW (variation -80.3 MW)
+    - Chinon (chinon): 2487.6 -> 2427.3 MW (variation -60.2 MW)
+    - Chooz (chooz): 2065.7 -> 2020.5 MW (variation -45.2 MW)
+    - Civaux (civaux): 2065.7 -> 2020.5 MW (variation -45.2 MW)
+    - Cruas-Meysse (cruas): 2487.6 -> 2427.3 MW (variation -60.2 MW)
+    - Dampierre-en-Burly (dampierre): 2487.6 -> 2427.3 MW (variation -60.2 MW)
+    - Flamanville (flamanville): 2760.9 -> 2695.6 MW (variation -65.3 MW)
+    - Golfech (golfech): 1698.4 -> 1658.2 MW (variation -40.2 MW)
+    - Gravelines (gravelines): 3731.3 -> 3641.0 MW (variation -90.4 MW)
+    - Nogent-sur-Seine (nogent): 1698.4 -> 1658.2 MW (variation -40.2 MW)
+    - Paluel (paluel): 3396.7 -> 3316.4 MW (variation -80.3 MW)
+    - Penly (penly): 1698.4 -> 1658.2 MW (variation -40.2 MW)
+    - Saint-Alban (saint_alban): 1698.4 -> 1658.2 MW (variation -40.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1243.8 -> 1213.7 MW (variation -30.1 MW)
+    - Tricastin (tricastin): 2487.6 -> 2427.3 MW (variation -60.2 MW)
+
+20:15 | consommation=49914 MW | solaire=0 MW | éolien=9935 MW | demande résiduelle=39979 MW | nucléaire=39979 MW
+  réserve=23021 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7412 MW
+    - centre_val_de_loire: 1886 MW
+    - bourgogne_franche_comte: 2197 MW
+    - normandie: 2875 MW
+    - hauts_de_france: 5287 MW
+    - grand_est: 4630 MW
+    - pays_de_la_loire: 2838 MW
+    - bretagne: 2498 MW
+    - nouvelle_aquitaine: 4638 MW
+    - occitanie: 4088 MW
+    - auvergne_rhone_alpes: 6986 MW
+    - provence_alpes_cote_d_azur: 4328 MW
+    - corse: 251 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1658.2 -> 1614.0 MW (variation -44.2 MW)
+    - Le Blayais (blayais): 2427.3 -> 2361.0 MW (variation -66.3 MW)
+    - Bugey (bugey): 2427.3 -> 2361.0 MW (variation -66.3 MW)
+    - Cattenom (cattenom): 3316.4 -> 3228.0 MW (variation -88.4 MW)
+    - Chinon (chinon): 2427.3 -> 2361.0 MW (variation -66.3 MW)
+    - Chooz (chooz): 2020.5 -> 1970.7 MW (variation -49.7 MW)
+    - Civaux (civaux): 2020.5 -> 1970.7 MW (variation -49.7 MW)
+    - Cruas-Meysse (cruas): 2427.3 -> 2361.0 MW (variation -66.3 MW)
+    - Dampierre-en-Burly (dampierre): 2427.3 -> 2361.0 MW (variation -66.3 MW)
+    - Flamanville (flamanville): 2695.6 -> 2623.7 MW (variation -71.9 MW)
+    - Golfech (golfech): 1658.2 -> 1614.0 MW (variation -44.2 MW)
+    - Gravelines (gravelines): 3641.0 -> 3541.5 MW (variation -99.5 MW)
+    - Nogent-sur-Seine (nogent): 1658.2 -> 1614.0 MW (variation -44.2 MW)
+    - Paluel (paluel): 3316.4 -> 3228.0 MW (variation -88.4 MW)
+    - Penly (penly): 1658.2 -> 1614.0 MW (variation -44.2 MW)
+    - Saint-Alban (saint_alban): 1658.2 -> 1614.0 MW (variation -44.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1213.7 -> 1180.5 MW (variation -33.2 MW)
+    - Tricastin (tricastin): 2427.3 -> 2361.0 MW (variation -66.3 MW)
+
+20:30 | consommation=48776 MW | solaire=0 MW | éolien=9940 MW | demande résiduelle=38836 MW | nucléaire=38836 MW
+  réserve=24164 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7245 MW
+    - centre_val_de_loire: 1846 MW
+    - bourgogne_franche_comte: 2149 MW
+    - normandie: 2814 MW
+    - hauts_de_france: 5164 MW
+    - grand_est: 4526 MW
+    - pays_de_la_loire: 2775 MW
+    - bretagne: 2440 MW
+    - nouvelle_aquitaine: 4531 MW
+    - occitanie: 3991 MW
+    - auvergne_rhone_alpes: 6828 MW
+    - provence_alpes_cote_d_azur: 4222 MW
+    - corse: 245 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1614.0 -> 1568.0 MW (variation -46.0 MW)
+    - Le Blayais (blayais): 2361.0 -> 2292.1 MW (variation -68.9 MW)
+    - Bugey (bugey): 2361.0 -> 2292.1 MW (variation -68.9 MW)
+    - Cattenom (cattenom): 3228.0 -> 3136.1 MW (variation -91.9 MW)
+    - Chinon (chinon): 2361.0 -> 2292.1 MW (variation -68.9 MW)
+    - Chooz (chooz): 1970.7 -> 1919.0 MW (variation -51.7 MW)
+    - Civaux (civaux): 1970.7 -> 1919.0 MW (variation -51.7 MW)
+    - Cruas-Meysse (cruas): 2361.0 -> 2292.1 MW (variation -68.9 MW)
+    - Dampierre-en-Burly (dampierre): 2361.0 -> 2292.1 MW (variation -68.9 MW)
+    - Flamanville (flamanville): 2623.7 -> 2549.1 MW (variation -74.7 MW)
+    - Golfech (golfech): 1614.0 -> 1568.0 MW (variation -46.0 MW)
+    - Gravelines (gravelines): 3541.5 -> 3438.1 MW (variation -103.4 MW)
+    - Nogent-sur-Seine (nogent): 1614.0 -> 1568.0 MW (variation -46.0 MW)
+    - Paluel (paluel): 3228.0 -> 3136.1 MW (variation -91.9 MW)
+    - Penly (penly): 1614.0 -> 1568.0 MW (variation -46.0 MW)
+    - Saint-Alban (saint_alban): 1614.0 -> 1568.0 MW (variation -46.0 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1180.5 -> 1146.0 MW (variation -34.5 MW)
+    - Tricastin (tricastin): 2361.0 -> 2292.1 MW (variation -68.9 MW)
+
+20:45 | consommation=47546 MW | solaire=0 MW | éolien=9838 MW | demande résiduelle=37708 MW | nucléaire=37708 MW
+  réserve=25292 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 7064 MW
+    - centre_val_de_loire: 1802 MW
+    - bourgogne_franche_comte: 2097 MW
+    - normandie: 2748 MW
+    - hauts_de_france: 5032 MW
+    - grand_est: 4413 MW
+    - pays_de_la_loire: 2708 MW
+    - bretagne: 2377 MW
+    - nouvelle_aquitaine: 4415 MW
+    - occitanie: 3886 MW
+    - auvergne_rhone_alpes: 6658 MW
+    - provence_alpes_cote_d_azur: 4108 MW
+    - corse: 238 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1568.0 -> 1522.7 MW (variation -45.3 MW)
+    - Le Blayais (blayais): 2292.1 -> 2224.0 MW (variation -68.0 MW)
+    - Bugey (bugey): 2292.1 -> 2224.0 MW (variation -68.0 MW)
+    - Cattenom (cattenom): 3136.1 -> 3045.4 MW (variation -90.7 MW)
+    - Chinon (chinon): 2292.1 -> 2224.0 MW (variation -68.0 MW)
+    - Chooz (chooz): 1919.0 -> 1868.0 MW (variation -51.0 MW)
+    - Civaux (civaux): 1919.0 -> 1868.0 MW (variation -51.0 MW)
+    - Cruas-Meysse (cruas): 2292.1 -> 2224.0 MW (variation -68.0 MW)
+    - Dampierre-en-Burly (dampierre): 2292.1 -> 2224.0 MW (variation -68.0 MW)
+    - Flamanville (flamanville): 2549.1 -> 2475.4 MW (variation -73.7 MW)
+    - Golfech (golfech): 1568.0 -> 1522.7 MW (variation -45.3 MW)
+    - Gravelines (gravelines): 3438.1 -> 3336.1 MW (variation -102.0 MW)
+    - Nogent-sur-Seine (nogent): 1568.0 -> 1522.7 MW (variation -45.3 MW)
+    - Paluel (paluel): 3136.1 -> 3045.4 MW (variation -90.7 MW)
+    - Penly (penly): 1568.0 -> 1522.7 MW (variation -45.3 MW)
+    - Saint-Alban (saint_alban): 1568.0 -> 1522.7 MW (variation -45.3 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1146.0 -> 1112.0 MW (variation -34.0 MW)
+    - Tricastin (tricastin): 2292.1 -> 2224.0 MW (variation -68.0 MW)
+
+21:00 | consommation=46289 MW | solaire=0 MW | éolien=9622 MW | demande résiduelle=36667 MW | nucléaire=36667 MW
+  réserve=26333 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6879 MW
+    - centre_val_de_loire: 1758 MW
+    - bourgogne_franche_comte: 2043 MW
+    - normandie: 2680 MW
+    - hauts_de_france: 4897 MW
+    - grand_est: 4297 MW
+    - pays_de_la_loire: 2639 MW
+    - bretagne: 2313 MW
+    - nouvelle_aquitaine: 4296 MW
+    - occitanie: 3779 MW
+    - auvergne_rhone_alpes: 6484 MW
+    - provence_alpes_cote_d_azur: 3992 MW
+    - corse: 232 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1522.7 -> 1480.8 MW (variation -41.8 MW)
+    - Le Blayais (blayais): 2224.0 -> 2161.3 MW (variation -62.8 MW)
+    - Bugey (bugey): 2224.0 -> 2161.3 MW (variation -62.8 MW)
+    - Cattenom (cattenom): 3045.4 -> 2961.7 MW (variation -83.7 MW)
+    - Chinon (chinon): 2224.0 -> 2161.3 MW (variation -62.8 MW)
+    - Chooz (chooz): 1868.0 -> 1821.0 MW (variation -47.1 MW)
+    - Civaux (civaux): 1868.0 -> 1821.0 MW (variation -47.1 MW)
+    - Cruas-Meysse (cruas): 2224.0 -> 2161.3 MW (variation -62.8 MW)
+    - Dampierre-en-Burly (dampierre): 2224.0 -> 2161.3 MW (variation -62.8 MW)
+    - Flamanville (flamanville): 2475.4 -> 2407.4 MW (variation -68.0 MW)
+    - Golfech (golfech): 1522.7 -> 1480.8 MW (variation -41.8 MW)
+    - Gravelines (gravelines): 3336.1 -> 3241.9 MW (variation -94.2 MW)
+    - Nogent-sur-Seine (nogent): 1522.7 -> 1480.8 MW (variation -41.8 MW)
+    - Paluel (paluel): 3045.4 -> 2961.7 MW (variation -83.7 MW)
+    - Penly (penly): 1522.7 -> 1480.8 MW (variation -41.8 MW)
+    - Saint-Alban (saint_alban): 1522.7 -> 1480.8 MW (variation -41.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1112.0 -> 1080.6 MW (variation -31.4 MW)
+    - Tricastin (tricastin): 2224.0 -> 2161.3 MW (variation -62.8 MW)
+
+21:15 | consommation=45055 MW | solaire=0 MW | éolien=9310 MW | demande résiduelle=35745 MW | nucléaire=35745 MW
+  réserve=27255 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6698 MW
+    - centre_val_de_loire: 1714 MW
+    - bourgogne_franche_comte: 1991 MW
+    - normandie: 2613 MW
+    - hauts_de_france: 4764 MW
+    - grand_est: 4184 MW
+    - pays_de_la_loire: 2572 MW
+    - bretagne: 2251 MW
+    - nouvelle_aquitaine: 4179 MW
+    - occitanie: 3673 MW
+    - auvergne_rhone_alpes: 6313 MW
+    - provence_alpes_cote_d_azur: 3878 MW
+    - corse: 225 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1480.8 -> 1443.8 MW (variation -37.1 MW)
+    - Le Blayais (blayais): 2161.3 -> 2105.7 MW (variation -55.6 MW)
+    - Bugey (bugey): 2161.3 -> 2105.7 MW (variation -55.6 MW)
+    - Cattenom (cattenom): 2961.7 -> 2887.6 MW (variation -74.1 MW)
+    - Chinon (chinon): 2161.3 -> 2105.7 MW (variation -55.6 MW)
+    - Chooz (chooz): 1821.0 -> 1779.3 MW (variation -41.7 MW)
+    - Civaux (civaux): 1821.0 -> 1779.3 MW (variation -41.7 MW)
+    - Cruas-Meysse (cruas): 2161.3 -> 2105.7 MW (variation -55.6 MW)
+    - Dampierre-en-Burly (dampierre): 2161.3 -> 2105.7 MW (variation -55.6 MW)
+    - Flamanville (flamanville): 2407.4 -> 2347.1 MW (variation -60.2 MW)
+    - Golfech (golfech): 1480.8 -> 1443.8 MW (variation -37.1 MW)
+    - Gravelines (gravelines): 3241.9 -> 3158.5 MW (variation -83.4 MW)
+    - Nogent-sur-Seine (nogent): 1480.8 -> 1443.8 MW (variation -37.1 MW)
+    - Paluel (paluel): 2961.7 -> 2887.6 MW (variation -74.1 MW)
+    - Penly (penly): 1480.8 -> 1443.8 MW (variation -37.1 MW)
+    - Saint-Alban (saint_alban): 1480.8 -> 1443.8 MW (variation -37.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1080.6 -> 1052.8 MW (variation -27.8 MW)
+    - Tricastin (tricastin): 2161.3 -> 2105.7 MW (variation -55.6 MW)
+
+21:30 | consommation=43892 MW | solaire=0 MW | éolien=8912 MW | demande résiduelle=34980 MW | nucléaire=34980 MW
+  réserve=28020 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6527 MW
+    - centre_val_de_loire: 1673 MW
+    - bourgogne_franche_comte: 1942 MW
+    - normandie: 2550 MW
+    - hauts_de_france: 4639 MW
+    - grand_est: 4077 MW
+    - pays_de_la_loire: 2508 MW
+    - bretagne: 2191 MW
+    - nouvelle_aquitaine: 4070 MW
+    - occitanie: 3574 MW
+    - auvergne_rhone_alpes: 6152 MW
+    - provence_alpes_cote_d_azur: 3770 MW
+    - corse: 219 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1443.8 -> 1413.0 MW (variation -30.8 MW)
+    - Le Blayais (blayais): 2105.7 -> 2059.5 MW (variation -46.1 MW)
+    - Bugey (bugey): 2105.7 -> 2059.5 MW (variation -46.1 MW)
+    - Cattenom (cattenom): 2887.6 -> 2826.1 MW (variation -61.5 MW)
+    - Chinon (chinon): 2105.7 -> 2059.5 MW (variation -46.1 MW)
+    - Chooz (chooz): 1779.3 -> 1744.7 MW (variation -34.6 MW)
+    - Civaux (civaux): 1779.3 -> 1744.7 MW (variation -34.6 MW)
+    - Cruas-Meysse (cruas): 2105.7 -> 2059.5 MW (variation -46.1 MW)
+    - Dampierre-en-Burly (dampierre): 2105.7 -> 2059.5 MW (variation -46.1 MW)
+    - Flamanville (flamanville): 2347.1 -> 2297.2 MW (variation -50.0 MW)
+    - Golfech (golfech): 1443.8 -> 1413.0 MW (variation -30.8 MW)
+    - Gravelines (gravelines): 3158.5 -> 3089.3 MW (variation -69.2 MW)
+    - Nogent-sur-Seine (nogent): 1443.8 -> 1413.0 MW (variation -30.8 MW)
+    - Paluel (paluel): 2887.6 -> 2826.1 MW (variation -61.5 MW)
+    - Penly (penly): 1443.8 -> 1413.0 MW (variation -30.8 MW)
+    - Saint-Alban (saint_alban): 1443.8 -> 1413.0 MW (variation -30.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1052.8 -> 1029.8 MW (variation -23.1 MW)
+    - Tricastin (tricastin): 2105.7 -> 2059.5 MW (variation -46.1 MW)
+
+21:45 | consommation=42831 MW | solaire=0 MW | éolien=8465 MW | demande résiduelle=34366 MW | nucléaire=34366 MW
+  réserve=28634 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6371 MW
+    - centre_val_de_loire: 1635 MW
+    - bourgogne_franche_comte: 1897 MW
+    - normandie: 2493 MW
+    - hauts_de_france: 4524 MW
+    - grand_est: 3980 MW
+    - pays_de_la_loire: 2450 MW
+    - bretagne: 2138 MW
+    - nouvelle_aquitaine: 3969 MW
+    - occitanie: 3484 MW
+    - auvergne_rhone_alpes: 6004 MW
+    - provence_alpes_cote_d_azur: 3672 MW
+    - corse: 214 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1413.0 -> 1388.3 MW (variation -24.7 MW)
+    - Le Blayais (blayais): 2059.5 -> 2022.5 MW (variation -37.0 MW)
+    - Bugey (bugey): 2059.5 -> 2022.5 MW (variation -37.0 MW)
+    - Cattenom (cattenom): 2826.1 -> 2776.7 MW (variation -49.4 MW)
+    - Chinon (chinon): 2059.5 -> 2022.5 MW (variation -37.0 MW)
+    - Chooz (chooz): 1744.7 -> 1716.9 MW (variation -27.8 MW)
+    - Civaux (civaux): 1744.7 -> 1716.9 MW (variation -27.8 MW)
+    - Cruas-Meysse (cruas): 2059.5 -> 2022.5 MW (variation -37.0 MW)
+    - Dampierre-en-Burly (dampierre): 2059.5 -> 2022.5 MW (variation -37.0 MW)
+    - Flamanville (flamanville): 2297.2 -> 2257.1 MW (variation -40.1 MW)
+    - Golfech (golfech): 1413.0 -> 1388.3 MW (variation -24.7 MW)
+    - Gravelines (gravelines): 3089.3 -> 3033.8 MW (variation -55.5 MW)
+    - Nogent-sur-Seine (nogent): 1413.0 -> 1388.3 MW (variation -24.7 MW)
+    - Paluel (paluel): 2826.1 -> 2776.7 MW (variation -49.4 MW)
+    - Penly (penly): 1413.0 -> 1388.3 MW (variation -24.7 MW)
+    - Saint-Alban (saint_alban): 1413.0 -> 1388.3 MW (variation -24.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1029.8 -> 1011.3 MW (variation -18.5 MW)
+    - Tricastin (tricastin): 2059.5 -> 2022.5 MW (variation -37.0 MW)
+
+22:00 | consommation=41889 MW | solaire=0 MW | éolien=8017 MW | demande résiduelle=33872 MW | nucléaire=33872 MW
+  réserve=29128 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6232 MW
+    - centre_val_de_loire: 1602 MW
+    - bourgogne_franche_comte: 1857 MW
+    - normandie: 2442 MW
+    - hauts_de_france: 4423 MW
+    - grand_est: 3893 MW
+    - pays_de_la_loire: 2398 MW
+    - bretagne: 2090 MW
+    - nouvelle_aquitaine: 3881 MW
+    - occitanie: 3403 MW
+    - auvergne_rhone_alpes: 5874 MW
+    - provence_alpes_cote_d_azur: 3585 MW
+    - corse: 209 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1388.3 -> 1368.5 MW (variation -19.9 MW)
+    - Le Blayais (blayais): 2022.5 -> 1992.7 MW (variation -29.8 MW)
+    - Bugey (bugey): 2022.5 -> 1992.7 MW (variation -29.8 MW)
+    - Cattenom (cattenom): 2776.7 -> 2737.0 MW (variation -39.7 MW)
+    - Chinon (chinon): 2022.5 -> 1992.7 MW (variation -29.8 MW)
+    - Chooz (chooz): 1716.9 -> 1694.5 MW (variation -22.3 MW)
+    - Civaux (civaux): 1716.9 -> 1694.5 MW (variation -22.3 MW)
+    - Cruas-Meysse (cruas): 2022.5 -> 1992.7 MW (variation -29.8 MW)
+    - Dampierre-en-Burly (dampierre): 2022.5 -> 1992.7 MW (variation -29.8 MW)
+    - Flamanville (flamanville): 2257.1 -> 2224.8 MW (variation -32.3 MW)
+    - Golfech (golfech): 1388.3 -> 1368.5 MW (variation -19.9 MW)
+    - Gravelines (gravelines): 3033.8 -> 2989.1 MW (variation -44.7 MW)
+    - Nogent-sur-Seine (nogent): 1388.3 -> 1368.5 MW (variation -19.9 MW)
+    - Paluel (paluel): 2776.7 -> 2737.0 MW (variation -39.7 MW)
+    - Penly (penly): 1388.3 -> 1368.5 MW (variation -19.9 MW)
+    - Saint-Alban (saint_alban): 1388.3 -> 1368.5 MW (variation -19.9 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 1011.3 -> 996.4 MW (variation -14.9 MW)
+    - Tricastin (tricastin): 2022.5 -> 1992.7 MW (variation -29.8 MW)
+
+22:15 | consommation=41072 MW | solaire=0 MW | éolien=7612 MW | demande résiduelle=33460 MW | nucléaire=33460 MW
+  réserve=29540 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6112 MW
+    - centre_val_de_loire: 1573 MW
+    - bourgogne_franche_comte: 1822 MW
+    - normandie: 2398 MW
+    - hauts_de_france: 4335 MW
+    - grand_est: 3818 MW
+    - pays_de_la_loire: 2354 MW
+    - bretagne: 2048 MW
+    - nouvelle_aquitaine: 3803 MW
+    - occitanie: 3334 MW
+    - auvergne_rhone_alpes: 5761 MW
+    - provence_alpes_cote_d_azur: 3509 MW
+    - corse: 205 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1368.5 -> 1351.9 MW (variation -16.6 MW)
+    - Le Blayais (blayais): 1992.7 -> 1967.9 MW (variation -24.8 MW)
+    - Bugey (bugey): 1992.7 -> 1967.9 MW (variation -24.8 MW)
+    - Cattenom (cattenom): 2737.0 -> 2703.8 MW (variation -33.1 MW)
+    - Chinon (chinon): 1992.7 -> 1967.9 MW (variation -24.8 MW)
+    - Chooz (chooz): 1694.5 -> 1675.9 MW (variation -18.6 MW)
+    - Civaux (civaux): 1694.5 -> 1675.9 MW (variation -18.6 MW)
+    - Cruas-Meysse (cruas): 1992.7 -> 1967.9 MW (variation -24.8 MW)
+    - Dampierre-en-Burly (dampierre): 1992.7 -> 1967.9 MW (variation -24.8 MW)
+    - Flamanville (flamanville): 2224.8 -> 2197.9 MW (variation -26.9 MW)
+    - Golfech (golfech): 1368.5 -> 1351.9 MW (variation -16.6 MW)
+    - Gravelines (gravelines): 2989.1 -> 2951.8 MW (variation -37.3 MW)
+    - Nogent-sur-Seine (nogent): 1368.5 -> 1351.9 MW (variation -16.6 MW)
+    - Paluel (paluel): 2737.0 -> 2703.8 MW (variation -33.1 MW)
+    - Penly (penly): 1368.5 -> 1351.9 MW (variation -16.6 MW)
+    - Saint-Alban (saint_alban): 1368.5 -> 1351.9 MW (variation -16.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 996.4 -> 983.9 MW (variation -12.4 MW)
+    - Tricastin (tricastin): 1992.7 -> 1967.9 MW (variation -24.8 MW)
+
+22:30 | consommation=40372 MW | solaire=0 MW | éolien=7283 MW | demande résiduelle=33089 MW | nucléaire=33089 MW
+  réserve=29911 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 6009 MW
+    - centre_val_de_loire: 1548 MW
+    - bourgogne_franche_comte: 1792 MW
+    - normandie: 2360 MW
+    - hauts_de_france: 4260 MW
+    - grand_est: 3754 MW
+    - pays_de_la_loire: 2315 MW
+    - bretagne: 2013 MW
+    - nouvelle_aquitaine: 3737 MW
+    - occitanie: 3274 MW
+    - auvergne_rhone_alpes: 5664 MW
+    - provence_alpes_cote_d_azur: 3445 MW
+    - corse: 201 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1351.9 -> 1337.0 MW (variation -14.9 MW)
+    - Le Blayais (blayais): 1967.9 -> 1945.5 MW (variation -22.4 MW)
+    - Bugey (bugey): 1967.9 -> 1945.5 MW (variation -22.4 MW)
+    - Cattenom (cattenom): 2703.8 -> 2674.0 MW (variation -29.8 MW)
+    - Chinon (chinon): 1967.9 -> 1945.5 MW (variation -22.4 MW)
+    - Chooz (chooz): 1675.9 -> 1659.1 MW (variation -16.8 MW)
+    - Civaux (civaux): 1675.9 -> 1659.1 MW (variation -16.8 MW)
+    - Cruas-Meysse (cruas): 1967.9 -> 1945.5 MW (variation -22.4 MW)
+    - Dampierre-en-Burly (dampierre): 1967.9 -> 1945.5 MW (variation -22.4 MW)
+    - Flamanville (flamanville): 2197.9 -> 2173.6 MW (variation -24.2 MW)
+    - Golfech (golfech): 1351.9 -> 1337.0 MW (variation -14.9 MW)
+    - Gravelines (gravelines): 2951.8 -> 2918.3 MW (variation -33.6 MW)
+    - Nogent-sur-Seine (nogent): 1351.9 -> 1337.0 MW (variation -14.9 MW)
+    - Paluel (paluel): 2703.8 -> 2674.0 MW (variation -29.8 MW)
+    - Penly (penly): 1351.9 -> 1337.0 MW (variation -14.9 MW)
+    - Saint-Alban (saint_alban): 1351.9 -> 1337.0 MW (variation -14.9 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 983.9 -> 972.8 MW (variation -11.2 MW)
+    - Tricastin (tricastin): 1967.9 -> 1945.5 MW (variation -22.4 MW)
+
+22:45 | consommation=39767 MW | solaire=0 MW | éolien=7055 MW | demande résiduelle=32712 MW | nucléaire=32712 MW
+  réserve=30288 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5920 MW
+    - centre_val_de_loire: 1527 MW
+    - bourgogne_franche_comte: 1766 MW
+    - normandie: 2327 MW
+    - hauts_de_france: 4195 MW
+    - grand_est: 3698 MW
+    - pays_de_la_loire: 2282 MW
+    - bretagne: 1982 MW
+    - nouvelle_aquitaine: 3680 MW
+    - occitanie: 3223 MW
+    - auvergne_rhone_alpes: 5580 MW
+    - provence_alpes_cote_d_azur: 3389 MW
+    - corse: 198 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1337.0 -> 1321.8 MW (variation -15.2 MW)
+    - Le Blayais (blayais): 1945.5 -> 1922.8 MW (variation -22.7 MW)
+    - Bugey (bugey): 1945.5 -> 1922.8 MW (variation -22.7 MW)
+    - Cattenom (cattenom): 2674.0 -> 2643.7 MW (variation -30.3 MW)
+    - Chinon (chinon): 1945.5 -> 1922.8 MW (variation -22.7 MW)
+    - Chooz (chooz): 1659.1 -> 1642.1 MW (variation -17.1 MW)
+    - Civaux (civaux): 1659.1 -> 1642.1 MW (variation -17.1 MW)
+    - Cruas-Meysse (cruas): 1945.5 -> 1922.8 MW (variation -22.7 MW)
+    - Dampierre-en-Burly (dampierre): 1945.5 -> 1922.8 MW (variation -22.7 MW)
+    - Flamanville (flamanville): 2173.6 -> 2149.0 MW (variation -24.6 MW)
+    - Golfech (golfech): 1337.0 -> 1321.8 MW (variation -15.2 MW)
+    - Gravelines (gravelines): 2918.3 -> 2884.2 MW (variation -34.1 MW)
+    - Nogent-sur-Seine (nogent): 1337.0 -> 1321.8 MW (variation -15.2 MW)
+    - Paluel (paluel): 2674.0 -> 2643.7 MW (variation -30.3 MW)
+    - Penly (penly): 1337.0 -> 1321.8 MW (variation -15.2 MW)
+    - Saint-Alban (saint_alban): 1337.0 -> 1321.8 MW (variation -15.2 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 972.8 -> 961.4 MW (variation -11.4 MW)
+    - Tricastin (tricastin): 1945.5 -> 1922.8 MW (variation -22.7 MW)
+
+23:00 | consommation=39241 MW | solaire=0 MW | éolien=6920 MW | demande résiduelle=32321 MW | nucléaire=32321 MW
+  réserve=30679 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5842 MW
+    - centre_val_de_loire: 1508 MW
+    - bourgogne_franche_comte: 1744 MW
+    - normandie: 2299 MW
+    - hauts_de_france: 4138 MW
+    - grand_est: 3650 MW
+    - pays_de_la_loire: 2253 MW
+    - bretagne: 1955 MW
+    - nouvelle_aquitaine: 3631 MW
+    - occitanie: 3178 MW
+    - auvergne_rhone_alpes: 5507 MW
+    - provence_alpes_cote_d_azur: 3341 MW
+    - corse: 195 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1321.8 -> 1306.1 MW (variation -15.7 MW)
+    - Le Blayais (blayais): 1922.8 -> 1899.2 MW (variation -23.6 MW)
+    - Bugey (bugey): 1922.8 -> 1899.2 MW (variation -23.6 MW)
+    - Cattenom (cattenom): 2643.7 -> 2612.3 MW (variation -31.4 MW)
+    - Chinon (chinon): 1922.8 -> 1899.2 MW (variation -23.6 MW)
+    - Chooz (chooz): 1642.1 -> 1624.4 MW (variation -17.7 MW)
+    - Civaux (civaux): 1642.1 -> 1624.4 MW (variation -17.7 MW)
+    - Cruas-Meysse (cruas): 1922.8 -> 1899.2 MW (variation -23.6 MW)
+    - Dampierre-en-Burly (dampierre): 1922.8 -> 1899.2 MW (variation -23.6 MW)
+    - Flamanville (flamanville): 2149.0 -> 2123.5 MW (variation -25.5 MW)
+    - Golfech (golfech): 1321.8 -> 1306.1 MW (variation -15.7 MW)
+    - Gravelines (gravelines): 2884.2 -> 2848.8 MW (variation -35.4 MW)
+    - Nogent-sur-Seine (nogent): 1321.8 -> 1306.1 MW (variation -15.7 MW)
+    - Paluel (paluel): 2643.7 -> 2612.3 MW (variation -31.4 MW)
+    - Penly (penly): 1321.8 -> 1306.1 MW (variation -15.7 MW)
+    - Saint-Alban (saint_alban): 1321.8 -> 1306.1 MW (variation -15.7 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 961.4 -> 949.6 MW (variation -11.8 MW)
+    - Tricastin (tricastin): 1922.8 -> 1899.2 MW (variation -23.6 MW)
+
+23:15 | consommation=38769 MW | solaire=0 MW | éolien=6861 MW | demande résiduelle=31908 MW | nucléaire=31908 MW
+  réserve=31092 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5773 MW
+    - centre_val_de_loire: 1491 MW
+    - bourgogne_franche_comte: 1724 MW
+    - normandie: 2273 MW
+    - hauts_de_france: 4088 MW
+    - grand_est: 3606 MW
+    - pays_de_la_loire: 2227 MW
+    - bretagne: 1931 MW
+    - nouvelle_aquitaine: 3586 MW
+    - occitanie: 3138 MW
+    - auvergne_rhone_alpes: 5441 MW
+    - provence_alpes_cote_d_azur: 3298 MW
+    - corse: 193 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1306.1 -> 1289.5 MW (variation -16.6 MW)
+    - Le Blayais (blayais): 1899.2 -> 1874.3 MW (variation -24.9 MW)
+    - Bugey (bugey): 1899.2 -> 1874.3 MW (variation -24.9 MW)
+    - Cattenom (cattenom): 2612.3 -> 2579.1 MW (variation -33.2 MW)
+    - Chinon (chinon): 1899.2 -> 1874.3 MW (variation -24.9 MW)
+    - Chooz (chooz): 1624.4 -> 1605.7 MW (variation -18.7 MW)
+    - Civaux (civaux): 1624.4 -> 1605.7 MW (variation -18.7 MW)
+    - Cruas-Meysse (cruas): 1899.2 -> 1874.3 MW (variation -24.9 MW)
+    - Dampierre-en-Burly (dampierre): 1899.2 -> 1874.3 MW (variation -24.9 MW)
+    - Flamanville (flamanville): 2123.5 -> 2096.5 MW (variation -27.0 MW)
+    - Golfech (golfech): 1306.1 -> 1289.5 MW (variation -16.6 MW)
+    - Gravelines (gravelines): 2848.8 -> 2811.4 MW (variation -37.4 MW)
+    - Nogent-sur-Seine (nogent): 1306.1 -> 1289.5 MW (variation -16.6 MW)
+    - Paluel (paluel): 2612.3 -> 2579.1 MW (variation -33.2 MW)
+    - Penly (penly): 1306.1 -> 1289.5 MW (variation -16.6 MW)
+    - Saint-Alban (saint_alban): 1306.1 -> 1289.5 MW (variation -16.6 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 949.6 -> 937.1 MW (variation -12.5 MW)
+    - Tricastin (tricastin): 1899.2 -> 1874.3 MW (variation -24.9 MW)
+
+23:30 | consommation=38334 MW | solaire=0 MW | éolien=6843 MW | demande résiduelle=31491 MW | nucléaire=31491 MW
+  réserve=31509 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5709 MW
+    - centre_val_de_loire: 1475 MW
+    - bourgogne_franche_comte: 1705 MW
+    - normandie: 2249 MW
+    - hauts_de_france: 4041 MW
+    - grand_est: 3566 MW
+    - pays_de_la_loire: 2203 MW
+    - bretagne: 1909 MW
+    - nouvelle_aquitaine: 3545 MW
+    - occitanie: 3102 MW
+    - auvergne_rhone_alpes: 5381 MW
+    - provence_alpes_cote_d_azur: 3259 MW
+    - corse: 190 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1289.5 -> 1272.8 MW (variation -16.8 MW)
+    - Le Blayais (blayais): 1874.3 -> 1849.1 MW (variation -25.1 MW)
+    - Bugey (bugey): 1874.3 -> 1849.1 MW (variation -25.1 MW)
+    - Cattenom (cattenom): 2579.1 -> 2545.5 MW (variation -33.5 MW)
+    - Chinon (chinon): 1874.3 -> 1849.1 MW (variation -25.1 MW)
+    - Chooz (chooz): 1605.7 -> 1586.9 MW (variation -18.9 MW)
+    - Civaux (civaux): 1605.7 -> 1586.9 MW (variation -18.9 MW)
+    - Cruas-Meysse (cruas): 1874.3 -> 1849.1 MW (variation -25.1 MW)
+    - Dampierre-en-Burly (dampierre): 1874.3 -> 1849.1 MW (variation -25.1 MW)
+    - Flamanville (flamanville): 2096.5 -> 2069.2 MW (variation -27.2 MW)
+    - Golfech (golfech): 1289.5 -> 1272.8 MW (variation -16.8 MW)
+    - Gravelines (gravelines): 2811.4 -> 2773.7 MW (variation -37.7 MW)
+    - Nogent-sur-Seine (nogent): 1289.5 -> 1272.8 MW (variation -16.8 MW)
+    - Paluel (paluel): 2579.1 -> 2545.5 MW (variation -33.5 MW)
+    - Penly (penly): 1289.5 -> 1272.8 MW (variation -16.8 MW)
+    - Saint-Alban (saint_alban): 1289.5 -> 1272.8 MW (variation -16.8 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 937.1 -> 924.6 MW (variation -12.6 MW)
+    - Tricastin (tricastin): 1874.3 -> 1849.1 MW (variation -25.1 MW)
+
+23:45 | consommation=37931 MW | solaire=0 MW | éolien=6841 MW | demande résiduelle=31090 MW | nucléaire=31090 MW
+  réserve=31910 MW | réserve minimale=5000 MW | réserve suffisante=True | situation=normale
+  manquant=0 MW | surplus=0 MW | direction=down
+  consommation régionale
+    - ile_de_france: 5649 MW
+    - centre_val_de_loire: 1460 MW
+    - bourgogne_franche_comte: 1688 MW
+    - normandie: 2226 MW
+    - hauts_de_france: 3998 MW
+    - grand_est: 3529 MW
+    - pays_de_la_loire: 2180 MW
+    - bretagne: 1889 MW
+    - nouvelle_aquitaine: 3508 MW
+    - occitanie: 3068 MW
+    - auvergne_rhone_alpes: 5325 MW
+    - provence_alpes_cote_d_azur: 3223 MW
+    - corse: 188 MW
+  répartition des centrales
+    - Belleville-sur-Loire (belleville): 1272.8 -> 1256.6 MW (variation -16.1 MW)
+    - Le Blayais (blayais): 1849.1 -> 1825.0 MW (variation -24.2 MW)
+    - Bugey (bugey): 1849.1 -> 1825.0 MW (variation -24.2 MW)
+    - Cattenom (cattenom): 2545.5 -> 2513.3 MW (variation -32.2 MW)
+    - Chinon (chinon): 1849.1 -> 1825.0 MW (variation -24.2 MW)
+    - Chooz (chooz): 1586.9 -> 1568.7 MW (variation -18.1 MW)
+    - Civaux (civaux): 1586.9 -> 1568.7 MW (variation -18.1 MW)
+    - Cruas-Meysse (cruas): 1849.1 -> 1825.0 MW (variation -24.2 MW)
+    - Dampierre-en-Burly (dampierre): 1849.1 -> 1825.0 MW (variation -24.2 MW)
+    - Flamanville (flamanville): 2069.2 -> 2043.0 MW (variation -26.2 MW)
+    - Golfech (golfech): 1272.8 -> 1256.6 MW (variation -16.1 MW)
+    - Gravelines (gravelines): 2773.7 -> 2737.4 MW (variation -36.3 MW)
+    - Nogent-sur-Seine (nogent): 1272.8 -> 1256.6 MW (variation -16.1 MW)
+    - Paluel (paluel): 2545.5 -> 2513.3 MW (variation -32.2 MW)
+    - Penly (penly): 1272.8 -> 1256.6 MW (variation -16.1 MW)
+    - Saint-Alban (saint_alban): 1272.8 -> 1256.6 MW (variation -16.1 MW)
+    - Saint-Laurent-des-Eaux (saint_laurent): 924.6 -> 912.5 MW (variation -12.1 MW)
+    - Tricastin (tricastin): 1849.1 -> 1825.0 MW (variation -24.2 MW)
+
+=== résumé ===
+nombre de pas : 96
+journée complète : True
+demande toujours satisfaite : True
+contraintes toujours respectées : True
+production toujours équilibrée : False
+puissance totale manquante : 0.0 MW
+réserve toujours suffisante : True
+nombre de situations dégradées : 0
