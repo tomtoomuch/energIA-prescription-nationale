@@ -1092,3 +1092,25 @@ comment exécuter le bonus
 depuis le dossier ms-python-2
 
 python -m services.charts
+
+
+
+
+services/scenario_json.py
+
+build_complete_scenario prépare un objet contenant
+le scénario
+les événements
+le nombre de pas
+la réserve minimale
+la version du format
+
+export_complete_scenario transforme cet objet Python en fichier json
+import_complete_scenario lit le fichier json et reconstruit l’objet Python
+validate_complete_scenario refuse un fichier incomplet ou incorrect
+exécution
+
+depuis ms-python-2
+
+le fichier sera créé dans
+exported_scenarios/evening_peak_occitanie.json
