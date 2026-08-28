@@ -1146,6 +1146,6 @@ une année de 365 jours
 python -m services.long_simulation  --days 365
 
 plusieurs jours avec un scénario de phase 3
-python -m services.long_simulation  --days 7 --scenario-id evening_peak_occitanie
+python -m services.long_simulation --days 7 --scenario-id evening_peak_occitanie
 
 dans cette version , la même journée de référence et le même scénario sont répétés chaque jour
