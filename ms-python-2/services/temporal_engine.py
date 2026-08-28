@@ -963,15 +963,15 @@ def simulate_day(
             plants=plants,
             previous_state=current_state,
             demand_mw=residual_demand_mw,
-#            regional_demands=(
-#                regional_demands_for_step
-#            ),
-#            graph=graph,
-#            plants_index=plants_index,
-#            regions_index=regions_index,
-#            simulation_parameters=(
-#                simulation_parameters
-#            ),
+            regional_demands=(
+                regional_demands_for_step
+            ),
+            graph=graph,
+            plants_index=plants_index,
+            regions_index=regions_index,
+            simulation_parameters=(
+                simulation_parameters
+            ),
         )
 
         nuclear_reserve_mw = (

@@ -1,0 +1,20 @@
+{
+  "format_version": 1,
+  "scenario": {
+    "id": "evening_peak_occitanie",
+    "name": "Pic de consommation en Occitanie",
+    "events": [
+      {
+        "type": "consumption_delta",
+        "region_id": "occitanie",
+        "start": "17:30",
+        "end": "21:00",
+        "delta_mw": 850
+      }
+    ]
+  },
+  "simulation_parameters": {
+    "number_of_steps": 96,
+    "minimum_reserve_mw": 5000.0
+  }
+}
