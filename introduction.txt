@@ -1114,3 +1114,38 @@ depuis ms-python-2
 
 le fichier sera créé dans
 exported_scenarios/evening_peak_occitanie.json
+
+
+long_simulation.py
+
+repeat_values répète une série journalière
+une liste de 96 valeurs répétée pendant 7 jours produit 672 valeurs
+build_long_consumption_data répète
+.les 96 horaires
+.les consommations nationales
+. les consommations de chaque région
+
+build_long_non_dispatchable_data répète
+- le solaire
+- l’éolien
+- les productions régionales
+
+simulate_period appelle une seule fois le moteur temporel avec toutes les valeurs
+c’est important car l’état nucléaire est conservé entre deux quarts d’heure et également entre deux journées
+add_day_information transforme un horaire comme 08:00 en jour 2 08:00 dans le résultat
+
+commandes d’exécution
+
+une semaine
+python -m services.long_simulation --days 7
+
+un mois de 30 jours
+python -m services.long_simulation  --days 30
+
+une année de 365 jours
+python -m services.long_simulation  --days 365
+
+plusieurs jours avec un scénario de phase 3
+python -m services.long_simulation  --days 7 --scenario-id evening_peak_occitanie
+
+dans cette version , la même journée de référence et le même scénario sont répétés chaque jour
