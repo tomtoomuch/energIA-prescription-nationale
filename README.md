@@ -29,11 +29,11 @@ config:
   layout: elk
 ---
 flowchart TB
- subgraph s1["microService Python/FastAPI"]
+  subgraph s1["microService Python/FastAPI"]
         Service1["Moteur prescriptif régional"]
- subgraph s2["microService Python/FastAPI 2"]
+  subgraph s2["microService Python/FastAPI 2"]
         Service2["Moteur prescriptif national"]
-  end
+  dend
     User["Utilisateur"] -- Requête --> Gateway["Gateway Node/Express"]
     JSON["JSON statiques"] -- Réponse --> Service1
     JSON["JSON statiques"] -- Réponse --> Service2
@@ -54,9 +54,10 @@ flowchart TB
     classDef gatewayStyle stroke:#fb923c, fill:#fff7ed
     classDef serviceStyle stroke:#a78bfa, fill:#f5f3ff
     classDef dataStyle stroke:#4ade80, fill:#f0fdf4
+
 ```
 
-#### Schéma de flux séquentiel
+### Schéma de flux séquentiel
 
 ```mermaid
 ---
@@ -79,11 +80,6 @@ A-->>P: 4. Résultat calculé (Plan de répartition optimal ou déficit).
 P-->>G: 5. Réponse structurée et formatée.
 G-->>C: 6. Retour à l'utilisateur final.
 ```
-
-### Déploiement de la phase 1 du projet EnergIA : prescription nationale en temps réel
-
-La phase 1 modifie un certain nombre de points du workflow :
-Utilisateur déclenche la simulation via la route GET /phase1/simulate-day -> le micro service récupère les données, les agrègent. Il détermine la consommation de chaque région et calcule, via Dijkstra, l'approvisionnement nécessaire en énergie pour pallier aux manques.
 
 ### Arborescence projet
 
@@ -269,7 +265,7 @@ Ce micro-service implémente l'ensemble des calculs complexes : modélisation du
 **Optimisation de cheminement :** Implémentation de l'algorithme de Dijkstra pour trouver le chemin le plus court entre deux points dans le réseau maillé.
 **Calcul des capacités disponibles :** Détermination de la puissance disponible en fonction du minimum entre les limites supérieures (_soft upper bound_) et la rampe de montée maximale (_max_ramp_up_mw_per_15_min_).
 
-#### Fonctionnement du moteur prescriptif
+#### Fonctionnement du moteur prescriptif initial
 
 Le moteur reçoit une région et une demande en MW, et répond en 4 étapes :
 
@@ -421,6 +417,24 @@ Les données sont structurées autour des trois piliers suivants :
 - **Données géographiques :** Incluant la segmentation en régions et un inventaire de centrales.
 - **Besoin régional :** Le flux d'entrée qui déclenche toute simulation (le besoin en MW).
 
+#### Données intégrées en phase 1
+
+**Journée de référence de consommation :**
+
+- 96 horaires (quarts d'heures)
+- la consommation nationale pour chacun des quarts d'heure
+- la consommation de chaque région pour chacun des quarts d'heure
+
+**Paramètres temporels du parc nucléaire :**
+
+- les centrales
+- leur production initiale
+- leur puissance minimale
+- leur puissance maximale
+- leur rampe de montée
+- leur rampe de descente
+- leur disponibilité
+
 ### Méthodologie algorithmique détaillée
 
 L'algorithme principal est une cascade séquentielle de calculs visant à produire le plan optimal avec le score minimal.
@@ -438,6 +452,19 @@ Le plus petit score indique la candidate la plus performante pour répondre au b
 **Répartition de la demande :** Les candidates sont triées par **ordre croissant de leur score**. La demande est ensuite distribuée séquentiellement à chaque centrale, en respectant sa marge disponible (sans dépasser ni le plafond ni les limites des liaisons).
 
 **Cas d'échec :** Si le total cumulé des MW disponibles reste inférieur au besoin initial, le système doit impérativement répondre avec le nombre exact de MW manquants et un message clair.
+
+### Déploiement de la phase 1 du projet EnergIA
+
+La phase 1 modifie un certain nombre de points du workflow. En effet, nous envisageons maintenant une prescription nationale. Il nous faut donc mettre à l'échelle notre moteur prescriptif pour qu'il utilise un jeu de données d'étalonnage d'une journée entière.
+L'tilisateur déclenche la simulation via la route GET /phase1/simulate-day -> le micro service récupère les données, les agrègent. Il détermine la consommation de chaque région et calcule, via Dijkstra, l'approvisionnement nécessaire en énergie pour pallier aux manques.
+
+Cette évolution lie donc un moteur temporel qui simule la production toutes les 15 minutes, au moteur d'allocation régionale, développé précédemment.
+
+**Modifications réalisées**
+
+### Déploiement de la phase 2 du projet EnergIA : prescription nationale en temps réel en ouvrant aux productions solaires et éoliennes
+
+La phase 2
 
 ### Tests Unitaires
 

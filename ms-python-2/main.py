@@ -35,9 +35,9 @@ app = FastAPI(
     title="EnergIA",
     description=(
         "Simulation temporelle du parc électrique "
-        "pour les phases 1 et 2"
+        "pour les phases 1, 2 et 3"
     ),
-    version="2.0.0",
+    version="3.0.0",
 )
 
 
