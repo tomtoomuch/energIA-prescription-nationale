@@ -1267,37 +1267,58 @@ Dans cette version, la même journée de référence et le même scénario sont 
 
 ## Tests unitaires Phase 2 & 3
 
-ms-python-2/tests/
-crée un nouveau fichier nommé  test_temporal_phases.py
+L'ensemble des jeux de tests unitaires se trouvent dans "ms-python-2/tests/".
 
+_**setUpClass()**_ charge les fichiers JSON une seule fois.
+Tous les tests réutilisent la consommation, les centrales.
 
-setUpClass() charge les fichiers JSON une seule fois
-tous les tests pourront ensuite réutiliser la consommation, les centrales
+### Tester la Phase 1
 
-class TestPhase1
-ce test vérifie que la Phase 1 est identifiée correctement et que le moteur produit bien les 96 quarts d’heure demandés
-Commande pour le testé
+_**classe TestPhase1**_ vérifie :
+
+* que la Phase 1 est identifiée correctement ;
+* que le moteur produit bien les 96 quarts d’heure demandés.
+
+#### Commander l'exécution du test de la Phase 1
+
+```bash
 python -m unittest tests.test_temporal_phases.TestPhase1 -v
+```
 
-class TestPhase2
+### Tester la Phase 2
 
-ces tests vérifient :
-les 96 pas de la Phase 2 ,le calcul consommation − solaire − éolien ,le calcul et le contrôle de la réserve
+_**class TestPhase2**_ vérifie :
 
-commande pour teste
+* les 96 pas de la Phase 2,
+* le calcul de la soustraction des productions solaire et éolienne à la consommation,
+* le calcul et son contrôle de la réserve disponible.
+
+#### Commander l'exécution du test de la Phase 2
+
+```bash
 python -m unittest tests.test_temporal_phases.TestPhase2 -v
+```
 
+### Tester la Phase 3
 
-class TestPhase3
-es tests vérifient :
-- les 96 pas de la Phase 3 ;
-- l’application de l’événement ;
-- le début inclus à 17:30 ;
-- la fin exclue à 21:00 ;
-- le respect des contraintes nucléaires.
+_**class TestPhase3**_ vérifie :
 
-commande pour teste
+* les 96 pas de la Phase 3 ;
+* l’application de l’événement ;
+* le début inclus à 17:30 ;
+* la fin exclue à 21:00 ;
+* le respect des contraintes nucléaires.
+
+#### Commander l'exécution du test de la Phase 3
+
+```bash
 python -m unittest tests.test_temporal_phases.TestPhase3 -v
+```
 
-pour lancer un seul test précis, par exemple le calcul de la demande résiduelle
+### Effectuer un test précis
+
+Pour lancer un seul test précis, par exemple le calcul de la demande résiduelle :
+
+```bash
 python -m unittest discover -s tests -p "test_temporal_phases.py" -k "demande_residuelle" -v
+```
