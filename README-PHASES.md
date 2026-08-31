@@ -522,26 +522,20 @@ Cela confirme que la demande non satisfaite de la Corse est un comportement volo
 
 #### Lancer la simulation Phase 1
 
+A l'exécution de la phase 1, le fonctionnement suit la logique suivante :
 
-lancer la phase 1
-
-def run_phase1(number_of_steps=96)
-
-cette fonction charge les consommations
-
-consumption_data = load_reference_consumption()
-
-elle construit ensuite la DataFrame nucléaire
-
-nuclear_dataframe = build_nuclear_dataframe()
-
-elle transmet les deux éléments au moteur temporel
-
-simulation = simulate_day(
-    consumption_data=consumption_data,
-    nuclear_dataframe=nuclear_dataframe,
-    number_of_steps=number_of_steps
-)
+1. construction de la DataFrame nucléaire
+2. création de l’état initial du parc
+3. lecture de la consommation de chaque région
+4. calcul de la demande nucléaire nationale
+5. calcul des limites accessibles des centrales
+6. répartition de la production entre les centrales
+7. vérification des puissances minimales et maximales
+8. vérification des rampes de montée et de descente
+9. création du nouvel état du parc
+10. utilisation du nouvel état au quart d’heure suivant
+11. répétition du calcul jusqu’aux 96 états
+12. affichage du résultat dans l’API ou dans le terminal
 
 
 route de vérification
@@ -578,7 +572,6 @@ il est possible de limiter le nombre de pas
 
 GET /phase1/simulate-day?number_of_steps=4
 
-
 résumé du fonctionnement
 
 1 construction de la DataFrame nucléaire
@@ -605,19 +598,6 @@ résumé du fonctionnement
 
 12 affichage du résultat dans l’API ou dans le terminal
 
-les  services
-Après ces corrections
-graph_loader.py charge les JSON et construit les index
-priority.py identifie les centrales locales et externes
-dijkstra.py cherche les chemins entre centrales
-candidates.py trouve les centrales candidates pour une région
-capacity.py calcule la capacité mobilisable
-score.py classe les centrales
-allocation.py répartit une demande régionale supplémentaire
-dispatch.py fait une répartition simplifiée
-nuclear_dataframe.py rassemble les données historiques et temporelles
-
-temporal_engine.py réalise la nouvelle simulation sur 96 quarts d’heure
 
 graph_loader.py
 nuclear_dataframe.py
@@ -971,214 +951,273 @@ La **Phase 2** permet de :
 
 ## Phase 3
 
-  fonctions
-validate_consumption_event vérifie un seul événement
+### Fonctions
 
-cette fonction vérifie un seul événement
-elle ne modifie pas l’événement
-elle déclenche une erreur si l’événement est incorrect
-elle retourne True si toutes les vérifications réussissen
-event ce la représentant une modification temporaire de consommation
+_**validate_consumption_event**_ vérifie un seul événement.
 
-la variation en MW  "delta_mw": 850
-la variation en pourcenta     "delta_percent": -12
+Cette fonction vérifie un seul événement, SANS le modifier.
+Elle déclenche une erreur si l’événement est incorrect.
+Elle retourne ```True``` si toutes les vérifications réussissent.
+"event" représente une modification temporaire de consommation.
 
-vérifier les champs obligatoires required_fields
-chaque événement doit contenir
-type
-region_id
-start
-end
-rechercher les champs manquants missing_fields
-event.keys() retourne les clés présentes dans l’événement
-vérifier le type de l’événement if event["type"] != "consumption_delta"
-.....
-autoriser 24:00 comme horaire de fin
+La variation en MW "delta_mw" : 850
+La variation en pourcentage "delta_percent" : -12
+
+La fonction vérifie les champs attendus (_required_fields_)
+Chaque événement doit contenir :
+
+* type
+* region_id
+* start
+* end
+
+Pendant cette vérification, on recherche les champs manquants et on les stocke dans _missing_fields_.
+_**event.keys()**_ retourne les clés présentes dans l’événement.
+La fonction vérifie enfin le type de l’événement :
+
+```py
+if event["type"] != "consumption_delta"
+```
+
+Dans le fichier _**graph_loader.py**_, nous autorisons 24:00 comme horaire de fin valide :
+
+```py
 valid_end_timestamps = (
     list(known_timestamps)
     + ["24:00"]
 )
+```
 
+Le script _**load_consumption_scenarios**_ charge et vérifie tous les scénarios du fichier "energia-scenarios-phase3-exemples.json" :
 
-load_consumption_scenarios charge et vérifie tous les scénarios du fichier
-charger et récupérer les scénarios,
-recherche la clé scenarios,
-charger la consommation de référence
-construire l’ensemble des régions
-known_region_ids = {
-    region["id"]
-    for region in consumption_data[
-        "regions"
-    ]
-}
-récupérer les horaires connus
-préparer les identifiants de scénarios
-known_scenario_ids = set()
+1. charge et récupére les scénarios,
+2. recherche et charge la clé de chaque scénario,
+3. charge la consommation de référence
+4. construit l’ensemble des régions
 
-cet est vide au début
-il mémorisera progressivement les identifiants déjà rencontrés
- {
-    "evening_peak_occitanie",
-    "midday_drop_grand_est"
-}
+    ```py
+    known_region_ids = {
+        region["id"]
+        for region in consumption_data[
+            "regions"
+        ]
+    }
+    ```
 
- parcourir les scénarios
-for scenario in scenarios
-la boucle traite les scénarios un par un
+5. récupére les horaires connus
+6. prépare les identifiants de scénarios
 
+    ```py
+    known_scenario_ids = set()
+    ```
 
-récupérer l’identifiant du scénario
-scenario_id = scenario.get(
-    "id"
-)
-si id est absent, scenario_id vaut None
+    Cet ensemble est initialisé sans assignation de valeur.
+    Il servira à stocker progressivement les identifiants déjà rencontrés.
 
-la condition suivante produit alors une erreur
-if not scenario_id:
-chaque scénario doit posséder un identifiant
+    ```py
+    {
+        "evening_peak_occitanie",
+        "midday_drop_grand_est"
+    }
+    ```
 
+7. parcourt les scénarios
 
-détecter les identifiants dupliqués
-if scenario_id in known_scenario_ids
-cette condition vérifie si l’identifiant a déjà été rencontré
-si oui, deux scénarios utilisent le même identifiant
+    ```py
+    for scenario in scenarios
+    ```
 
-après la vérification, l’identifiant est mémorisé
-known_scenario_ids.add(
-    scenario_id
-)
+    Cette boucle traite les scénarios un par un.
 
-récupérer les événements
-events = scenario.get(
+8. récupére l’identifiant du scénario
+
+    ```py
+    scenario_id = scenario.get(
+        "id"
+    )
+    ```
+
+    Si ```id``` est absent, ```scenario_id``` vaut None.
+    La condition suivante produit alors une erreur :
+
+    ```py
+    if not scenario_id:
+    ```
+
+    Chaque scénario doit posséder un identifiant.
+
+9. détecte les identifiants dupliqués
+
+    ```py
+    if scenario_id in known_scenario_ids
+    ```
+
+    Cette condition vérifie si l’identifiant a déjà été rencontré.
+    Si oui, deux scénarios utilisent le même identifiant.
+
+    Après la vérification, l’identifiant est mémorisé
+    
+    ```py
+    known_scenario_ids.add(
+        scenario_id
+    )
+    ```
+
+10. récupère les évènements
+
+    ```py
+    events = scenario.get(
     "events",
     []
-)
-cette instruction récupère la liste des événements du scénario
-si la liste est absente ou vide, le scénario est refusé
-if not events:
-un scénario sans événement ne modifierait aucune consommation
+    )
+    ```
 
-valider chaque événement
+    Cette instruction récupère la liste des événements du scénario, si la liste est absente ou vide, le scénario est refusé.
 
-get_consumption_scenario retrouve un scénario grâce à son identifiant
+    ```py
+    if not events:
+    ```
 
-for scenario in scenarios_data.get la boucle regarde chaque scénario
+    Un scénario sans événement ne modifierait aucune consommation.
 
-exemple d’identifiant est evening_peak_occitanie
+11. valide chaque événement
+
+    _**get_consumption_scenario**_ retrouve un scénario grâce à son identifiant :
+
+    ```py
+    for scenario in scenarios_data.get
+    ```
+
+    La boucle regarde chaque scénario. Exemple d’identifiant de scénario : "evening_peak_occitanie".
 
 ## Bonus
 
-Changement du code pour la BONUS
+### Importation et exportation de scénarii
 
-bonus demande
+**services/scenario_json.py_**
+_**build_complete_scenario**_ prépare un objet contenant :
 
-1  exporter et réimporter un scénario complet en json
-2 générer des courbes
-3  simuler une semaine, un mois ou une année
-4  réfléchir aux performances pour les longues simulations
+* le scénario
+* les événements
+* le nombre de pas
+* la réserve minimale
+* la version du format
 
-le fichier utilisé est charts.py
+_**export_complete_scenario**_ transforme cet objet Python en fichier json
+_**import_complete_scenario**_ lit le fichier json et reconstruit l’objet Python
+_**validate_complete_scenario**_ refuse un fichier incomplet ou incorrect
 
- consommation totale
-roduction solaire
-production éolienne
-production non pilotable totale
-demande résiduelle
- production nucléaire
-  réserve nucléaire disponible
- réserve minimale demandée
- surplus nucléaire
- puissance manquante
+Le fichier sera créé dans :
 
+```bash
+exported_scenarios/evening_peak_occitanie.json
+```
+
+### Générer les courbes de KPI
+
+Le fichier utilisé est "charts.py".
+Les variables identifiées comme signifiantes sont :
+
+* consommation totale
+* production solaire
+* production éolienne
+* production non pilotable totale
+* demande résiduelle
+* production nucléaire
+* réserve nucléaire disponible
+* réserve minimale demandée
+* surplus nucléaire
+* puissance manquante
+
+#### Validation des données
+
+```py
 def validate_chart_data(
     simulation
 ):
-cette function vérifie que la simulation possède des résultats
-elle contrôle également que chaque quart d’heure contient les données nécessaires comme la consommation, le solaire, l’éolien, la réserve et les MW manquants
-elle évite de produire une courbe incorrecte avec des données incomplètes
-get_chart_values
+```
+
+Cette fonction vérifie que la simulation possède des résultats.
+Elle contrôle également que chaque quart d’heure contient les données nécessaires comme la consommation, la production solaire, la production éolienne, la réserve disponible et les MW manquants.
+Elle évite de produire une courbe incorrecte avec des données incomplètes.
+
+#### Récupération des données à utiliser dans les graphiques
+
+```py
 def get_chart_values(
     steps,
     field_name
 )
-cette fonction récupère une même information pour les 96 quarts d’heure
-par exemple
+```
+
+Cette fonction récupère une même information pour les 96 quarts d’heure.
+_exemple_
+
+```py
 solar_productions = get_chart_values(
     steps,
     "solar_production_mw"
 )
-elle retourne une liste contenant les 96 productions solaires
-configure_time_axis
+```
+
+_Elle retourne une liste contenant les 96 productions solaires._
+
+#### Configuration de l'axe temporel
+
+```py
 def configure_time_axis(
     axis,
     timestamps
 ):
-cette fonction prépare l’axe horizontal des graphiques
-elle place les horaires sur l’axe et ajoute une grille pour faciliter la lecture
-generate_phase2_charts
+```
 
+Cette fonction prépare l’axe horizontal des graphiques. Elle place les horaires sur l’axe et ajoute une grille pour faciliter la lecture.
 
+#### Génération des graphiques
+
+```py
 def generate_phase2_charts(
     simulation,
     output_directory=OUTPUT_DIRECTORY
 ):
+```
 
-c’est la fonction principale du bonus
+La fonction reçoit le résultat complet de _**simulate_day**_.
+Elle récupère les différentes valeurs,
+construit quatre graphiques,
+et enregistre finalement une image, au format PNG, dans le dossier "generated_charts/"
 
+#### Les 4 graphiques
 
-elle reçoit le résultat complet de simulate_day
- récupère les différentes valeurs
-construit quatre graphiques
-enregistre finalement une image dans le dossier generated_charts
-les quatre graphiques
+1. Le premier graphique compare
+    * la consommation totale
+    * la demande résiduelle
+    * la production nucléaire
+    Il montre comment le nucléaire s’adapte après avoir retirer les productions solaire et éolienne.
 
-le premier graphique compare
-la consommation totale
-la demande résiduelle
-la production nucléaire
-il montre comment le nucléaire s’adapte après avoir retiré le solaire et l’éolien
+2. Le second graphique affiche
+    * la production solaire
+    * la production éolienne
+    * le total de la production non pilotable
+    Il permet de voir l’évolution des énergies non pilotables pendant la journée.
 
-le deuxième graphique affiche
-le solaire
-l’éolien
-le total non pilotable
-il permet de voir l’évolution des énergies non pilotables pendant la journée
+3. Le troisième graphique compare
+    * la réserve nucléaire disponible
+    * la réserve minimale configurable
+    Si la réserve disponible passe sous la réserve minimale, la zone est affichée en rouge.
 
-le troisième graphique compare
-la réserve nucléaire disponible
-la réserve minimale configurable
-si la réserve disponible passe sous la réserve minimale, la zone est affichée en rouge
-le quatrième graphique affiche
- le surplus nucléaire
-la puissance manquante
-il permet d’identifier les quarts d’heure pendant lesquels la demande ne peut pas être satisfaite
+4. Le quatrième graphique affiche :
+    * le surplus nucléaire
+    * la puissance manquante
+    Il permet d’identifier les quarts d’heure pendant lesquels la demande ne peut pas être satisfaite.
 
-comment exécuter le bonus
-depuis le dossier ms-python-2
+#### Exécution de la création des graphiques depuis "ms-pythoon-2/"
 
+```py
 python -m services.charts
+```
 
-
-services/scenario_json.py
-
-build_complete_scenario prépare un objet contenant
-le scénario
-les événements
-le nombre de pas
-la réserve minimale
-la version du format
-
-export_complete_scenario transforme cet objet Python en fichier json
-import_complete_scenario lit le fichier json et reconstruit l’objet Python
-validate_complete_scenario refuse un fichier incomplet ou incorrect
-exécution
-
-depuis ms-python-2
-
-le fichier sera créé dans
-exported_scenarios/evening_peak_occitanie.json
-
-### long_simulation.py
+### Simuler une semaine, un mois ou une année
 
 **repeat_values** répète une série journalière
 une liste de 96 valeurs répétée pendant 7 jours produit 672 valeurs
@@ -1198,21 +1237,67 @@ build_long_consumption_data répète
 c’est important car l’état nucléaire est conservé entre deux quarts d’heure et également entre deux journées
 add_day_information transforme un horaire comme 08:00 en jour 2 08:00 dans le résultat
 
-### Commandes d’exécution
+#### Commandes d’exécution
 
-une semaine
-python -m services.long_simulation --days 7
+1. Une semaine
 
-un mois de 30 jours
-python -m services.long_simulation  --days 30
+    ```bash
+    python -m services.long_simulation --days 7
+    ```
 
-une année de 365 jours
-python -m services.long_simulation  --days 365
+2. Un mois de 30 jours
 
-Plusieurs jours avec un scénario de phase 3
+    ```bash
+    python -m services.long_simulation  --days 30
+    ```
 
-```bash
-python -m services.long_simulation --days 7 --scenario-id evening_peak_occitanie
-```
+3. Une année de 365 jours
+
+    ```bash
+    python -m services.long_simulation  --days 365
+    ```
+
+4. Plusieurs jours avec un scénario de phase 3
+
+    ```bash
+    python -m services.long_simulation --days 7 --scenario-id evening_peak_occitanie
+    ```
 
 Dans cette version, la même journée de référence et le même scénario sont répétés chaque jour.
+
+## Tests unitaires Phase 2 & 3
+
+ms-python-2/tests/
+crée un nouveau fichier nommé  test_temporal_phases.py
+
+
+setUpClass() charge les fichiers JSON une seule fois
+tous les tests pourront ensuite réutiliser la consommation, les centrales
+
+class TestPhase1
+ce test vérifie que la Phase 1 est identifiée correctement et que le moteur produit bien les 96 quarts d’heure demandés
+Commande pour le testé
+python -m unittest tests.test_temporal_phases.TestPhase1 -v
+
+class TestPhase2
+
+ces tests vérifient :
+les 96 pas de la Phase 2 ,le calcul consommation − solaire − éolien ,le calcul et le contrôle de la réserve
+
+commande pour teste
+python -m unittest tests.test_temporal_phases.TestPhase2 -v
+
+
+class TestPhase3
+es tests vérifient :
+- les 96 pas de la Phase 3 ;
+- l’application de l’événement ;
+- le début inclus à 17:30 ;
+- la fin exclue à 21:00 ;
+- le respect des contraintes nucléaires.
+
+commande pour teste
+python -m unittest tests.test_temporal_phases.TestPhase3 -v
+
+pour lancer un seul test précis, par exemple le calcul de la demande résiduelle
+python -m unittest discover -s tests -p "test_temporal_phases.py" -k "demande_residuelle" -v
