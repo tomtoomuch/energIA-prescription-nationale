@@ -76,6 +76,38 @@ def get_regional_consumption(
 
     return regional_consumption
 
+def get_regional_non_dispatchable_production(
+    non_dispatchable_data,
+    index
+):
+    regional_production = {}
+
+    for region in non_dispatchable_data[
+        "regions"
+    ]:
+        region_id = region["id"]
+
+        production = region[
+            "production_mw"
+        ]
+
+        solar_mw = float(
+            production["solar"][index]
+        )
+
+        wind_mw = float(
+            production["wind"][index]
+        )
+
+        regional_production[region_id] = {
+            "solar_mw": solar_mw,
+            "wind_mw": wind_mw,
+            "total_mw": (
+                solar_mw + wind_mw
+            ),
+        }
+
+    return regional_production
 
 def calculate_plant_limits(
     plant,
@@ -948,16 +980,44 @@ def simulate_day(
         )
 
         regional_demands_for_step = None
+        regional_non_dispatchable_production = {}
 
-        # Pour le moment, l'allocation régionale
-        # est activée uniquement pour la Phase 1.
-        if (
-            regional_allocation_enabled
-            and non_dispatchable_data is None
-        ):
+        if regional_allocation_enabled:
             regional_demands_for_step = (
-                reference_regional_consumption
+                regional_consumption.copy()
             )
+
+            if non_dispatchable_data is not None:
+                regional_non_dispatchable_production = (
+                    get_regional_non_dispatchable_production(
+                        non_dispatchable_data,
+                        index,
+                    )
+                )
+
+                for (
+                        region_id,
+                        consumption_mw
+                ) in regional_consumption.items():
+                    renewable_production_mw = (
+                        regional_non_dispatchable_production[
+                            region_id
+                        ][
+                            "total_mw"
+                        ]
+                    )
+
+                    regional_demands_for_step[
+                        region_id
+                    ] = max(
+                        0.0,
+                        float(consumption_mw)
+                        - renewable_production_mw,
+                    )
+
+                residual_demand_mw = sum(
+                    regional_demands_for_step.values()
+                )
 
         result = simulate_step(
             plants=plants,
