@@ -86,8 +86,9 @@ G-->>C: 6. Retour à l'utilisateur final.
 ```mermaid
 ---
 config:
-  layout: tree
-title: Arborescence Prototyppe Moteur Prescriptif ENERGIA
+  treeView:
+    showIcons:true
+title: Arborescence Prototype Moteur Prescriptif ENERGIA
 ---
 treeView-beta
 ".env"
@@ -314,9 +315,9 @@ Ce fichier transforme les données brutes du JSON (centrales, liaisons) en une s
 >
 >Pour tester, lancer un terminal et appeler :
 
- ```bash
- python graph_loader.py
- ```
+```bash
+python graph_loader.py
+```
 
 #### ms-python/services/**dijkstra.py**
 
