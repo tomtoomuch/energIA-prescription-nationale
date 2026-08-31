@@ -1114,3 +1114,14 @@ depuis ms-python-2
 
 le fichier sera créé dans
 exported_scenarios/evening_peak_occitanie.json
+
+
+31/08/2026
+
+
+Dans main.py
+1 phase 2 chargeait seulement la consommation, les énergies renouvelables et les centrales. Maintenant, elle charge aussi le réseau régional nécessaire pour appeler allocate(), Dijkstra, les capacités et le score
+2 charger le contexte régional en Phase 3 def run_phase3(
+
+dans temporal_engine.py
+cette fonction lit, pour un quart d’heure donné, le solaire et l’éolien de chaque région. Jusqu’ici, le moteur utilisait uniquement les totaux nationaux ligne 946-1020
