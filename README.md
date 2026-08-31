@@ -501,13 +501,25 @@ Le plus petit score indique la candidate la plus performante pour répondre au b
 La phase 1 modifie un certain nombre de points du workflow. En effet, nous envisageons maintenant une prescription nationale. Il nous faut donc mettre à l'échelle notre moteur prescriptif pour qu'il utilise un jeu de données d'étalonnage d'une journée entière.
 L'tilisateur déclenche la simulation via la route GET /phase1/simulate-day -> le micro service récupère les données, les agrègent. Il détermine la consommation de chaque région et calcule, via Dijkstra, l'approvisionnement nécessaire en énergie pour pallier aux manques.
 
-Cette évolution lie donc un moteur temporel qui simule la production toutes les 15 minutes, au moteur d'allocation régionale, développé précédemment.
+Cette évolution lie donc un moteur temporel qui simule la production toutes les 15 minutes, au moteur d'allocation régionale, développé précédemment. 
 
-**Modifications réalisées**
+Les détails du déploiement de la Phase 1 sont visibles dans [README-PHASE-1](./README-PHASES.md#phase-1 "Déploiement de la Phase 1").
 
-## Déploiement de la phase 2 du projet EnergIA : prescription nationale en temps réel en ouvrant aux productions solaires et éoliennes
+## Déploiement de la Phase 2 du projet EnergIA
 
-La phase 2
+La phase 2 modifie plusieurs scripts et fonctions de la Phase 1. Nous prenons en considération les données de production d'énergie solaire et éolienne sur le territoire français métropolitain. Nous soustrayons cette production à la consommation afin de piloter le parc de ccentrales nucléaires le plus justement possible.
+
+Les détails du déploiement de la Phase 2 sont visibles dans [README-PHASE-2](./README-PHASES.md#phase-2 "Déploiement de la Phase 2")
+
+## Déploiement de la Phase 3 et des fonctionnalités 'avancées' du projet EnergIA
+
+La phase 3 apporte de nouvelles modifications et ajoute de nouvelles fonctionnalités. Nous impactons les données de cnosommation et de production en incluant des scénarii de baisse ou hausse de consommation exceptionnelle.
+
+De plus, ces scénarii doivent pouvoir être exportés et importés sans difficulté.
+
+Enfin, un nouveau script produit des graphiques avec les données et données calculées en Phase 2.
+
+Toutes ces nouveautés de la Phase 3 sont expliquées dans le fichieir [README-PHASE-3](./README-PHASES.md#phase-3 "Déploiement de la Phase 3") et [README-BONUS](./README-PHASES.md#bonus "Déploiement des bonus")
 
 ## Tests Unitaires
 
@@ -556,16 +568,19 @@ L'environnement complet est géré via le fichier docker-compose.yml à la racin
 
 ### Terminaisons _(Endpoints)_ de l'API exposé(e)s
 
-| Service                   | Endpoint             | Méthode  | Description                                                                                      |
-| ------------------------- | -------------------- | -------- | ------------------------------------------------------------------------------------------------ |
-| Gateway Express - HTML UI | /                    | GET/POST | Point d'entrée client pour toute simulation                                                      |
-| ms Python                 | /plants              | GET      | Récupère la liste de toutes les centrales du parc                                                |
-| ms Python                 | /regions             | GET      | Liste des régions géographiques couvertes                                                        |
-| ms Python                 | /network             | GET      | Détails structurels et topologiques du réseau                                                    |
-| ms Python                 | /simulate            | POST     | Endpoint principal. Reçoit un besoin énergétique et déclenche la simulation                      |
-| ms Python 2               | /phase1/plants       | GET      | Liste des centrales                                                                              |
-| ms Python 2               | /phase1/consumption  | GET      | Liste des consommations par région                                                               |
-| ms Python 2               | /phase1/simulate-day | GET      | Déclenche la simulation de pilotage de la distribution énergétique en fonction des consommations |
+| Service                   | Endpoint                            | Méthode  | Description                                                                                      |
+| ------------------------- | ----------------------------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| Gateway Express - HTML UI | /                                   | GET/POST | Point d'entrée client pour toute simulation                                                      |
+| ms Python                 | /plants                             | GET      | Récupère la liste de toutes les centrales du parc                                                |
+| ms Python                 | /regions                            | GET      | Liste des régions géographiques couvertes                                                        |
+| ms Python                 | /network                            | GET      | Détails structurels et topologiques du réseau                                                    |
+| ms Python                 | /simulate                           | POST     | Endpoint principal. Reçoit un besoin énergétique et déclenche la simulation                      |
+| ms Python 2               | /phase1/plants                      | GET      | Liste des centrales                                                                              |
+| ms Python 2               | /phase1/consumption                 | GET      | Liste des consommations par région                                                               |
+| ms Python 2               | /phase1/simulate-day                | GET      | Déclenche la simulation de pilotage de la distribution énergétique en fonction des consommations |
+| ms Python 2               | /phase2/non-dispatchable-production | GET      | Liste des productions solaires et éoliennes                                                      |
+| ms Python 2               | /phase2/simulate-day                | GET      | Déclenche la simulation de pilotage de la Phase 2                                                |
+| ms Python 2               | /phase3/simulate-day                | GET      | Déclenche la simulation de pilotage de la phase 3                                                |
 
 **Important :**
 Le client ne doit **jamais** communiquer directement avec le service Python.
