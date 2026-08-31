@@ -1114,3 +1114,51 @@ depuis ms-python-2
 
 le fichier sera créé dans
 exported_scenarios/evening_peak_occitanie.json
+
+
+31/08/2026
+
+
+Dans main.py
+1 phase 2 chargeait seulement la consommation, les énergies renouvelables et les centrales. Maintenant, elle charge aussi le réseau régional nécessaire pour appeler allocate(), Dijkstra, les capacités et le score
+2 charger le contexte régional en Phase 3 def run_phase3(
+
+dans temporal_engine.py
+cette fonction lit, pour un quart d’heure donné, le solaire et l’éolien de chaque région. Jusqu’ici, le moteur utilisait uniquement les totaux nationaux ligne 946-1020
+
+
+
+ms-python-2/tests/
+crée un nouveau fichier nommé  test_temporal_phases.py
+
+
+setUpClass() charge les fichiers JSON une seule fois
+tous les tests pourront ensuite réutiliser la consommation, les centrales
+
+class TestPhase1
+ce test vérifie que la Phase 1 est identifiée correctement et que le moteur produit bien les 96 quarts d’heure demandés
+Commande pour le testé
+python -m unittest tests.test_temporal_phases.TestPhase1 -v
+
+class TestPhase2
+
+ces tests vérifient :
+les 96 pas de la Phase 2 ,le calcul consommation − solaire − éolien ,le calcul et le contrôle de la réserve
+
+commande pour teste
+python -m unittest tests.test_temporal_phases.TestPhase2 -v
+
+
+class TestPhase3
+es tests vérifient :
+- les 96 pas de la Phase 3 ;
+- l’application de l’événement ;
+- le début inclus à 17:30 ;
+- la fin exclue à 21:00 ;
+- le respect des contraintes nucléaires.
+
+commande pour teste
+python -m unittest tests.test_temporal_phases.TestPhase3 -v
+
+pour lancer un seul test précis, par exemple le calcul de la demande résiduelle
+python -m unittest discover -s tests -p "test_temporal_phases.py" -k "demande_residuelle" -v

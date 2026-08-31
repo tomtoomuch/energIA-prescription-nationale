@@ -105,12 +105,10 @@ def run_phase1(
     )
 
 
-
 def run_phase2(
     number_of_steps=96,
     minimum_reserve_mw=5000
 ):
-    # charge les données de la phase 2
     consumption_data = (
         load_reference_consumption()
     )
@@ -118,6 +116,24 @@ def run_phase2(
     non_dispatchable_data = (
         load_non_dispatchable_production()
     )
+
+    fleet_data = load_data()
+
+    graph = build_graph(
+        fleet_data
+    )
+
+    plants_index = build_plants_index(
+        fleet_data
+    )
+
+    regions_index = build_regions_index(
+        fleet_data
+    )
+
+    simulation_parameters = fleet_data[
+        "simulation_parameters"
+    ]
 
     nuclear_dataframe = (
         build_nuclear_dataframe()
@@ -129,15 +145,18 @@ def run_phase2(
         number_of_steps=number_of_steps,
         non_dispatchable_data=non_dispatchable_data,
         minimum_reserve_mw=minimum_reserve_mw,
+        graph=graph,
+        plants_index=plants_index,
+        regions_index=regions_index,
+        simulation_parameters=(
+            simulation_parameters
+        ),
     )
-
 def run_phase3(
     scenario_id,
     number_of_steps=96,
     minimum_reserve_mw=5000,
 ):
-
-    # Chargement des données de la phase 3
     consumption_data = (
         load_reference_consumption()
     )
@@ -145,6 +164,24 @@ def run_phase3(
     non_dispatchable_data = (
         load_non_dispatchable_production()
     )
+
+    fleet_data = load_data()
+
+    graph = build_graph(
+        fleet_data
+    )
+
+    plants_index = build_plants_index(
+        fleet_data
+    )
+
+    regions_index = build_regions_index(
+        fleet_data
+    )
+
+    simulation_parameters = fleet_data[
+        "simulation_parameters"
+    ]
 
     nuclear_dataframe = (
         build_nuclear_dataframe()
@@ -154,11 +191,9 @@ def run_phase3(
         load_consumption_scenarios()
     )
 
-    scenario = (
-        get_consumption_scenario(
-            scenarios_data,
-            scenario_id,
-        )
+    scenario = get_consumption_scenario(
+        scenarios_data,
+        scenario_id,
     )
 
     simulation = simulate_day(
@@ -168,15 +203,20 @@ def run_phase3(
         non_dispatchable_data=non_dispatchable_data,
         minimum_reserve_mw=minimum_reserve_mw,
         consumption_events=scenario["events"],
+        graph=graph,
+        plants_index=plants_index,
+        regions_index=regions_index,
+        simulation_parameters=(
+            simulation_parameters
+        ),
     )
 
     simulation["scenario"] = {
-        "scenario_id":scenario["id"],
-        "name":scenario["name"]
+        "scenario_id": scenario["id"],
+        "name": scenario["name"],
     }
 
     return simulation
-
 
 @app.get("/")
 def home():
