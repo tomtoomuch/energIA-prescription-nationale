@@ -10,14 +10,14 @@ Ce projet est une intervention complète visant à moderniser le système d'aide
     - [Routes de monitoring](#routes-de-monitoring)
     - [Routes d'opérations](#routes-dopérations)
   - [Composants techniques principaux](#composants-techniques-principaux)
-    - [Fonctionnement du moteur prescriptif](#fonctionnement-du-moteur-prescriptif)
+    - [Fonctionnement du moteur prescriptif initial](#fonctionnement-du-moteur-prescriptif-initial)
     - [Données utilisées](#données-utilisées)
     - [Méthodologie algorithmique détaillée](#méthodologie-algorithmique-détaillée)
     - [Tests Unitaires](#tests-unitaires)
 - [Démarrage et utilisation](#démarrage-et-utilisation)
   - [Prérequis techniques](#prérequis-techniques)
   - [Lancement de l'environnement (via Docker)](#lancement-de-lenvironnement-via-docker)
-    - [Terminaisons _(Endpoints)_ de l'API exposé(e)s](#terminaisons-endpoints-de-lapi-exposes)
+    - [Terminaisons _(Endpoints)_ de l'API exposé(e)s](#terminaisons-endpoints-de-lapi-exposées)
 
 ## Architecture globale
 
@@ -132,17 +132,30 @@ treeView-beta
         "energia-parametres-temporels-nucleaire.json"
         "energia-production-non-pilotable.json"
         "energia-scenarios-phase3-exemples.json"
+    "exported_scenarios/"
+        "evening_peak_occitanie.json"
+    "generated_charts/"
+        "energia-phase2-courbes.png"
     "services/"
+        "__init__.py"
         "allocation.py"
+        "apply_consumption_events.py"
         "candidates.py"
         "capacity.py"
+        "charts.py"
         "dijkstra.py"
         "dispatch.py"
         "graph_loader.py"
+        "long_simulation.py"
+        "nuclear_dataframe.py"
         "priority.py"
+        "scenario_json.py"
         "score.py"
-        "tests/"
-            "test-engine.py"
+        "temporal_allocation.py"
+        "temporal_engine.py"
+    "tests/"
+        "test-engine.py"
+        "test_nuclear_dataframe"
 ```
 
 Dépôt GitHub : <https://github.com/tomtoomuch/energIA-prescription-nationale>
@@ -155,7 +168,7 @@ Image du micro-service 'Prescription nationale" : <https://hub.docker.com/r/tomt
 
 ## Application
 
-### Routes
+## Routes
 
 Notre API expose 10 routes sur la passerelle (_gateway_) qui écoute le port 3000.
 Les routes sont documentées ci-dessous.
@@ -163,28 +176,28 @@ Par ailleurs, vous pouvez trouver la [documentation générée avec Bruno](./doc
 De plus, FastAPI documente automatiquement les routes exposées via openAPI et [cette documentation sur une page html](http://localhost:8000/docs").
 Par ailleurs, les routes du second micro-service sont documentées [ici](http://localhost:8002/docs).
 
-#### **Routes de monitoring**
+### **Routes de monitoring**
 
-##### GET /health
+#### GET /health
 
 GET <http://localhost:3000/health>
 
 Interroge le serveur passerelle et vérifie son fonctionnement.
 
-##### GET /health-ms
+#### GET /health-ms
 
 GET <http://localhost:3000/health-ms>
 
 Interroge le serveur python/FastAPI (port 8000) sur son _endpoint_ /health via la passerelle et répond au client via la passerelle également et vérifie son fonctionnement.
 <!-- AMELIORATION : Prévoir d'afficher un·e page/onglet/surcouche modale qui affiche l'état du réseau et de ses éléments. On peu y ajouter les métriques des conteneurs -->
 
-##### GET /health-ms-2
+#### GET /health-ms-2
 
 GET <http://localhost:3000/health-ms-2>
 
 Interroge le serveur python/FastAPI (port 8002) sur son _endpoint_ /health via la passerelle et répond au client via la passerelle également et vérifie son fonctionnement.
 
-#### **Routes d'opérations**
+### **Routes d'opérations**
 
 **Déploiement initial**
 GET <http://localhost:3000/plants>
@@ -252,7 +265,7 @@ Le format des réponses json
 }
 ```
 
-### Composants techniques principaux
+## Composants techniques principaux
 
 - **Gateway Express (gateway/) :** la passerelle API (NodeJS/Express).
 C'est le seul point d'entrée autorisé pour tout client externe. Elle gère le routage, la validation des requêtes et assure que les communications internes se font via un protocole strict vers le backend Python.
@@ -265,7 +278,7 @@ Ce micro-service implémente l'ensemble des calculs complexes : modélisation du
 **Optimisation de cheminement :** Implémentation de l'algorithme de Dijkstra pour trouver le chemin le plus court entre deux points dans le réseau maillé.
 **Calcul des capacités disponibles :** Détermination de la puissance disponible en fonction du minimum entre les limites supérieures (_soft upper bound_) et la rampe de montée maximale (_max_ramp_up_mw_per_15_min_).
 
-#### Fonctionnement du moteur prescriptif initial
+### Fonctionnement du moteur prescriptif initial
 
 Le moteur reçoit une région et une demande en MW, et répond en 4 étapes :
 
@@ -275,7 +288,7 @@ Le moteur reçoit une région et une demande en MW, et répond en 4 étapes :
     - à chaque tour, il prend la centrale avec la meilleure note, lui donne le maximum qu'elle peut fournir (plafonné par sa marge, sa vitesse de montée en puissance, et la capacité de la liaison empruntée),
     - puis recommence avec ce qu'il reste à couvrir - jusqu'à ce que la demande soit entièrement satisfaite, ou qu'il n'y ait plus aucune centrale disponible.
 
-##### Formule d'attribution de score
+#### Formule d'attribution de score
 
 ```py
 score = distance_km × 1.0 + pertes_% × 45.0 + (taux_de_charge_final ^ 4) × 900.0 + pénalité_technique × 200.0 − 250[^1]
@@ -287,7 +300,7 @@ Le bonus régional (-250) fait qu'une centrale locale part avec un avantage qu'u
 Les centrales de la région sont donc presque toujours choisies en premier, sauf si elles sont vraiment trop saturées.
 Tous ces poids ne sont pas choisis au hasard : ils sont lus directement depuis _simulation_parameters_ dans le [JSON fourni par le brief](./data/parc_nucleaire_prescriptif_france.json "Fichier de données fourni pour lel travail de prototypagee").
 
-##### ms-python/services/**graph_loader.py**
+#### ms-python/services/**graph_loader.py**
 
 Ce fichier transforme les données brutes du JSON (centrales, liaisons) en une structure que le programme peut utiliser facilement pour calculer des chemins - un graphe
 
@@ -305,7 +318,7 @@ Ce fichier transforme les données brutes du JSON (centrales, liaisons) en une s
  python graph_loader.py
  ```
 
-##### ms-python/services/**dijkstra.py**
+#### ms-python/services/**dijkstra.py**
 
 Ce fichier trouve le chemin le moins cher (_ou chemin le plus court_) entre deux centrales, en passant par le réseau de liaisons - c'est l'algorithme de Dijkstra, qu'on a écrit nous-mêmes sans bibliothèque.
 
@@ -322,7 +335,7 @@ Ce fichier trouve le chemin le moins cher (_ou chemin le plus court_) entre deux
 **1 fonction**
  **shortest_paths_from :** au lieu de chercher le chemin vers une seule centrale, cette fonction calcule d'un coup le chemin le plus court vers toutes les centrales atteignables depuis un point de départ
 
-##### ms-python/services/**capacity.py**
+#### ms-python/services/**capacity.py**
 
 Ce fichier calcule combien de MW en plus chaque centrale peut encore produire, avant d'atteindre sa limite de sécurité.
 
@@ -335,7 +348,7 @@ Le cas d'une centrale indisponible : si _available_ est à ```False``` dans le J
 
 Le fichier JSON contient déjà, pour chaque centrale, un champ _initial_dispatchable_margin_mw_ - une valeur de référence. Notre fonction _dispatchable_margin_ doit retourner exactement ce nombre. Par exemple pour Golfech, le JSON dit 89, et notre fonction doit donner 89.0. C'est une vérification simple qui montre que notre calcul retombe sur les chiffres officiels du jeu de données.
 
-##### ms-python/services/**priority.py**
+#### ms-python/services/**priority.py**
 
 Ce fichier décide dans quel ordre chercher des centrales pour une région donnée :
 d'abord chez elle, ensuite les voisines les plus évidentes.
@@ -357,7 +370,7 @@ Le bloc de point d'entrée contient actuellement un test à la main sur deux ré
 Pour l'Occitanie, qui a Golfech comme unique centrale locale, l'ordre doit être \['golfech', 'tricastin', 'cruas', 'saint_alban'].
 Pour l'Île-de-France, qui n'a aucune centrale locale (regarde _local_plant_ids: \[]_ dans le JSON), l'ordre de recherche commence directement par les centrales externes \['nogent', 'dampierre', 'saint_laurent']. C'est un aspect fondamental du brief : certaines régions n'ont pas de centrale sur leur territoire, il faut quand même pouvoir répondre à la demande des populations.
 
-##### ms-python/services/**candidates.py**
+#### ms-python/services/**candidates.py**
 
 Ce fichier donne, pour une région donnée, la liste complète des centrales candidates avec leur distance et leurs pertes - en combinant les centrales locales, les centrales d'entrée externes, et le reste du graphe si besoin. Avant, nous exécutions deux briques séparées mais aucune ne suffisait seule. **priority.py** savait dire _"regarde d'abord les centrales locales, puis les externes"_ - mais s'arrêtait là, sans jamais chercher plus loin dans le réseau si ces deux
 listes ne suffisaient pas. dijkstra.py savait calculer des distances et des chemins, mais seulement si on lui donnait déjà un point de départ et une cible précise.
@@ -379,11 +392,11 @@ if plant_id not in candidates or info["distance_km"] < '...':
 
 Notre logique veut que nous comparions la meilleure option disponible, pas une option au hasard.
 
-##### ms-python/services/**score.py**
+#### ms-python/services/**score.py**
 
 Script attribue un score à chaque centrale en fonction du point de départ. Plus le score d'un nœud est bas, plus ce nœud est intéressant comme étape dans le chemin.
 
-###### Eléments impactant le score à la hausse
+##### Eléments impactant le score à la hausse
 
 - Une **distance** trop importante impacte fortement la note → plus il y a de km de distance, plus le score est élevée.
 - Les **déperditions de puissance** entraîne une forte hausse du score, elles sont liées à la distance.
@@ -392,11 +405,11 @@ Script attribue un score à chaque centrale en fonction du point de départ. Plu
 
 _Le brief demande justement d'éviter les centrales presque saturées._
 
-###### Eléments impactant le score à la baisse
+##### Eléments impactant le score à la baisse
 
 - Une **distance** faible, si la centrale se trouve dans la région demandeuse → on enlève 250 points à son score.
 
-##### ms-python/services/**allocation.py**
+#### ms-python/services/**allocation.py**
 
 Ce fichier décide, MW par MW, quelles centrales vont produire plus, et combien chacune - comme un responsable qui distribue une commande entre plusieurs fournisseurs, en prenant toujours le meilleur d'abord.
 Le script prend en entrée une demande d'énergie électrique à couvrir (par exemple 1200 MW pour l'Occitanie).
@@ -409,7 +422,7 @@ Les **3 plafonds** qu'on ne dépasse jamais, à bien retenir :
 - la montée en puissance, ou _ramp_ in english (elle ne peut pas monter en puissance instantanément),
 - la capacité de la liaison empruntée
 
-### Données utilisées
+## Données utilisées
 
 Les données sont structurées autour des trois piliers suivants :
 
@@ -417,7 +430,14 @@ Les données sont structurées autour des trois piliers suivants :
 - **Données géographiques :** Incluant la segmentation en régions et un inventaire de centrales.
 - **Besoin régional :** Le flux d'entrée qui déclenche toute simulation (le besoin en MW).
 
-#### Données intégrées en phase 1
+**Données du parc nucléaire français :**
+
+les centrales nucléaires
+les régions
+les liaisons entre les centrales
+les paramètres de simulation
+
+### Données intégrées en phase 1
 
 **Journée de référence de consommation :**
 
@@ -435,7 +455,29 @@ Les données sont structurées autour des trois piliers suivants :
 - leur rampe de descente
 - leur disponibilité
 
-### Méthodologie algorithmique détaillée
+### Données intégrées en phase 2
+
+**Productions non pilotables (solaire et éolienne) :**
+
+- 96 horaires
+- la production solaire nationale
+- la production éolienne nationale
+- la production solaire régionale
+- la production éolienne nationale
+
+### Données intégrées en phase 3
+
+**Scénarios d'évènements de consommation :**
+
+- un identifiant de scénario (chaîne unique)
+- un intitulé de scénario
+- un ou plusieurs évènements
+  - le type d'évènement
+  - l'identifiant de la région dans laquelle a lieu l'évènement
+  - le timestamp du début de l'évènement
+  - le timestamp de la fin de l'évènement
+
+## Méthodologie algorithmique détaillée
 
 L'algorithme principal est une cascade séquentielle de calculs visant à produire le plan optimal avec le score minimal.
 
@@ -453,7 +495,7 @@ Le plus petit score indique la candidate la plus performante pour répondre au b
 
 **Cas d'échec :** Si le total cumulé des MW disponibles reste inférieur au besoin initial, le système doit impérativement répondre avec le nombre exact de MW manquants et un message clair.
 
-### Déploiement de la phase 1 du projet EnergIA
+## Déploiement de la phase 1 du projet EnergIA
 
 La phase 1 modifie un certain nombre de points du workflow. En effet, nous envisageons maintenant une prescription nationale. Il nous faut donc mettre à l'échelle notre moteur prescriptif pour qu'il utilise un jeu de données d'étalonnage d'une journée entière.
 L'tilisateur déclenche la simulation via la route GET /phase1/simulate-day -> le micro service récupère les données, les agrègent. Il détermine la consommation de chaque région et calcule, via Dijkstra, l'approvisionnement nécessaire en énergie pour pallier aux manques.
@@ -462,11 +504,11 @@ Cette évolution lie donc un moteur temporel qui simule la production toutes les
 
 **Modifications réalisées**
 
-### Déploiement de la phase 2 du projet EnergIA : prescription nationale en temps réel en ouvrant aux productions solaires et éoliennes
+## Déploiement de la phase 2 du projet EnergIA : prescription nationale en temps réel en ouvrant aux productions solaires et éoliennes
 
 La phase 2
 
-### Tests Unitaires
+## Tests Unitaires
 
 Le système doit être robuste et le test des comportements suivants est crucial :
 
@@ -511,7 +553,7 @@ L'environnement complet est géré via le fichier docker-compose.yml à la racin
 - Le micro-service Python (ms-python) écoutant sur le port 8000 (interne).
 - La passerelle Node.js (gateway) écoutant sur le port 3000 (externe).
 
-### Terminaisons _(Endpoints)_ de l'API  exposé(e)s
+### Terminaisons _(Endpoints)_ de l'API exposé(e)s
 
 | Service                   | Endpoint             | Méthode  | Description                                                                                      |
 | ------------------------- | -------------------- | -------- | ------------------------------------------------------------------------------------------------ |
