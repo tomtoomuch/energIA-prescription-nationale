@@ -1162,3 +1162,39 @@ python -m unittest tests.test_temporal_phases.TestPhase3 -v
 
 pour lancer un seul test précis, par exemple le calcul de la demande résiduelle
 python -m unittest discover -s tests -p "test_temporal_phases.py" -k "demande_residuelle" -v
+
+
+01-09
+
+ms-python-2/services/energia_service.py
+     la plus importante de l’architecture
+        retourner les régions EnergIA list_regions()
+        Points à vérifier :
+        - la clé regions existe ;
+        - chaque région possède un identifiant ;
+        - la fonction retourne uniquement des données sérialisables en JSON.
+
+
+        get_plant_status
+
+        plant_id
+        Comportement :
+        1. charger les centrales ;
+        2. normaliser l’identifiant ;
+        3. rechercher la centrale ;
+        4. retourner ses informations ;
+        5. lever une erreur claire si elle n’existe pas.
+
+
+     get_region_consumption
+
+        region_id
+        timestamp
+        Comportement :
+        1. charger les consommations ;
+        2. vérifier que l’heure existe ;
+        3. trouver l’index de l’heure ;
+        4. vérifier que la région existe ;
+        5. lire sa consommation à cet index ;
+        6. retourner une réponse structurée.
+     
