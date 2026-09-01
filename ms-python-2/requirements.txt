@@ -3,3 +3,5 @@ uvicorn
 python-dotenv==1.0.1
 pandas
 matplotlib
+ollama
+mcp
