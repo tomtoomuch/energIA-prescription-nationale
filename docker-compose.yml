@@ -24,3 +24,12 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+
+  llm:
+    image: ollama/ollama:latest
+    container_name: llm
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./llm:/root/.ollama
+    restart: unless-stopped
