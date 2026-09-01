@@ -27,9 +27,17 @@ services:
 
   llm:
     image: ollama/ollama:latest
-    container_name: llm
     ports:
       - "11434:11434"
     volumes:
       - ./llm:/root/.ollama
+    pull_policy: always
+    restart: unless-stopped
+
+  mcp-server:
+    image: energia-mcp-server
+    ports:
+      - "${PYTHON_PORT_3:-8003}:8003"
+    env_file:
+      - .env
     restart: unless-stopped
