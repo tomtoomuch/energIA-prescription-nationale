@@ -40,12 +40,6 @@ services:
 
     #     reservations:
     #       cpus: '1'
-    # entrypoint: >
-    #   /bin/sh -c "
-    #   ollama serve & 
-    #   sleep 5; 
-    #   ollama pull gemma4:e4b; 
-    #   wait"
     deploy:
       resources:
         reservations:
@@ -53,6 +47,12 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+    entrypoint: >
+      /bin/sh -c "
+      ollama serve & 
+      sleep 5; 
+      ollama run gemma4:e4b; 
+      wait"
   mcp-server:
     image: energia-mcp-server
     ports:
