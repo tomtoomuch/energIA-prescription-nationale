@@ -1318,3 +1318,59 @@ importe energia_service.py
 appelle les fonctions du service
 regroupe les résultats
 les affiche au format JSON
+
+
+
+server.py
+1. Importer les éléments nécessaires
+2. Trouver la racine du projet
+3. Trouver ms-python-2
+4. Autoriser l’import du service
+    sys.path.insert(
+        0,
+        str(MS_PYTHON_2_DIRECTORY),
+    )
+
+Le dossier ms-python-2 n’est pas un package installé avec pip
+cette ligne permet donc d’écrire
+import "services.energia_service" could not be resolved
+mais que le programme fonctionne lorsqu’il est lancé,
+ le problème peut seulement venir de l’analyseur de l’éditeur
+
+5. Importer la logique métier
+from services.energia_service import (
+    getToken limit reached
+
+export_data.py ne doit pas charger lui-même les fichiers JSON ni calculer la simulation
+Il délègue cela à energia_service.py
+
+6. Créer le serveur
+mcp = FastMCP(
+    "EnergIA MCP Server",
+    host="127.0.0.1",
+    port=8003,
+)
+Cela prépare un serveur MCP nommé
+127.0.0.1 signifie que le serveur est accessible uniquement depuis votre ordinateur.
+8003 est le port utilisé.
+/mcp sera le point d’accès MCP.
+7. Transformer les fonctions en outils @mcp.tool() def energia_list_regions()
+
+Le décorateur  @mcp.tool()
+enregistre cette fonction comme un outil MCP
+Un client peut alors découvrir le noms entier for this conversation is 64313 tokens
+Chaque outil MCP est une petite porte vers une fonctionnalité métier
+
+8. Lancer le serveur
+if __name__ == "__main__":
+    mcp.run(
+        transport="streamable-http"
+    )
+streamable-http signifie que MCP communique par HTTP.
+
+http://127.0.0.1:8003/
+http://127.0.0.1:8003/mcp
+
+
+en racine de la project faire npx @modelcontextprotocol/inspector
+ensuit ajouter une nouvelle service add-manully url http://127.0.0.1:8003/mcp
