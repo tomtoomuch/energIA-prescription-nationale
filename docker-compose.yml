@@ -47,12 +47,7 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    entrypoint: >
-      /bin/sh -c "
-      ollama serve & 
-      sleep 5; 
-      ollama run gemma4:e4b; 
-      wait"
+    entrypoint: /bin/sh -c "ollama serve & sleep 5; ollama run gemma4:e4b; wait"
   mcp-server:
     image: energia-mcp-server
     ports:
@@ -60,6 +55,5 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    depends_on: [
-      ms-python-2,
-    ]
+    depends_on: 
+      - ms-python-2
