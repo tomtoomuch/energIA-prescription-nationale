@@ -8,4 +8,4 @@ services:
   llm:
     build: ./llm
   mcp-server:
-    build: ./mcp-server
+    build: ./mcp_server
