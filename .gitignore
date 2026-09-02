@@ -1,7 +1,7 @@
 .gitignore
 docs/brief/**
 ms-python-2/__pycache__/
-
+llm/**
 gateway/node_modules
 .obsidian/
 .env

@@ -33,7 +33,26 @@ services:
       - ./llm:/root/.ollama
     pull_policy: always
     restart: unless-stopped
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2'
 
+    #     reservations:
+    #       cpus: '1'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    entrypoint: >
+      /bin/sh -c "
+      ollama serve & 
+      sleep 5; 
+      ollama run gemma4:e4b; 
+      wait"
   mcp-server:
     image: energia-mcp-server
     ports:

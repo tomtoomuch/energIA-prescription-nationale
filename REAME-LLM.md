@@ -1,8 +1,9 @@
 # README LLM
 
-```mmd
+```mermaid
 ---
 config:
+  layoout:elk
   theme: redux
 ---
 flowchart TB
@@ -15,4 +16,4 @@ flowchart TB
     n4 -- renvoie les résultats --> n3
 
     n1@{ shape: rect}
-    ```
+```
