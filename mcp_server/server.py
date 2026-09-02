@@ -125,7 +125,7 @@ async def home(request):
     return JSONResponse({
         "application": "EnergIA MCP Server",
         "status": "running",
-        "mcp_endpoint": "/mcp",
+        "mcp_endpoint": "/mcp_server",
     })
 
 
