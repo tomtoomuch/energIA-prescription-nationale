@@ -1,11 +1,14 @@
-# LLM ou client MCP
-#         ↓
-# mcp_server/tool.py
-#         ↓
-# services/energia_service.py
-#         ↓
+# Client MCP ou futur LLM
+#           ↓
+# mcp_server/server.py
+#           ↓
+# ms-python-2/services/energia_service.py
+#           ↓
 # moteur de simulation EnergIA
-
+#           ↓
+# données calculées
+#           ↓
+# réponse MCP
 
 import sys
 from pathlib import Path
