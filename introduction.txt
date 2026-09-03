@@ -1246,3 +1246,9 @@ quand on exécute directement
 python tool.py
 le bloc final appelle actuellement get_plants() et affiche les centrales au format json
 il n’affiche donc pas automatiquement toutes les données ni la simulation
+
+
+mcp_server\orchestrator.py pour relier les composants, sans refaire les calculs
+
+
+
