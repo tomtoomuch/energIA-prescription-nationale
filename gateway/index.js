@@ -5,6 +5,7 @@ const path = require("path");
 const port = process.env.GATEWAY_PORT || 3000;
 const PYTHON_API_URL = process.env.PYTHON_SERVICE_URL || "http://ms-python:8000";
 const PYTHON_API_URL_2 = process.env.PYTHON_SERVICE_URL_2 || "http://ms-python-2:8002";
+const PYTHON_MCP_URL = process.env.PYTHON_MCP_URL || "http://mcp-server:8003";
 const SECURITY_TOKEN = process.env.SECURITY_TOKEN;
 
 app.use(express.json());
@@ -129,6 +130,16 @@ app.get("/phase3/simulate-day", async (req, res) => {
     try {
         console.log(`[GET] /regions -> ${PYTHON_API_URL_2}/phase3/simulate-day`);
         const response = await axios.get(`${PYTHON_API_URL_2}/phase3/simulate-day`, { headers: pythonHeaders() });
+        return res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        return handlePythonError(error, res);
+    }
+});
+
+app.post("/assistant", async (req, res) => {
+    try {
+        console.log(`[POST] /assistant -> ${PYTHON_MCP_URL}/assistant`, req.body);
+        const response = await axios.post(`${PYTHON_MCP_URL}/assistant`, req.body, { headers: pythonHeaders() });
         return res.status(200).json({ success: true, response: response.data });
     } catch (error) {
         return handlePythonError(error, res);

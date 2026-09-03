@@ -2,8 +2,18 @@ services:
   gateway:
     build: ./gateway
   ms-python:
-    build: ./ms-python
+    build:
+      context: ./ms-python
+      dockerfile: dockerfile
   ms-python-2:
-    build: ./ms-python-2
+    build:
+      context: ./ms-python-2
+      dockerfile: dockerfile
+  # llm:
+  #   build:
+  #     context: ./llm
+  #     dockerfile: dockerfile
   mcp-server:
-    build: ./mcp_server
+    build:
+      context: ./mcp_server
+      dockerfile: dockerfile

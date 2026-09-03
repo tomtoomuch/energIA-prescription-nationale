@@ -111,6 +111,6 @@ async def health(request):
 
 
 if __name__ == "__main__":
-    mcp.run(
+    app = mcp.run(
         transport="streamable-http"
     )
