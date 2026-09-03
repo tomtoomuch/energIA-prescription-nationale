@@ -9,9 +9,9 @@ OLLAMA_HOST = os.getenv(
 )
 OLLAMA_MODEL = os.getenv(
     "OLLAMA_MODEL",
-    "gemma4:e4b",
+    "qwen3:1.7b",
 )
-
+#gemma4:e4b
 
 client = Client(
     host=OLLAMA_HOST
