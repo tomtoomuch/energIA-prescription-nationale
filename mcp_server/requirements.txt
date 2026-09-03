@@ -4,4 +4,5 @@ python-dotenv==1.0.1
 pandas
 matplotlib
 ollama
-fastmcp
+mcp>=1.12.4,<2
+httpx>=0.27,<1

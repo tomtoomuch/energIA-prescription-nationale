@@ -1374,3 +1374,22 @@ http://127.0.0.1:8003/mcp
 
 en racine de la project faire npx @modelcontextprotocol/inspector
 ensuit ajouter une nouvelle service add-manully url http://127.0.0.1:8003/mcp
+
+
+
+
+
+server.py
+    expose les outils EnergIA avec FastMCP
+
+tool.py
+    exporte/affiche toutes les données pour le collègue
+
+ollama_client.py
+    communique directement avec Ollama
+
+mcp_client.py
+    communique avec server.py par MCP
+
+orchestrator.py
+    relie l’utilisateur, Ollama et MCP

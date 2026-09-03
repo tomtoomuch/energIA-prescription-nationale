@@ -1,76 +1,123 @@
 import json
+import os
 import sys
-from pathlib import Path
+
+import httpx
 
 
-# racine du projet
-PROJECT_DIRECTORY = (
-    Path(__file__).resolve().parent.parent
-)
+def get_plants():
+    """
+    Récupère les centrales depuis l'API FastAPI EnergIA.
 
-# dossier contenant services/energia_service.py
-MS_PYTHON_2_DIRECTORY = (
-    PROJECT_DIRECTORY / "ms-python-2"
-)
+    Aucun calcul métier et aucune lecture de fichier
+    de données ne sont effectués ici.
+    """
+    base_url = os.getenv(
+        "PYTHON_SERVICE_URL_2",
+        "http://ms-python-2:8002",
+    ).rstrip("/")
 
-# permet à Python d'importer le dossier services
-sys.path.insert(
-    0,
-    str(MS_PYTHON_2_DIRECTORY),
-)
+    security_token = os.getenv("SECURITY_TOKEN")
 
+    if not security_token:
+        raise RuntimeError(
+            "SECURITY_TOKEN n'est pas configuré "
+            "dans l'environnement MCP."
+        )
 
-from services.energia_service import (
-    get_simulation_results,
-    list_plants,
-    list_regions,
-)
+    url = f"{base_url}/phase1/plants"
 
-
-def get_all_energia_data():
-
-    # regroupe toutes les données utiles dans un seul dictionnaire.
-
-    regions = list_regions()
-    plants = list_plants()
-
-    simulation = get_simulation_results(
-        number_of_steps=96,
-        minimum_reserve_mw=5000,
-    )
-
-    return {
-        "regions": regions,
-        "plants": plants,
-        "simulation": simulation,
-    }
-
-
-def main():
     try:
-        all_data = get_all_energia_data()
-
-        # conversion en texte JSON lisible
-        json_data = json.dumps(
-            all_data,
-            ensure_ascii=False,
-            indent=2,
-            allow_nan=False,
+        response = httpx.get(
+            url,
+            headers={
+                "x-api-key": security_token,
+            },
+            timeout=30.0,
         )
 
-        print(json_data)
+        # Refuse les réponses HTTP en erreur.
+        response.raise_for_status()
 
-    except (
-        ValueError,
-        FileNotFoundError,
-        KeyError,
-        TypeError,
-    ) as error:
-        print(
-            f"Erreur EnergIA : {error}",
-            file=sys.stderr,
+    except httpx.TimeoutException as error:
+        raise RuntimeError(
+            "L'API EnergIA n'a pas répondu "
+            "dans le délai autorisé."
+        ) from error
+
+    except httpx.HTTPStatusError as error:
+        status = error.response.status_code
+
+        if status in (401, 403):
+            message = (
+                "Accès à EnergIA refusé : "
+                "vérifiez SECURITY_TOKEN."
+            )
+        else:
+            message = (
+                "L'API EnergIA a retourné "
+                f"une erreur HTTP {status}."
+            )
+
+        raise RuntimeError(message) from error
+
+    except httpx.RequestError as error:
+        raise RuntimeError(
+            "Impossible de joindre l'API EnergIA. "
+            "Vérifiez son adresse et le conteneur "
+            "ms-python-2."
+        ) from error
+
+    try:
+        data = response.json()
+    except ValueError as error:
+        raise RuntimeError(
+            "L'API EnergIA n'a pas retourné "
+            "un JSON valide."
+        ) from error
+
+    if not isinstance(data, dict):
+        raise RuntimeError(
+            "Réponse EnergIA invalide : "
+            "un objet JSON est attendu."
         )
+
+    if (
+        not isinstance(data.get("plants"), list)
+        or type(data.get("plants_count")) is not int
+    ):
+        raise RuntimeError(
+            "Réponse EnergIA invalide : "
+            "'plants' ou 'plants_count' est absent "
+            "ou incorrect."
+        )
+
+    if data["plants_count"] != len(data["plants"]):
+        raise RuntimeError(
+            "Réponse EnergIA incohérente : "
+            "le nombre de centrales ne correspond "
+            "pas à la liste."
+        )
+
+    return data
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        result = get_plants()
+
+        print(
+            json.dumps(
+                result,
+                ensure_ascii=False,
+                indent=2,
+                allow_nan=False,
+            )
+        )
+
+    except (RuntimeError, ValueError) as error:
+        print(
+            f"Erreur : {error}",
+            file=sys.stderr,
+        )
+        sys.exit(1)

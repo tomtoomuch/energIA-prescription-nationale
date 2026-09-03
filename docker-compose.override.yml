@@ -5,7 +5,5 @@ services:
     build: ./ms-python
   ms-python-2:
     build: ./ms-python-2
-  llm:
-    build: ./llm
   mcp-server:
     build: ./mcp_server
