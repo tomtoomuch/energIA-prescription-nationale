@@ -49,7 +49,7 @@ services:
               capabilities: [gpu]
     entrypoint: /bin/sh -c "ollama serve & sleep 5; ollama run gemma4:e4b; wait"
   mcp-server:
-    image: energia-mcp-server
+    image: tomtoomuch/energia-mcp-server
     ports:
       - "${MCP_PORT_3:-8003}:8003"
     env_file:
