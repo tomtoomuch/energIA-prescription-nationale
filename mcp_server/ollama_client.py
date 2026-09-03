@@ -34,24 +34,12 @@ def ask_ollama(question):
         )
 
     try:
-        response = client.chat(
+        response = client.generate(
             model=OLLAMA_MODEL,
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "Tu es l'assistant EnergIA. "
-                        "Tu réponds en français."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": question,
-                },
-            ],
+            prompt=f"`Tu es l'assistant EnergIA. Tu n'utilises pass d'emojis. Tu réponds en français à la question : {question}. Tu ne réponds qu'en utilisant les données fournies par l'API. Tu ne réponds pas à la question si les données ne sont pas suffisantes.`",
         )
 
-        return response.message.content
+        return response.response
 
     except Exception as error:
         raise RuntimeError(
