@@ -1,8 +1,6 @@
 services:
   gateway:
-    build: 
-      context: ./gateway
-      dockerfile: dockerfile
+    build: ./gateway
   ms-python:
     build:
       context: ./ms-python

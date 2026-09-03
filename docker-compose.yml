@@ -51,7 +51,7 @@ services:
   mcp-server:
     image: energia-mcp-server
     ports:
-      - "${PYTHON_PORT_3:-8003}:8003"
+      - "${MCP_PORT_3:-8003}:8003"
     env_file:
       - .env
     restart: unless-stopped
