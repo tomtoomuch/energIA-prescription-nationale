@@ -6,6 +6,7 @@ gateway/node_modules
 .obsidian/
 .env
 docker-compose.yml
+docker-compose.override.yml
 ms-python-2/services/__pycache__/
 ms-python/services/__pycache__/**
 ms-python/app/__pycache__/**
@@ -17,4 +18,4 @@ ms-python-2/services/__pycache__/graph_loader.cpython-311.pyc
 ms-python-2/services/__pycache__/__init__.cpython-311.pyc
 ms-python-2/services/__pycache__
 ms-python-2/tests/__pycache__/
-create mode 100644 mcp_server/__pycache__/tool.cpython-314.pyc
+mcp_server/__pycache__/**

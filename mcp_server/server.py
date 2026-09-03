@@ -3,13 +3,11 @@ import json
 from mcp.server.fastmcp import FastMCP
 from starlette.responses import JSONResponse
 from urllib.parse import unquote
-
 from tool import (
     get_plants,
     get_region_consumption,
     get_phase3_simulation,
 )
-
 
 mcp = FastMCP(
     "EnergIA MCP Server",
