@@ -54,7 +54,7 @@ services:
       ollama run gemma4:e4b; 
       wait"
   mcp-server:
-    image: energia-mcp-server
+    image: tomtoomuch/energia-mcp-server
     ports:
       - "${PYTHON_PORT_3:-8003}:8003"
     env_file:
