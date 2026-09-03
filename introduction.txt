@@ -1166,230 +1166,83 @@ python -m unittest discover -s tests -p "test_temporal_phases.py" -k "demande_re
 
 01-09
 
+
 ms-python-2/services/energia_service.py
 
-charger les données EnergIA
-lancer les calculs du moteur
-préparer des résultats propres
-vérifier les paramètres
-renvoyer des dictionnaires sérialisables en JSON
+ce fichier fournit des fonctions métier pour
+charger les données en appelant les services existants
+ lancer les calculs du moteur
+ vérifier les paramètres
+préparer les résultats
+ retourner des dictionnaires sérialisables en json
 
+
+attention, dans le fonctionnement actuel, les routes fastapi appellent directement les services existants et le moteur
+
+energia_service.py existe toujours, mais il n’est pas actuellement appelé par les outils mcp ni par ces routes
 
 _normalize_identifier(value, field_name)
-elle contrôle et nettoie un identifiant "  GOLFECH  " => "golfech"
 
-déclenche une erreur si la valeur n’est pas une chaîne ou si elle est vide
-Le _ au début indique que cette fonction est interne au service.
+cette fonction contrôle et nettoie un identifiant
+"  GOLFECH  " → "golfech"
+
+elle déclenche une erreur si la valeur n’est pas une chaîne ou si elle est vide après suppression des espaces
+le _ au début du nom indique, par convention, une fonction destinée à un usage interne
 _normalize_timestamp(timestamp)
-Elle contrôle un horaire :
-" 18:00 "=>  "18:00"
-Elle refuse les valeurs vides ou non textuelles.
-Elle ne vérifie toutefois pas directement le format HH:MM. L’horaire est validé ensuite en recherchant sa présence dans les données.
+cette fonction contrôle et nettoie un horaire
+
+" 18:00 " → "18:00"
+
+elle refuse les valeurs vides ou non textuelles
+elle ne vérifie pas elle-même le format HH:MM
+les fonctions qui l’utilisent recherchent ensuite l’horaire dans les données ou les résultats de simulation
 _ensure_json_serializable(value)
-vérifie que le résultat peut être transformé en JSON.
-c’est important pour
-
- tool.py
- FastAPI
- le futur serveur MCP
- le LLM
-en résumé cette une validation de donnais
-
-list_regions()
-
-elle renvoie les régions connues
-{
-    "count": 13,
-    "regions": [
-        {
-            "id": "occitanie",
-            "name": "Occitanie"
-        }
-    ]
-
-vérifie également
-que des régions existent
- que chaque région possède un identifiant
- que chaque région possède un nom
- qu’un identifiant n’est pas présent deux fois
-
-list_plants()
+cette fonction vérifie que le résultat peut être transformé en json
+elle refuse notamment les objets incompatibles et les valeurs numériques non standards comme NaN
+elle retourne la valeur d’origine, pas une chaîne json
+c’est utile lorsque les résultats doivent être envoyés par une api ou un outil
 
 
-construit la DataFrame des centrales, puis la transforme en données JSON.
-Elle renvoie notamment
-l’identifiant de la centrale
-son nom
-sa région
-sa disponibilité
-sa production initiale
-sa puissance minimale
-sa puissance maximale
-ses rampes de montée et de descente
 
-c’est la configuration des centrales, pas leur production calculée pendant la journée
-get_plant_status(plant_id)
-Elle cherche une centrale précise dans list_plants()
 
-ex
-get_plant_status("golfech")
-elle retourne la configuration initiale de Golfech ou une erreur contrôlée si la centrale n’existe pas
-Le nom get_plant_status peut être légèrement trompeur : ce n’est pas l’état simulé. C’est l’état configuré
+mcp_server/tool.py
+
+
+ce fichier est le client http de l’api energ ia
+
+il ne recherche plus le dossier du moteur et n’importe plus directement energia_service.py
+_get_api_data(path, params=None, timeout=30.0)
+cette fonction commune gère
+- l’adresse fastapi définie par PYTHON_SERVICE_URL_2
+- la clé SECURITY_TOKEN
+- l’envoi de la clé dans l’en-tête x-api-key
+- la requête http et ses paramètres
+- le délai maximal d’attente
+- les erreurs de connexion et de statut http
+- la lecture du résultat json
+les trois fonctions suivantes réutilisent cette connexion
+get_plants()
+elle appelle
+GET /phase1/plants
+elle récupère les centrales et vérifie que le nombre annoncé correspond à la longueur de la liste
 get_region_consumption(region_id, timestamp)
-Elle retourne la consommation de référence d’une région à une heure donnée
-ex
-get_region_consumption(
-    "occitanie",
-    "18:00",
-)
-elle ne lance pas la simulation. Elle lit la consommation dans le fichier de référence
-fonctions de simulation
-get_simulation_results(...)
-c’est la fonction principale du service
-elle charge
-les consommations
-les centrales nucléaires
-les productions solaire et éolienne
-le graphe du réseau
- les régions
- les paramètres de simulation
-Puis elle appelle
-simulate_day(...)
-
-avec la valeur par défaut
-number_of_steps=96
-elle calcule les 96 quarts d’heure de la journée
-elle renvoie notamment
-la phase exécutée
-les sources d’énergie
-le résumé de la journée
-les 96 résultats dans simulation["steps"]
-la demande
-la production nucléaire
-la production solaire et éolienne
-la réserve nucléaire
-le manque de production
-la situation normale ou dégradée
-l’état calculé des centrales
-le respect des contraintes
-les allocations régionales
-Dans votre version actuelle, cette fonction exécute essentiellement la phase 2 : nucléaire + solaire + éolien, sans scénario de consommation de phase 3
-get_simulation_step(timestamp)
-Elle lance une simulation complète, puis renvoie uniquement le quart d’heure demandé.
-
-ex
-get_simulation_step("18:00")
-Point à connaître : chaque appel recalcule les 96 étapes
-si votre collègue appelle cette fonction plusieurs fois le moteur recalculera plusieurs fois la même journée
-
-get_plant_simulated_status(plant_id, timestamp)
-elle renvoie l’état réellement calculé d’une centrale à une heure donnée
-ex
-get_plant_simulated_status(
-    "golfech",
-    "18:00",
-)
-contrairement à get_plant_status(), elle peut retourner
-la production à 18 h
-le changement depuis le quart d’heure précédent
-la puissance minimale et maximale atteignable
-le respect des rampes
-le respect des contraintes
-
-get_region_energy_status(region_id, timestamp)
-elle construit un résumé régional contenant
-
-la région
-l’heure
-sa consommation
-son allocation régionale
-les centrales situées dans cette région
-la situation énergétique nationale
-
-Attention : national_situation décrit toute la France
-pas uniquement la région. Une région peut rencontrer une difficulté
- particulière alors que cette valeur reste nationale
-
-
-
- Rôle de tool.py
- localise ms-python-2
-importe energia_service.py
-appelle les fonctions du service
-regroupe les résultats
-les affiche au format JSON
-
-
-
-server.py
-1. Importer les éléments nécessaires
-2. Trouver la racine du projet
-3. Trouver ms-python-2
-4. Autoriser l’import du service
-    sys.path.insert(
-        0,
-        str(MS_PYTHON_2_DIRECTORY),
-    )
-
-Le dossier ms-python-2 n’est pas un package installé avec pip
-cette ligne permet donc d’écrire
-import "services.energia_service" could not be resolved
-mais que le programme fonctionne lorsqu’il est lancé,
- le problème peut seulement venir de l’analyseur de l’éditeur
-
-5. Importer la logique métier
-from services.energia_service import (
-    getToken limit reached
-
-export_data.py ne doit pas charger lui-même les fichiers JSON ni calculer la simulation
-Il délègue cela à energia_service.py
-
-6. Créer le serveur
-mcp = FastMCP(
-    "EnergIA MCP Server",
-    host="127.0.0.1",
-    port=8003,
-)
-Cela prépare un serveur MCP nommé
-127.0.0.1 signifie que le serveur est accessible uniquement depuis votre ordinateur.
-8003 est le port utilisé.
-/mcp sera le point d’accès MCP.
-7. Transformer les fonctions en outils @mcp.tool() def energia_list_regions()
-
-Le décorateur  @mcp.tool()
-enregistre cette fonction comme un outil MCP
-Un client peut alors découvrir le noms entier for this conversation is 64313 tokens
-Chaque outil MCP est une petite porte vers une fonctionnalité métier
-
-8. Lancer le serveur
-if __name__ == "__main__":
-    mcp.run(
-        transport="streamable-http"
-    )
-streamable-http signifie que MCP communique par HTTP.
-
-http://127.0.0.1:8003/
-http://127.0.0.1:8003/mcp
-
-
-en racine de la project faire npx @modelcontextprotocol/inspector
-ensuit ajouter une nouvelle service add-manully url http://127.0.0.1:8003/mcp
-
-
-
-
-
-server.py
-    expose les outils EnergIA avec FastMCP
-
-tool.py
-    exporte/affiche toutes les données pour le collègue
-
-ollama_client.py
-    communique directement avec Ollama
-
-mcp_client.py
-    communique avec server.py par MCP
-
-orchestrator.py
-    relie l’utilisateur, Ollama et MCP
+elle appelle
+GET /phase1/consumption
+elle récupère les consommations de référence, sélectionne un horaire et une région, puis retourne la valeur en mw
+elle ne calcule pas la consommation
+attention, cette fonction retourne la consommation de référence, pas la consommation modifiée par un scénario de phase 3
+get_phase3_simulation()
+elle appelle
+GET /phase3/simulate-day
+elle transmet les paramètres
+scenario_id
+number_of_steps
+minimum_reserve_mw
+fastapi lance la simulation avec les événements du scénario
+la fonction vérifie ensuite que la réponse correspond à la phase 3, au scénario demandé et au nombre de pas attendu
+elle retourne la réponse complète sans refaire les calculs
+affichage manuel
+quand on exécute directement
+python tool.py
+le bloc final appelle actuellement get_plants() et affiche les centrales au format json
+il n’affiche donc pas automatiquement toutes les données ni la simulation
