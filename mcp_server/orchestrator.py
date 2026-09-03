@@ -57,39 +57,43 @@ async def read_consumption(region_id, timestamp):
             result = await session.read_resource(AnyUrl(uri))
 
     if len(result.contents) != 1:
-        raise RuntimeError("contenu de ressource inattendu")
+        raise RuntimeError("Contenu de ressource inattendu")
 
     content = result.contents[0]
 
     if not hasattr(content, "text"):
-        raise RuntimeError("la ressource doit contenir du texte json")
+        raise RuntimeError("La ressource doit contenir du texte json")
 
     data = json.loads(content.text)
 
     if not isinstance(data, dict):
-        raise RuntimeError("la ressource doit retourner un objet json")
+        raise RuntimeError("La ressource doit retourner un objet json")
 
     if (
         data.get("region_id") != region_id
         or data.get("timestamp") != timestamp
         or data.get("consumption_mw") is None
     ):
-        raise RuntimeError("donnees absentes ou incoherentes")
+        raise RuntimeError("Données absentes ou incohérentes")
 
     return data
 
 
 def build_prompt(data):
     return (
-        "redige une phrase courte en francais\n"
-        "indique la consommation de reference pour la region "
-        "et l'horaire presents dans le json\n"
-        "utilise uniquement les donnees fournies\n"
-        "conserve exactement la consommation et son unite MW\n"
-        "ne presente pas cette valeur comme une mesure en direct "
-        "ou comme une simulation de phase 3\n"
-        "n'ajoute aucune estimation ni explication non fournie\n"
-        "donnees :\n"
+        "`Tu es l'assistant EnergIA.\n"
+        "Tu n'utilises pas d'emojis.\n"
+        "Tu réponds en français à la question : {question}.\n"
+        "Tu ne réponds qu'en utilisant les données fournies par l'API.\n"
+        "Tu ne réponds pas à la question si les données ne sont pas suffisantes.`\n"
+        "Rédige une phrase courte.\n"
+        "indique la consommation de référence pour la region"
+        "et l'horaire présents dans le JSON.\n"
+        "Conserve exactement la consommation et son unite MW\n"
+        "Ne présente pas cette valeur comme une mesure en temps réel\n"
+        "ou comme une simulation de phase 3.\n"
+        "N'ajoute aucune estimation ni explication non fournie\n"
+        "Données :\n"
         + json.dumps(data, ensure_ascii=False, allow_nan=False)
     )
 

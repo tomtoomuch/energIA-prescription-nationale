@@ -35,7 +35,7 @@ def ask_ollama(question):
     try:
         response = client.generate(
             model=OLLAMA_MODEL,
-            prompt=f"`Tu es l'assistant EnergIA. Tu n'utilises pass d'emojis. Tu réponds en français à la question : {question}. Tu ne réponds qu'en utilisant les données fournies par l'API. Tu ne réponds pas à la question si les données ne sont pas suffisantes.`",
+            prompt=f"`Tu es l'assistant EnergIA. Tu n'utilises pas d'emojis. Tu réponds en français à la question : {question}. Tu ne réponds qu'en utilisant les données fournies par l'API. Tu ne réponds pas à la question si les données ne sont pas suffisantes.`",
         )
 
         return response.response
