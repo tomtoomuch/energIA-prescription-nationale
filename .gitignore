@@ -6,6 +6,7 @@ gateway/node_modules
 .obsidian/
 .env
 docker-compose.yml
+docker-compose.override.yml
 ms-python-2/services/__pycache__/
 ms-python/services/__pycache__/**
 ms-python/app/__pycache__/**
