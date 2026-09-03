@@ -4,7 +4,7 @@
 ---
 config:
   layoout:elk
-  theme: redux
+  theme:redux
 ---
 flowchart TB
     n1["Human"] --> n2["Gateway"]
