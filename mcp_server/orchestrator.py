@@ -15,7 +15,7 @@ from ollama_client import ask_ollama
 
 MCP_URL = os.getenv(
     "MCP_URL",
-    "http://energia-mcp-server:8003/mcp",
+    "http://mcp-server:8003/mcp",
 )
 
 
