@@ -40,13 +40,13 @@ services:
 
     #     reservations:
     #       cpus: '1'
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: all
+#              capabilities: [gpu]
     entrypoint: >
       /bin/sh -c "
       ollama serve & 
@@ -54,12 +54,15 @@ services:
       ollama run gemma4:e4b; 
       wait"
   mcp-server:
+    build:
+      context: ./mcp_server
+      dockerfile: dockerfile
     image: energia-mcp-server
     ports:
       - "${MCP_PORT_3:-8003}:8003"
     env_file:
-      - .env
+      - ./.env
+    depends_on:
+      - ms-python-2
+      - llm
     restart: unless-stopped
-    depends_on: [
-      ms-python-2,
-    ]
