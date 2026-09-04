@@ -51,12 +51,12 @@ services:
       /bin/sh -c "
       ollama serve & 
       sleep 5; 
-      ollama run qwen3:1.7b; 
+      ollama run gemma4:e4b; 
       wait"
   mcp-server:
     image: energia-mcp-server
     ports:
-      - "${PYTHON_PORT_3:-8003}:8003"
+      - "${MCP_PORT_3:-8003}:8003"
     env_file:
       - .env
     restart: unless-stopped

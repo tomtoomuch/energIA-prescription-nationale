@@ -7,7 +7,7 @@ from datetime import timedelta
 from urllib.parse import quote
 
 from mcp import ClientSession
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import streamable_http_client
 from pydantic import AnyUrl
 
 from ollama_client import ask_ollama
@@ -41,7 +41,7 @@ async def read_consumption(region_id, timestamp):
         f"{quote(timestamp, safe='')}"
     )
 
-    async with streamablehttp_client(MCP_URL) as (
+    async with streamable_http_client(MCP_URL) as (
         read_stream,
         write_stream,
         _,
@@ -79,11 +79,11 @@ async def read_consumption(region_id, timestamp):
     return data
 
 
-def build_prompt(data, question):
+def build_prompt(data):
     return (
         "Tu es l'assistant EnergIA.\n"
         "Tu n'utilises pas d'emojis.\n"
-        f"`Tu réponds en français à la question : {question}.\n`"
+        "Tu réponds en français à la question posée.\n"
         "Tu ne réponds qu'en utilisant les données fournies par l'API.\n"
         "Tu ne réponds pas à la question si les données ne sont pas suffisantes.`\n"
         "Rédige une phrase courte.\n"
@@ -124,7 +124,7 @@ def main():
     )
 
     try:
-        prompt = build_prompt(data, question=question)
+        prompt = build_prompt(data)
 
         print("envoi a ollama, veuillez patienter", flush=True)
         answer = ask_ollama(prompt)
