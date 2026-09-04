@@ -79,11 +79,11 @@ async def read_consumption(region_id, timestamp):
     return data
 
 
-def build_prompt(data):
+def build_prompt(data, question):
     return (
-        "`Tu es l'assistant EnergIA.\n"
+        "Tu es l'assistant EnergIA.\n"
         "Tu n'utilises pas d'emojis.\n"
-        "Tu réponds en français à la question : {question}.\n"
+        f"`Tu réponds en français à la question : {question}.\n`"
         "Tu ne réponds qu'en utilisant les données fournies par l'API.\n"
         "Tu ne réponds pas à la question si les données ne sont pas suffisantes.`\n"
         "Rédige une phrase courte.\n"
@@ -124,7 +124,7 @@ def main():
     )
 
     try:
-        prompt = build_prompt(data)
+        prompt = build_prompt(data, question=question)
 
         print("envoi a ollama, veuillez patienter", flush=True)
         answer = ask_ollama(prompt)
