@@ -242,13 +242,14 @@ Exemple de tableau de sources :
 
 | Donnée         | Source possible     | Format   | Fréquence  |
 | -------------- | ------------------- | -------- | ---------- |
-| Consommation   | RTE                 | CSV/API  | horaire    |
+| Consommation   | RTE                 | CSV/API  | horaire    | 
 | Température    | API météo           | JSON     | horaire    |
 | Ensoleillement | API météo           | JSON     | horaire    |
 | Vacances       | API gouvernementale | JSON/CSV | ponctuel   |
 | Jours fériés   | API calendrier      | JSON     | annuel     |
 | Heure/jour     | calcul Python       | —        | temps réel |
-Il nous faut identifier de vraies sources.
+
+**Il nous faut identifier de vraies sources.**
 
 Il est indispensable, une fois une source donnée identifiée, de la tester afin d'identifier la réponse et son format :
 
@@ -258,18 +259,18 @@ config:
   layout: elk
 ---
 flowchart TD
-	A[API]
-	B[réponse JSON]
-	C[Donnée récupérée]
-	
-	A --> B
-	B --> C
-	
-	classDef dataSource stroke:#818cf8,fill:#eef2ff
-	classDef process stroke:#2dd4bf,fill:#f0fdfa
-	classDef output stroke:#fb923c,fill:#fff7ed
+  A[API]
+  B[réponse JSON]
+  C[Donnée récupérée]
 
-	class A dataSource
+  A --> B
+  B --> C
+
+  classDef dataSource stroke:#818cf8,fill:#eef2ff
+  classDef process stroke:#2dd4bf,fill:#f0fdfa
+  classDef output stroke:#fb923c,fill:#fff7ed
+
+  class A dataSource
     class B process
     class C output
 ```
