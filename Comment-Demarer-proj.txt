@@ -1,0 +1,169 @@
+docker desktop doit être démarré
+
+  le fichier env doit contenir les variables nécessaires
+  le modèle gemma4:e4b doit être disponible dans ollama
+
+étape 1 ouvrir le projet
+
+cd nergIA-prescription-nationale
+
+étape 2 vérifier le fichier env
+le fichier .env doit contenir au minimum
+
+GATEWAY_PORT=3000
+PYTHON_PORT=8000
+PYTHON_PORT_2=8002
+MCP_PORT_3=8003
+PYTHON_SERVICE_URL=http://ms-python:8000
+PYTHON_SERVICE_URL_2=http://ms-python-2:8002
+MCP_URL=http://mcp-server:8003/mcp
+OLLAMA_HOST=http://llm:11434
+OLLAMA_MODEL=gemma4:e4b
+SECURITY_TOKEN=votre_token
+
+il faut conserver la vraie valeur du token déjà utilisée par le projet
+
+étape 3 construire les images docker
+
+docker compose build
+
+étape 4 démarrer les services
+
+docker compose up -d
+
+
+étape 5 vérifier les conteneurs
+
+docker compose ps
+les services suivants doivent être actifs
+  gateway
+  ms-python
+  ms-python-2
+  llm
+  mcp-server
+
+
+étape 6 consulter les erreurs éventuelles
+
+
+docker compose logs --tail=100
+
+pour suivre uniquement le serveur MCP
+
+docker compose logs -f mcp-server
+
+pour suivre uniquement ollama
+docker compose logs -f llm
+
+
+étape 7 vérifier FastAPI
+
+Invoke-RestMethod http://127.0.0.1:8002/health
+la réponse doit indiquer que le service energIA fonctionne
+étape 8 vérifier le serveur MCP
+Invoke-RestMethod http://127.0.0.1:8003/health
+la réponse attendue doit contenir
+{
+  "status": "ok",
+  "service": "EnergIA MCP Server"
+}
+
+
+étape 9 vérifier ollama
+
+Invoke-RestMethod http://127.0.0.1:11434/api/tags
+pour afficher les modèles installés
+
+docker compose exec llm ollama list
+
+si gemma4:e4b est absent
+docker compose exec llm ollama pull gemma4:e4b
+
+pour tester le modèle
+docker compose exec llm ollama run gemma4:e4b "réponds uniquement par ok"
+
+étape 10 tester la connexion MCP vers FastAPI
+
+
+docker compose exec mcp-server python tool.py
+
+la commande doit afficher les centrales energIA
+pour afficher seulement leur nombre
+docker compose exec mcp-server python -c "import tool; print(tool.get_plants()['plants_count'])"
+le résultat attendu est
+18
+
+
+étape 11 lancer MCP Inspector en local
+
+ouvrir un nouveau terminal
+cd C:\python-projs\energIA-prescription-nationale\mcp_server
+activer l’environnement virtuel si nécessaire
+..\ .venv\Scripts\Activate.ps1
+si cette commande ne fonctionne pas utiliser le chemin réel de votre environnement virtuel
+définir l’adresse locale de FastAPI
+$env:PYTHON_SERVICE_URL_2="http://127.0.0.1:8002"
+tester avant de lancer Inspector
+python -c "import tool; print(tool.get_plants()['plants_count'])"
+lancer Inspector
+
+
+mcp dev server.py
+
+dans l’interface ouvrir l’onglet resources pour tester les ressources
+dans l’interface ouvrir l’onglet tools pour tester les outils MCP
+
+
+étape 12 tester la consommation
+dans MCP Inspector utiliser
+{
+  "region_id": "occitanie",
+  "timestamp": "16:00"
+}
+le résultat attendu est une consommation provenant de FastAPI
+
+
+étape 13 lancer la question avec gemma 4
+
+depuis la racine du projet
+
+cd C:\python-projs\energIA-prescription-nationale
+
+lancer l’orchestrateur
+
+docker compose exec -it mcp-server python orchestrator.py
+poser par exemple
+consommation occitanie 16:00
+le parcours exécuté est
+  orchestrator.py reçoit la question
+  MCP récupère la consommation
+  tool.py appelle FastAPI
+  FastAPI retourne la donnée energIA
+  orchestrator.py construit le prompt
+  ollama_client.py envoie le prompt à gemma 4
+  gemma 4 rédige la réponse finale
+
+
+étape 14 accéder à la gateway
+
+ouvrir dans le navigateur
+
+http://127.0.0.1:3000
+
+étape 15 arrêter le projet
+
+docker compose down
+
+étape 16 redémarrer après une modification python
+
+docker compose build mcp-server
+
+docker compose up -d --force-recreate mcp-server
+
+étape 17 vérifier git
+
+git status
+git log --oneline -10
+
+
+npx @modelcontextprotocol/inspector
