@@ -2,8 +2,17 @@ import json
 import math
 import os
 import sys
-
+from pathlib import Path
 import httpx
+from dotenv import load_dotenv
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+ENV_FILE = PROJECT_ROOT / ".env"
+
+load_dotenv(
+    dotenv_path=ENV_FILE,
+    override=False,
+)
 
 
 def _get_api_data(path, params=None, timeout=30.0):
@@ -98,12 +107,7 @@ def get_plants():
 
 
 def get_region_consumption(region_id, timestamp):
-    """
-    Sélectionne la consommation d'une région et
-    d'un horaire dans la réponse FastAPI.
 
-    Aucun calcul de consommation n'est effectué.
-    """
     if not isinstance(region_id, str):
         raise ValueError(
             "L'identifiant de région doit être une chaîne."
