@@ -1251,5 +1251,65 @@ il n’affiche donc pas automatiquement toutes les données ni la simulation
 mcp_server\orchestrator.py pour relier les composants, sans refaire les calculs
 
 
+04/09/2026
+mcp_server contient la partie qui relie energIA à MCP et à ollama
+server.py
+  crée le serveur MCP
+  expose les ressources et les outils disponibles
+  reçoit les demandes envoyées par un client MCP
+  appelle les fonctions présentes dans tool.py
+  retourne les résultats au format json
+tool.py
+  contient les fonctions utilisées par le serveur MCP
+  récupère la configuration depuis le fichier env
+  appelle les routes FastAPI de ms-python-2
+  transmet le token de sécurité dans les requêtes
+  vérifie les paramètres et les réponses reçues
+  gère les erreurs lorsque FastAPI est indisponible
+ollama_client.py
+  crée la connexion avec ollama
+  utilise le modèle gemma4:e4b
+  envoie un prompt au modèle
+  récupère et vérifie la réponse générée
+  gère les erreurs lorsque ollama est indisponible
+orchestrator.py
+  coordonne les différents composants
+  reçoit la question de l’utilisateur
+  demande les données nécessaires au serveur MCP
+  construit un prompt avec les données reçues
+  envoie le prompt à gemma 4
+  affiche la réponse finale à l’utilisateur
+requirements.txt
+  contient les dépendances python du serveur MCP
+  installe notamment mcp httpx ollama fastapi et python dotenv
+dockerfile
+  construit l’image docker du serveur MCP
+  installe les dépendances du fichier requirements.txt
+  copie les fichiers du serveur dans le conteneur
+  démarre server.py sur le port 8003
+flux général
+  l’utilisateur pose une question
+  orchestrator.py analyse la demande
+  le serveur MCP appelle une fonction de tool.py
+  tool.py interroge FastAPI
+  FastAPI retourne les données energIA
+  orchestrator.py ajoute les données dans le prompt
+  ollama_client.py envoie le prompt à gemma 4
+  gemma 4 formule la réponse finale
+rôle de chaque composant
+  FastAPI fournit les données et les résultats du moteur energIA
+  MCP contrôle les fonctionnalités accessibles au modèle
+  gemma 4 comprend la question et rédige la réponse
+  l’orchestrateur organise les échanges entre MCP FastAPI et gemma 4
+règle importante
+  MCP ne réalise pas les calculs métier
+  MCP récupère les informations en appelant FastAPI
+  gemma 4 ne doit pas inventer les données energIA
+  la réponse doit utiliser les valeurs retournées par FastAPI
+
+
+
+
+
 
 npx @modelcontextprotocol/inspector
