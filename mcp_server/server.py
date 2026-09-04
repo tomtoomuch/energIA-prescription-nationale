@@ -4,9 +4,9 @@ from mcp.server.fastmcp import FastMCP
 from starlette.responses import JSONResponse
 from urllib.parse import unquote
 from tool import (
-    get_plants,
-    get_region_consumption,
-    get_phase3_simulation,
+    get_plants as fetch_plants,
+    get_region_consumption as fetch_region_consumption,
+    get_phase3_simulation as fetch_phase3_simulation,
 )
 
 mcp = FastMCP(
@@ -24,7 +24,34 @@ def _to_json(data):
         ensure_ascii=False,
         allow_nan=False,
     )
+@mcp.tool()
+def list_plants():
 
+    return fetch_plants()
+
+
+@mcp.tool()
+def get_consumption(
+    region_id: str,
+    timestamp: str,
+):
+     return fetch_region_consumption(
+        region_id=region_id,
+        timestamp=timestamp,
+    )
+
+
+@mcp.tool()
+def simulate_phase3(
+    scenario_id: str = "evening_peak_occitanie",
+    number_of_steps: int = 4,
+    minimum_reserve_mw: float = 5000.0,
+):
+     return fetch_phase3_simulation(
+        scenario_id=scenario_id,
+        number_of_steps=number_of_steps,
+        minimum_reserve_mw=minimum_reserve_mw,
+    )
 
 @mcp.resource(
     "energia://plants",
@@ -36,7 +63,7 @@ def plants_resource() -> str:
     # les données sont récupérées depuis fastapi
 
     return _to_json(
-        get_plants()
+        fetch_plants()
     )
 
 @mcp.resource(
@@ -50,7 +77,10 @@ def consumption_resource(region_id: str, timestamp: str) -> str:
     timestamp = unquote(timestamp)
 
     # récupère les données depuis fastapi
-    data = get_region_consumption(region_id, timestamp)
+    data = fetch_region_consumption(
+        region_id,
+        timestamp,
+    )
 
     # renvoie le résultat au format json
     return _to_json(data)
@@ -81,17 +111,17 @@ def phase3_resource(
         steps_count = int(number_of_steps)
     except ValueError as error:
         raise ValueError(
-            "Le nombre de pas doit être un entier"
+            "le nombre de pas doit être un entier"
         ) from error
 
     try:
         reserve_mw = float(minimum_reserve_mw)
     except ValueError as error:
         raise ValueError(
-            "La réserve minimale doit être un nombre"
+            "la réserve minimale doit être un nombre"
         ) from error
 
-    data = get_phase3_simulation(
+    data = fetch_phase3_simulation(
         scenario_id=scenario_id,
         number_of_steps=steps_count,
         minimum_reserve_mw=reserve_mw,
