@@ -15,7 +15,7 @@ from ollama_client import ask_ollama
 
 MCP_URL = os.getenv(
     "MCP_URL",
-    "http://127.0.0.1:8003/mcp",
+    "http://energia-mcp-server:8003/mcp",
 )
 
 
@@ -100,24 +100,24 @@ def build_prompt(data):
 
 def main():
     question = input(
-        "demande, exemple consommation occitanie 18:00 : "
+        "Format attendu pour la saisie : consommation occitanie 18:00 -> "
     )
 
     try:
         region_id, timestamp = parse_question(question)
 
-        print("lecture de la consommation par mcp", flush=True)
+        print("Lecture de la consommation par mcp...", flush=True)
         data = asyncio.run(
             read_consumption(region_id, timestamp)
         )
 
     except Exception as error:
-        print(f"lecture impossible : {error}", flush=True)
-        print("aucune demande envoyee a ollama", flush=True)
+        print(f"Lecture impossible : {error}", flush=True)
+        print("Aucune demande envoyée à Ollama.", flush=True)
         return
 
     # affiche les données avant de solliciter le modèle
-    print("donnees EnergIA :", flush=True)
+    print("Données EnergIA : ", flush=True)
     print(
         json.dumps(data, ensure_ascii=False, indent=2),
         flush=True,
@@ -126,21 +126,19 @@ def main():
     try:
         prompt = build_prompt(data)
 
-        print("envoi a ollama, veuillez patienter", flush=True)
+        print("Envoi à Ollama, veuillez patienter...", flush=True)
         answer = ask_ollama(prompt)
 
         if not isinstance(answer, str) or not answer.strip():
-            raise RuntimeError("ollama a retourne une reponse vide")
+            raise RuntimeError("Ollama a retourné une réponse vide")
 
-        print("reponse redigee par ollama :", flush=True)
+        print("Réponse rédigée par Ollama :", flush=True)
         print(answer, flush=True)
 
     except Exception as error:
-        print(f"reponse ollama indisponible : {error}", flush=True)
-        print(
-            "les donnees EnergIA restent disponibles ci-dessus",
-            flush=True,
-        )
+        print(f"Réponse Ollama indisponible : {error}", flush=True)
+        print("Les données EnergIA restent disponibles ci-dessus", flush=True)
+
 
 
 if __name__ == "__main__":

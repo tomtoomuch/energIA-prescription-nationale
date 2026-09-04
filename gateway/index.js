@@ -18,7 +18,7 @@ function pythonHeaders() {
 }
 
 function handlePythonError(error, res) {
-    console.error("Erreur appel service Python:", error.message);
+    console.error("Erreur appel service Python : ", error.message);
     const status = error.response?.status || 500;
     const detail = error.response?.data || { message: "Impossible de contacter le service Python" };
     return res.status(status).json({ success: false, error: detail });
@@ -138,8 +138,8 @@ app.get("/phase3/simulate-day", async (req, res) => {
 
 app.post("/assistant", async (req, res) => {
     try {
-        console.log(`[POST] /assistant -> ${PYTHON_MCP_URL}/assistant`, req.body);
-        const response = await axios.post(`${PYTHON_MCP_URL}/assistant`, req.body, { headers: pythonHeaders() });
+        console.log(`[POST] /assistant`, req.body);
+        const response = await axios.post(`${PYTHON_MCP_URL}/consumption`, req.body, { headers: pythonHeaders() });
         return res.status(200).json({ success: true, response: response.data });
     } catch (error) {
         return handlePythonError(error, res);
@@ -147,5 +147,5 @@ app.post("/assistant", async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Gateway service listening at http://localhost:${port}`);
+    console.log(`Gateway service listening at http://energia-gateway:${port}`);
 });

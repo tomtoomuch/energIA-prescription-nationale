@@ -81,14 +81,14 @@ def phase3_resource(
         steps_count = int(number_of_steps)
     except ValueError as error:
         raise ValueError(
-            "le nombre de pas doit être un entier"
+            "Le nombre de pas doit être un entier"
         ) from error
 
     try:
         reserve_mw = float(minimum_reserve_mw)
     except ValueError as error:
         raise ValueError(
-            "la réserve minimale doit être un nombre"
+            "La réserve minimale doit être un nombre"
         ) from error
 
     data = get_phase3_simulation(

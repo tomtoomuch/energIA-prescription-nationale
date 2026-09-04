@@ -5,7 +5,7 @@ from ollama import Client
 
 OLLAMA_HOST = os.getenv(
     "OLLAMA_HOST",
-    "http://127.0.0.1:11434",
+    "http://llm:11434",
 )
 OLLAMA_MODEL = os.getenv(
     "OLLAMA_MODEL",
@@ -35,7 +35,7 @@ def ask_ollama(question):
     try:
         response = client.generate(
             model=OLLAMA_MODEL,
-            prompt=f"`Tu es l'assistant EnergIA. Tu n'utilises pas d'emojis. Tu réponds en français à la question : {question}. Tu ne réponds qu'en utilisant les données fournies par l'API. Tu ne réponds pas à la question si les données ne sont pas suffisantes.`",
+            prompt=question,
         )
 
         return response.response
