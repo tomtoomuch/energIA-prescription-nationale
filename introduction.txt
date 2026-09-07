@@ -415,7 +415,6 @@ mcp_server ne possède pas encore de tests automatisés
 travail restant
 ---------------------
 
-permettre à gemma 4 de sélectionner automatiquement les outils MCP
 
 accepter des questions totalement naturelles
 
@@ -423,7 +422,9 @@ ajouter un outil pour obtenir une centrale précise
 
 ajouter un outil pour obtenir la situation énergétique d’une région
 
+limiter les données envoyées au modèle
 
+mettre à jour README  IN PROCESS
 
 
 
