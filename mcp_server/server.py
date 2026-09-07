@@ -139,10 +139,7 @@ def phase3_resource(
     methods=["POST"],
 )
 async def assistant(request):
-    """
-    Reçoit une question depuis la gateway
-    et retourne le parcours complet
-    """
+
     expected_token = os.getenv(
         "SECURITY_TOKEN"
     )

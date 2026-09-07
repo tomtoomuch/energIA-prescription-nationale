@@ -20,9 +20,7 @@ client = Client(
 
 
 def ask_ollama(prompt):
-    """
-    Envoie un prompt à Gemma 4 et retourne son texte.
-    """
+
     if not isinstance(prompt, str):
         raise ValueError(
             "Le prompt doit être une chaîne"

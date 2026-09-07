@@ -85,7 +85,6 @@ def _get_api_data(path, params=None, timeout=30.0):
 
 
 def get_plants():
-    """Retourne les centrales reçues depuis FastAPI."""
     data = _get_api_data("/phase1/plants")
 
     if (
