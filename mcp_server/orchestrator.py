@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import traceback
 from datetime import timedelta
 from urllib.parse import quote
 
@@ -20,8 +21,11 @@ MCP_URL = os.getenv(
 
 
 def parse_question(question):
-    #format   consommation occitanie 18:00
+    """
+    Analyse une question au format
 
+    consommation occitanie 18:00
+    """
     if not isinstance(question, str):
         raise ValueError(
             "La question doit être une chaîne"
@@ -48,7 +52,9 @@ async def read_consumption(
     region_id,
     timestamp,
 ):
-
+    """
+    Récupère une consommation en passant par MCP
+    """
     uri = (
         "energia://consumption/"
         f"{quote(region_id, safe='')}/"
@@ -70,11 +76,6 @@ async def read_consumption(
             ),
         ) as session:
             await session.initialize()
-
-            print(
-                "Connexion MCP : OK",
-                flush=True,
-            )
 
             result = await session.read_resource(
                 AnyUrl(uri)
@@ -119,7 +120,9 @@ def build_prompt(
     question,
     data,
 ):
-
+    """
+    Construit le prompt envoyé à gemma 4
+    """
     data_json = json.dumps(
         data,
         ensure_ascii=False,
@@ -128,28 +131,82 @@ def build_prompt(
     )
 
     return f"""
-Tu es l'assistant du projet EnergIA.
+Tu es l'assistant du projet EnergIA
 
-Réponds en français, clairement et sans emoji.
+Réponds en français clairement et sans emoji
 
-La question de l'utilisateur est :
+La question de l'utilisateur est
 {question}
 
 Tu dois répondre uniquement à partir des données EnergIA
-présentes dans le JSON ci-dessous.
+présentes dans le JSON ci-dessous
 
-La valeur de consommation est une consommation de référence.
-Elle ne représente pas une mesure en temps réel.
+La consommation est une consommation de référence
+elle ne représente pas une mesure en temps réel
 
-N'invente aucune valeur.
-Conserve exactement la valeur et l'unité MW.
-Si les données sont insuffisantes, dis-le clairement.
+N'invente aucune valeur
+conserve exactement la valeur et l'unité MW
+si les données sont insuffisantes dis le clairement
 
-Données EnergIA :
+Données EnergIA
 {data_json}
 
-Rédige une seule phrase courte.
+Rédige une seule phrase courte
 """.strip()
+
+
+async def ask_energia(question):
+    """
+    Exécute le parcours complet et retourne
+    les données nécessaires à l'interface web
+    """
+    region_id, timestamp = parse_question(
+        question
+    )
+
+    steps = [
+        "question reçue",
+    ]
+
+    data = await read_consumption(
+        region_id=region_id,
+        timestamp=timestamp,
+    )
+
+    steps.append(
+        "connexion MCP réussie"
+    )
+
+    steps.append(
+        "données FastAPI récupérées"
+    )
+
+    prompt = build_prompt(
+        question=question,
+        data=data,
+    )
+
+    steps.append(
+        "prompt construit avec les données EnergIA"
+    )
+
+    # ollama est synchrone
+    # to_thread évite de bloquer le serveur MCP
+    answer = await asyncio.to_thread(
+        ask_ollama,
+        prompt,
+    )
+
+    steps.append(
+        "réponse générée par gemma 4"
+    )
+
+    return {
+        "question": question,
+        "steps": steps,
+        "data": data,
+        "answer": answer,
+    }
 
 
 async def main():
@@ -159,52 +216,36 @@ async def main():
     )
 
     try:
-        region_id, timestamp = (
-            parse_question(question)
-        )
-
-        print(
-            "Récupération des données par MCP...",
-            flush=True,
-        )
-
-        data = await read_consumption(
-            region_id=region_id,
-            timestamp=timestamp,
+        result = await ask_energia(
+            question
         )
 
         print()
-        print("Données reçues de FastAPI via MCP :")
+        print("Processus")
+
+        for step in result["steps"]:
+            print(f"  {step}")
+
+        print()
+        print("Données EnergIA")
         print(
             json.dumps(
-                data,
+                result["data"],
                 ensure_ascii=False,
                 indent=2,
             )
         )
 
-        prompt = build_prompt(
-            question=question,
-            data=data,
-        )
-
         print()
-        print(
-            "Envoi du prompt à Gemma 4...",
-            flush=True,
-        )
-
-        answer = ask_ollama(prompt)
-
-        print()
-        print("Réponse Gemma 4 :")
-        print(answer)
+        print("Réponse gemma 4")
+        print(result["answer"])
 
     except Exception as error:
         print()
         print(
             f"Assistant indisponible : {error}"
         )
+        traceback.print_exception(error)
 
 
 if __name__ == "__main__":
