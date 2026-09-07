@@ -1,4 +1,5 @@
 .gitignore
+docker-compose.gpu_or_cpu.yml
 docs/brief/**
 ms-python-2/__pycache__/
 llm/**
