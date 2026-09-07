@@ -1,8 +1,12 @@
 import json
+import os
 
 from mcp.server.fastmcp import FastMCP
 from starlette.responses import JSONResponse
 from urllib.parse import unquote
+
+from orchestrator import ask_energia
+
 from tool import (
     get_plants as fetch_plants,
     get_region_consumption as fetch_region_consumption,
@@ -128,6 +132,91 @@ def phase3_resource(
     )
 
     return _to_json(data)
+
+
+@mcp.custom_route(
+    "/assistant",
+    methods=["POST"],
+)
+async def assistant(request):
+    """
+    Reçoit une question depuis la gateway
+    et retourne le parcours complet
+    """
+    expected_token = os.getenv(
+        "SECURITY_TOKEN"
+    )
+
+    provided_token = request.headers.get(
+        "x-api-key"
+    )
+
+    if (
+        not expected_token
+        or provided_token != expected_token
+    ):
+        return JSONResponse(
+            {
+                "success": False,
+                "error": (
+                    "Clé API absente ou invalide"
+                ),
+            },
+            status_code=401,
+        )
+
+    try:
+        payload = await request.json()
+    except Exception:
+        return JSONResponse(
+            {
+                "success": False,
+                "error": (
+                    "Le corps de la requête "
+                    "doit être un JSON valide"
+                ),
+            },
+            status_code=400,
+        )
+
+    question = payload.get(
+        "question",
+        "",
+    )
+
+    try:
+        result = await ask_energia(
+            question
+        )
+
+        return JSONResponse(
+            {
+                "success": True,
+                **result,
+            }
+        )
+
+    except ValueError as error:
+        return JSONResponse(
+            {
+                "success": False,
+                "error": str(error),
+            },
+            status_code=422,
+        )
+
+    except Exception as error:
+        return JSONResponse(
+            {
+                "success": False,
+                "error": (
+                    "Assistant EnergIA indisponible : "
+                    f"{error}"
+                ),
+            },
+            status_code=503,
+        )
+
 
 
 @mcp.custom_route("/health", methods=["GET"])
