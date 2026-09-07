@@ -529,3 +529,5 @@ vérifier git avant le transfert
 
 git status
 git log --oneline -15
+
+
