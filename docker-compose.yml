@@ -1,12 +1,17 @@
 services:
   gateway:
-    image: tomtoomuch/energia-gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    image: energia-gateway
     ports:
       - "${GATEWAY_PORT:-3000}:3000"
     env_file:
       - ./.env
     depends_on:
       - ms-python
+      - ms-python-2
+      - mcp-server
     restart: unless-stopped
 
   ms-python:
