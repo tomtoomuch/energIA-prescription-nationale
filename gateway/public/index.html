@@ -5,6 +5,77 @@
     <title>EnergIA — Moteur prescriptif</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
+            #assistant-section {
+             border-top: 1px solid #334155;
+              width: 80%;
+              background: #fff;
+              margin: 0 auto;
+              color: #000;
+              padding: 20px;
+              margin-bottom: 40px;
+              }
+
+      #assistant-section h2 {
+        font-size: 16px;
+        margin: 0 0 6px;
+      }
+
+      #assistant-question {
+        width: 100%;
+        min-height: 80px;
+        padding: 10px;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        resize: vertical;
+        background: #1e293b;
+        color: #e2e8f0;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      #assistant-button:disabled {
+        cursor: wait;
+        opacity: 0.6;
+      }
+
+      #assistant-error {
+        min-height: 18px;
+        margin-top: 8px;
+        color: #f87171;
+        font-size: 13px;
+      }
+
+      #assistant-process,
+      #assistant-data,
+      #assistant-answer {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #1e293b;
+        font-size: 13px;
+      }
+
+      #assistant-process {
+        color: #93c5fd;
+      }
+
+      #assistant-data {
+        overflow-x: auto;
+        color: #cbd5e1;
+        white-space: pre-wrap;
+      }
+
+      #assistant-answer {
+        background: #14532d;
+        color: #bbf7d0;
+        line-height: 1.5;
+      }
+
+      .assistant-step {
+        margin: 5px 0;
+      }
+
+
       * { box-sizing: border-box; }
       body { margin: 0; font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; }
       #app { display: flex; height: 100vh; }
@@ -35,6 +106,49 @@
     </style>
   </head>
 <body>
+    <section id="assistant-section">
+      <h2>assistant energIA</h2>
+
+      <p class="subtitle">
+        posez une question à partir des données energIA
+      </p>
+
+      <form id="assistant-form">
+        <label for="assistant-question">
+          question
+        </label>
+
+        <textarea
+          id="assistant-question"
+          placeholder="consommation occitanie 18:00"
+          required
+        >consommation occitanie 18:00</textarea>
+
+        <button
+          id="assistant-button"
+          type="submit"
+        >
+          envoyer la question
+        </button>
+      </form>
+
+      <div id="assistant-error"></div>
+
+      <div
+        id="assistant-process"
+        hidden
+      ></div>
+
+      <pre
+        id="assistant-data"
+        hidden
+      ></pre>
+
+      <div
+        id="assistant-answer"
+        hidden
+      ></div>
+    </section>
 <div id="app">
   <div id="sidebar">
     <h1>EnergIA</h1>
@@ -218,12 +332,142 @@
       errorBox.textContent = err.message;
     }
   }
+  function renderAssistantResult(result) {
+    const processBox = document.getElementById(
+      "assistant-process"
+    );
+
+    const dataBox = document.getElementById(
+      "assistant-data"
+    );
+
+    const answerBox = document.getElementById(
+      "assistant-answer"
+    );
+
+    const steps = result.steps || [];
+
+    processBox.innerHTML = `
+      <strong>processus</strong>
+      ${steps
+        .map(
+          (step) => `
+            <div class="assistant-step">
+              ✓ ${step}
+            </div>
+          `
+        )
+        .join("")}
+    `;
+
+    dataBox.textContent = JSON.stringify(
+      result.data,
+      null,
+      2
+    );
+
+    answerBox.innerHTML = `
+      <strong>réponse gemma 4</strong>
+      <div>${result.answer}</div>
+    `;
+
+    processBox.hidden = false;
+    dataBox.hidden = false;
+    answerBox.hidden = false;
+  }
+
+
+  async function askAssistant(event) {
+    event.preventDefault();
+
+    const questionInput = document.getElementById(
+      "assistant-question"
+    );
+
+    const button = document.getElementById(
+      "assistant-button"
+    );
+
+    const errorBox = document.getElementById(
+      "assistant-error"
+    );
+
+    const processBox = document.getElementById(
+      "assistant-process"
+    );
+
+    const dataBox = document.getElementById(
+      "assistant-data"
+    );
+
+    const answerBox = document.getElementById(
+      "assistant-answer"
+    );
+
+    const question = questionInput.value.trim();
+
+    errorBox.textContent = "";
+    processBox.hidden = false;
+    processBox.textContent = (
+      "traitement de la question en cours"
+    );
+    dataBox.hidden = true;
+    answerBox.hidden = true;
+
+    button.disabled = true;
+    button.textContent = (
+      "gemma 4 prépare la réponse"
+    );
+
+    try {
+      const result = await fetchJSON(
+        "/assistant",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question,
+          }),
+        }
+      );
+
+      renderAssistantResult(
+        result
+      );
+
+    } catch (error) {
+      processBox.hidden = true;
+      errorBox.textContent = error.message;
+
+    } finally {
+      button.disabled = false;
+      button.textContent = (
+        "envoyer la question"
+      );
+    }
+  }
+
 
   window.addEventListener("DOMContentLoaded", () => {
     initMap();
     loadPlants();
     loadRegions();
-    document.getElementById("sim-form").addEventListener("submit", runSimulation);
+
+    document
+      .getElementById("sim-form")
+      .addEventListener(
+        "submit",
+        runSimulation
+      );
+
+    document
+      .getElementById("assistant-form")
+      .addEventListener(
+        "submit",
+        askAssistant
+      );
   });
 </script>
 </body>
