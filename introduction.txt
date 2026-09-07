@@ -423,9 +423,6 @@ ajouter un outil pour obtenir une centrale précise
 
 ajouter un outil pour obtenir la situation énergétique d’une région
 
-limiter les données envoyées au modèle
-
-mettre à jour README avec MCP ollama et la route assistant
 
 
 
