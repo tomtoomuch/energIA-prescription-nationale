@@ -3,15 +3,12 @@ import json
 import os
 import traceback
 from datetime import timedelta
-from urllib.parse import quote
 
 from mcp import ClientSession
 from mcp.client.streamable_http import (
     streamable_http_client,
 )
-from pydantic import AnyUrl
-
-from ollama_client import ask_ollama
+from ollama import Client
 
 
 MCP_URL = os.getenv(
@@ -19,41 +16,354 @@ MCP_URL = os.getenv(
     "http://mcp-server:8003/mcp",
 )
 
+OLLAMA_HOST = os.getenv(
+    "OLLAMA_HOST",
+    "http://llm:11434",
+)
 
-def parse_question(question):
+OLLAMA_MODEL = os.getenv(
+    "OLLAMA_MODEL",
+    "gemma4:e4b",
+)
 
+
+ollama_client = Client(
+    host=OLLAMA_HOST,
+)
+
+
+SYSTEM_PROMPT = """
+Tu es l'assistant du projet EnergIA
+
+Tu réponds en français clairement et sans emoji
+
+Tu disposes d'outils qui donnent accès aux données réelles
+de l'application EnergIA
+
+Pour toute question sur les centrales la consommation
+ou les simulations tu dois utiliser un outil
+
+Tu ne dois jamais inventer une valeur EnergIA
+
+Après un appel d'outil tu dois répondre uniquement
+à partir du résultat retourné
+
+La consommation retournée par get_consumption est
+une consommation de référence et non une mesure en temps réel
+
+Les résultats de simulate_phase3 sont des résultats simulés
+""".strip()
+
+
+OLLAMA_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "list_plants",
+            "description": (
+                "Retourne la liste des centrales EnergIA "
+                "avec leur disponibilité leur région "
+                "leur puissance et leurs contraintes"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_consumption",
+            "description": (
+                "Retourne la consommation de référence "
+                "d'une région à une heure donnée"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "region_id": {
+                        "type": "string",
+                        "description": (
+                            "identifiant de région en minuscules "
+                            "par exemple occitanie"
+                        ),
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": (
+                            "heure au format HH:MM "
+                            "par exemple 18:00"
+                        ),
+                    },
+                },
+                "required": [
+                    "region_id",
+                    "timestamp",
+                ],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "simulate_phase3",
+            "description": (
+                "Lance une simulation EnergIA de phase 3 "
+                "avec un scénario une durée et une réserve"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "scenario_id": {
+                        "type": "string",
+                        "description": (
+                            "identifiant du scénario "
+                            "par exemple evening_peak_occitanie"
+                        ),
+                    },
+                    "number_of_steps": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 96,
+                        "description": (
+                            "nombre de quarts d'heure à simuler"
+                        ),
+                    },
+                    "minimum_reserve_mw": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": (
+                            "réserve nucléaire minimale en MW"
+                        ),
+                    },
+                },
+                "required": [
+                    "scenario_id",
+                    "number_of_steps",
+                    "minimum_reserve_mw",
+                ],
+            },
+        },
+    },
+]
+
+
+def validate_question(question):
+    """
+    Vérifie la question sans imposer un format précis
+    """
     if not isinstance(question, str):
         raise ValueError(
             "La question doit être une chaîne"
         )
 
-    parts = question.strip().split()
+    question = question.strip()
 
-    if (
-        len(parts) != 3
-        or parts[0].casefold() != "consommation"
-    ):
+    if not question:
         raise ValueError(
-            "Format attendu : "
-            "consommation occitanie 18:00"
+            "La question est obligatoire"
         )
 
-    region_id = parts[1].casefold()
-    timestamp = parts[2]
-
-    return region_id, timestamp
+    return question
 
 
-async def read_consumption(
-    region_id,
-    timestamp,
+def normalize_tool_arguments(
+    tool_name,
+    arguments,
 ):
+    """
+    Nettoie les paramètres produits par gemma 4
+    """
+    if not isinstance(arguments, dict):
+        raise ValueError(
+            "Les paramètres de l'outil sont invalides"
+        )
 
-    uri = (
-        "energia://consumption/"
-        f"{quote(region_id, safe='')}/"
-        f"{quote(timestamp, safe='')}"
+    arguments = dict(arguments)
+
+    if tool_name == "get_consumption":
+        region_id = arguments.get(
+            "region_id"
+        )
+
+        timestamp = arguments.get(
+            "timestamp"
+        )
+
+        if isinstance(region_id, str):
+            arguments["region_id"] = (
+                region_id
+                .strip()
+                .casefold()
+            )
+
+        if isinstance(timestamp, str):
+            timestamp = timestamp.strip()
+
+            # transforme 18h en 18:00
+            if (
+                timestamp.endswith("h")
+                and timestamp[:-1].isdigit()
+            ):
+                timestamp = (
+                    timestamp[:-1].zfill(2)
+                    + ":00"
+                )
+
+            # transforme 18 en 18:00
+            elif timestamp.isdigit():
+                timestamp = (
+                    timestamp.zfill(2)
+                    + ":00"
+                )
+
+            arguments["timestamp"] = timestamp
+
+    if tool_name == "simulate_phase3":
+        arguments.setdefault(
+            "scenario_id",
+            "evening_peak_occitanie",
+        )
+
+        arguments.setdefault(
+            "number_of_steps",
+            4,
+        )
+
+        arguments.setdefault(
+            "minimum_reserve_mw",
+            5000.0,
+        )
+
+        arguments["number_of_steps"] = int(
+            arguments["number_of_steps"]
+        )
+
+        arguments["minimum_reserve_mw"] = float(
+            arguments["minimum_reserve_mw"]
+        )
+
+    return arguments
+
+
+def mcp_result_to_text(result):
+    """
+    Transforme le résultat MCP en texte JSON
+    utilisable par gemma 4
+    """
+    if result.isError:
+        error_messages = []
+
+        for content in result.content:
+            if hasattr(content, "text"):
+                error_messages.append(
+                    content.text
+                )
+
+        message = "\n".join(
+            error_messages
+        )
+
+        raise RuntimeError(
+            message
+            or "L'outil MCP a retourné une erreur"
+        )
+
+    if result.structuredContent is not None:
+        return json.dumps(
+            result.structuredContent,
+            ensure_ascii=False,
+            allow_nan=False,
+        )
+
+    text_parts = []
+
+    for content in result.content:
+        if hasattr(content, "text"):
+            text_parts.append(
+                content.text
+            )
+
+    if not text_parts:
+        raise RuntimeError(
+            "L'outil MCP n'a retourné aucune donnée"
+        )
+
+    return "\n".join(
+        text_parts
     )
+
+
+def parse_result_for_interface(
+    result_text,
+):
+    """
+    Transforme le résultat en objet pour l'interface
+    lorsque le résultat contient du JSON
+    """
+    try:
+        return json.loads(
+            result_text
+        )
+    except json.JSONDecodeError:
+        return {
+            "raw_result": result_text,
+        }
+
+
+async def ask_model(
+    messages,
+    with_tools=True,
+):
+    """
+    Appelle ollama sans bloquer le serveur HTTP
+    """
+    parameters = {
+        "model": OLLAMA_MODEL,
+        "messages": messages,
+        "stream": False,
+    }
+
+    if with_tools:
+        parameters["tools"] = (
+            OLLAMA_TOOLS
+        )
+
+    return await asyncio.to_thread(
+        ollama_client.chat,
+        **parameters,
+    )
+
+
+async def ask_energia(question):
+    """
+    Laisse gemma 4 choisir un ou plusieurs outils MCP
+    puis lui demande de produire la réponse finale
+    """
+    question = validate_question(
+        question
+    )
+
+    messages = [
+        {
+            "role": "system",
+            "content": SYSTEM_PROMPT,
+        },
+        {
+            "role": "user",
+            "content": question,
+        },
+    ]
+
+    steps = [
+        "question reçue",
+        "question envoyée à gemma 4",
+    ]
+
+    tools_used = []
+    collected_data = []
 
     async with streamable_http_client(
         MCP_URL
@@ -66,142 +376,137 @@ async def read_consumption(
             read_stream,
             write_stream,
             read_timeout_seconds=timedelta(
-                seconds=60
+                seconds=180
             ),
         ) as session:
             await session.initialize()
 
-            result = await session.read_resource(
-                AnyUrl(uri)
+            steps.append(
+                "connexion MCP réussie"
             )
 
-    if len(result.contents) != 1:
-        raise RuntimeError(
-            "Contenu MCP inattendu"
-        )
+            # maximum trois tours pour éviter
+            # une boucle infinie du modèle
+            for _ in range(3):
+                response = await ask_model(
+                    messages=messages,
+                    with_tools=True,
+                )
 
-    content = result.contents[0]
+                messages.append(
+                    response.message
+                )
 
-    if not hasattr(content, "text"):
-        raise RuntimeError(
-            "La ressource MCP doit contenir "
-            "du texte JSON"
-        )
+                tool_calls = (
+                    response.message.tool_calls
+                    or []
+                )
 
-    try:
-        data = json.loads(content.text)
-    except json.JSONDecodeError as error:
-        raise RuntimeError(
-            "La ressource MCP n'a pas retourné "
-            "un JSON valide"
-        ) from error
+                if not tool_calls:
+                    answer = (
+                        response.message.content
+                        or ""
+                    ).strip()
 
-    if not isinstance(data, dict):
-        raise RuntimeError(
-            "La ressource MCP doit retourner "
-            "un objet JSON"
-        )
+                    if not answer:
+                        raise RuntimeError(
+                            "Gemma 4 n'a produit "
+                            "ni réponse ni appel d'outil"
+                        )
 
-    if data.get("consumption_mw") is None:
-        raise RuntimeError(
-            "La consommation est absente"
-        )
+                    if not tools_used:
+                        steps.append(
+                            "aucun outil MCP sélectionné"
+                        )
+                    else:
+                        steps.append(
+                            "réponse finale générée "
+                            "par gemma 4"
+                        )
 
-    return data
+                    return {
+                        "question": question,
+                        "steps": steps,
+                        "tools_used": tools_used,
+                        "data": (
+                            collected_data[0]
+                            if len(collected_data) == 1
+                            else collected_data
+                        ),
+                        "answer": answer,
+                    }
 
+                for tool_call in tool_calls:
+                    tool_name = (
+                        tool_call.function.name
+                    )
 
-def build_prompt(
-    question,
-    data,
-):
+                    if tool_name not in {
+                        "list_plants",
+                        "get_consumption",
+                        "simulate_phase3",
+                    }:
+                        raise RuntimeError(
+                            "Outil interdit ou inconnu : "
+                            f"{tool_name}"
+                        )
 
-    data_json = json.dumps(
-        data,
-        ensure_ascii=False,
-        allow_nan=False,
-        indent=2,
+                    arguments = (
+                        normalize_tool_arguments(
+                            tool_name,
+                            tool_call.function.arguments,
+                        )
+                    )
+
+                    steps.append(
+                        f"outil sélectionné : {tool_name}"
+                    )
+
+                    result = await session.call_tool(
+                        tool_name,
+                        arguments=arguments,
+                    )
+
+                    result_text = (
+                        mcp_result_to_text(
+                            result
+                        )
+                    )
+
+                    result_data = (
+                        parse_result_for_interface(
+                            result_text
+                        )
+                    )
+
+                    tools_used.append({
+                        "name": tool_name,
+                        "arguments": arguments,
+                    })
+
+                    collected_data.append(
+                        result_data
+                    )
+
+                    steps.append(
+                        f"résultat reçu pour {tool_name}"
+                    )
+
+                    messages.append({
+                        "role": "tool",
+                        "tool_name": tool_name,
+                        "content": result_text,
+                    })
+
+    raise RuntimeError(
+        "Gemma 4 a dépassé le nombre "
+        "maximal d'appels d'outils"
     )
-
-    return f"""
-Tu es l'assistant du projet EnergIA
-
-Réponds en français clairement et sans emoji
-
-La question de l'utilisateur est
-{question}
-
-Tu dois répondre uniquement à partir des données EnergIA
-présentes dans le JSON ci-dessous
-
-La consommation est une consommation de référence
-elle ne représente pas une mesure en temps réel
-
-N'invente aucune valeur
-conserve exactement la valeur et l'unité MW
-si les données sont insuffisantes dis le clairement
-
-Données EnergIA
-{data_json}
-
-Rédige une seule phrase courte
-""".strip()
-
-
-async def ask_energia(question):
-
-    region_id, timestamp = parse_question(
-        question
-    )
-
-    steps = [
-        "question reçue",
-    ]
-
-    data = await read_consumption(
-        region_id=region_id,
-        timestamp=timestamp,
-    )
-
-    steps.append(
-        "connexion MCP réussie"
-    )
-
-    steps.append(
-        "données FastAPI récupérées"
-    )
-
-    prompt = build_prompt(
-        question=question,
-        data=data,
-    )
-
-    steps.append(
-        "prompt construit avec les données EnergIA"
-    )
-
-    # ollama est synchrone
-    # to_thread évite de bloquer le serveur MCP
-    answer = await asyncio.to_thread(
-        ask_ollama,
-        prompt,
-    )
-
-    steps.append(
-        "réponse générée par gemma 4"
-    )
-
-    return {
-        "question": question,
-        "steps": steps,
-        "data": data,
-        "answer": answer,
-    }
 
 
 async def main():
     question = input(
-        "Question EnergIA "
-        "(exemple : consommation occitanie 18:00) : "
+        "Question pour EnergIA : "
     )
 
     try:
@@ -213,7 +518,23 @@ async def main():
         print("Processus")
 
         for step in result["steps"]:
-            print(f"  {step}")
+            print(
+                f"  {step}"
+            )
+
+        print()
+        print("Outils utilisés")
+
+        if result["tools_used"]:
+            for tool in result["tools_used"]:
+                print(
+                    f"  {tool['name']} "
+                    f"{tool['arguments']}"
+                )
+        else:
+            print(
+                "  aucun outil"
+            )
 
         print()
         print("Données EnergIA")
@@ -227,15 +548,22 @@ async def main():
 
         print()
         print("Réponse gemma 4")
-        print(result["answer"])
+        print(
+            result["answer"]
+        )
 
     except Exception as error:
         print()
         print(
             f"Assistant indisponible : {error}"
         )
-        traceback.print_exception(error)
+
+        traceback.print_exception(
+            error
+        )
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(
+        main()
+    )
