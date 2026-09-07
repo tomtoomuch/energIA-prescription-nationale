@@ -3,8 +3,15 @@ const axios = require("axios");
 const app = express();
 const path = require("path");
 const port = process.env.GATEWAY_PORT || 3000;
-const PYTHON_API_URL = process.env.PYTHON_SERVICE_URL || "http://ms-python:8000";
-const PYTHON_API_URL_2 = process.env.PYTHON_SERVICE_URL_2 || "http://ms-python-2:8002";
+const PYTHON_API_URL = (
+    process.env.PYTHON_SERVICE_URL ||
+    "http://ms-python:8000"
+).replace(/\/+$/, "");
+
+const PYTHON_API_URL_2 = (
+    process.env.PYTHON_SERVICE_URL_2 ||
+    "http://ms-python-2:8002"
+).replace(/\/+$/, "");
 const PYTHON_MCP_URL = (
     process.env.PYTHON_MCP_URL ||
     "http://mcp-server:8003"
