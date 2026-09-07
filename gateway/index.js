@@ -5,7 +5,10 @@ const path = require("path");
 const port = process.env.GATEWAY_PORT || 3000;
 const PYTHON_API_URL = process.env.PYTHON_SERVICE_URL || "http://ms-python:8000";
 const PYTHON_API_URL_2 = process.env.PYTHON_SERVICE_URL_2 || "http://ms-python-2:8002";
-const PYTHON_MCP_URL = process.env.PYTHON_MCP_URL || "http://mcp-server:8003";
+const PYTHON_MCP_URL = (
+    process.env.PYTHON_MCP_URL ||
+    "http://mcp-server:8003"
+).replace(/\/+$/, "");
 const SECURITY_TOKEN = process.env.SECURITY_TOKEN;
 
 app.use(express.json());
@@ -138,11 +141,41 @@ app.get("/phase3/simulate-day", async (req, res) => {
 
 app.post("/assistant", async (req, res) => {
     try {
-        console.log(`[POST] /assistant`, req.body);
-        const response = await axios.post(`${PYTHON_MCP_URL}/consumption`, req.body, { headers: pythonHeaders() });
-        return res.status(200).json({ success: true, response: response.data });
+        const question = req.body?.question?.trim();
+
+        if (!question) {
+            return res.status(400).json({
+                success: false,
+                error: {
+                    message: "La question est obligatoire",
+                },
+            });
+        }
+
+        console.log(
+            `[POST] /assistant`,
+            { question }
+        );
+
+        const response = await axios.post(
+            `${PYTHON_MCP_URL}/assistant`,
+            { question },
+            {
+                headers: pythonHeaders(),
+                timeout: 180000,
+            }
+        );
+
+        return res.status(200).json({
+            success: true,
+            response: response.data,
+        });
+
     } catch (error) {
-        return handlePythonError(error, res);
+        return handlePythonError(
+            error,
+            res
+        );
     }
 });
 
