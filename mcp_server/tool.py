@@ -47,24 +47,53 @@ def _get_api_data(path, params=None, timeout=30.0):
             "dans le délai autorisé."
         ) from error
 
+
     except httpx.HTTPStatusError as error:
+
         status = error.response.status_code
 
+        try:
+
+            error_data = error.response.json()
+
+        except ValueError:
+
+            error_data = {}
+
+        detail = error_data.get(
+
+            "detail",
+
+            "aucun détail disponible",
+
+        )
+
         if status in (401, 403):
+
             message = (
-                "Accès refusé : vérifiez SECURITY_TOKEN."
+
+                "Accès refusé : "
+
+                "vérifiez SECURITY_TOKEN"
+
             )
+
         else:
+
             message = (
+
                 f"L'API EnergIA a retourné "
-                f"une erreur HTTP {status}."
+
+                f"une erreur HTTP {status} : "
+
+                f"{detail}"
+
             )
 
-        raise RuntimeError(message) from error
-
-    except httpx.RequestError as error:
         raise RuntimeError(
-            "Impossible de joindre l'API EnergIA."
+
+            message
+
         ) from error
 
     try:

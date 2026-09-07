@@ -229,449 +229,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
-
-       <script>
-  let map;
-  let plantMarkers = {};
-  let plantsById = {};
-  let routeLayers = [];
-
-
-  async function fetchJSON(url, options) {
-    const response = await fetch(
-      url,
-      options
-    );
-
-    let body;
-
-    try {
-      body = await response.json();
-    } catch (error) {
-      throw new Error(
-        "Le serveur n'a pas retourné un JSON valide"
-      );
-    }
-
-    if (
-      !response.ok ||
-      body.success === false
-    ) {
-      let message = "Erreur inconnue";
-
-      if (
-        typeof body.error === "string"
-      ) {
-        message = body.error;
-
-      } else if (
-        typeof body.error?.message === "string"
-      ) {
-        message = body.error.message;
-
-      } else if (
-        typeof body.error?.detail === "string"
-      ) {
-        message = body.error.detail;
-
-      } else if (
-        typeof body.error?.error === "string"
-      ) {
-        message = body.error.error;
-
-      } else if (
-        typeof body.detail === "string"
-      ) {
-        message = body.detail;
-      }
-
-      throw new Error(
-        message
-      );
-    }
-
-    return body.response;
-  }
-
-
-  function initMap() {
-    map = L.map(
-      "map"
-    ).setView(
-      [46.6, 2.5],
-      6
-    );
-
-    L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution: (
-          "&copy; OpenStreetMap contributors"
-        ),
-      }
-    ).addTo(
-      map
-    );
-  }
-
-
-  function plantColor(plant) {
-    if (
-      !plant.simulation?.available
-    ) {
-      return "#9ca3af";
-    }
-
-    const ratio = (
-      plant.simulation.initial_load_ratio ??
-      0
-    );
-
-    if (ratio > 0.9) {
-      return "#ef4444";
-    }
-
-    if (ratio > 0.75) {
-      return "#f59e0b";
-    }
-
-    return "#22c55e";
-  }
-
-
-  async function loadPlants() {
-    const plants = await fetchJSON(
-      "/plants"
-    );
-
-    plants.forEach(
-      (plant) => {
-        plantsById[plant.id] = plant;
-
-        const marker = L.circleMarker(
-          [
-            plant.location.latitude,
-            plant.location.longitude,
-          ],
-          {
-            radius: 7,
-            color: "#0f172a",
-            weight: 1,
-            fillColor: plantColor(
-              plant
-            ),
-            fillOpacity: 0.9,
-          }
-        ).addTo(
-          map
-        );
-
-        marker.bindPopup(`
-          <strong>${plant.name}</strong><br>
-          puissance installée :
-          ${plant.installed_power_mw} MW<br>
-
-          production actuelle :
-          ${plant.simulation.initial_output_mw} MW<br>
-
-          marge disponible :
-          ${plant.simulation.initial_dispatchable_margin_mw} MW<br>
-
-          taux de charge :
-          ${(
-            plant.simulation.initial_load_ratio *
-            100
-          ).toFixed(1)} %
-        `);
-
-        plantMarkers[plant.id] = marker;
-      }
-    );
-  }
-
-
-  async function loadRegions() {
-    const regions = await fetchJSON(
-      "/regions"
-    );
-
-    const select = document.getElementById(
-      "region-select"
-    );
-
-    regions
-      .slice()
-      .sort(
-        (firstRegion, secondRegion) => (
-          firstRegion.name.localeCompare(
-            secondRegion.name
-          )
-        )
-      )
-      .forEach(
-        (region) => {
-          const option = document.createElement(
-            "option"
-          );
-
-          option.value = region.id;
-          option.textContent = region.name;
-
-          select.appendChild(
-            option
-          );
-        }
-      );
-  }
-
-
-  function clearRoutes() {
-    routeLayers.forEach(
-      (layer) => {
-        map.removeLayer(
-          layer
-        );
-      }
-    );
-
-    routeLayers = [];
-
-    Object
-      .values(plantMarkers)
-      .forEach(
-        (marker) => {
-          marker.setStyle({
-            radius: 7,
-            weight: 1,
-          });
-        }
-      );
-  }
-
-
-  function drawAllocation(allocation) {
-    const coordinates = allocation.path
-      .map(
-        (plantId) => (
-          plantsById[plantId]
-        )
-      )
-      .filter(
-        Boolean
-      )
-      .map(
-        (plant) => [
-          plant.location.latitude,
-          plant.location.longitude,
-        ]
-      );
-
-    if (
-      coordinates.length > 1
-    ) {
-      const line = L.polyline(
-        coordinates,
-        {
-          color: (
-            allocation.distance_km === 0
-              ? "#22c55e"
-              : "#3b82f6"
-          ),
-          weight: Math.max(
-            2,
-            Math.min(
-              8,
-              allocation.allocated_mw / 50
-            )
-          ),
-          opacity: 0.85,
-        }
-      ).addTo(
-        map
-      );
-
-      routeLayers.push(
-        line
-      );
-    }
-
-    const marker = (
-      plantMarkers[allocation.plant_id]
-    );
-
-    if (marker) {
-      marker.setStyle({
-        radius: 11,
-        weight: 3,
-      });
-    }
-  }
-
-
-  function renderResults(
-    result,
-    demand
-  ) {
-    const panel = document.getElementById(
-      "results"
-    );
-
-    const statusClass = (
-      result.fully_satisfied
-        ? "ok"
-        : "warn"
-    );
-
-    const statusText = (
-      result.fully_satisfied
-        ? "Demande entièrement couverte"
-        : (
-          `${result.missing_mw.toFixed(1)} MW ` +
-          `manquants sur ${demand} MW`
-        )
-    );
-
-    const allocations = Array.isArray(
-      result.allocations
-    )
-      ? result.allocations
-      : [];
-
-    const rows = allocations
-      .map(
-        (allocation) => `
-          <tr>
-            <td>
-              ${
-                plantsById[
-                  allocation.plant_id
-                ]?.name ??
-                allocation.plant_id
-              }
-            </td>
-
-            <td>
-              ${allocation.allocated_mw.toFixed(1)} MW
-            </td>
-
-            <td>
-              ${(
-                allocation.final_load_ratio *
-                100
-              ).toFixed(1)} %
-            </td>
-
-            <td>
-              ${allocation.distance_km.toFixed(0)} km
-            </td>
-
-            <td>
-              ${allocation.loss_percent.toFixed(2)} %
-            </td>
-          </tr>
-        `
-      )
-      .join("");
-
-    panel.innerHTML = `
-      <div class="status ${statusClass}">
-        ${statusText}
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>centrale</th>
-            <th>alloué</th>
-            <th>taux final</th>
-            <th>distance</th>
-            <th>pertes</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          ${
-            rows ||
-            `
-              <tr>
-                <td colspan="5">
-                  aucune centrale disponible
-                </td>
-              </tr>
-            `
-          }
-        </tbody>
-      </table>
-    `;
-  }
-
-
-  async function runSimulation(event) {
-    event.preventDefault();
-
-    const region = document
-      .getElementById("region-select")
-      .value;
-
-    const demand = parseFloat(
-      document
-        .getElementById("demand-input")
-        .value
-    );
-
-    const errorBox = document.getElementById(
-      "error-box"
-    );
-
-    errorBox.textContent = "";
-
-    if (
-      !region ||
-      !demand ||
-      demand <= 0
-    ) {
-      errorBox.textContent = (
-        "Choisissez une région et une demande valide"
-      );
-
-      return;
-    }
-
-    clearRoutes();
-
-    try {
-      const result = await fetchJSON(
-        "/simulate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            region,
-            additional_demand_mw: demand,
-          }),
-        }
-      );
-
-      result.allocations.forEach(
-        drawAllocation
-      );
-
-      renderResults(
-        result,
-        demand
-      );
-
-    } catch (error) {
-      errorBox.textContent = (
-        error.message
-      );
-    }
-  }
-
-
-  function formatNumber(value) {
+    <script>
+        function formatNumber(value) {
     if (
       value === null ||
       value === undefined ||
@@ -685,9 +244,7 @@
       {
         maximumFractionDigits: 2,
       }
-    ).format(
-      Number(value)
-    );
+    ).format(Number(value));
   }
 
 
@@ -708,19 +265,6 @@
   }
 
 
-  function escapeHTML(value) {
-    const element = document.createElement(
-      "div"
-    );
-
-    element.textContent = String(
-      value ?? ""
-    );
-
-    return element.innerHTML;
-  }
-
-
   function summaryItem(
     label,
     value,
@@ -729,11 +273,11 @@
     return `
       <div class="assistant-summary-item">
         <span class="assistant-summary-label">
-          ${escapeHTML(label)}
+          ${label}
         </span>
 
         <span class="assistant-summary-value ${cssClass}">
-          ${escapeHTML(value)}
+          ${value}
         </span>
       </div>
     `;
@@ -749,14 +293,12 @@
       <div class="assistant-summary-grid">
         ${summaryItem(
           "région",
-          data.region_id ||
-          "non disponible"
+          data.region_id || "non disponible"
         )}
 
         ${summaryItem(
           "heure",
-          data.timestamp ||
-          "non disponible"
+          data.timestamp || "non disponible"
         )}
 
         ${summaryItem(
@@ -803,8 +345,7 @@
       <div class="assistant-summary-grid">
         ${summaryItem(
           "phase",
-          data.phase ??
-          "non disponible"
+          data.phase ?? "non disponible"
         )}
 
         ${summaryItem(
@@ -814,8 +355,7 @@
 
         ${summaryItem(
           "nombre de pas",
-          data.steps_count ??
-          "non disponible"
+          data.steps_count ?? "non disponible"
         )}
 
         ${summaryItem(
@@ -908,9 +448,7 @@
       : [];
 
     const availablePlants = plants.filter(
-      (plant) => (
-        plant.available === true
-      )
+      (plant) => plant.available === true
     );
 
     const maximumPower = availablePlants.reduce(
@@ -1047,7 +585,7 @@
         .map(
           (step) => `
             <div class="assistant-step">
-              ✓ ${escapeHTML(step)}
+              ✓ ${step}
             </div>
           `
         )
@@ -1090,132 +628,6 @@
     dataBox.hidden = false;
     answerBox.hidden = false;
   }
-
-
-  async function askAssistant(event) {
-    event.preventDefault();
-
-    const questionInput = document.getElementById(
-      "assistant-question"
-    );
-
-    const button = document.getElementById(
-      "assistant-button"
-    );
-
-    const errorBox = document.getElementById(
-      "assistant-error"
-    );
-
-    const processBox = document.getElementById(
-      "assistant-process"
-    );
-
-    const dataBox = document.getElementById(
-      "assistant-data"
-    );
-
-    const answerBox = document.getElementById(
-      "assistant-answer"
-    );
-
-    const question = (
-      questionInput.value.trim()
-    );
-
-    errorBox.textContent = "";
-
-    processBox.hidden = false;
-    processBox.textContent = (
-      "traitement de la question en cours"
-    );
-
-    dataBox.hidden = true;
-    answerBox.hidden = true;
-
-    button.disabled = true;
-    button.textContent = (
-      "gemma 4 prépare la réponse"
-    );
-
-    try {
-      const result = await fetchJSON(
-        "/assistant",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            question,
-          }),
-        }
-      );
-
-      renderAssistantResult(
-        result
-      );
-
-    } catch (error) {
-      processBox.hidden = true;
-      errorBox.textContent = (
-        error.message
-      );
-
-    } finally {
-      button.disabled = false;
-      button.textContent = (
-        "envoyer la question"
-      );
-    }
-  }
-
-
-  window.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-      const errorBox = document.getElementById(
-        "error-box"
-      );
-
-      try {
-        initMap();
-
-        await Promise.all([
-          loadPlants(),
-          loadRegions(),
-        ]);
-
-      } catch (error) {
-        errorBox.textContent = (
-          `initialisation impossible : ${error.message}`
-        );
-      }
-
-      const simulationForm = document.getElementById(
-        "sim-form"
-      );
-
-      if (simulationForm) {
-        simulationForm.addEventListener(
-          "submit",
-          runSimulation
-        );
-      }
-
-      const assistantForm = document.getElementById(
-        "assistant-form"
-      );
-
-      if (assistantForm) {
-        assistantForm.addEventListener(
-          "submit",
-          askAssistant
-        );
-      }
-    }
-  );
-</script>
-
+    </script>
 </body>
 </html>

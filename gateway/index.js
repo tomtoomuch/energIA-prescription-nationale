@@ -21,12 +21,48 @@ function pythonHeaders() {
 }
 
 function handlePythonError(error, res) {
-    console.error("Erreur appel service Python : ", error.message);
-    const status = error.response?.status || 500;
-    const detail = error.response?.data || { message: "Impossible de contacter le service Python" };
-    return res.status(status).json({ success: false, error: detail });
-}
+    console.error(
+        "Erreur appel service",
+        error.response?.data || error.message
+    );
 
+    const status = (
+        error.response?.status || 500
+    );
+
+    const receivedData = (
+        error.response?.data
+    );
+
+    let message = (
+        "Impossible de contacter le service"
+    );
+
+    if (
+        typeof receivedData?.error === "string"
+    ) {
+        message = receivedData.error;
+    } else if (
+        typeof receivedData?.error?.message === "string"
+    ) {
+        message = receivedData.error.message;
+    } else if (
+        typeof receivedData?.detail === "string"
+    ) {
+        message = receivedData.detail;
+    } else if (
+        typeof error.message === "string"
+    ) {
+        message = error.message;
+    }
+
+    return res.status(status).json({
+        success: false,
+        error: {
+            message,
+        },
+    });
+}
 app.get("/health", (req, res) => {
     res.status(200).json({ success: true, message: "Welcome to energIA API Gateway!" });
 });

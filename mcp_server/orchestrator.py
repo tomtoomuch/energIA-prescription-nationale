@@ -461,7 +461,20 @@ async def ask_energia(question):
                     steps.append(
                         f"outil sélectionné : {tool_name}"
                     )
+                    print(
+                        "outil sélectionné",
+                        tool_name,
+                        flush=True,
+                    )
 
+                    print(
+                        "arguments envoyés",
+                        json.dumps(
+                            arguments,
+                            ensure_ascii=False,
+                        ),
+                        flush=True,
+                    )
                     result = await session.call_tool(
                         tool_name,
                         arguments=arguments,
