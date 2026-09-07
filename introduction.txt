@@ -1312,4 +1312,6 @@ règle importante
 
 
 
-npx @modelcontextprotocol/inspector
+ docker compose exec -it mcp-server python orchestrator.py   test donnais "  consommation occitanie 18:00  "
+
+npx @modelcontextprotocol/inspector demarer la server mcp
