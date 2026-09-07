@@ -1,1317 +1,531 @@
-services/graph_loader.py
-
-le premier parent remonte vers services
-le deuxième parent remonte vers ms-python-2
-data correspond au dossier contenant les fichiers JSON
-
-les chemins construits permettent de retrouver les fichiers de données depuis le fichier Python
+guide  du projet energIA
 
 
-parc_nucleaire_prescriptif_france.json
+l’interface classique est
 
-ce fichier contient
-
-les centrales nucléaires
-les régions
-les liaisons entre les centrales
-les paramètres de simulation
-
-
-energia-journee-reference-consommation.json
-
-ce fichier contient
-
-les 96 horaires de la journée
-la consommation nationale pour chaque quart d’heure
-la consommation de chaque région pour chaque quart d’heure
+utilisateur
+gateway
+FastAPI
+moteur energIA
+résultat
 
 
-energia-parametres-temporels-nucleaire.json
+le parcours de l’assistant est
 
-ce fichier contient
-
-les centrales
-leur production initiale
-leur puissance minimale
-leur puissance maximale
-leur rampe de montée
-leur rampe de descente
-leur disponibilité
-
-
-charger un fichier JSON
-
-def load_json(path)
-
-cette fonction ouvre un fichier JSON
-elle transforme ensuite son contenu en dictionnaire Python
-
-return json.load(file)
+utilisateur
+interface web
+gateway
+route assistant du serveur MCP
+orchestrator.py
+ressource MCP
+tool.py
+FastAPI ms-python-2
+moteur energIA
+données JSON
+ollama avec gemma 4
+réponse dans l’interface
 
 
-charger les données historiques du parc
+règle importante
 
-def load_data(path=FLEET_PATH)
+les calculs métier restent dans ms-python-2
 
-cette fonction charge le fichier historique du parc nucléaire
-elle vérifie que le fichier contient des centrales
-elle vérifie que le fichier contient des régions
-elle vérifie que le fichier contient des liaisons entre les centrales
+MCP ne refait pas les calculs
 
+tool.py récupère les données en appelant FastAPI
 
-construire l’index des centrales
+gemma 4 ne doit pas inventer les données energIA
 
-def build_plants_index(data)
-
-cette fonction transforme la liste des centrales en dictionnaire
-chaque centrale devient accessible directement avec son identifiant
-
-exemple
-
-{
-    "belleville": {
-        "id": "belleville",
-        "name": "Belleville-sur-Loire"
-    }
-}
+la réponse doit être construite à partir du JSON retourné par FastAPI
 
 
-construire l’index des régions
+-----------------
+services docker
+-----------------
 
-def build_regions_index(data)
+gateway
 
-cette fonction transforme la liste des régions en dictionnaire
-chaque région devient accessible directement avec son identifiant
-
-exemple
-
-{
-    "occitanie": {
-        "id": "occitanie",
-        "name": "Occitanie"
-    }
-}
+ce service utilise node js et express
+il écoute sur le port 3000
+il fournit l’interface web
+il transmet les requêtes aux services python et au serveur MCP
 
 
-construire le graphe des centrales
+ms-python
 
-def build_graph(data)
-
-cette fonction construit le graphe des liaisons entre les centrales
-chaque centrale possède une liste de centrales voisines
-
-pour chaque liaison elle conserve
-
-l’identifiant de la liaison
-la centrale de départ
-la centrale d’arrivée
-la distance
-le pourcentage de perte
-la capacité maximale de transfert
-la disponibilité
-
-si une liaison est bidirectionnelle la fonction ajoute également le chemin inverse
+ce service utilise FastAPI
+il écoute sur le port 8000
+il contient le premier moteur historique du projet
 
 
-charger la consommation
-
-def load_reference_consumption(
-    path=REFERENCE_CONSUMPTION_PATH
-)
-
-cette fonction charge le fichier de consommation
-
-data = load_json(path)
-
-elle récupère ensuite
-
-timestamps
-national_total_consumption_mw
-regions
-
-elle vérifie que la liste des horaires contient 96 valeurs
-elle vérifie que la consommation nationale contient 96 valeurs
-
-24 heures × 4 quarts d’heure = 96
-
-elle vérifie également que chaque région possède 96 consommations
-si les données sont incorrectes elle produit une erreur claire
+ms-python-2
+ce service utilise FastAPI
+il écoute sur le port 8002
+il contient le moteur temporel actuel avec les phases 1 2 et 3
 
 
-charger les paramètres temporels des centrales
+llm
+ce service utilise ollama
+il écoute sur le port 11434
+le modèle utilisé est gemma4:e4b
 
-def load_temporal_nuclear_parameters(
-    path=TEMPORAL_NUCLEAR_PARAMETERS_PATH
-)
+mcp-server
+ce service utilise FastMCP
+il écoute sur le port 8003
+il expose les ressources les outils MCP et la route HTTP de l’assistant
 
-cette fonction charge les paramètres temporels des centrales nucléaires
-elle vérifie la présence des champs importants
 
-plant_id
-initial_output_mw_at_23_45_previous_day
-minimum_operating_power_mw
-maximum_power_mw
-max_ramp_up_mw_per_15_min
-max_ramp_down_mw_per_15_min
 
-elle vérifie également
+---------------------------
+fichiers à la racine
+--------------------------
 
-que les identifiants des centrales ne sont pas dupliqués
-que la puissance minimale ne dépasse pas la puissance maximale
-que la production initiale reste entre le minimum et le maximum
-que les rampes de montée et de descente ne sont pas négatives
+docker-compose.yml
+il configure les ports les dépendances et les fichiers env
+
+.env
+ce fichier contient les variables de configuration
+il contient les ports
+il contient les adresses internes des services
+il contient SECURITY_TOKEN
+il contient le modèle ollama
+la valeur de SECURITY_TOKEN ne doit jamais être copiée dans la documentation
+
+
+README.md
+
+ce fichier présente le moteur principal et les commandes historiques
+
+README-PHASES.md
+ce fichier décrit les phases temporelles du moteur
+
+Comment-Demarer-proj.txt
+ce fichier contient les commandes de démarrage et de vérification
+
+introduction.txt
+ce fichier explique l’évolution du moteur et les différentes parties du projet
 
 ===========================================================
-Intégration des contraintes du premier brief dans la Phase 1
-==============================================================
-Cette évolution relie le moteur temporel, qui simule la production toutes les 15 minutes, au moteur d’allocation régionale développé lors du premier brief.
+gateway
+===========================================================
 
-Modifications réalisées
+gateway/Dockerfile
+ce fichier construit le conteneur node js
+il installe les dépendances
+il démarre gateway/index.js
 
-services/capacity.py
 
-dispatchable_margin() calcule maintenant la marge disponible depuis current_output_mw, c’est-à-dire la production du quart d’heure précédent.
+gateway/package.json
+ce fichier contient les dépendances node js
+express fournit le serveur HTTP
+axios permet d’appeler les autres services
 
-available_capacity() limite la hausse à la plus petite valeur entre :
 
-la marge restante avant la puissance maximale ; la rampe maximale de montée en 15 minutes.
+gateway/index.js
+ce fichier crée la gateway express
+GET /health vérifie la gateway
+GET /health-ms vérifie ms-python
+GET /health-ms-2 vérifie ms-python-2
+GET /plants récupère les centrales du premier moteur
+GET /regions récupère les régions du premier moteur
+GET /network récupère le réseau du premier moteur
+POST /simulate lance une simulation du premier moteur
+GET /phase1/plants récupère les centrales depuis ms-python-2
+GET /phase1/consumption récupère les consommations de référence
+GET /phase1/simulate-day lance la phase 1
+GET /phase2/simulate-day lance la phase 2
+GET /phase3/simulate-day lance la phase 3
+POST /assistant transmet une question au serveur MCP
+pythonHeaders ajoute SECURITY_TOKEN dans l’en-tête x-api-key
+handlePythonError transforme les erreurs des services en réponses HTTP
 
-Lorsque l’état courant n’est pas fourni, les fonctions conservent le comportement historique afin de rester compatibles avec le premier brief.
 
-services/score.py
+gateway/public/index.html
+ce fichier contient l’interface web
+il affiche la carte et les centrales
+il permet de lancer une simulation
+il contient le formulaire de l’assistant energIA
+askAssistant envoie la question vers POST /assistant
+renderAssistantResult affiche les étapes les données et la réponse
+fetchJSON centralise les requêtes HTTP du navigateur
 
-candidate_score() calcule maintenant le taux de saturation final depuis la production courante.
-Une centrale déjà proche de sa puissance maximale reçoit ainsi une pénalité de saturation adaptée à son état réel.
 
-services/allocation.py
+---------------------------
+mcp_server
+---------------------------
 
-allocate() peut maintenant recevoir :
+mcp_server/dockerfile
+ce fichier construit l’image du serveur MCP
+il installe les dépendances de requirements.txt
+il copie les fichiers python
+il démarre server.py sur le port 8003
 
-- current_state : état qui évolue après chaque allocation régionale ;
-- step_initial_state : état fixe au début du quart d’heure ;
-- plant_limits : limites temporelles accessibles pendant le pas actuel.
+mcp_server/requirements.txt
+ce fichier contient les dépendances python
+mcp fournit le protocole Model Context Protocol
+httpx permet d’appeler FastAPI
+ollama permet de communiquer avec gemma 4
+python-dotenv permet de charger le fichier env
 
-La distinction entre current_state et step_initial_state empêche une centrale de réutiliser plusieurs fois sa rampe de montée lorsque plusieurs régions sont traitées pendant le même quart d’heure.
+mcp_server/tool.py
+ce ficier est le client HTTP de FastAPI
+PROJECT_ROOT retrouve le dossier racine du projet
+ENV_FILE indique le chemin du fichier env
+load_dotenv charge la configuration pendant une exécution locale
+_get_api_data construit une requête HTTP vers FastAPI
+_get_api_data ajoute SECURITY_TOKEN dans l’en-tête x-api-key
+_get_api_data gère les délais les erreurs HTTP les erreurs réseau et le JSON invalide
+get_plants appelle GET /phase1/plants
+get_plants vérifie le nombre et la liste des centrales
+get_region_consumption appelle GET /phase1/consumption
+get_region_consumption sélectionne une région et un horaire
+get_region_consumption retourne region_id timestamp et consumption_mw
+get_phase3_simulation appelle GET /phase3/simulate-day
+get_phase3_simulation transmet le scénario le nombre de pas et la réserve minimale
+get_phase3_simulation retourne le résultat sans refaire les calculs
 
-L’allocation respecte simultanément :
 
-- la marge disponible ;
-- la rampe de montée ;
-- les limites temporelles ;
-- la capacité du chemin ;
-- la demande restante ;
-- le score de la centrale.
+mcp_server/server.py
+ce fichier crée le serveur MCP
+_to_json transforme une donnée python en texte JSON
+list_plants est un outil MCP qui retourne les centrales
+get_consumption est un outil MCP qui retourne la consommation d’une région
+simulate_phase3 est un outil MCP qui lance une simulation phase 3
 
-services/temporal_allocation.py
+plants_resource expose energia://plants
+consumption_resource expose energia://consumption/{region_id}/{timestamp}
+phase3_resource expose energia://phase3/{scenario_id}/{number_of_steps}/{minimum_reserve_mw}
+POST /assistant reçoit une question depuis la gateway
+POST /assistant contrôle x-api-key
+POST /assistant appelle ask_energia
+GET /health vérifie le serveur MCP
 
-- distribute_change_between_regions() répartit la hausse nationale nécessaire entre les régions proportionnellement à leur consommation.
-- distribute_down_change() répartit une baisse de production entre les centrales selon leur flexibilité de descente.
 
-allocate_regional_demands() :
+mcp_server/ollama_client.py
+ce fichier crée la connexion avec ollama
+OLLAMA_HOST contient l’adresse du service ollama
+OLLAMA_MODEL contient gemma4:e4b
+ask_ollama vérifie le prompt
+ask_ollama envoie le prompt à gemma 4
+ask_ollama récupère la réponse
+ask_ollama refuse une réponse vide
+main permet de tester ollama depuis le terminal
 
-compare la demande avec la production du quart d’heure précédent ;
-détermine si le parc doit monter, descendre ou rester stable ;
-appelle allocate() pour chaque région en cas de hausse ;
-conserve les rampes entre les différentes allocations régionales ;
-met à jour l’état des centrales ;
-enregistre les MW impossibles à attribuer dans missing_mw ;
-enregistre le surplus impossible à supprimer dans forced_surplus_mw.
 
-services/temporal_engine.py
+mcp_server/orchestrator.py
+ce fichier coordonne MCP FastAPI et ollama
+parse_question accepte actuellement le format consommation région heure
 
-build_initial_state() construit l’état initial des centrales à 23:45 la veille.
-calculate_plant_limits() calcule les puissances minimales et maximales accessibles pendant les 15 prochaines minutes.
-simulate_step() calcule un quart d’heure et utilise l’allocation régionale lorsque le graphe, les index et les consommations régionales sont disponibles.
-simulate_day() enchaîne les 96 quarts d’heure et transmet l’état final de chaque pas au pas suivant.
+exemple
+
+consommation occitanie 18:00
+parse_question retourne region_id et timestamp
+read_consumption construit l’adresse de la ressource MCP
+read_consumption se connecte au serveur MCP
+read_consumption lit la consommation
+read_consumption transforme le résultat JSON en dictionnaire python
+build_prompt ajoute la question et les données energIA dans le prompt
+ask_energia exécute le parcours complet
+ask_energia retourne la question les étapes les données et la réponse
+main permet de poser une question depuis le terminal
+limite actuelle
+gemma 4 ne sélectionne pas encore automatiquement un outil MCP
+python sélectionne la ressource de consommation
+gemma 4 utilise ensuite la donnée pour rédiger la réponse
+
+
+
+-----------------------------
+ms-python-2
+-----------------------------
 
 ms-python-2/main.py
-
-run_phase1() :
-
-charge la consommation de référence ;
-charge les données du parc ;
-construit le graphe ;
-construit les index des centrales et des régions ;
-récupère les paramètres de simulation ;
-construit la DataFrame nucléaire ;
-transmet toutes ces informations à simulate_day().
-
-Le flux complet devient donc :
-
-run_phase1()
-→ simulate_day()
-→ simulate_step()
-→ allocate_regional_demands()
-→ allocate()
-→ candidates
-→ Dijkstra
-→ capacité des chemins
-→ pertes
-→ score
-→ nouvel état temporel
-
-
-Cas particulier de la Corse
-
-La Corse est volontairement non interconnectée dans parc_nucleaire_prescriptif_france.json :
-
-connected_to_continental_grid = false
-local_plant_ids = []
-external_entry_plant_ids = []
-
-Elle ne possède donc :
-
-aucune centrale nucléaire locale ;
-aucun point d’entrée vers le réseau nucléaire continental ;
-aucune centrale candidate accessible.
-
-region_candidates() retourne automatiquement une liste vide. allocate() ne peut alors attribuer aucune puissance supplémentaire à cette région et enregistre la différence dans missing_mw.
-
-Aucune condition particulière comme :
-
-if region_id == "corse":
-
-n’a été ajoutée. Le comportement est entièrement déterminé par les données.
-
-Le JSON contient également le scénario :
-
-corse_non_interconnectee
-expected_result = unsatisfied_demand
-
-Cela confirme que la demande non satisfaite de la Corse est un comportement volontaire du modèle.
-
-Résultats de la simulation
-
-Premier pas à 00:00
-Demande : 35 816 MW
-Production : 35 816 MW
-MW manquants : 0
-Contraintes respectées : True
-
-Journée complète
-
-Nombre de pas : 96
-Journée complète : True
-Contraintes toujours respectées : True
-Demande satisfaite sur tous les pas : False
-Équilibre offre-demande sur tous les pas : False
-MW manquants cumulés : 116,371 MW
-Région concernée : Corse uniquement
-Déficit maximal observé : 6,038 MW à 17:30
-Continuité des états : True
-
-La demande et la production sont équilibrées pour toutes les régions connectées. Les écarts observés correspondent uniquement à la Corse, volontairement isolée dans les données du premier brief.
-
-Le moteur respecte donc les contraintes et signale une demande impossible à fournir au lieu de la masquer avec une répartition nationale.
-
-Simulations manuelles de vérification
-
-Ces commandes ne remplacent pas les tests automatisés. Elles permettent d’observer directement le comportement réel du moteur.
-
-1. Vérification d’un seul quart d’heure
-
-Depuis ms-python-2 :
-
-py -c "from main import run_phase1; r=run_phase1(1); s=r['steps'][0]; print(s['timestamp'], s['production_mw'], s['missing_mw'], s['all_constraints_respected'])"
-
-Cette commande vérifie que le moteur démarre à 00:00 depuis l’état de 23:45, calcule la demande et respecte les contraintes pendant le premier pas.
-
-2. Vérification de plusieurs quarts d’heure
-
-py -c "from main import run_phase1; r=run_phase1(4); [print(s['timestamp'], 'demande=', s['nuclear_required_mw'], 'production=', s['production_mw'], 'direction=', s['direction']) for s in r['steps']]"
-
-Cette commande permet d’observer l’enchaînement de 00:00 à 00:45 et de vérifier que le résultat d’un quart d’heure devient le point de départ du suivant.
-
-3. Vérification de la journée complète
-
-py -c "from main import run_phase1; r=run_phase1(96); print('Pas:', r['steps_count']); print('Journée complète:', r['complete_day']); print('Demande satisfaite:', r['all_demand_satisfied']); print('Contraintes:', r['all_constraints_respected']); print('Équilibre:', r['all_production_balanced']); print('MW manquants:', r['total_missing_mw'])"
-
-Cette commande vérifie l’exécution des 96 pas, le respect global des contraintes et le bilan de la demande non satisfaite.
-
-Résultat observé :
-
-Pas : 96
-Journée complète : True
-Demande satisfaite : False
-Contraintes : True
-Équilibre : False
-MW manquants : 116,371
-
-Les valeurs False ne représentent pas une erreur du moteur : elles correspondent à la demande impossible à fournir en Corse, région volontairement non interconnectée dans les données.
-
-Tests réalisés
-
-tests/test_engine.py vérifie notamment :
-
-la recherche d’un chemin avec Dijkstra ;
-l’absence de chemin ;
-la marge depuis la production initiale ;
-la marge depuis la production courante ;
-la flexibilité temporelle de montée ;
-une demande satisfaisable ;
-une demande non satisfaisable ;
-la modification réelle de l’état ;
-le respect des flexibilités de descente ;
-la continuité entre les quarts d’heure ;
-la simulation complète des 96 pas ;
-la détection des MW manquants ;
-
-la vérification que tous les déficits régionaux proviennent uniquement de la Corse.
-
-Validation à effectuer avant le commit
-
-Depuis ms-python-2 :
-
-py -m unittest discover -s tests -p "test_*.py" -v
-
-Après reconstruction de l’image Docker :
-
-docker compose exec ms-python-2 python -m unittest discover -s tests -p "test_*.py" -v
-
-La validation est acceptée lorsque les 13 tests se terminent avec OK.
-
-État final de la Phase 1
-
-La Phase 1 permet maintenant de :
-
-simuler les 96 quarts d’heure de la journée ;
-connaître la consommation de chaque région ;
-calculer la production nucléaire nécessaire ;
-répartir les hausses avec les contraintes du premier brief ;
-respecter les puissances minimales et maximales ;
-respecter les rampes de montée et de descente ;
-conserver l’état pour le quart d’heure suivant ;
-détecter et expliquer une demande régionale impossible à satisfaire.
-
------------------------------------------------------------
-changement phase 2
-
-fonctions nouvelles dans graph_loader.py
-
-def load_non_dispatchable_production()
-
-cette fonction charge le fichier de production non pilotable
-elle récupère les 96 horaires, la production solaire, la production éolienne et les productions régionales
-elle vérifie que chaque série contient 96 valeurs,vérifie aussi que les productions ne sont pas négatives
-cette fonction est nécessaire pour fournir les données solaires et éoliennes au moteur
-
-
-def validate_phase2_compatibility(
-    consumption_data,
-    non_dispatchable_data
-)
-cette fonction compare les données de consommation avec les données de production non pilotable
-elle vérifie que les deux fichiers possèdent les mêmes horaires et les mêmes régions
-cette vérification évite de comparer une consommation et une production qui ne correspondent pas au même quart d’heure
-fonction nouvelle dans temporal_engine.py
-
-calculate_nuclear_reserve
-def calculate_nuclear_reserve(
-    plants,
-    production_mw
-)
-cette fonction calcule la capacité nucléaire encore disponible
-elle additionne les puissances maximales des centrales disponibles
-elle retire ensuite la production nucléaire actuelle
-le calcul utilisé est
-réserve nucléaire = puissance maximale du parc - production nucléaire actuelle
-
-cette fonction permet de vérifier si la réserve disponible respecte la réserve minimale configurée
-
-fonction modifiée dans temporal_engine.py
-simulate_day
-def simulate_day(
-    consumption_data,
-    nuclear_dataframe,
-    number_of_steps=None,
-    non_dispatchable_data=None,
-    minimum_reserve_mw=0
-)
-cette fonction existait déjà pendant la phase 1
-
-elle a été modifiée pour recevoir les productions solaire et éolienne
-elle récupère la production solaire et la production éolienne de chaque quart d’heure
-elle calcule la production non pilotable totale
-
-production non pilotable =production solaire + production éolienne
-
-elle calcule ensuite la demande résiduelle
-
-demande résiduelle = consommation totale - production non pilotable
-elle transmet cette demande résiduelle à simulate_step
-
-simulate_step adapte la production nucléaire en respectant les puissances minimales, les puissances maximales et les rampes
-simulate_day calcule aussi la réserve nucléaire
-elle compare la réserve disponible avec la réserve minimale configurée
-elle détermine ensuite la situation du quart d’heure normale dégradée demande non satisfaite
-cette fonction relie les nouvelles données de la phase 2 au moteur nucléaire développé pendant la phase 1
-fonction nouvelle dans main.py
-
-run_phase2
-def run_phase2(
-    number_of_steps=96,
-    minimum_reserve_mw=5000
-)
-cette fonction charge les données nécessaires à la phase 2
-elle charge la consommation, la production solaire, la production éolienne et la DataFrame nucléaire
-elle transmet ensuite les données à simulate_day
-elle transmet aussi la valeur configurable de la réserve minimale
-cette fonction prépare et lance la simulation complète de la phase 2
-fonction nouvelle dans main.py pour l’api
-
-
-simulate_phase2_api
-def simulate_phase2_api(
-    number_of_steps,
-    minimum_reserve_mw
-)
-cette fonction expose la simulation de la phase 2 avec FastAPI
-la route utilisée est
-/phase2/simulate-day
-elle permet de choisir le nombre de quarts d’heure et la réserve minimale
-cette fonction appelle run_phase2 et retourne les résultats au format JSON
-fonction modifiée dans main.py
-
-run_command_line
-def run_command_line()
-cette fonction permet maintenant de choisir la phase à exécuter dans le terminal
-elle accepte les paramètres suivants
-
---phase
---steps
---minimum-reserve-mw
-exemple
-
-pour lanse phase 2 sans les paramettre python main.py --phase 2
-python main.py --phase 2 --steps 96 --minimum-reserve-mw 5000
-
-cette fonction permet de lancer la phase 1 ou la phase 2 avec le même fichier main.py
-
------****start résumé phase 2******---------------------
-  lancer phase 2 python main.py --phase 2
-
-load_non_dispatchable_production
-charge et vérifie le solaire et l’éolien
-
-validate_phase2_compatibility
-vérifie la compatibilité des horaires et des régions
-
-calculate_nuclear_reserve
-calcule la capacité nucléaire encore disponible
-
-simulate_day
-calcule la demande résiduelle, adapte le nucléaire et contrôle la réserve
-
-run_phase2
-charge les données et lance la phase 2
-
-simulate_phase2_api
-expose la phase 2 avec FastAPI
-
-run_command_line
-permet de choisir la phase et la réserve dans le terminal
-----------******end résumé phase 2********----------------
-
----------------------------------------------------------
+ce fichier crée l’application FastAPI
+verify_api_key contrôle x-api-key
+run_phase1 lance la simulation nucléaire avec la consommation de référence
+run_phase2 ajoute le solaire l’éolien et la réserve nucléaire
+run_phase3 ajoute les scénarios de variation de consommation
+GET /heath vérifie FastAPI
+GET /phase1/plants retourne les centrales
+GET /phase1/consumption retourne les consommations
+GET /phase2/non-dispatchable-production retourne le solaire et l’éolien
+GET /phase1/simulate-day lance la phase 1
+GET /phase2/simulate-day lance la phase 2
+GET /phase3/simulate-day lance la phase 3
+
+
+------------------------
+services du moteur
+------------------------
+
+services/graph_loader.py
+charge et valide les fichiers JSON
+construit les index des centrales et des régions
+construit le graphe des liaisons
+charge les consommations les productions renouvelables et les scénarios
 services/nuclear_dataframe.py
+fusionne les données générales et temporelles des centrales dans une DataFrame
+services/dijkstra.py
+recherche le chemin le plus court entre deux centrales
+services/capacity.py
+calcule la marge disponible
+applique les limites de puissance et de rampe
 
-ici les données historiques et les paramètres temporels des centrales
 
-la fonction principale est
+services/priority.py
+détermine l’ordre de recherche des centrales
 
-def build_nuclear_dataframe(
-    fleet_path=FLEET_PATH,
-    temporal_path=TEMPORAL_PARAMETERS_PATH
-)
+services/candidates.py
+sélectionne les centrales disponibles pour une région
 
-la fonction charge les deux fichiers JSON
 
-parc_nucleaire_prescriptif_france.json
-energia-parametres-temporels-nucleaire.json
+services/score.py
+calcule le score utilisé pour classer les centrales
 
-elle transforme les centrales historiques en DataFrame
+services/allocation.py
+répartit une demande entre les centrales candidates
 
-fleet_dataframe = pd.json_normalize(
-    fleet_plants,
-    sep="_"
-)
-
-elle transforme les paramètres temporels en DataFrame
-
-temporal_dataframe = pd.DataFrame(
-    temporal_plants
-)
-
-elle fusionne ensuite les deux DataFrames avec plant_id
-
-dataframe = fleet_dataframe.merge(
-    temporal_dataframe,
-    on="plant_id"
-)
-
-la DataFrame finale contient notamment
-
-plant_id
-plant_name
-location_region_id
-plant_edges
-initial_output_mw_at_23_45_previous_day
-minimum_operating_power_mw
-maximum_power_mw
-max_ramp_up_mw_per_15_min
-max_ramp_down_mw_per_15_min
-available
-
-chaque ligne représente une centrale
-la colonne plant_edges contient les liaisons associées à la centrale
-
+services/temporal_allocation.py
+répartit les variations entre les régions
+conserve l’état des centrales entre les allocations
 
 services/temporal_engine.py
-
-ce fichier calcule la production nucléaire toutes les 15 minutes
-
-
-constante EPSILON
-
-EPSILON = 0.000001
-
-cette petite valeur évite les problèmes d’arrondi avec les nombres décimaux
-une différence plus petite que EPSILON est considérée comme nulle
-
-
-construire l’état initial
-
-def build_initial_state(plants)
-
-cette fonction prépare la production initiale des centrales à 23 h 45 avant le début de la journée
-elle crée un dictionnaire contenant l’identifiant et la production de chaque centrale
-
-exemple
-
-{
-    "belleville": 1493,
-    "blayais": 2075
-}
-
-elle vérifie que la puissance minimale ne dépasse pas la puissance maximale
-elle vérifie que chaque production initiale se trouve entre le minimum et le maximum de la centrale
-
-
-récupérer la consommation régionale
-
-def get_regional_consumption(
-    consumption_data,
-    index
-)
-
-cette fonction récupère la consommation de chaque région pour un quart d’heure
-
-exemple de résultat pour 00:00
-
-{
-    "ile_de_france": 5335,
-    "occitanie": 2450
-}
-
-l’index représente la position du quart d’heure dans les données
-
-0 → 00:00
-1 → 00:15
-2 → 00:30
-
-
-calculer les limites accessibles d’une centrale
-
-def calculate_plant_limits(
-    plant,
-    current_output_mw
-)
-
-cette fonction calcule les puissances minimale et maximale accessibles pendant le prochain quart d’heure
-
-pour calculer la limite minimale accessible
-
-minimum_reachable_mw = max(
-    minimum_mw,
-    current_output_mw - ramp_down_mw
-)
-
-pour calculer la limite maximale accessible
-
-maximum_reachable_mw = min(
-    maximum_mw,
-    current_output_mw + ramp_up_mw
-)
-
-la flexibilité de montée correspond à
-
-maximum_reachable_mw - current_output_mw
-
-la flexibilité de descente correspond à
-
-current_output_mw - minimum_reachable_mw
-
-si la centrale est indisponible ses flexibilités de montée et de descente sont égales à zéro
-
-
-répartir la variation
-
-def distribute_change(
-    plants,
-    previous_state,
-    requested_change_mw,
-    direction,
-    plant_limits
-)
-
-cette fonction répartit la variation demandée entre les centrales
-la répartition est proportionnelle à la flexibilité disponible de chaque centrale
-
-si la demande augmente elle utilise la flexibilité de montée
-si la demande diminue elle utilise la flexibilité de descente
-
-la variation totale ne peut pas dépasser la flexibilité totale disponible
-
-possible_change_mw = min(
-    requested_change_mw,
-    total_flexibility_mw
-)
-
-la fonction crée une copie de l’état précédent
-
-next_state = previous_state.copy()
-
-elle applique ensuite la variation à chaque centrale
-elle retourne le nouvel état du parc
-
-
-simuler un quart d’heure
-
-def simulate_step(
-    plants,
-    previous_state,
-    demand_mw
-)
-
-cette fonction calcule un seul quart d’heure
-
-1 elle calcule la production nucléaire précédente
-
-2 elle compare cette production avec la demande nationale
-
-3 elle décide s’il faut monter descendre ou rester stable
-
-4 elle calcule les limites accessibles de chaque centrale
-
-5 elle répartit la variation entre les centrales
-
-6 elle calcule la nouvelle production nucléaire totale
-
-7 elle calcule les MW manquants
-
-8 elle calcule le surplus éventuel
-
-9 elle vérifie les limites minimales et maximales
-
-10 elle vérifie les rampes de montée et de descente
-
-11 elle retourne le nouvel état du parc
-
-le résultat contient pour chaque centrale
-
-plant_id
-plant_name
-region_id
-available
-previous_output_mw
-output_mw
-change_mw
-minimum_operating_power_mw
-maximum_power_mw
-max_ramp_up_mw_per_15_min
-max_ramp_down_mw_per_15_min
-minimum_reachable_mw
-maximum_reachable_mw
-respects_minimum
-respects_maximum
-respects_ramp_up
-respects_ramp_down
-constraints_respected
-plant_edges
-
-
-simuler une journée
-
-def simulate_day(
-    consumption_data,
-    nuclear_dataframe,
-    number_of_steps=None
-)
-
-cette fonction répète simulate_step pour toute la journée
-
-consumption_data contient les consommations nationales et régionales
-nuclear_dataframe contient les données des centrales provenant des fichiers JSON
-
-la DataFrame est transformée en liste de dictionnaires
-
-plants = nuclear_dataframe.to_dict(
-    orient="records"
-)
-
-chaque dictionnaire représente une centrale
-
-la fonction construit ensuite l’état initial
-
-current_state = build_initial_state(
-    plants
-)
-
-pour chaque quart d’heure elle récupère la consommation régionale
-elle additionne les consommations régionales
-elle compare cette somme avec la consommation nationale
-elle lance ensuite simulate_step
-
-le nouvel état devient le point de départ du quart d’heure suivant
-
-current_state = result.pop(
-    "state"
-)
-
-exemple
-
-état de 23:45 → calcul de 00:00
-état de 00:00 → calcul de 00:15
-état de 00:15 → calcul de 00:30
-
-la fonction ajoute au résultat
-
-l’index du quart d’heure
-l’heure
-la consommation de chaque région
-la consommation régionale totale
-la production nucléaire nécessaire
-la production nucléaire réelle
-la production de chaque centrale
-les MW manquants
-le surplus éventuel
-le respect des contraintes
-
-
-main.py
-
-ce fichier connecte les données la DataFrame le moteur temporel et l’API
-
-
-lancer la phase 1
-
-def run_phase1(number_of_steps=96)
-
-cette fonction charge les consommations
-
-consumption_data = load_reference_consumption()
-
-elle construit ensuite la DataFrame nucléaire
-
-nuclear_dataframe = build_nuclear_dataframe()
-
-elle transmet les deux éléments au moteur temporel
-
-simulation = simulate_day(
-    consumption_data=consumption_data,
-    nuclear_dataframe=nuclear_dataframe,
-    number_of_steps=number_of_steps
-)
-
-
-route de vérification
-
-GET /health
-
-cette route vérifie que le service fonctionne
-
-
-route des centrales
-
-GET /phase1/plants
-
-cette route affiche les centrales
-elle affiche également leurs limites leurs rampes leur disponibilité et leurs liaisons
-
-
-route des consommations
-
-GET /phase1/consumption
-
-cette route affiche les 96 horaires
-elle affiche la consommation nationale
-elle affiche la consommation de chaque région
-
-
-route de simulation
-
-GET /phase1/simulate-day
-
-cette route lance la simulation de la phase 1 sur 96 quarts d’heure
-
-il est possible de limiter le nombre de pas
-
-GET /phase1/simulate-day?number_of_steps=4
-
-
-résumé du fonctionnement
-
-1 construction de la DataFrame nucléaire
-
-2 création de l’état initial du parc
-
-3 lecture de la consommation de chaque région
-
-4 calcul de la demande nucléaire nationale
-
-5 calcul des limites accessibles des centrales
-
-6 répartition de la production entre les centrales
-
-7 vérification des puissances minimales et maximales
-
-8 vérification des rampes de montée et de descente
-
-9 création du nouvel état du parc
-
-10 utilisation du nouvel état au quart d’heure suivant
-
-11 répétition du calcul jusqu’aux 96 états
-
-12 affichage du résultat dans l’API ou dans le terminal
-
-les  services
-Après ces corrections
-graph_loader.py charge les JSON et construit les index
-priority.py identifie les centrales locales et externes
-dijkstra.py cherche les chemins entre centrales
-candidates.py trouve les centrales candidates pour une région
-capacity.py calcule la capacité mobilisable
-score.py classe les centrales
-allocation.py répartit une demande régionale supplémentaire
-dispatch.py fait une répartition simplifiée
-nuclear_dataframe.py rassemble les données historiques et temporelles
-
-temporal_engine.py réalise la nouvelle simulation sur 96 quarts d’heure
-
-graph_loader.py
-nuclear_dataframe.py
-temporal_engine.py
-main.py
-capacity.py, allocation.py et score.py ont été adaptés pour recevoir l’état courant du parc.
-Ils sont appelés à travers temporal_allocation.py afin de réutiliser les contraintes du premier brief pendant chaque quart d’heure.
-dispatch.py conserve son comportement historique et n’est pas utilisé par l’allocation temporelle de la Phase 1.
-
----------**************Phase 3 start********************-----------
-
-  fonctions
-validate_consumption_event vérifie un seul événement
-
-cette fonction vérifie un seul événement
-elle ne modifie pas l’événement
-elle déclenche une erreur si l’événement est incorrect
-elle retourne True si toutes les vérifications réussissen
-event ce la représentant une modification temporaire de consommation
-
-la variation en MW  "delta_mw": 850
-la variation en pourcenta     "delta_percent": -12
-
-vérifier les champs obligatoires required_fields
-chaque événement doit contenir
-type
-region_id
-start
-end
-rechercher les champs manquants missing_fields
-event.keys() retourne les clés présentes dans l’événement
-vérifier le type de l’événement if event["type"] != "consumption_delta"
-.....
-autoriser 24:00 comme horaire de fin
-valid_end_timestamps = (
-    list(known_timestamps)
-    + ["24:00"]
-)
-
-
-load_consumption_scenarios charge et vérifie tous les scénarios du fichier
-charger et récupérer les scénarios,
-recherche la clé scenarios,
-charger la consommation de référence
-construire l’ensemble des régions
-known_region_ids = {
-    region["id"]
-    for region in consumption_data[
-        "regions"
-    ]
-}
-récupérer les horaires connus
-préparer les identifiants de scénarios
-known_scenario_ids = set()
-
-cet est vide au début
-il mémorisera progressivement les identifiants déjà rencontrés
- {
-    "evening_peak_occitanie",
-    "midday_drop_grand_est"
-}
-
- parcourir les scénarios
-for scenario in scenarios
-la boucle traite les scénarios un par un
-
-
-récupérer l’identifiant du scénario
-scenario_id = scenario.get(
-    "id"
-)
-si id est absent, scenario_id vaut None
-
-la condition suivante produit alors une erreur
-if not scenario_id:
-chaque scénario doit posséder un identifiant
-
-
-détecter les identifiants dupliqués
-if scenario_id in known_scenario_ids
-cette condition vérifie si l’identifiant a déjà été rencontré
-si oui, deux scénarios utilisent le même identifiant
-
-après la vérification, l’identifiant est mémorisé
-known_scenario_ids.add(
-    scenario_id
-)
-
-récupérer les événements
-events = scenario.get(
-    "events",
-    []
-)
-cette instruction récupère la liste des événements du scénario
-si la liste est absente ou vide, le scénario est refusé
-if not events:
-un scénario sans événement ne modifierait aucune consommation
-
-valider chaque événement
-
-get_consumption_scenario retrouve un scénario grâce à son identifiant
-
-for scenario in scenarios_data.get la boucle regarde chaque scénario
-
-exemple d’identifiant est evening_peak_occitanie
-
-Changement du code pour la BONUS
-
-bonus demande
-
-1  exporter et réimporter un scénario complet en json
-2 générer des courbes
-3  simuler une semaine, un mois ou une année
-4  réfléchir aux performances pour les longues simulations
-
-le fichier utilisé est charts.py
-
- consommation totale
-roduction solaire
-production éolienne
-production non pilotable totale
-demande résiduelle
- production nucléaire
-  réserve nucléaire disponible
- réserve minimale demandée
- surplus nucléaire
- puissance manquante
-
-def validate_chart_data(
-    simulation
-):
-cette function vérifie que la simulation possède des résultats
-elle contrôle également que chaque quart d’heure contient les données nécessaires comme la consommation, le solaire, l’éolien, la réserve et les MW manquants
-elle évite de produire une courbe incorrecte avec des données incomplètes
-get_chart_values
-def get_chart_values(
-    steps,
-    field_name
-)
-cette fonction récupère une même information pour les 96 quarts d’heure
-par exemple
-solar_productions = get_chart_values(
-    steps,
-    "solar_production_mw"
-)
-elle retourne une liste contenant les 96 productions solaires
-configure_time_axis
-def configure_time_axis(
-    axis,
-    timestamps
-):
-cette fonction prépare l’axe horizontal des graphiques
-elle place les horaires sur l’axe et ajoute une grille pour faciliter la lecture
-generate_phase2_charts
-
-
-def generate_phase2_charts(
-    simulation,
-    output_directory=OUTPUT_DIRECTORY
-):
-c’est la fonction principale du bonus
-
-
-elle reçoit le résultat complet de simulate_day
- récupère les différentes valeurs
-construit quatre graphiques
-enregistre finalement une image dans le dossier generated_charts
-les quatre graphiques
-
-le premier graphique compare
-la consommation totale
-la demande résiduelle
-la production nucléaire
-il montre comment le nucléaire s’adapte après avoir retiré le solaire et l’éolien
-
-le deuxième graphique affiche
-le solaire
-l’éolien
-le total non pilotable
-il permet de voir l’évolution des énergies non pilotables pendant la journée
-
-le troisième graphique compare
-la réserve nucléaire disponible
-la réserve minimale configurable
-si la réserve disponible passe sous la réserve minimale, la zone est affichée en rouge
-le quatrième graphique affiche
- le surplus nucléaire
-la puissance manquante
-il permet d’identifier les quarts d’heure pendant lesquels la demande ne peut pas être satisfaite
-
-comment exécuter le bonus
-depuis le dossier ms-python-2
-
-python -m services.charts
-
-
+construit l’état initial des centrales
+calcule un quart d’heure
+enchaîne les 96 pas
+calcule la réserve le surplus et les MW manquants
+
+
+services/apply_consumption_events.py
+détermine si un événement est actif
+calcule la variation de l’événement
+applique la variation aux consommations
 
 
 services/scenario_json.py
-
-build_complete_scenario prépare un objet contenant
-le scénario
-les événements
-le nombre de pas
-la réserve minimale
-la version du format
-
-export_complete_scenario transforme cet objet Python en fichier json
-import_complete_scenario lit le fichier json et reconstruit l’objet Python
-validate_complete_scenario refuse un fichier incomplet ou incorrect
-exécution
-
-depuis ms-python-2
-
-le fichier sera créé dans
-exported_scenarios/evening_peak_occitanie.json
+valide un scénario
+exporte un scénario
+importe un scénario
 
 
-31/08/2026
+services/charts.py
+génère les graphiques de la phase 2
+
+services/long_simulation.py
+répète les données journalières
+simule une semaine un mois ou une année
 
 
-Dans main.py
-1 phase 2 chargeait seulement la consommation, les énergies renouvelables et les centrales. Maintenant, elle charge aussi le réseau régional nécessaire pour appeler allocate(), Dijkstra, les capacités et le score
-2 charger le contexte régional en Phase 3 def run_phase3(
-
-dans temporal_engine.py
-cette fonction lit, pour un quart d’heure donné, le solaire et l’éolien de chaque région. Jusqu’ici, le moteur utilisait uniquement les totaux nationaux ligne 946-1020
+services/energia_service.py
+contient une façade métier expérimentale
+dans l’architecture actuelle MCP appelle FastAPI
+MCP n’appelle pas directement energia_service.py
 
 
+services/dispatch.py
+contient une fonction historique simple de répartition
 
-ms-python-2/tests/
-crée un nouveau fichier nommé  test_temporal_phases.py
+------------------------
+fichiers de données
+----------------------------
 
-
-setUpClass() charge les fichiers JSON une seule fois
-tous les tests pourront ensuite réutiliser la consommation, les centrales
-
-class TestPhase1
-ce test vérifie que la Phase 1 est identifiée correctement et que le moteur produit bien les 96 quarts d’heure demandés
-Commande pour le testé
-python -m unittest tests.test_temporal_phases.TestPhase1 -v
-
-class TestPhase2
-
-ces tests vérifient :
-les 96 pas de la Phase 2 ,le calcul consommation − solaire − éolien ,le calcul et le contrôle de la réserve
-
-commande pour teste
-python -m unittest tests.test_temporal_phases.TestPhase2 -v
+energia-journee-reference-consommation.json
+contient les 96 horaires de la journée
+contient la consommation nationale
+contient la consommation de chaque région
 
 
-class TestPhase3
-es tests vérifient :
-- les 96 pas de la Phase 3 ;
-- l’application de l’événement ;
-- le début inclus à 17:30 ;
-- la fin exclue à 21:00 ;
-- le respect des contraintes nucléaires.
+energia-parametres-temporels-nucleaire.json
+contient la production initiale
+contient les puissances minimales et maximales
+contient les rampes de montée et de descente
+contient la disponibilité des centrales
 
-commande pour teste
-python -m unittest tests.test_temporal_phases.TestPhase3 -v
+energia-production-non-pilotable.json
+contient la production solaire et éolienne
+contient les valeurs nationales et régionales
 
-pour lancer un seul test précis, par exemple le calcul de la demande résiduelle
-python -m unittest discover -s tests -p "test_temporal_phases.py" -k "demande_residuelle" -v
+energia-scenarios-phase3-exemples.json
+contient les scénarios et leurs événements
+le scénario evening_peak_occitanie est utilisé dans la démonstration MCP
+
+parc_nucleaire_prescriptif_france.json
+contient les centrales
+contient les régions
+contient les liaisons
+contient les paramètres de simulation
+
+------------------------
+tests
+-------------------
+
+ms-python/tests contient les tests du premier moteur
+ms-python-2/tests/test_engine.py teste le moteur et les allocations
+ms-python-2/tests/test_temporal_phases.py teste les phases 1 2 et 3
+ms-python-2/tests/test_nuclear_dataframe.py teste la création de la DataFrame
+ms-python-2/tests/test_energia_service.py teste energia_service.py
 
 
-01-09
+---------------------------
+variables d’environnement
+-----------------------------
 
+dans Docker les services utilisent
 
-ms-python-2/services/energia_service.py
+PYTHON_SERVICE_URL_2=http://ms-python-2:8002
 
-ce fichier fournit des fonctions métier pour
-charger les données en appelant les services existants
- lancer les calculs du moteur
- vérifier les paramètres
-préparer les résultats
- retourner des dictionnaires sérialisables en json
+PYTHON_MCP_URL=http://mcp-server:8003
 
+MCP_URL=http://mcp-server:8003/mcp
 
-attention, dans le fonctionnement actuel, les routes fastapi appellent directement les services existants et le moteur
+OLLAMA_HOST=http://llm:11434
 
-energia_service.py existe toujours, mais il n’est pas actuellement appelé par les outils mcp ni par ces routes
+OLLAMA_MODEL=gemma4:e4b
 
-_normalize_identifier(value, field_name)
+depuis Windows les adresses sont
 
-cette fonction contrôle et nettoie un identifiant
-"  GOLFECH  " → "golfech"
+http://127.0.0.1:8002
 
-elle déclenche une erreur si la valeur n’est pas une chaîne ou si elle est vide après suppression des espaces
-le _ au début du nom indique, par convention, une fonction destinée à un usage interne
-_normalize_timestamp(timestamp)
-cette fonction contrôle et nettoie un horaire
+http://127.0.0.1:8003
 
-" 18:00 " → "18:00"
+http://127.0.0.1:11434
 
-elle refuse les valeurs vides ou non textuelles
-elle ne vérifie pas elle-même le format HH:MM
-les fonctions qui l’utilisent recherchent ensuite l’horaire dans les données ou les résultats de simulation
-_ensure_json_serializable(value)
-cette fonction vérifie que le résultat peut être transformé en json
-elle refuse notamment les objets incompatibles et les valeurs numériques non standards comme NaN
-elle retourne la valeur d’origine, pas une chaîne json
-c’est utile lorsque les résultats doivent être envoyés par une api ou un outil
+les noms ms-python-2 mcp-server et llm fonctionnent uniquement dans le réseau Docker
 
 
 
 
-mcp_server/tool.py
+--------------------
+limitations actuelles
+-----------------
+
+la question doit encore respecter le format consommation région heure
+exemple consommation occitanie 18:00
+
+la consommation retournée est une consommation de référence
+elle ne représente pas une mesure en temps réel
+gemma 4 ne choisit pas encore automatiquement l’outil MCP
+une simulation phase 3 complète peut produire un très grand JSON
+les réponses de gemma 4 peuvent varier
+mcp_server ne possède pas encore de tests automatisés
 
 
-ce fichier est le client http de l’api energ ia
 
-il ne recherche plus le dossier du moteur et n’importe plus directement energia_service.py
-_get_api_data(path, params=None, timeout=30.0)
-cette fonction commune gère
-- l’adresse fastapi définie par PYTHON_SERVICE_URL_2
-- la clé SECURITY_TOKEN
-- l’envoi de la clé dans l’en-tête x-api-key
-- la requête http et ses paramètres
-- le délai maximal d’attente
-- les erreurs de connexion et de statut http
-- la lecture du résultat json
-les trois fonctions suivantes réutilisent cette connexion
-get_plants()
-elle appelle
-GET /phase1/plants
-elle récupère les centrales et vérifie que le nombre annoncé correspond à la longueur de la liste
-get_region_consumption(region_id, timestamp)
-elle appelle
-GET /phase1/consumption
-elle récupère les consommations de référence, sélectionne un horaire et une région, puis retourne la valeur en mw
-elle ne calcule pas la consommation
-attention, cette fonction retourne la consommation de référence, pas la consommation modifiée par un scénario de phase 3
-get_phase3_simulation()
-elle appelle
-GET /phase3/simulate-day
-elle transmet les paramètres
-scenario_id
-number_of_steps
-minimum_reserve_mw
-fastapi lance la simulation avec les événements du scénario
-la fonction vérifie ensuite que la réponse correspond à la phase 3, au scénario demandé et au nombre de pas attendu
-elle retourne la réponse complète sans refaire les calculs
-affichage manuel
-quand on exécute directement
-python tool.py
-le bloc final appelle actuellement get_plants() et affiche les centrales au format json
-il n’affiche donc pas automatiquement toutes les données ni la simulation
+-------------------
+travail restant
+---------------------
 
+permettre à gemma 4 de sélectionner automatiquement les outils MCP
 
-mcp_server\orchestrator.py pour relier les composants, sans refaire les calculs
+accepter des questions totalement naturelles
 
+ajouter un outil pour obtenir une centrale précise
 
-04/09/2026
-mcp_server contient la partie qui relie energIA à MCP et à ollama
-server.py
-  crée le serveur MCP
-  expose les ressources et les outils disponibles
-  reçoit les demandes envoyées par un client MCP
-  appelle les fonctions présentes dans tool.py
-  retourne les résultats au format json
-tool.py
-  contient les fonctions utilisées par le serveur MCP
-  récupère la configuration depuis le fichier env
-  appelle les routes FastAPI de ms-python-2
-  transmet le token de sécurité dans les requêtes
-  vérifie les paramètres et les réponses reçues
-  gère les erreurs lorsque FastAPI est indisponible
-ollama_client.py
-  crée la connexion avec ollama
-  utilise le modèle gemma4:e4b
-  envoie un prompt au modèle
-  récupère et vérifie la réponse générée
-  gère les erreurs lorsque ollama est indisponible
-orchestrator.py
-  coordonne les différents composants
-  reçoit la question de l’utilisateur
-  demande les données nécessaires au serveur MCP
-  construit un prompt avec les données reçues
-  envoie le prompt à gemma 4
-  affiche la réponse finale à l’utilisateur
-requirements.txt
-  contient les dépendances python du serveur MCP
-  installe notamment mcp httpx ollama fastapi et python dotenv
-dockerfile
-  construit l’image docker du serveur MCP
-  installe les dépendances du fichier requirements.txt
-  copie les fichiers du serveur dans le conteneur
-  démarre server.py sur le port 8003
-flux général
-  l’utilisateur pose une question
-  orchestrator.py analyse la demande
-  le serveur MCP appelle une fonction de tool.py
-  tool.py interroge FastAPI
-  FastAPI retourne les données energIA
-  orchestrator.py ajoute les données dans le prompt
-  ollama_client.py envoie le prompt à gemma 4
-  gemma 4 formule la réponse finale
-rôle de chaque composant
-  FastAPI fournit les données et les résultats du moteur energIA
-  MCP contrôle les fonctionnalités accessibles au modèle
-  gemma 4 comprend la question et rédige la réponse
-  l’orchestrateur organise les échanges entre MCP FastAPI et gemma 4
-règle importante
-  MCP ne réalise pas les calculs métier
-  MCP récupère les informations en appelant FastAPI
-  gemma 4 ne doit pas inventer les données energIA
-  la réponse doit utiliser les valeurs retournées par FastAPI
+ajouter un outil pour obtenir la situation énergétique d’une région
+
+limiter les données envoyées au modèle
+
+mettre à jour README avec MCP ollama et la route assistant
 
 
 
 
 
 
- docker compose exec -it mcp-server python orchestrator.py   test donnais "  consommation occitanie 18:00  "
+Commandes pour teste le project
 
-npx @modelcontextprotocol/inspector demarer la server mcp
+cd C:\python-projs\energIA-prescription-nationale
+
+vérifiez Docker
+docker version
+
+construisez les images locales
+docker compose build
+
+démarrez tous les services
+docker compose up -d
+
+vérifiez les services
+docker compose ps
+les services suivants doivent être Up
+gateway
+ms-python
+ms-python-2
+llm
+mcp-server
+
+
+vérifier FastAPI
+Invoke-RestMethod http://127.0.0.1:8002/health
+
+vérifier MCP
+Invoke-RestMethod http://127.0.0.1:8003/health
+
+vérifier la gateway
+Invoke-RestMethod http://127.0.0.1:3000/health
+
+vérifier ollama
+Invoke-RestMethod http://127.0.0.1:11434/api/tags
+
+afficher les modèles installés
+docker compose exec llm ollama list
+
+le modèle attendu est
+gemma4:e4b
+
+tester MCP vers FastAPI
+docker compose exec mcp-server python -c "import tool; print(tool.get_plants()['plants_count'])"
+
+le résultat attendu est
+18
+
+
+tester l’assistant dans le terminal
+docker compose exec -it mcp-server python orchestrator.py
+poser
+consommation occitanie 18:00
+
+tester l’interface web
+ouvrir dans le navigateur
+http://127.0.0.1:3000
+écrire
+consommation occitanie 18:00
+cliquer sur
+envoyer la question
+
+
+consulter les logs
+logs de la gateway
+
+docker compose logs --tail=100 gateway
+
+logs de FastAPI
+docker compose logs --tail=100 ms-python-2
+
+logs du serveur MCP
+docker compose logs --tail=100 mcp-server
+
+logs de ollama
+docker compose logs --tail=100 llm
+
+suivre tous les logs en direct
+docker compose logs -f
+
+
+reconstruire après une modification
+
+pour une modification dans mcp_server
+docker compose build mcp-server
+docker compose up -d --force-recreate mcp-server
+
+pour une modification dans gateway
+docker compose build gateway
+docker compose up -d --force-recreate gateway
+
+arrêter le projet
+docker compose down
+
+vérifier git avant le transfert
+
+git status
+git log --oneline -15

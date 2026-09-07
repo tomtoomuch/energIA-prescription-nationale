@@ -21,11 +21,7 @@ MCP_URL = os.getenv(
 
 
 def parse_question(question):
-    """
-    Analyse une question au format
 
-    consommation occitanie 18:00
-    """
     if not isinstance(question, str):
         raise ValueError(
             "La question doit être une chaîne"
@@ -52,9 +48,7 @@ async def read_consumption(
     region_id,
     timestamp,
 ):
-    """
-    Récupère une consommation en passant par MCP
-    """
+
     uri = (
         "energia://consumption/"
         f"{quote(region_id, safe='')}/"
@@ -120,9 +114,7 @@ def build_prompt(
     question,
     data,
 ):
-    """
-    Construit le prompt envoyé à gemma 4
-    """
+
     data_json = json.dumps(
         data,
         ensure_ascii=False,
@@ -156,10 +148,7 @@ Rédige une seule phrase courte
 
 
 async def ask_energia(question):
-    """
-    Exécute le parcours complet et retourne
-    les données nécessaires à l'interface web
-    """
+
     region_id, timestamp = parse_question(
         question
     )
