@@ -1,65 +1,96 @@
-body { 
-  display:inline-flex;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-  position:relative; 
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the body takes at least the full viewport height */
 }
 
-header{
-  display:block;
-  position:fixed;
-  top:0;
-  z-index:100;
-  width:100%;
-  height:80px;
-  background-color:#0f172a;
+/* Resetting styles that conflict with the new flex layout */
+body > *:first-child {
+    /* Targets the header, allowing it to sit on top */
+    flex-shrink: 0;
 }
 
-header>nav{
-  display:flex;
-  width:100%;
-  height:100%;
-  flex-wrap:wrap;
-  justify-content:space-around;
-  align-content:center;
-  align-items:center;
+header {
+  display: block; /* Changed from inline-block to flex for better alignment control */
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  height: 80px;
+  background-color: #0f172a;
+  width: 100%; /* Ensure it spans the full width */
+}
+
+header > nav {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  padding: 0 20px; /* Added padding for spacing */
 }
 
 nav > a {
-  font-size:16pt;
-  font-weight:bolder;
-  color:#ccc;
-  text-decoration:none;
-  width:30%;
+  font-size: 14pt;
+  font-weight: bold;
+  color: #ccc;
+  text-decoration: none;
+  width: 30%; /* Keep existing width constraint */
+  text-align: center;
+  padding:5px;
+}
+
+nav>a:hover{
+  background-color:#2563eb;
+  border-radius: 8px;
 }
 
 main {
-  margin-top:80px;
+  /* This container must now manage the remaining vertical space */
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 120px;
+  /* If sections are meant to stack vertically, we let the natural flow handle it, but we'll add spacing between them. */
+  width: 100%;
+  height: calc(100vh - 120px);
 }
 
 section {
-  display:flex;
-  flex-wrap:nowrap;
-  justify-content:center;
-  align-content:center;
+  /* Crucial: Make sections stack vertically and take up space as needed, but let's give them a base minimum height */
+  flex-basis: 100%; /* Take full width */
+  width: 100%;
   height:100%;
+  /* We use padding/margin on the section itself to create space, rather than relying on height: 100% which is hard to coordinate with a fixed header. */
+  /* If you absolutely need sections to look like they fill the screen, we might need to rethink the layout using different container logic, but for stacked content, natural flow with padding is usually best. */
 }
 
+/* --- Assistant Section Adjustments --- */
 #assistant-section {
   border-top: 1px solid #334155;
   width: 80% !important;
   background: #fff !important;
-  margin: 0 auto !important;
   color: #000 !important;
   padding: 20px !important;
-  margin-bottom: 40px !important;
+  margin: 20px auto !important; /* Adjusted margin */
+  /* Removed !important that might be fighting flex/layout */
+}
+
+/* --- General Cleanups --- */
+/* The following sections should be adjusted based on how they interact with the fixed header and the main flow. */
+#app-section {
+    /* To make this section content flow naturally after the header, we remove any height constraints that fight content. */
+    min-height: auto; /* Let content determine height */
+    padding-top: 40px; /* Add some spacing from the top if needed */
 }
 
 .assistant-summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,
-      minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 10px;
 }
 
@@ -156,11 +187,12 @@ section {
   margin: 5px 0;
 }
 
-
+/* Utility reset (retained) */
 * {
   box-sizing: border-box;
 }
 
+/* General body reset (retained) */
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
@@ -168,29 +200,26 @@ body {
   color: #e2e8f0;
 }
 
+/* Adjusting main to act as a container for stacked sections */
 main {
-  display:flex;
-  width:100%;
-  flex-wrap:wrap;
-  justify-content:stretch;
-  align-content:stretch;
+    display: block; /* Change from flex to block flow to stack sections vertically */
+    width: 100%;
+    /* We removed the explicit height/flex-basis calculations here because sections will manage their own height via content + padding/margin. */
 }
 
-#app {
-  display: flex;
-  height: 100vh;
-}
-
+/* Keep sidebar and map structure if they are siblings within their respective sections, or if they need to remain flexible */
 #sidebar {
-  width: 360px;
-  padding: 20px;
-  background: #111827;
-  overflow-y: auto;
-  border-right: 1px solid #1f2937;
+    width: 360px;
+    padding: 20px;
+    background: #111827;
+    overflow-y: auto;
+    border-right: 1px solid #1f2937;
+    /* In the context of a section, this sidebar should only take up space relative to the section's content flow */
 }
 
 #map {
-  flex: 1;
+    flex: 1;
+    /* If sidebar and map are meant to be side-by-side, they should remain siblings inside a flex container within the section. */
 }
 
 h1 {

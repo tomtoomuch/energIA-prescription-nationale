@@ -12,54 +12,56 @@
     <header id="welcome-section">
       
       <nav>
-        <a href="#welcome-section">EnergIA</a> 
+        <a href="#welcome-section">EnergIA</a>
+
+        <a href="#ancre-assistant">Système d'Aide à la Décision</a>
         
-        <a href="#app-section">Moteur prescriptif régional</a>
+        <a href="#ancre-app">Moteur prescriptif régional</a>
         
-        <a href="#assistant-section">Système d'Aide à la Décision</a>
+        
       </nav>
 
     </header>
   
     <main>
-      <section id="assistant-section">
-        <h2>Assistant energIA</h2>
-
-        <p class="subtitle">
-          Posez une question à partir des données EnergIA
-        </p>
-
-        <form id="assistant-form">
-          <label for="assistant-question">
-            Question
-          </label>
-
-          <textarea
-            id="assistant-question"
-            placeholder="consommation occitanie 18:00"
-            required
-          >consommation occitanie 18:00</textarea>
-
-          <button
-            id="assistant-button"
-            type="submit"
-          >
-            Envoyer la question
-          </button>
-        </form>
-
-        <div id="assistant-error"></div>
-
-        <div id="assistant-process" hidden></div>
+      
+      <section id="ancre-assistant">
         
-        <div id="assistant-data" hidden></div>
+        <article id="assistant-section">
+          <h2>Assistant energIA</h2>
 
-        <div id="assistant-answer" hidden></div>
+          <form id="assistant-form">
+            <label for="assistant-question">
+              Saisissez votre question à EnergIA
+            </label>
 
+            <textarea
+              id="assistant-question"
+              placeholder="consommation occitanie 18:00"
+              required
+            >consommation occitanie 18:00</textarea>
+
+            <button
+              id="assistant-button"
+              type="submit"
+            >
+              Envoyer la question
+            </button>
+          </form>
+
+          <div id="assistant-error"></div>
+
+          <div id="assistant-process" hidden></div>
+          
+          <div id="assistant-data" hidden></div>
+
+          <div id="assistant-answer" hidden></div>
+        </article>
+      
       </section>
 
-      <section id="app-section">
-        <div id="app">
+      <section id="ancre-app">
+        <article id="app">
           <div id="sidebar">
             <h1>EnergIA</h1>
             <p class="subtitle">Répartition prescriptive régoinale de la production nucléaire en France</p>
@@ -89,7 +91,7 @@
 
           <div id="map"></div>
         
-        </div>
+        </article>
       </section>
     </main>
 
