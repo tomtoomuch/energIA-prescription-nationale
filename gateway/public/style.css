@@ -84,8 +84,18 @@ section {
 /* The following sections should be adjusted based on how they interact with the fixed header and the main flow. */
 #app-section {
     /* To make this section content flow naturally after the header, we remove any height constraints that fight content. */
-    min-height: auto; /* Let content determine height */
-    padding-top: 40px; /* Add some spacing from the top if needed */
+    min-height: 100%; /* Let content determine height */
+}
+
+#app {
+  display:flex;
+  flex-direction:wrap;
+}
+
+p.subtitle {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0 0 20px;
 }
 
 .assistant-summary-grid {
@@ -225,12 +235,6 @@ main {
 h1 {
   font-size: 18px;
   margin: 0 0 4px;
-}
-
-p.subtitle {
-  font-size: 13px;
-  color: #94a3b8;
-  margin: 0 0 20px;
 }
 
 label {
