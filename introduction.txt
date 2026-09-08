@@ -15,7 +15,7 @@ le parcours de l’assistant est
 utilisateur
 interface web
 gateway
-route assistant du serveur MCP
+route assistant du serveur MCP demarage npx @modelcontextprotocol/inspector
 orchestrator.py
 ressource MCP
 tool.py
@@ -220,16 +220,15 @@ exemple
 
 consommation occitanie 18:00
 parse_question retourne region_id et timestamp
-read_consumption construit l’adresse de la ressource MCP
-read_consumption se connecte au serveur MCP
-read_consumption lit la consommation
-read_consumption transforme le résultat JSON en dictionnaire python
+cette fichier  construit l’adresse de la ressource MCP
+cette fichier se connecte au serveur MCP
+cette fichier  lit la consommation
+cette fichier  transforme le résultat JSON en dictionnaire python
 build_prompt ajoute la question et les données energIA dans le prompt
 ask_energia exécute le parcours complet
 ask_energia retourne la question les étapes les données et la réponse
 main permet de poser une question depuis le terminal
 limite actuelle
-gemma 4 ne sélectionne pas encore automatiquement un outil MCP
 python sélectionne la ressource de consommation
 gemma 4 utilise ensuite la donnée pour rédiger la réponse
 
@@ -408,26 +407,6 @@ gemma 4 ne choisit pas encore automatiquement l’outil MCP
 une simulation phase 3 complète peut produire un très grand JSON
 les réponses de gemma 4 peuvent varier
 mcp_server ne possède pas encore de tests automatisés
-
-
-
--------------------
-travail restant
----------------------
-
-
-accepter des questions totalement naturelles
-
-ajouter un outil pour obtenir une centrale précise
-
-ajouter un outil pour obtenir la situation énergétique d’une région
-
-limiter les données envoyées au modèle
-
-mettre à jour README  IN PROCESS
-
-
-
 
 
 Commandes pour teste le project
