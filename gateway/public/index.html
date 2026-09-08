@@ -3,83 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnergIA — Moteur prescriptif</title>
+    <title>EnergIA — Système d'Aide à la Décision</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   
   <body>
-    
-    <section id="assistant-section">
-      <h2>Assistant energIA</h2>
-
-      <p class="subtitle">
-        Posez une question à partir des données EnergIA
-      </p>
-
-      <form id="assistant-form">
-        <label for="assistant-question">
-          Question
-        </label>
-
-        <textarea
-          id="assistant-question"
-          placeholder="consommation occitanie 18:00"
-          required
-        >consommation occitanie 18:00</textarea>
-
-        <button
-          id="assistant-button"
-          type="submit"
-        >
-          Envoyer la question
-        </button>
-      </form>
-
-      <div id="assistant-error"></div>
-
-      <div id="assistant-process" hidden></div>
+    <header id="welcome-section">
       
-      <div id="assistant-data" hidden></div>
+      <nav>
+        <a href="#welcome-section">EnergIA</a> 
+        
+        <a href="#app-section">Moteur prescriptif régional</a>
+        
+        <a href="#assistant-section">Système d'Aide à la Décision</a>
+      </nav>
 
-      <div id="assistant-answer" hidden></div>
+    </header>
+  
+    <main>
+      <section id="assistant-section">
+        <h2>Assistant energIA</h2>
 
-    </section>
+        <p class="subtitle">
+          Posez une question à partir des données EnergIA
+        </p>
 
-    <section id="app-section">
-      <div id="app">
-        <div id="sidebar">
-          <h1>EnergIA</h1>
-          <p class="subtitle">Répartition prescriptive régoinale de la production nucléaire en France</p>
+        <form id="assistant-form">
+          <label for="assistant-question">
+            Question
+          </label>
 
-          <form id="sim-form">
-            <label for="region-select">Région en surconsommation</label>
-            <select id="region-select" required>
-              <option value="" disabled selected>Choisir une région...</option>
-            </select>
+          <textarea
+            id="assistant-question"
+            placeholder="consommation occitanie 18:00"
+            required
+          >consommation occitanie 18:00</textarea>
 
-            <label for="demand-input">Hausse de consommation (MW)</label>
-            <input id="demand-input" type="number" min="1" step="1" placeholder="ex: 500" required />
+          <button
+            id="assistant-button"
+            type="submit"
+          >
+            Envoyer la question
+          </button>
+        </form>
 
-            <button type="submit">Lancer la simulation</button>
-          </form>
-          <div id="error-box"></div>
+        <div id="assistant-error"></div>
 
-          <div class="legend">
-            <span><span class="dot" style="background:#22c55e"></span>Marge confortable</span>
-            <span><span class="dot" style="background:#f59e0b"></span>Charge élevée</span>
-            <span><span class="dot" style="background:#ef4444"></span>Presque saturée</span>
-            <span><span class="dot" style="background:#9ca3af"></span>Indisponible</span>
+        <div id="assistant-process" hidden></div>
+        
+        <div id="assistant-data" hidden></div>
+
+        <div id="assistant-answer" hidden></div>
+
+      </section>
+
+      <section id="app-section">
+        <div id="app">
+          <div id="sidebar">
+            <h1>EnergIA</h1>
+            <p class="subtitle">Répartition prescriptive régoinale de la production nucléaire en France</p>
+
+            <form id="sim-form">
+              <label for="region-select">Région en surconsommation</label>
+              <select id="region-select" required>
+                <option value="" disabled selected>Choisir une région...</option>
+              </select>
+
+              <label for="demand-input">Hausse de consommation (MW)</label>
+              <input id="demand-input" type="number" min="1" step="1" placeholder="ex: 500" required />
+
+              <button type="submit">Lancer la simulation</button>
+            </form>
+            <div id="error-box"></div>
+
+            <div class="legend">
+              <span><span class="dot" style="background:#22c55e"></span>Marge confortable</span>
+              <span><span class="dot" style="background:#f59e0b"></span>Charge élevée</span>
+              <span><span class="dot" style="background:#ef4444"></span>Presque saturée</span>
+              <span><span class="dot" style="background:#9ca3af"></span>Indisponible</span>
+            </div>
+
+            <div id="results"></div>
           </div>
 
-          <div id="results"></div>
+          <div id="map"></div>
+        
         </div>
-
-        <div id="map"></div>
-      
-      </div>
-    </section>
-    
+      </section>
+    </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./input_checks.js"></script>
