@@ -89,7 +89,11 @@ section {
 
 #app {
   display:flex;
-  flex-direction:wrap;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-content:stretch;
+  align-items:stretch;
 }
 
 p.subtitle {
@@ -219,8 +223,8 @@ main {
 
 /* Keep sidebar and map structure if they are siblings within their respective sections, or if they need to remain flexible */
 #sidebar {
-    width: 360px;
-    padding: 20px;
+    max-width: 30%;
+    padding: 10px;
     background: #111827;
     overflow-y: auto;
     border-right: 1px solid #1f2937;
