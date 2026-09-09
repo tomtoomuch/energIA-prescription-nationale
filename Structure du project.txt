@@ -1,4 +1,4 @@
-energIA-prescription-nationale
+energIA
 │
 ├── docker-compose.yml
 │     démarre tous les services
