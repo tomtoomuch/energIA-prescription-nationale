@@ -120,26 +120,28 @@ Tout le fonctionnement de l'application est régie par des règles simples mais 
 * **gateway** : Utilise Node.js et Express, écoute sur le port 3000.
 Point d'entrée pour l'utilisateur, la passerelle fournit l'interface web et transmet les requêtes au réseau de micro-services (_ms-python-2_, _mcp-server_, _llm_).
 
-> ```bash docker pull tomtoomuch/energia-gateway ```
+> ```docker pull tomtoomuch/energia-gateway```
 
 * **ms-python** : Utilise FastAPI, écoute sur le port 8000.
 Ce conteneur contient le moteur prescriptif régional issu de la phase de déploiement initial.
 
-> ```bash docker pull tomtoomuch/energia-ms-python```
+> ```docker pull tomtoomuch/energia-ms-python```
 
 * **ms-python-2** : Utilise FastAPI, écoute sur le port 8002. Ce conteneur contient le moteur temporel actuel, qui permet de lancer des simulations (Phases 1, 2 et 3) et fournit les outils et données au serveur MCP.
 
-> ```bash docker pull tomtoomuch/energia-ms-python-2```
+> ```docker pull tomtoomuch/energia-ms-python-2```
 
 * **llm** : Utilise l'image officielle d'Ollama fournie par Docker, écoute sur le port 11434. Le modèle est récupéré puis chargé automatiquement au montage du conteneur. Nous utilisons le modèle [`gemma4:e4b`](https://ollama.com/library/gemma4 "Lien vers la page du modèle de langage gemma4:e4b disponible dans la bibliothèque de modèle d'Ollama). Un fichier docker-commpose.gpu_or_cpu.yml permet d'activer la prise en charge des GPU pour le LLM au montage de l'application.
 
-> ```bash docker pull tomtoomuch/energia-llm```
+> ```docker pull tomtoomuch/energia-llm```
 
 * **mcp-server** : Utilise FastMCP, écoute sur le port 8003. Expose les ressources, les outils MCP et la route HTTP (```/assistant```) vers le système d'aide à la décision.
 
-> ```bash docker pull tomtoomuch/energia-mcp-server```
+> ```docker pull tomtoomuch/energia-mcp-server```
 
 ## Arborescence du projet
+
+### Fichiers à la racine
 
 * `docker-compose.yml` : Configure les ports, les dépendances et les fichiers `.env`.
 * `.env` : Contient les variables de configuration (ports, adresses internes, `SECURITY_TOKEN`, modèle ollama).
@@ -148,13 +150,13 @@ Ce conteneur contient le moteur prescriptif régional issu de la phase de déplo
 * `Comment-Demarer-proj.txt` : Contient les commandes de démarrage et de vérification.
 * `introduction.txt` : Explique l’évolution du moteur et les différentes parties du projet.
 
-## Structure des dossiers
+### Structure des dossiers
 
 **gateway/**
 
-* `Dockerfile` : Construit le conteneur Node.js.
-* `package.json` : Contient les dépendances Node.js (`express`, `axios`).
-* `index.js` : Crée la gateway Express avec endpoints pour la santé (`/health*`), récupération de données (`/plants`, `/regions`, `/network`), simulation (`/simulate`), et l'assistant (`POST /assistant`).
+* `Dockerfile` : construit le conteneur Node.js, installe les dépendances et démarre gatewawy/index.js
+* `package.json` : contient les dépendances Node.js (`express`, `axios`), fournit le serveur HTTP et permet d'envoyer les requêtes sur le réseau de microservices
+* `index.js` : crée la gateway Express et expose l'ensemble des fonctionnalités de notre application avec endpoints pour la santé (`/health*`), récupération de données (`/plants`, `/regions`, `/network`), simulation (`/simulate`), et l'assistant (`POST /assistant`).
 
 **mcp_server/**
 
@@ -234,6 +236,7 @@ Ce conteneur contient le moteur prescriptif régional issu de la phase de déplo
     ```
 
 5.  **Tests API :**
+    
     ```powershell
     # Vérifier FastAPI
     Invoke-RestMethod http://127.0.0.1:8002/health
@@ -252,7 +255,7 @@ Ce conteneur contient le moteur prescriptif régional issu de la phase de déplo
     # Modèle attendu : gemma4:e4b
     ```
 
-6.  **Test des interactions :**
+6. **Test des interactions :**
 
     ```powershell
     # Tester MCP vers FastAPI
@@ -261,7 +264,7 @@ Ce conteneur contient le moteur prescriptif régional issu de la phase de déplo
 
     # Tester l’assistant dans le terminal
     docker compose exec -it mcp-server python orchestrator.py
-    poser
+    # Quesiton à poser 
     consommation occitanie 18:00
 
     # Tester l’interface web
@@ -269,7 +272,9 @@ Ce conteneur contient le moteur prescriptif régional issu de la phase de déplo
     # Écrire : consommation occitanie 18:00
     # Cliquer sur : envoyer la question
     ```
-7.  **Logs et Maintenance :**
+
+7. **Journaux et maintenance :**
+
     ```powershell
     # Consulter les logs (dernier filtre)
     docker compose logs --tail=100 gateway
