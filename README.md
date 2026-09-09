@@ -256,13 +256,13 @@ Ces routes sont destinées au diagnostic et requièrent `x-api-key: <SECURITY_TO
 | `GET /phase2/simulate-day` | `number_of_steps` (1–96), `minimum_reserve_mw` (≥ 0) | 96, 5000 MW |
 | `GET /phase3/simulate-day` | paramètres phase 2 + `scenario_id` | `evening_peak_occitanie` |
 
-La documentation OpenAPI générée est disponible à `http://127.0.0.1:8002/docs` ; celle du prototype à `http://127.0.0.1:8000/docs`.
+La documentation OpenAPI générée est disponible à `http://127.0.0.1:8002/docs` ; celle du prototype (ponctuel régional) à `http://127.0.0.1:8000/docs`.
 
 ## 9. MCP et assistant
 
 Le serveur MCP expose les outils `list_plants`, `get_consumption(region_id, timestamp)` et `simulate_phase3(scenario_id, number_of_steps, minimum_reserve_mw)`, ainsi que les ressources :
 
-```text
+```py
 energia://plants
 energia://consumption/{region_id}/{timestamp}
 energia://phase3/{scenario_id}/{number_of_steps}/{minimum_reserve_mw}
@@ -323,11 +323,11 @@ python -m services.long_simulation --days 365 --scenario-id evening_peak_occitan
 | Document | Utilité |
 | --- | --- |
 | `docs/brief.md` | Cahier des charges pédagogique des trois phases. |
-| `README.md` | Documentation détaillée du prototype et des routes initiales. |
-| `README-PHASES.md` | Détails d'implémentation et résultats des phases temporelles. |
-| `README-LLM.md` | Variante CPU/GPU pour le service Ollama. |
-| `DEMARRAGE-PROJET-ENERGIA.md` | Procédure de démarrage, vérification et diagnostic. |
-| `GUIDE.md` et `introduction.txt` | Présentation de l'architecture actuelle et du flux assistant. |
+| [`DEPLOIEMENT-INITIAL.md`](./DEPLOIEMENT-INITIAL.md) | Documentation détaillée du prototype et des routes initiales. |
+| [`DEPLOIEMENT-PHASES.md`](./DEPLOIEMENT-PHASES.md) | Détails d'implémentation et résultats des phases temporelles. |
+| [`DEPLOIEMENT-LLM.md`](./DEPLOIEMENT-LLM.md) | Variante CPU/GPU pour le service Ollama. |
+| [`DEMARRAGE-PROJET-ENERGIA.md`](./DEMARRAGE-PROJET-ENERGIA.md)`DEMARRAGE-PROJET-ENERGIA.md` | Procédure de démarrage, vérification et diagnostic. |
+| [`README.md`](./README.md) | Présentation de l'architecture actuelle et du flux assistant. |
 | `docs/architecture_et_flux/README.md` | Réflexion d'architecture, flux, sources et MLOps. |
 
 Cette documentation est le point de départ recommandé ; les documents ci-dessus restent les sources de détail et d'historique.
