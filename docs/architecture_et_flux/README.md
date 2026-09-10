@@ -1,6 +1,6 @@
 # Architecture et flux de données
 
-Le projet EnergIA déploie actuellement un outil de simulation, selon un modèle prescriptif,  d'approvisionnement en électricité. 
+Le projet EnergIA déploie actuellement un outil de simulation, selon un modèle prescriptif,  d'approvisionnement en électricité.
 
 ## Schéma directeur du projet
 
@@ -197,44 +197,43 @@ flowchart TD
   
 ## Les étapes pour bien modéliser nos données et leurs flux
 
-### ÉTAPE 1 / Choisir 4-6 variables
+### ETAPE 1 / Choisir 4-6 variables
+
 1. Temps
-	heure
-	jour de la semaine
-	week-end
-	mois
-	saison
-	vacances scolaires
-	jours fériés
+  heure
+  jour de la semaine
+  week-end
+  mois
+  saison
+  vacances scolaires
+  jours fériés
 
 2. Météo
-	température
-	humidité
-	ensoleillement
-	précipitations
-	vent
+  température
+  humidité
+  ensoleillement
+  précipitations
+  vent
 
 3. Type de journée
-	jour ouvré
-	week-end
-	jour férié
-	vacances
+  jour ouvré
+  week-end
+  jour férié
+  vacances
 
 4. Région
-	région
-	population
-	densité
-	activité industrielle
+  région
+  population
+  densité
+  activité industrielle
 
 5. Événements exceptionnels
-	canicule
-	grand froid
-	événement sportif
-	confinement, etc.
+  canicule
+  grand froid
+  événement sportif
+  confinement, etc.
 
-**Choisir les données utiles**
-
-### ÉTAPE 2 / Trouver les vraies sources
+### ETAPE 2 / Trouver les vraies sources
 
 Maintenant que nous avons identifier nos dimensions, nous devons identifier et vérifier une ou des sources de données fiables et alimentées _(tester la route d'API dans la barre d'adresse du navigateur si son accès est libre)_ et rassembler un certain nombres d'éléments les concernant. Il faudra documenter ces flux.
 
@@ -248,8 +247,6 @@ Exemple de tableau de sources :
 | Vacances       | API gouvernementale | JSON/CSV | ponctuel   |
 | Jours fériés   | API calendrier      | JSON     | annuel     |
 | Heure/jour     | calcul Python       | —        | temps réel |
-
-**Il nous faut identifier de vraies sources.**
 
 Il est indispensable, une fois une source donnée identifiée, de la tester afin d'identifier la réponse et son format :
 
@@ -277,7 +274,7 @@ flowchart TD
 
 Il nous faut maintenant identifier la façon dont nous allons récupérer les données et surtout la fréquence de ces récupérations.
 
-### ÉTAPE 3 / Batch ou temps réel ?
+### ETAPE 3 / Batch ou temps réel ?
 
 #### Batch / Statique
 
@@ -289,18 +286,18 @@ config:
   layout: elk
 ---
 flowchart TD
-	A[Source statique]
-	B[ETL Python]
-	C[Stockage en bases]
-	
-	A --> B
-	B --> C
-	
-	classDef dataSource stroke:#818cf8,fill:#eef2ff
-	classDef process stroke:#2dd4bf,fill:#f0fdfa
-	classDef output stroke:#fb923c,fill:#fff7ed
+  A[Source statique]
+  B[ETL Python]
+  C[Stockage en bases]
+  
+  A --> B
+  B --> C
+  
+  classDef dataSource stroke:#818cf8,fill:#eef2ff
+  classDef process stroke:#2dd4bf,fill:#f0fdfa
+  classDef output stroke:#fb923c,fill:#fff7ed
 
-	class A dataSource
+  class A dataSource
     class B process
     class C output
 ```
@@ -315,31 +312,31 @@ config:
   layout: elk
 ---
 flowchart TD
-	A[Utilisateur demande une prédiction]
-	B[Passerelle / Gateway]
-	C[MS Python]
-	D[API Météo]
-	E[Température actuelle]
-	F[Modèle ML]
-	G[Prédiction]
-		
-	A --> B
-	B --> C
-	C --> D
-	D --> E
-	E --> F
-	F --> G
-	
-	classDef dataSource stroke:#818cf8,fill:#eef2ff
-	classDef process stroke:#2dd4bf,fill:#f0fdfa
-	classDef output stroke:#fb923c,fill:#fff7ed
+  A[Utilisateur demande une prédiction]
+  B[Passerelle / Gateway]
+  C[MS Python]
+  D[API Météo]
+  E[Température actuelle]
+  F[Modèle ML]
+  G[Prédiction]
+    
+  A --> B
+  B --> C
+  C --> D
+  D --> E
+  E --> F
+  F --> G
+  
+  classDef dataSource stroke:#818cf8,fill:#eef2ff
+  classDef process stroke:#2dd4bf,fill:#f0fdfa
+  classDef output stroke:#fb923c,fill:#fff7ed
 
-	class A,C,D,E dataSource
+  class A,C,D,E dataSource
     class B,D,F process
     class G output
 ```
 
-### ÉTAPE 5 / Dessiner le flux de données
+### ETAPE 5 / Dessiner le flux de données
 
 Le besoin pose plusieurs questions fondamentales :
 #### Question 1
@@ -352,16 +349,19 @@ Au moins par respect de la 'séparation des responsabilités' et pour des raison
 Comment transmettre la prédiction ?
 
 Par exemple :
+
 ```json
 {
-	"prediction_mw": 4520,
+    "prediction_mw": 4520,
 
     "model_version": "v1.2",
 
     "timestamp": "2026-08-09T13:00:00
 }
 ```
+
 Le service Python retourne cette réponse au Gateway.
+
 #### Question 3
 
 Que faire si l'API météo est indisponible ?
@@ -374,30 +374,33 @@ config:
   layout: elk
 ---
 flowchart TD
-	A[API météo indisponible]
-	B[Utiliser dernière température connue]
-	C[Prédiction]
+  A[API météo indisponible]
+  B[Utiliser dernière température connue]
+  C[Prédiction]
 
-	A --> B
-	B --> C
+  A --> B
+  B --> C
 
-	classDef dataSource stroke:#818cf8,fill:#eef2ff
-	classDef process stroke:#2dd4bf,fill:#f0fdfa
-	classDef output stroke:#fb923c,fill:#fff7ed
+  classDef dataSource stroke:#818cf8,fill:#eef2ff
+  classDef process stroke:#2dd4bf,fill:#f0fdfa
+  classDef output stroke:#fb923c,fill:#fff7ed
 
-	class A dataSource
+  class A dataSource
     class B process
     class C output
 ```
 
 Ou retourner une erreur claire :
+
 ```json
 {
     "error": "Weather service unavailable"
 }
 ```
+
 La première solution semble préférable.
-### ÉTAPE 5 / Concevoir la base de données
+
+### ETAPE 5 / Concevoir la base de données
 
 La modélisation de la donnée et de ses relations sont fondamentales à tout trraitement. Dans le cadre de notre projet, cet étape attend une structuration importante de la donnée, de son choix à son implémentation.
 
@@ -408,6 +411,7 @@ Database
 ├── calendar
 ├── prediction
 └── model
+
 #### consumption
 
 | colonne        | exemple          |
@@ -427,11 +431,20 @@ Database
 | humidity    | 55               |
 | sunshine    | 80               |
 
+#### calendar
+
+| colonne     | exemple          |
+| ----------- | ---------------- |
+| id          | 1                |
+| timestamp   | 2026-08-09 13:00 |
+| year        | 2025             |
+| month       | 09               |
+| day         | 09               |
+
 #### prediction
 
-|               |                  |
-| ------------- | ---------------- |
 | colonne       | exemple          |
+| ------------- | ---------------- |
 | id            | 1                |
 | timestamp     | 2026-08-09 13:00 |
 | predicted_mw  | 4600             |
@@ -441,31 +454,27 @@ Database
 
 #### model
 
-|            |                       |
-| ---------- | --------------------- |
 | colonne    | exemple               |
+| ---------- | --------------------- |
 | id         | 1                     |
 | version    | v1.2                  |
 | trained_at | 2026-08-01            |
 | model_path | models/model_v1.2.pkl |
 
-### ÉTAPE 6 / Prévoir les problèmes en production
+### ETAPE 6 / Prévoir les problèmes en production
 
 Envisageons maintenant le projet sous l'angle de la maintenance et de la surveillance du ML : les MLOps.
-Il est se poser une question simple : que se passe-t-il quand le modèle est réellement utilisé ?
+Il est indispensable de se poser une question simple : que se passe-t-il quand le modèle est réellement utilisé ?
 
-En répondant  à cette question, il semble évident d'aborder l'ensemble des problèmes que l'on peut rencontrer.
+En répondant à cette question, il semble évident d'aborder l'ensemble des problèmes que l'on peut rencontrer.
 
-> **Où mettre les clés API ?**
-Jamais dans le code. Dans un fichier contenant les variables d'environnement est la bonne pratique.
+> **Où mettre les clés API ?** Jamais dans le code. Dans un fichier contenant les variables d'environnement est la bonne pratique.
 
-> **Que faire si le modèle n'est pas entraîné ?**
-Il me semble préférable de notifier l'utilisateur de l'indisponibilité du modèle.
+> **Que faire si le modèle n'est pas entraîné ?** Il me semble préférable de notifier l'utilisateur de l'indisponibilité du modèle.
 
-> **Faut-il mettre les prédictions en cache ?**
-Oui, potentiellement. Cela évite les recalculs et les temps de requêtage et d'occupation du modèle.
+> **Faut-il mettre les prédictions en cache ?** Oui, potentiellement. Cela évite les recalculs et les temps de requêtage et d'occupation du modèle.
 
-# Étape 7 — MLOps : surveiller le modèle
+### ETAPE 7 — MLOps : surveiller le modèle
 
 C'est probablement la partie qui semble la plus compliquée, mais l'idée est simple.
 

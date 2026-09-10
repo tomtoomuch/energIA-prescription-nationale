@@ -3,20 +3,35 @@ const axios = require("axios");
 const app = express();
 const path = require("path");
 const port = process.env.GATEWAY_PORT || 3000;
-const PYTHON_API_URL = process.env.PYTHON_SERVICE_URL || "http://ms-python:8000";
-const PYTHON_API_URL_2 = process.env.PYTHON_SERVICE_URL_2 || "http://ms-python-2:8002";
-const PREDICTION_SERVICE_URL = process.env.PREDICTION_SERVICE_URL || "http://prediction:8004";
-const TRAINING_SERVICE_URL = process.env.TRAINING_SERVICE_URL || "http://training:8005";
+const SECURITY_TOKEN = process.env.SECURITY_TOKEN;
+
+const PYTHON_API_URL = (
+    process.env.PYTHON_SERVICE_URL ||
+    "http://ms-python:8000"
+).replace(/\/+$/, "");
+
+const PYTHON_API_URL_2 = (
+    process.env.PYTHON_SERVICE_URL_2 ||
+    "http://ms-python-2:8002"
+).replace(/\/+$/, "");
+
 const PYTHON_MCP_URL = (
     process.env.PYTHON_MCP_URL ||
     "http://mcp-server:8003"
 ).replace(/\/+$/, "");
-const SECURITY_TOKEN = process.env.SECURITY_TOKEN;
+
+const PYTHON_PREDICTION_URL = (
+    process.env.PYTHON_PREDICTION_URL || 
+    "http://prediction:8004"
+).replace(/\/+$/, "");
+
+const PYTHON_TRAINING_URL = (
+    process.env.PYTHON_TRAINING_URL || 
+    "http://training:8005"
+).replace(/\/+$/, "");
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
-
-
 
 function pythonHeaders() {
     return { "x-api-key": SECURITY_TOKEN };
@@ -217,13 +232,9 @@ app.post("/assistant", async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Gateway service listening at http://energia-gateway:${port}`);
-});
-
 app.get("/health-prediction", async (req, res) => {
     try {
-        const response = await axios.get(`${PREDICTION_SERVICE_URL}/health`);
+        const response = await axios.get(`${PYTHON_PREDICTION_URL}/health`);
         return res.status(200).json({ success: true, response: response.data });
     } catch (error) {
         return handlePythonError(error, res);
@@ -233,7 +244,7 @@ app.get("/health-prediction", async (req, res) => {
 app.post("/prediction/train", async (req, res) => {
     try {
         const response = await axios.post(
-            `${TRAINING_SERVICE_URL}/train`,
+            `${PYTHON_TRAINING_URL}/train`,
             {},
             { headers: pythonHeaders(), timeout: 180000 }
         );
@@ -246,7 +257,7 @@ app.post("/prediction/train", async (req, res) => {
 app.post("/prediction", async (req, res) => {
     try {
         const response = await axios.post(
-            `${PREDICTION_SERVICE_URL}/predictions`,
+            `${PYTHON_PREDICTION_URL}/prediction`,
             req.body,
             { headers: pythonHeaders() }
         );
@@ -254,4 +265,8 @@ app.post("/prediction", async (req, res) => {
     } catch (error) {
         return handlePythonError(error, res);
     }
+});
+
+app.listen(port, () => {
+    console.log(`Gateway service listening at http://energia-gateway:${port}`);
 });
