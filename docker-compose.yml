@@ -1,9 +1,6 @@
 services:
   gateway:
-    build:
-      context: ./gateway
-      dockerfile: Dockerfile
-    image: energia-gateway
+    image: tomtoomuch/energia-gateway
     ports:
       - "${GATEWAY_PORT:-3000}:3000"
     env_file:
@@ -12,9 +9,9 @@ services:
       - ms-python
       - ms-python-2
       - mcp-server
-      - prediction
-      - training
     restart: unless-stopped
+    networks:
+      - energia-net
 
   ms-python:
     image: tomtoomuch/energia-ms-python
@@ -23,6 +20,8 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    networks:
+      - energia-net
 
   ms-python-2:
     image: tomtoomuch/energia-ms-python-2
@@ -31,9 +30,11 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    networks:
+      - energia-net
 
   llm:
-    image: ollama/ollama:latest
+    image: tomtoomuch/energia-llm
     ports:
       - "11434:11434"
     volumes:
@@ -46,11 +47,10 @@ services:
       sleep 5; 
       ollama run gemma4:e4b; 
       wait"
+    networks:
+      - energia-net
   mcp-server:
-    build:
-      context: ./mcp_server
-      dockerfile: dockerfile
-    image: energia-mcp-server
+    image: tomtoomuch/energia-mcp-server
     ports:
       - "${MCP_PORT_3:-8003}:8003"
     env_file:
@@ -59,28 +59,8 @@ services:
       - ms-python-2
       - llm
     restart: unless-stopped
+    networks:
+      - energia-net
 
-  training:
-    image: energia-training
-    ports:
-      - "${TRAINING_PORT:-8005}:8005"
-    env_file:
-      - ./.env
-    volumes:
-      - prediction-models:/models
-    restart: unless-stopped
-
-  prediction:
-    image: energia-prediction
-    ports:
-      - "${PREDICTION_PORT:-8004}:8004"
-    env_file:
-      - ./.env
-    volumes:
-      - prediction-models:/models:ro
-    depends_on:
-      - training
-    restart: unless-stopped
-
-volumes:
-  prediction-models:
+networks:
+  energia-net:

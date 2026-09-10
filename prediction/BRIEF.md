@@ -79,7 +79,7 @@ Si aucun modèle n'a été publié, le service retourne `503`, plutôt que d'inv
 - `POST /prediction` transmet une requête de prévision ;
 - `GET /health-prediction` vérifie que le service de prédiction est disponible.
 
-Les variables `TRAINING_SERVICE_URL`, `PREDICTION_SERVICE_URL`, `TRAINING_PORT` et `PREDICTION_PORT` sont ajoutées à `.env`. Les services sont déclarés dans le compose principal ; `docker-compose.override.yml` les construit depuis le dépôt local.
+Les variables `PYTHON_TRAINING_URL`, `PYTHON_PREDICTION_URL`, `TRAINING_PORT` et `PREDICTION_PORT` sont ajoutées à `.env`. Les services sont déclarés dans le compose principal ; `docker-compose.override.yml` les construit depuis le dépôt local.
 
 ## Critères de validation
 
