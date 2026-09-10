@@ -1,0 +1,23 @@
+{
+  "zone_A": {
+    "bourgogne_franche_comte": "Bourgogne-Franche-Comté",
+    "nouvelle-aquitaine": "Nouvelle-Aquitaine",
+    "auvergne_rhone_alpes": "Auvergne-Rhône-Alpes"
+  },
+  "zone_B": {
+    "provence_alpes_cote_d_azur": "Provence-Alpes-Côte d'Azur",
+    "hauts_de_france": "Hauts-de-France",
+    "grand-est": "Grand Est",
+    "pays_de_la_loire": "Pays de la Loire",
+    "normandie": "Normandie",
+    "bretagne": "Bretagne",
+    "centre_val_de_loire": "Centre-Val de Loire"
+  },
+  "zone_C": {
+    "ile_de_france": "Île-de-France",
+    "occitanie": "Occitanie"
+  },
+  "zone_Corse": {
+    "corse": "Corse"
+  }
+}
