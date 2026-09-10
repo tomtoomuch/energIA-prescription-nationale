@@ -1,0 +1,8 @@
+services:
+  prediction:
+    image: tomtoomuch/energia-prediction
+    ports:
+      - "${PYTHON_PORT:-8004}:8004"
+    env_file:
+      - .env
+    restart: unless-stopped

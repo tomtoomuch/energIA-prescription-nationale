@@ -17,3 +17,7 @@ services:
     build:
       context: ./mcp_server
       dockerfile: dockerfile
+  prediction:
+    build:
+      context: ./prediction
+      dockerfile: dockerfile
