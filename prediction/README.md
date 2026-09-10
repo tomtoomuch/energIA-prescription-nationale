@@ -1,8 +1,8 @@
-# EnergIA — microservices de prévision
+# EnergIA — microservices de prédiction
 
 Ce dossier transforme l'exercice de régression de consommation électrique en deux microservices complémentaires : un service qui entraîne et publie le modèle, puis un service qui l'utilise pour produire des prévisions.
 
-> Le modèle entraîné est un modèle de machine learning de régression, pas le LLM Ollama/Gemma du projet. Le LLM peut ultérieurement interroger ce service via MCP afin d'expliquer une prévision.
+> Le modèle entraîné est un modèle de machine learning de régression, pas le LLM Ollama/Gemma du projet. Le LLM peut ultérieurement interroger ce service via MCP afin d'expliquer une prédiction.
 
 ## Architecture
 

@@ -405,7 +405,6 @@ La première solution semble préférable.
 La modélisation de la donnée et de ses relations sont fondamentales à tout trraitement. Dans le cadre de notre projet, cet étape attend une structuration importante de la donnée, de son choix à son implémentation.
 
 Database
-│
 ├── consumption
 ├── weather
 ├── calendar
@@ -427,6 +426,7 @@ Database
 | ----------- | ---------------- |
 | id          | 1                |
 | timestamp   | 2026-08-09 13:00 |
+| region      | Occitanie
 | temperature | 28.5             |
 | humidity    | 55               |
 | sunshine    | 80               |
