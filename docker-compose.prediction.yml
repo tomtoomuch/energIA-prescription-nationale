@@ -1,8 +1,28 @@
 services:
   prediction:
-    image: tomtoomuch/energia-prediction
+    build:
+      context: ./prediction
+      dockerfile: dockerfile
+    image: energia-prediction
     ports:
-      - "${PYTHON_PORT:-8004}:8004"
+      - "${PREDICTION_PORT:-8004}:8004"
     env_file:
       - .env
+    volumes:
+      - prediction-models:/models:ro
     restart: unless-stopped
+  training:
+    build:
+      context: ./prediction
+      dockerfile: dockerfile.training
+    image: energia-training
+    ports:
+      - "${TRAINING_PORT:-8005}:8005"
+    env_file:
+      - .env
+    volumes:
+      - prediction-models:/models
+    restart: unless-stopped
+
+volumes:
+  prediction-models:

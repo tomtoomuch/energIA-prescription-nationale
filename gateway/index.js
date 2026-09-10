@@ -5,6 +5,8 @@ const path = require("path");
 const port = process.env.GATEWAY_PORT || 3000;
 const PYTHON_API_URL = process.env.PYTHON_SERVICE_URL || "http://ms-python:8000";
 const PYTHON_API_URL_2 = process.env.PYTHON_SERVICE_URL_2 || "http://ms-python-2:8002";
+const PREDICTION_SERVICE_URL = process.env.PREDICTION_SERVICE_URL || "http://prediction:8004";
+const TRAINING_SERVICE_URL = process.env.TRAINING_SERVICE_URL || "http://training:8005";
 const PYTHON_MCP_URL = (
     process.env.PYTHON_MCP_URL ||
     "http://mcp-server:8003"
@@ -217,4 +219,39 @@ app.post("/assistant", async (req, res) => {
 
 app.listen(port, () => {
     console.log(`Gateway service listening at http://energia-gateway:${port}`);
+});
+
+app.get("/health-prediction", async (req, res) => {
+    try {
+        const response = await axios.get(`${PREDICTION_SERVICE_URL}/health`);
+        return res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        return handlePythonError(error, res);
+    }
+});
+
+app.post("/prediction/train", async (req, res) => {
+    try {
+        const response = await axios.post(
+            `${TRAINING_SERVICE_URL}/train`,
+            {},
+            { headers: pythonHeaders(), timeout: 180000 }
+        );
+        return res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        return handlePythonError(error, res);
+    }
+});
+
+app.post("/prediction", async (req, res) => {
+    try {
+        const response = await axios.post(
+            `${PREDICTION_SERVICE_URL}/predictions`,
+            req.body,
+            { headers: pythonHeaders() }
+        );
+        return res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        return handlePythonError(error, res);
+    }
 });
