@@ -1,6 +1,5 @@
 from datetime import date, timedelta
 
-
 def telecharger_calendrier(annee, chemin_fichier):
     url = (
         "https://calendrier.api.gouv.fr/jours-feries/"
@@ -52,5 +51,5 @@ def telecharger_calendrier(annee, chemin_fichier):
     return str(chemin)
 
 
-if name == "main":
+if __name__ == "__main__":
     telecharger_json(URL_API, FICHIER_SORTIE)

@@ -1,19 +1,13 @@
 services:
 
   gateway:
-    depends_on:
-      - prediction
-      - training
-
-  prediction:
-    image: tomtoomuch/energia-prediction
+    image: tomtoomuch/energia-gateway
     ports:
-      - "${PREDICTION_PORT:-8004}:8004"
+      - "${GATEWAY_PORT:-3000}:3000"
     env_file:
       - ./.env
-    volumes:
-      - ./prediction-models:./models:ro
     depends_on:
+      - prediction
       - training
     restart: unless-stopped
     networks:
@@ -26,10 +20,27 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./prediction-models:./models
+      - ./prediction-models:/models
+    restart: unless-stopped
+    networks:
+      - energia-net
+      
+  prediction:
+    image: tomtoomuch/energia-prediction
+    ports:
+      - "${PREDICTION_PORT:-8004}:8004"
+    env_file:
+      - ./.env
+    volumes:
+      - ./prediction-models:/models:ro
+    depends_on:
+      - training
     restart: unless-stopped
     networks:
       - energia-net
 
 volumes:
   prediction-models:
+
+networks:
+  energia-net:

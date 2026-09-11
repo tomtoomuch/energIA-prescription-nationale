@@ -9,6 +9,8 @@ services:
       - ms-python
       - ms-python-2
       - mcp-server
+      - prediction
+      - training
     restart: unless-stopped
     networks:
       - energia-net
