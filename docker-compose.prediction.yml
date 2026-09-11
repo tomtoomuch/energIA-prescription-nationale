@@ -4,17 +4,6 @@ services:
     depends_on:
       - prediction
       - training
-  training:
-    image: tomtoomuch/energia-training
-    ports:
-      - "${TRAINING_PORT:-8005}:8005"
-    env_file:
-      - ./.env
-    volumes:
-      - ./prediction-models:./models
-    restart: unless-stopped
-    networks:
-      - energia-net
 
   prediction:
     image: tomtoomuch/energia-prediction
@@ -26,6 +15,18 @@ services:
       - ./prediction-models:./models:ro
     depends_on:
       - training
+    restart: unless-stopped
+    networks:
+      - energia-net
+
+  training:
+    image: tomtoomuch/energia-training
+    ports:
+      - "${TRAINING_PORT:-8005}:8005"
+    env_file:
+      - ./.env
+    volumes:
+      - ./prediction-models:./models
     restart: unless-stopped
     networks:
       - energia-net
