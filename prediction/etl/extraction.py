@@ -10,6 +10,7 @@ import requests
 RACINE_PROJET = Path(__file__).resolve().parent.parent
 DOSSIER_DATA = RACINE_PROJET / "data"
 
+
 ANNEE = 2025
 
 FICHIER_ELECTRICITE = DOSSIER_DATA / "eco2mix-regional.json"
