@@ -311,8 +311,10 @@ print("\nPremières prédictions pour chaque région :")
 
 for region, tableau in resultats_15min.groupby("libelle_region"):
     print("\nRégion :", region)
-    print(tableau.head(4).round(2).to_string(index=False))
 
-print("\nNombre de prédictions par région :")
-print(resultats_15min.groupby("libelle_region").size())
+    apercu = tableau.head(4).copy()
+    apercu["consommation_predite"] = (
+        apercu["consommation_predite"].round(2)
+    )
 
+    print(apercu.to_string(index=False))
