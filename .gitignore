@@ -21,3 +21,8 @@ ms-python-2/services/__pycache__
 ms-python-2/tests/__pycache__/
 mcp_server/__pycache__/**
 mcp_server/__pycache__/
+prediction/__pycache__/
+prediction/__pycache__/**
+prediction/data
+prediction/data/**
+prediction/data/dataset_final.csv

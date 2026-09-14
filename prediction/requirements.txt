@@ -1,0 +1,11 @@
+python-dotenv==1.0.1
+pandas
+matplotlib
+ollama
+mcp
+scikit-learn
+sklearn
+json
+pathlib
+joblib
+datetime
