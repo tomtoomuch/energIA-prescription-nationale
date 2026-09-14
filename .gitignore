@@ -26,3 +26,6 @@ prediction/__pycache__/**
 prediction/data
 prediction/data/**
 prediction/data/dataset_final.csv
+prediction/graphiques
+prediction/modeles
+prediction/predictions
