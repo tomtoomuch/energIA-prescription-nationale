@@ -1,6 +1,8 @@
 services:
   gateway:
-    build: ./gateway
+    build:
+      context: ./gateway
+      dockerfile: dockerfile
   ms-python:
     build:
       context: ./ms-python
@@ -16,4 +18,9 @@ services:
   mcp-server:
     build:
       context: ./mcp_server
+      dockerfile: dockerfile
+
+  prediction:
+    build:
+      context: ./prediction
       dockerfile: dockerfile

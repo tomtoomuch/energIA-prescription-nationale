@@ -1,9 +1,6 @@
 services:
   gateway:
-    build:
-      context: ./gateway
-      dockerfile: Dockerfile
-    image: energia-gateway
+    image: tomtoomuch/energia-gateway
     ports:
       - "${GATEWAY_PORT:-3000}:3000"
     env_file:
@@ -45,15 +42,25 @@ services:
       ollama run gemma4:e4b; 
       wait"
   mcp-server:
-    build:
-      context: ./mcp_server
-      dockerfile: dockerfile
-    image: energia-mcp-server
+    image: tomtoomuch/energia-mcp-server
     ports:
       - "${MCP_PORT_3:-8003}:8003"
     env_file:
       - ./.env
     depends_on:
       - ms-python-2
+      - llm
+    restart: unless-stopped
+
+  prediction:
+    image: tomtoomuch/energia-prediction
+    env_file:
+      - ./.env
+    volumes:
+      - ./prediction:/prediction
+    depends_on:
+      - gateway
+      - ms-python-2
+      - mcp-server
       - llm
     restart: unless-stopped
