@@ -26,3 +26,4 @@ prediction/__pycache__/**
 prediction/data
 prediction/data/**
 prediction/data/dataset_final.csv
+docker-compose.yml
