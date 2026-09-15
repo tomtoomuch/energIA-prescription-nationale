@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Application web sémantique et accessible."
+    >
+
+    <title>Application — Boilerplate</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         EN-TÊTE
+         ========================================================= -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a
+                class="site-logo"
+                href="#accueil"
+                aria-label="Retour à l'accueil"
+            >
+                <span aria-hidden="true">◆</span>
+                Mon Application
+            </a>
+
+            <nav
+                class="main-navigation"
+                aria-label="Navigation principale"
+            >
+                <ul>
+                    <li>
+                        <a href="#section-1">
+                            Section 1
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-2">
+                            Section 2
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-3">
+                            Section 3
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         CONTENU PRINCIPAL
+         ========================================================= -->
+
+    <main id="accueil" class="site-main">
+
+        <div class="horizontal-container">
+
+            <!-- SECTION 1 -->
+
+            <section
+                id="section-1"
+                class="content-section"
+                aria-labelledby="section-1-title"
+            >
+                <div class="section-content">
+
+                    <p class="section-kicker">
+                        01 — Introduction
+                    </p>
+
+                    <h1 id="section-1-title">
+                        Première section
+                    </h1>
+
+                    <p class="lead">
+                        Présentation du premier espace de contenu
+                        de l'application.
+                    </p>
+
+                    <p>
+                        Cette section constitue le premier panneau
+                        horizontal. Elle peut accueillir du contenu,
+                        des informations, des cartes ou toute autre
+                        interface métier.
+                    </p>
+
+                </div>
+            </section>
+
+
+            <!-- SECTION 2 -->
+
+            <section
+                id="section-2"
+                class="content-section"
+                aria-labelledby="section-2-title"
+            >
+                <div class="section-content">
+
+                    <p class="section-kicker">
+                        02 — Données
+                    </p>
+
+                    <h2 id="section-2-title">
+                        Deuxième section
+                    </h2>
+
+                    <p class="lead">
+                        Un second espace consacré aux données
+                        et aux fonctionnalités.
+                    </p>
+
+                    <p>
+                        Le déplacement horizontal est réalisé
+                        uniquement avec CSS grâce au système
+                        de défilement horizontal et aux ancres.
+                    </p>
+
+                </div>
+            </section>
+
+
+            <!-- SECTION 3 -->
+
+            <section
+                id="section-3"
+                class="content-section"
+                aria-labelledby="section-3-title"
+            >
+                <div class="section-content">
+
+                    <p class="section-kicker">
+                        03 — Analyse
+                    </p>
+
+                    <h2 id="section-3-title">
+                        Troisième section
+                    </h2>
+
+                    <p class="lead">
+                        Un troisième espace destiné à l'analyse,
+                        à la visualisation ou aux résultats.
+                    </p>
+
+                    <p>
+                        Cette architecture peut facilement être
+                        connectée à une application JavaScript,
+                        Angular ou autre framework.
+                    </p>
+
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         PIED DE PAGE FIXE
+         ========================================================= -->
+
+    <footer class="site-footer">
+
+        <!-- Navigation secondaire -->
+
+        <nav
+            class="footer-navigation"
+            aria-label="Navigation secondaire"
+        >
+            <h2 class="visually-hidden">
+                Navigation secondaire
+            </h2>
+
+            <ul>
+                <li>
+                    <a href="#accueil">
+                        Accueil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#section-1">
+                        Section 1
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#section-2">
+                        Section 2
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#section-3">
+                        Section 3
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!-- Chat LLM -->
+
+        <section
+            class="chat-panel"
+            aria-labelledby="chat-title"
+        >
+
+            <h2 id="chat-title">
+                Assistant IA
+            </h2>
+
+            <form class="chat-form">
+
+                <label for="chat-message">
+                    Votre message
+                </label>
+
+                <div class="chat-input-group">
+
+                    <input
+                        type="text"
+                        id="chat-message"
+                        name="message"
+                        autocomplete="off"
+                        placeholder="Posez votre question..."
+                    >
+
+                    <button type="submit">
+                        Envoyer
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Filtres -->
+
+        <section
+            class="filters-panel"
+            aria-labelledby="filters-title"
+        >
+
+            <h2 id="filters-title">
+                Filtres
+            </h2>
+
+            <div class="filter">
+
+                <label for="category">
+                    Catégorie
+                </label>
+
+                <select id="category" name="category">
+
+                    <option value="">
+                        Toutes les catégories
+                    </option>
+
+                    <option value="development">
+                        Développement
+                    </option>
+
+                    <option value="data">
+                        Données
+                    </option>
+
+                    <option value="ai">
+                        Intelligence artificielle
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+    </footer>
+
+</body>
+</html>

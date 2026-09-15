@@ -1,0 +1,335 @@
+/* 
+* =========================================
+* GLOBAL RESET ET VARIABLES DE THÈME
+* =========================================
+*/
+:root {
+    /* Bleu Nuit/Petrol */
+    --color-primary: #0A1931; /* Bleu Nuit profond */
+    --color-secondary-dark: #031627; /* Arrière-plan encore plus sombre */
+    --color-text-dark: #333;
+    --color-text-light: #f0f4f8;
+    
+    /* Jaune Électrique */
+    --color-accent: #FFD700; /* Or/Jaune électrique */
+    --color-accent-dark: #e6c200;
+    
+    /* Couleurs de fond et d'accentuation */
+    --color-background: #FFFFFF;
+    --color-section-alt: #F3F4F6;
+    --color-border: #ddd;
+}
+
+/* 
+ * =========================================
+ * STYLES GÉNÉRAUX & RÉINITIALISATION
+ * =========================================
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--color-text-dark);
+    background-color: #f7f9fb;
+}
+
+/* 
+ * =========================================
+ * 1. HEADER ET NAVIGATION PRINCIPALE
+ * =========================================
+*/
+.main-header {
+    background-color: var(--color-secondary-dark);
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.primary-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.primary-nav a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: block;
+    transition: color 0.3s, border-bottom 0.3s;
+    font-weight: 500;
+}
+
+.primary-nav a:hover, 
+.primary-nav a:focus {
+    color: var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+}
+
+
+/* 
+ * =========================================
+ * 2. CONTENEURS DE SECTIONS ET TITRES
+ * =========================================
+*/
+.content-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+.content-section {
+    padding: 80px 0;
+}
+
+.section-header {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 3px solid var(--color-accent);
+    display: block; 
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
+}
+
+/* Introduction (Hero) */
+.intro-section {
+    text-align: center;
+    padding: 100px 0;
+    background-color: var(--color-section-alt);
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.intro-section h1 {
+    font-size: 3.5rem;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+
+/* 
+ * =========================================
+ * 3. CARTES DE CONTENU (Horizontal Scroll)
+ * =========================================
+*/
+.horizontal-scroll {
+    background-color: var(--color-background);
+}
+
+.section-header {
+    /* Override pour les sections horizontales, aligné à gauche */
+    text-align: left;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.content-wrapper {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 20px; 
+    gap: 30px;
+    /* Masquer la barre de défilement */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.content-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.content-card {
+    flex: 0 0 350px; /* Largeur fixe pour les cartes */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--color-accent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* Important : empêche le rétrécissement */
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.content-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.content-card a {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+
+/* 
+ * =========================================
+ * 4. BOUTONS CTA (Call to Action)
+ * =========================================
+*/
+.cta-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    margin-right: 15px;
+}
+
+.cta-button.primary {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+}
+
+.cta-button.primary:hover {
+    background-color: var(--color-accent-dark);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.cta-button.secondary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.cta-group {
+    margin-top: 20px;
+}
+
+
+/* 
+ * =========================================
+ * 5. FOOTER ET MENU DÉROULANT
+ * =========================================
+*/
+.main-footer {
+    background-color: var(--color-secondary-dark);
+    color: #bbb;
+    padding: 40px 4%;
+    text-align: center;
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.secondary-nav {
+    /* Structure pour contenir le menu déroulant */
+    position: relative;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    background-color: var(--color-secondary-dark);
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 50;
+    list-style: none;
+    padding: 10px 0;
+    margin: 5px 0 0 0;
+    border-radius: 5px;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--color-text-light);
+}
+
+.dropdown-menu li:hover {
+    background-color: #1a2e47;
+    color: var(--color-accent);
+}
+
+/* 
+ * =========================================
+* 6. RESPONSIVITÉ (Adaptative)
+* =========================================
+*/
+@media (max-width: 1024px) {
+    /* Réduction des espaces entre les liens dans le menu principal */
+    .primary-nav ul {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Layout Mobile */
+    .main-header {
+        flex-direction: column;
+        padding: 1rem 20px;
+    }
+    .logo a {
+        margin-bottom: 15px;
+        display: block;
+    }
+    .primary-nav ul {
+        justify-content: space-around;
+        width: 100%;
+    }
+    
+    /* Les cartes s'étendent sur presque toute la largeur */
+    .content-card {
+        flex: 0 0 90%; 
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center; /* Centre le texte du copyright */
+    }
+}

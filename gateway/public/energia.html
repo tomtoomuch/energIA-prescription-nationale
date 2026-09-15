@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="EnergIA - Répartition intelligente de la production électrique"
+    >
+
+    <title>Application — Boilerplate</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="energia.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         EN-TÊTE
+         ========================================================= -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a
+                class="site-logo"
+                href="#section-accueil"
+                aria-label="Retour à l'accueil"
+            >
+                <span aria-hidden="true">◆</span>
+                EnergIA
+            </a>
+
+            <nav
+                class="main-navigation"
+                aria-label="Navigation principale"
+            >
+                <ul>
+                    <li>
+                        <a href="#section-1">
+                            Régional
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-2">
+                            National - SAD
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-3">
+                            Données
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         CONTENU PRINCIPAL
+         ========================================================= -->
+
+    <main id="accueil" class="site-main">
+
+        <div class="horizontal-container">
+            
+            <!-- SECTION ACCUEIL -->
+
+            <section
+                id="section-accueil"
+                class="content-section"
+                aria-labelledby="section-accueil-title"
+            >
+                <article class="section-content">
+
+                    <p class="section-kicker">
+                        00 — Projet EnergIA
+                    </p>
+
+                    <h1 id="section-1-title">
+                        Répartition intelligente de la production
+                    </h1>
+
+                    <p class="lead">
+                        Présentation du projet dans son ensemble.
+                    </p>
+
+                    <p>
+                        Outils, usages, objectifs, stack....
+                    </p>
+
+                </article>
+            </section>
+
+            <!-- SECTION MOTEUR REGIONAL -->
+
+            <section
+                id="section-1"
+                class="content-section"
+                aria-labelledby="section-1-title"
+            >
+                <article class="app section-content">
+
+                    <p class="section-kicker">
+                        01 — Moteur régional
+                    </p>
+
+                    <h1 id="section-1-title">
+                        Prototype EnergIA
+                    </h1>
+
+                    <div id="proto-energia">
+                        
+                        <div id="sidebar">
+
+                            <form id="sim-form">
+                                <label for="region-select">Région en surconsommation</label>
+                                <select id="region-select" required>
+                                    <option value="" disabled selected>Choisir une région...</option>
+                                </select>
+
+                                <label for="demand-input">Hausse de consommation (MW)</label>
+                                <input id="demand-input" type="number" min="1" step="1" placeholder="ex: 500" required />
+
+                                <button type="submit">Lancer la simulation</button>
+                            </form>
+
+                            <div id="error-box"></div>
+
+                            <div class="legend">
+                                <span><span class="dot" style="background:#22c55e"></span>Marge confortable</span>
+                                <span><span class="dot" style="background:#f59e0b"></span>Charge élevée</span>
+                                <span><span class="dot" style="background:#ef4444"></span>Presque saturée</span>
+                                <span><span class="dot" style="background:#9ca3af"></span>Indisponible</span>
+                            </div>
+
+                            <div id="results">
+
+                            </div>
+                    
+                        </div>
+
+                        <div id="map">
+
+                        </div>
+                    </div>
+
+                </article>
+            </section>
+
+            <!-- SECTION MOTEUR NATIONAL -->
+
+            <section
+                id="section-2"
+                class="content-section"
+                aria-labelledby="section-2-title"
+            >
+                <article class="section-content">
+
+                    <p class="section-kicker">
+                        02 — Moteur national
+                    </p>
+
+                    <h2 id="section-2-title">
+                        Assistant d'aide à la décision
+                    </h2>
+
+                    <form id="assistant-form">
+                        <label for="assistant-question">
+                        Saisissez votre question à EnergIA
+                        </label>
+
+                        <textarea
+                        id="assistant-question"
+                        placeholder="consommation occitanie 18:00"
+                        required
+                        >consommation occitanie 18:00
+                        </textarea>
+
+                        <button
+                        id="assistant-button"
+                        type="submit"
+                        >
+                        Envoyer la question
+                        </button>
+                    </form>
+
+                    <div id="assistant-error"></div>
+
+                    <div id="assistant-process" hidden></div>
+                    
+                    <div id="assistant-data" hidden></div>
+
+                    <div id="assistant-answer" hidden></div>
+
+                </article>
+            </section>
+
+
+            <!-- SECTION 3 -->
+
+            <section
+                id="section-3"
+                class="content-section"
+                aria-labelledby="section-3-title"
+            >
+                <article class="section-content">
+
+                    <p class="section-kicker">
+                        03 — Données
+                    </p>
+
+                    <h2 id="section-3-title">
+                        Exploration des données et visualisations
+                    </h2>
+
+                    <p class="lead">
+                        Un troisième espace destiné à l'analyse,
+                        à la visualisation ou aux résultats.
+                    </p>
+
+                    <div class="selecteurs">
+                        <label for="region">Région
+                            <select id="region"><option value="">Chargement des régions…</option></select>
+                        </label>
+                        <label for="mois">Mois de 2025
+                            <select id="mois"><option value="">Choisissez une région</option></select>
+                        </label>
+                    </div>
+
+                    <p id="message" role="status" aria-live="polite"></p>
+                    
+                    <div id="resultats" hidden>
+                    
+                        <section>
+                            <h2>Consommation réelle et prédite</h2>
+                            <p>La courbe bleue représente les observations disponibles. La courbe orange représente les estimations du modèle aux mêmes horaires. La MAE du mois figure dans le titre de l’image.</p>
+                            <img id="comparaison" alt="" loading="lazy">
+                        </section>
+                    
+                        <section>
+                            <h2>Corrélations</h2>
+                            <p>Cette matrice décrit les liens statistiques entre variables observées. Une corrélation ne démontre pas une relation de cause à effet.</p>
+                            <img id="correlation" alt="" loading="lazy">
+                        </section>
+                    </div>
+
+                    <aside>
+                        <h2>Évaluation par région</h2>
+                        <p>Le fichier d’évaluation actuel regroupe les résultats de validation par région. Ses valeurs ne correspondent pas au mois sélectionné.</p>
+                        <a href="/graphiques/evaluation/erreurs_par_region.csv" download>Télécharger le CSV d’évaluation</a>
+                    </aside>
+
+                </article>
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         PIED DE PAGE FIXE
+         ========================================================= -->
+
+    <footer class="site-footer">
+
+        <!-- Navigation secondaire -->
+
+        <!--nav
+            class="footer-navigation"
+            aria-label="Navigation secondaire"
+        >
+            <h2 class="visually-hidden">
+                Navigation secondaire
+            </h2>
+
+            <ul>
+                <li>
+                    <a href="#section-accueil">
+                        Accueil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#section-1">
+                        Section 1
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#section-2">
+                        Section 2
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#section-3">
+                        Section 3
+                    </a>
+                </li>
+            </ul>
+        </nav-->
+
+
+        <!-- Chat LLM -->
+
+        <!--section
+            class="chat-panel"
+            aria-labelledby="chat-title"
+        >
+
+            <h2 id="chat-title">
+                Assistant IA
+            </h2>
+
+            <form class="chat-form">
+
+                <label for="chat-message">
+                    Votre message
+                </label>
+
+                <div class="chat-input-group">
+
+                    <input
+                        type="text"
+                        id="chat-message"
+                        name="message"
+                        autocomplete="off"
+                        placeholder="Posez votre question..."
+                    >
+
+                    <button type="submit">
+                        Envoyer
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section-->
+
+
+        <!-- Filtres -->
+
+        <!--section
+            class="filters-panel"
+            aria-labelledby="filters-title"
+        >
+
+            <h2 id="filters-title">
+                Filtres
+            </h2>
+
+            <div class="filter">
+
+                <label for="category">
+                    Catégorie
+                </label>
+
+                <select id="category" name="category">
+
+                    <option value="">
+                        Toutes les catégories
+                    </option>
+
+                    <option value="development">
+                        Développement
+                    </option>
+
+                    <option value="data">
+                        Données
+                    </option>
+
+                    <option value="ai">
+                        Intelligence artificielle
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section-->
+
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./input_checks.js"></script>
+    <script src="./graphismes.js"></script>
+</body>
+</html>
