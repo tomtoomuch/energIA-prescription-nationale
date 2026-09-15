@@ -8,6 +8,8 @@ services:
       - "${GATEWAY_PORT:-3000}:3000"
     env_file:
       - ./.env
+    volumes:
+      - ./prediction/graphiques:/app/prediction-graphiques:ro
     depends_on:
       - ms-python
       - ms-python-2
@@ -40,10 +42,11 @@ services:
     restart: unless-stopped
     entrypoint: >
       /bin/sh -c "
-      ollama serve & 
-      sleep 5; 
-      ollama run gemma4:e4b; 
+      ollama serve &
+      sleep 5;
+      ollama run gemma4:e4b;
       wait"
+
   mcp-server:
     build:
       context: ./mcp_server
