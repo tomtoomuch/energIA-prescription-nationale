@@ -1,5 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
 
@@ -10,13 +12,14 @@
 
     <meta
         name="description"
-        content="Application web sémantique et accessible."
+        content="EnergIA — plateforme d'aide à la décision pour la distribution énergétique."
     >
 
-    <title>Application — Boilerplate</title>
+    <title>EnergIA — Distribution énergétique intelligente</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="new-style.css">
 </head>
+
 
 <body>
 
@@ -24,42 +27,47 @@
          EN-TÊTE
          ========================================================= -->
 
-    <header class="site-header">
+    <header id="entete" class="site-header">
 
-        <div class="header-inner">
+        <div class="contenu-entete">
 
             <a
                 class="site-logo"
-                href="#accueil"
-                aria-label="Retour à l'accueil"
+                href="#section-accueil"
+                aria-label="EnergIA — retour à l'accueil"
             >
                 <span aria-hidden="true">◆</span>
-                Mon Application
+                <span>EnergIA</span>
             </a>
+
 
             <nav
                 class="main-navigation"
                 aria-label="Navigation principale"
             >
+
                 <ul>
+
                     <li>
                         <a href="#section-1">
-                            Section 1
+                            Prescription régionale
                         </a>
                     </li>
 
                     <li>
                         <a href="#section-2">
-                            Section 2
+                            Prescription nationale
                         </a>
                     </li>
 
                     <li>
                         <a href="#section-3">
-                            Section 3
+                            Assistant à la décision
                         </a>
                     </li>
+
                 </ul>
+
             </nav>
 
         </div>
@@ -71,104 +79,623 @@
          CONTENU PRINCIPAL
          ========================================================= -->
 
-    <main id="accueil" class="site-main">
+    <main
+        id="accueil"
+        class="site-main"
+    >
 
         <div class="horizontal-container">
 
-            <!-- SECTION 1 -->
+
+            <!-- =================================================
+                 ACCUEIL
+                 ================================================= -->
 
             <section
-                id="section-1"
-                class="content-section"
-                aria-labelledby="section-1-title"
+                id="section-accueil"
+                class="content-section content-section--home"
+                aria-labelledby="section-accueil-title"
             >
+
                 <div class="section-content">
 
                     <p class="section-kicker">
-                        01 — Introduction
+                        00 — Projet EnergIA
                     </p>
 
-                    <h1 id="section-1-title">
-                        Première section
+                    <h1 id="section-accueil-title">
+                        Aide à la décision
                     </h1>
 
                     <p class="lead">
-                        Présentation du premier espace de contenu
-                        de l'application.
+                        EnergIA propose une plateforme d'aide à la
+                        décision destinée au pilotage d'un réseau de
+                        parcs de production d'énergie pour les régions
+                        françaises.
                     </p>
 
                     <p>
-                        Cette section constitue le premier panneau
-                        horizontal. Elle peut accueillir du contenu,
-                        des informations, des cartes ou toute autre
-                        interface métier.
+                        Le moteur est capable de recommander une
+                        répartition de la production lorsqu'une région
+                        connaît une hausse de sa consommation.
                     </p>
 
+                    <p>
+                        L'application s'appuie sur l'algorithmie,
+                        une architecture en microservices et des
+                        tests unitaires permettant de sécuriser
+                        les différentes briques fonctionnelles.
+                    </p>
+
+
+                    <div class="home-features">
+
+                        <div class="feature-card">
+
+                            <span
+                                class="feature-icon"
+                                aria-hidden="true"
+                            >
+                                ↗
+                            </span>
+
+                            <h2>
+                                Prescrire
+                            </h2>
+
+                            <p>
+                                Déterminer une répartition adaptée
+                                de la production énergétique.
+                            </p>
+
+                        </div>
+
+
+                        <div class="feature-card">
+
+                            <span
+                                class="feature-icon"
+                                aria-hidden="true"
+                            >
+                                ◈
+                            </span>
+
+                            <h2>
+                                Analyser
+                            </h2>
+
+                            <p>
+                                Exploiter les données territoriales
+                                et énergétiques disponibles.
+                            </p>
+
+                        </div>
+
+
+                        <div class="feature-card">
+
+                            <span
+                                class="feature-icon"
+                                aria-hidden="true"
+                            >
+                                ?
+                            </span>
+
+                            <h2>
+                                Décider
+                            </h2>
+
+                            <p>
+                                Interroger EnergIA pour obtenir
+                                une aide contextualisée.
+                            </p>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             </section>
 
 
-            <!-- SECTION 2 -->
+            <!-- =================================================
+                 PRESCRIPTION RÉGIONALE
+                 ================================================= -->
+
+            <section
+                id="section-1"
+                class="content-section content-section--regional"
+                aria-labelledby="section-1-title"
+            >
+
+                <div class="section-content section-content--wide">
+
+                    <header class="section-header">
+
+                        <div>
+
+                            <p class="section-kicker">
+                                01 — Moteur prescriptif régional
+                            </p>
+
+                            <h2 id="section-1-title">
+                                Prescription régionale
+                            </h2>
+
+                            <p class="lead">
+                                Répartition prescriptive de la
+                                production nucléaire en France.
+                            </p>
+
+                        </div>
+
+
+                        <div class="section-status">
+
+                            <span
+                                class="status-indicator"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span>
+                                Moteur disponible
+                            </span>
+
+                        </div>
+
+                    </header>
+
+
+                    <div class="regional-layout">
+
+
+                        <!-- PARAMÈTRES -->
+
+                        <div class="control-panel">
+
+                            <h3>
+                                Paramètres de simulation
+                            </h3>
+
+
+                            <form id="sim-form">
+
+                                <div class="form-field">
+
+                                    <label for="region-select">
+                                        Région en surconsommation
+                                    </label>
+
+                                    <select
+                                        id="region-select"
+                                        name="region"
+                                        required
+                                    >
+
+                                        <option
+                                            value=""
+                                            disabled
+                                            selected
+                                        >
+                                            Choisir une région...
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-field">
+
+                                    <label for="demand-input">
+                                        Hausse de consommation
+                                        <span>(MW)</span>
+                                    </label>
+
+                                    <input
+                                        id="demand-input"
+                                        name="demand"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        inputmode="numeric"
+                                        placeholder="Ex. : 500"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="primary-button"
+                                >
+                                    <span aria-hidden="true">
+                                        ▶
+                                    </span>
+
+                                    Lancer la simulation
+                                </button>
+
+                            </form>
+
+
+                            <div
+                                id="error-box"
+                                class="message message--error"
+                                role="alert"
+                                aria-live="assertive"
+                            ></div>
+
+
+                            <div class="legend">
+
+                                <h3>
+                                    Niveau de charge
+                                </h3>
+
+                                <ul>
+
+                                    <li>
+                                        <span
+                                            class="dot dot--comfortable"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Marge confortable
+                                    </li>
+
+                                    <li>
+                                        <span
+                                            class="dot dot--high"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Charge élevée
+                                    </li>
+
+                                    <li>
+                                        <span
+                                            class="dot dot--critical"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Presque saturée
+                                    </li>
+
+                                    <li>
+                                        <span
+                                            class="dot dot--offline"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Indisponible
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RÉSULTATS -->
+
+                        <div
+                            id="results"
+                            class="results-panel"
+                            aria-live="polite"
+                            aria-atomic="false"
+                        >
+
+                            <div class="results-empty">
+
+                                <span
+                                    class="results-empty-icon"
+                                    aria-hidden="true"
+                                >
+                                    ◌
+                                </span>
+
+                                <h3>
+                                    En attente d'une simulation
+                                </h3>
+
+                                <p>
+                                    Sélectionnez une région et indiquez
+                                    une hausse de consommation pour
+                                    obtenir une recommandation.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CARTE -->
+
+                        <div
+                            id="map"
+                            class="map-panel"
+                            role="img"
+                            aria-label="Carte interactive des régions françaises"
+                        >
+
+                            <div class="map-placeholder">
+
+                                <span aria-hidden="true">
+                                    ◇
+                                </span>
+
+                                <p>
+                                    Carte énergétique
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PRESCRIPTION NATIONALE
+                 ================================================= -->
 
             <section
                 id="section-2"
-                class="content-section"
+                class="content-section content-section--national"
                 aria-labelledby="section-2-title"
             >
-                <div class="section-content">
 
-                    <p class="section-kicker">
-                        02 — Données
-                    </p>
+                <div class="section-content section-content--wide">
 
-                    <h2 id="section-2-title">
-                        Deuxième section
-                    </h2>
+                    <header class="section-header">
 
-                    <p class="lead">
-                        Un second espace consacré aux données
-                        et aux fonctionnalités.
-                    </p>
+                        <div>
 
-                    <p>
-                        Le déplacement horizontal est réalisé
-                        uniquement avec CSS grâce au système
-                        de défilement horizontal et aux ancres.
-                    </p>
+                            <p class="section-kicker">
+                                02 — Moteur prescriptif national
+                            </p>
+
+                            <h2 id="section-2-title">
+                                Prescription nationale
+                            </h2>
+
+                            <p class="lead">
+                                Vision globale de la répartition
+                                énergétique à l'échelle du territoire.
+                            </p>
+
+                        </div>
+
+                    </header>
+
+
+                    <div class="national-dashboard">
+
+                        <div class="metric-card">
+
+                            <span class="metric-label">
+                                Production disponible
+                            </span>
+
+                            <strong
+                                class="metric-value"
+                                id="national-production"
+                            >
+                                —
+                            </strong>
+
+                            <span class="metric-unit">
+                                MW
+                            </span>
+
+                        </div>
+
+
+                        <div class="metric-card">
+
+                            <span class="metric-label">
+                                Consommation nationale
+                            </span>
+
+                            <strong
+                                class="metric-value"
+                                id="national-consumption"
+                            >
+                                —
+                            </strong>
+
+                            <span class="metric-unit">
+                                MW
+                            </span>
+
+                        </div>
+
+
+                        <div class="metric-card">
+
+                            <span class="metric-label">
+                                Marge disponible
+                            </span>
+
+                            <strong
+                                class="metric-value"
+                                id="national-margin"
+                            >
+                                —
+                            </strong>
+
+                            <span class="metric-unit">
+                                MW
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="national-content">
+
+                        <div class="information-card">
+
+                            <h3>
+                                Répartition nationale
+                            </h3>
+
+                            <p>
+                                Cette vue permet de consolider les
+                                besoins régionaux afin d'étudier leur
+                                impact sur l'équilibre global du réseau.
+                            </p>
+
+                            <div
+                                id="national-results"
+                                aria-live="polite"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="information-card">
+
+                            <h3>
+                                État du réseau
+                            </h3>
+
+                            <p>
+                                Les indicateurs nationaux pourront être
+                                alimentés par les données issues du
+                                moteur prescriptif et des services
+                                énergétiques.
+                            </p>
+
+                            <div
+                                id="national-status"
+                                aria-live="polite"
+                            ></div>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
             </section>
 
 
-            <!-- SECTION 3 -->
+            <!-- =================================================
+                 ASSISTANT À LA DÉCISION
+                 ================================================= -->
 
             <section
                 id="section-3"
-                class="content-section"
+                class="content-section content-section--assistant"
                 aria-labelledby="section-3-title"
             >
-                <div class="section-content">
 
-                    <p class="section-kicker">
-                        03 — Analyse
-                    </p>
+                <div class="section-content section-content--assistant">
 
-                    <h2 id="section-3-title">
-                        Troisième section
-                    </h2>
+                    <header class="section-header">
 
-                    <p class="lead">
-                        Un troisième espace destiné à l'analyse,
-                        à la visualisation ou aux résultats.
-                    </p>
+                        <div>
 
-                    <p>
-                        Cette architecture peut facilement être
-                        connectée à une application JavaScript,
-                        Angular ou autre framework.
-                    </p>
+                            <p class="section-kicker">
+                                03 — Intelligence artificielle
+                            </p>
+
+                            <h2 id="section-3-title">
+                                Assistant à la décision
+                            </h2>
+
+                            <p class="lead">
+                                Interrogez EnergIA en langage naturel
+                                pour explorer les données énergétiques
+                                disponibles.
+                            </p>
+
+                        </div>
+
+                    </header>
+
+
+                    <div class="assistant-interface">
+
+                        <form id="assistant-form">
+
+                            <div class="form-field">
+
+                                <label for="assistant-question">
+                                    Votre question à EnergIA
+                                </label>
+
+                                <textarea
+                                    id="assistant-question"
+                                    name="question"
+                                    rows="4"
+                                    placeholder="Ex. : consommation Occitanie à 18:00"
+                                    required
+                                >consommation occitanie 18:00</textarea>
+
+                            </div>
+
+
+                            <button
+                                id="assistant-button"
+                                type="submit"
+                                class="primary-button"
+                            >
+                                <span aria-hidden="true">
+                                    →
+                                </span>
+
+                                Envoyer la question
+                            </button>
+
+                        </form>
+
+
+                        <div
+                            id="assistant-error"
+                            class="message message--error"
+                            role="alert"
+                            aria-live="assertive"
+                        ></div>
+
+
+                        <div
+                            id="assistant-process"
+                            class="assistant-block"
+                            aria-live="polite"
+                            hidden
+                        ></div>
+
+
+                        <div
+                            id="assistant-data"
+                            class="assistant-block"
+                            aria-live="polite"
+                            hidden
+                        ></div>
+
+
+                        <div
+                            id="assistant-answer"
+                            class="assistant-answer"
+                            aria-live="polite"
+                            hidden
+                        ></div>
+
+                    </div>
 
                 </div>
+
             </section>
 
         </div>
@@ -177,88 +704,155 @@
 
 
     <!-- =========================================================
-         PIED DE PAGE FIXE
+         ASSISTANT FLOTTANT
+         ========================================================= -->
+
+    <aside
+        class="assistant-drawer"
+        aria-labelledby="quick-assistant-title"
+    >
+
+        <details>
+
+            <summary>
+
+                <span
+                    class="assistant-avatar"
+                    aria-hidden="true"
+                >
+                    AI
+                </span>
+
+                <span class="assistant-summary-content">
+
+                    <strong id="quick-assistant-title">
+                        Assistant EnergIA
+                    </strong>
+
+                    <span>
+                        Interroger les données
+                    </span>
+
+                </span>
+
+            </summary>
+
+
+            <div class="assistant-drawer-content">
+
+                <form class="chat-form">
+
+                    <div class="form-field">
+
+                        <label for="chat-message">
+                            Question rapide
+                        </label>
+
+                        <input
+                            type="text"
+                            id="chat-message"
+                            name="message"
+                            autocomplete="off"
+                            placeholder="Posez votre question..."
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Envoyer
+                    </button>
+
+                </form>
+
+
+                <div
+                    id="chat-answer"
+                    class="chat-answer"
+                    aria-live="polite"
+                >
+                    <span aria-hidden="true">◇</span>
+
+                    <p>
+                        Votre assistant EnergIA est prêt.
+                    </p>
+                </div>
+
+            </div>
+
+        </details>
+
+    </aside>
+
+
+    <!-- =========================================================
+         PIED DE PAGE / BARRE APPLICATIVE
          ========================================================= -->
 
     <footer class="site-footer">
 
-        <!-- Navigation secondaire -->
+
+        <!-- NAVIGATION DÉROULANTE -->
 
         <nav
             class="footer-navigation"
-            aria-label="Navigation secondaire"
+            aria-label="Navigation de l'application"
         >
-            <h2 class="visually-hidden">
-                Navigation secondaire
-            </h2>
 
-            <ul>
-                <li>
-                    <a href="#accueil">
-                        Accueil
-                    </a>
-                </li>
+            <details class="navigation-menu">
 
-                <li>
-                    <a href="#section-1">
-                        Section 1
-                    </a>
-                </li>
+                <summary>
+                    <span aria-hidden="true">
+                        ☰
+                    </span>
 
-                <li>
-                    <a href="#section-2">
-                        Section 2
-                    </a>
-                </li>
+                    <span>
+                        Navigation
+                    </span>
+                </summary>
 
-                <li>
-                    <a href="#section-3">
-                        Section 3
-                    </a>
-                </li>
-            </ul>
+
+                <ul>
+
+                    <li>
+                        <a href="#section-accueil">
+                            <span aria-hidden="true">00</span>
+                            Accueil
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-1">
+                            <span aria-hidden="true">01</span>
+                            Régional
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-2">
+                            <span aria-hidden="true">02</span>
+                            National
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#section-3">
+                            <span aria-hidden="true">03</span>
+                            Assistant
+                        </a>
+                    </li>
+
+                </ul>
+
+            </details>
+
         </nav>
 
 
-        <!-- Chat LLM -->
-
-        <section
-            class="chat-panel"
-            aria-labelledby="chat-title"
-        >
-
-            <h2 id="chat-title">
-                Assistant IA
-            </h2>
-
-            <form class="chat-form">
-
-                <label for="chat-message">
-                    Votre message
-                </label>
-
-                <div class="chat-input-group">
-
-                    <input
-                        type="text"
-                        id="chat-message"
-                        name="message"
-                        autocomplete="off"
-                        placeholder="Posez votre question..."
-                    >
-
-                    <button type="submit">
-                        Envoyer
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-
-        <!-- Filtres -->
+        <!-- FILTRES -->
 
         <section
             class="filters-panel"
@@ -269,28 +863,36 @@
                 Filtres
             </h2>
 
+
             <div class="filter">
 
                 <label for="category">
-                    Catégorie
+                    Domaine
                 </label>
 
-                <select id="category" name="category">
+                <select
+                    id="category"
+                    name="category"
+                >
 
                     <option value="">
-                        Toutes les catégories
+                        Toutes les données
                     </option>
 
-                    <option value="development">
-                        Développement
+                    <option value="production">
+                        Production
                     </option>
 
-                    <option value="data">
-                        Données
+                    <option value="consumption">
+                        Consommation
                     </option>
 
-                    <option value="ai">
-                        Intelligence artificielle
+                    <option value="regional">
+                        Régional
+                    </option>
+
+                    <option value="national">
+                        National
                     </option>
 
                 </select>
@@ -299,7 +901,25 @@
 
         </section>
 
-    </footer>
 
+        <!-- ÉTAT DE L'APPLICATION -->
+
+        <div class="footer-status">
+
+            <span
+                class="status-indicator"
+                aria-hidden="true"
+            ></span>
+
+            <span>
+                EnergIA opérationnel
+            </span>
+
+        </div>
+
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./input_checks.js"></script>
 </body>
 </html>
+```
