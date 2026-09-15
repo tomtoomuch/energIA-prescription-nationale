@@ -729,21 +729,6 @@ def main():
     )
 
     # afficher quelques horaires pour chaque région
-
-    # afficher quelques horaires pour la première région
-    print("\nPremières prédictions pour chaque région :")
-
-    for region, tableau in resultats_15min.groupby("libelle_region"):
-        print("\nRégion :", region)
-
-        apercu = tableau.head(4).copy()
-        apercu["consommation_predite"] = (
-            apercu["consommation_predite"].round(2)
-        )
-
-        print(apercu.to_string(index=False))
-
-
     print("\nPremières prédictions pour chaque région :")
 
     for region, tableau in resultats_15min.groupby(

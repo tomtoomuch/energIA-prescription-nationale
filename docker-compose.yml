@@ -8,6 +8,8 @@ services:
       - "${GATEWAY_PORT:-3000}:3000"
     env_file:
       - ./.env
+    volumes:
+      - ./prediction/graphiques:/app/prediction-graphiques:ro
     depends_on:
       - ms-python
       - ms-python-2
