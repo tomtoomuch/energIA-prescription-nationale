@@ -13,23 +13,40 @@ services:
     depends_on:
       - ms-python
       - ms-python-2
+      - prediction-api
       - mcp-server
     restart: unless-stopped
 
   ms-python:
-    image: tomtoomuch/energia-ms-python
+    build:
+      context: ./ms-python
+      dockerfile: dockerfile
+    image: energia-ms-python-local
     ports:
       - "${PYTHON_PORT:-8000}:8000"
     env_file:
-      - .env
+      - ./.env
     restart: unless-stopped
 
   ms-python-2:
-    image: tomtoomuch/energia-ms-python-2
+    build:
+      context: ./ms-python-2
+      dockerfile: dockerfile
+    image: energia-ms-python-2-local
     ports:
       - "${PYTHON_PORT_2:-8002}:8002"
     env_file:
-      - .env
+      - ./.env
+    restart: unless-stopped
+
+  prediction-api:
+    build:
+      context: ./prediction
+      dockerfile: dockerfile
+    image: energia-prediction-api
+    volumes:
+      - ./prediction/modeles:/app/modeles:ro
+      - ./prediction/data:/app/data:ro
     restart: unless-stopped
 
   llm:
@@ -38,7 +55,6 @@ services:
       - "11434:11434"
     volumes:
       - ./llm:/root/.ollama
-    pull_policy: always
     restart: unless-stopped
     entrypoint: >
       /bin/sh -c "
@@ -58,5 +74,6 @@ services:
       - ./.env
     depends_on:
       - ms-python-2
+      - prediction-api
       - llm
     restart: unless-stopped
