@@ -2,6 +2,10 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+
 import requests
 
 
@@ -105,6 +109,13 @@ def telecharger_electricite(url, chemin_fichier):
 
     # L'export récupère toutes les lignes de chaque mois, sans limite de 1000.
     with requests.Session() as session:
+        attente = Retry(
+            total=4,
+            status_forcelist=[429],
+            backoff_factor=10,
+            respect_retry_after_header=True,
+        )
+        session.mount("https://", HTTPAdapter(max_retries=attente))
         for mois in range(1, 13):
             debut = date(ANNEE, mois, 1)
             fin = (
