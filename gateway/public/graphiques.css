@@ -1,0 +1,13 @@
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: #17233b; background: #f4f7fb; }
+header { background: #152b4c; color: white; padding: 1rem max(1rem, calc((100vw - 1100px)/2)); display: flex; justify-content: space-between; gap: 1rem; }
+header a { color: white; font-weight: 700; text-decoration: none; }
+main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem 3rem; }
+h1 { margin-bottom: .3rem; }
+.selecteurs { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0 1rem; }
+label { display: grid; gap: .4rem; font-weight: 650; min-width: min(100%, 260px); }
+select { font: inherit; padding: .65rem; border: 1px solid #98abc7; border-radius: .5rem; background: white; }
+section, aside { background: white; border-radius: .8rem; padding: 1.25rem; margin-top: 1.25rem; box-shadow: 0 3px 14px #152b4c12; }
+section img { display: block; max-width: 100%; height: auto; margin: 1rem auto 0; }
+aside a { color: #1559a5; }
+#message { min-height: 1.5em; }

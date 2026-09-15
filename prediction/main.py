@@ -1,55 +1,28 @@
-from datetime import date, timedelta
+from fastapi import FastAPI
+from pydantic import BaseModel
+import joblib
+import pandas as pd
 
-def telecharger_calendrier(annee, chemin_fichier):
-    url = (
-        "https://calendrier.api.gouv.fr/jours-feries/"
-        f"metropole/{annee}.json"
-    )
+from prediction.etl.dataframe import creer_dataframe
 
-    reponse = requests.get(url, timeout=30)
-    reponse.raise_for_status()
-    jours_feries = reponse.json()
+app = FastAPI(title="API de Prédiction - Modèle régressif")
 
-    calendrier = []
-    jour = date(annee, 1, 1)
+# Charger le modèle de régression pré-entraîné au démarrage
+model = joblib.load("./modeles/modele_consommation.joblib")
 
-    while jour.year == annee:
-        date_texte = jour.isoformat()
+# Définir le format des données d'entrée
+class PredictionInput(BaseModel):
+    feature_1: float
+    feature_2: float
+    feature_3: float
 
-        calendrier.append({
-            "date": date_texte,
-            "jour_semaine": jour.weekday(),  # Lundi = 0, dimanche = 6
-            "weekend": jour.weekday() >= 5,
-            "ferie": date_texte in jours_feries,
-            "nom_ferie": jours_feries.get(date_texte),
-        })
-
-        jour += timedelta(days=1)
-
-    chemin = Path(chemin_fichier)
-    chemin.parent.mkdir(parents=True, exist_ok=True)
-
-
-    with chemin.open("w", encoding="utf-8") as fichier:
-        json.dump(calendrier, fichier, indent=2, ensure_ascii=False)
-
-    print(f"Calendrier créé : {chemin.resolve()}")
-    return str(chemin)
-    dossier = Path(file).resolve().parent
-
-    telecharger_calendrier(
-        2026,
-        dossier / "data" / "calendrier-2026.json",
-    )
-
-    with chemin.open("w", encoding="utf-8") as fichier:
-        json.dump(donnees, fichier, indent=2, ensure_ascii=False)
-
-    print(f"Nombre de mesures : {len(donnees.get('records', []))}")
-    print(f"Fichier créé ici : {chemin.resolve()}")
-
-    return str(chemin)
-
-
-if __name__ == "__main__":
-    telecharger_json(URL_API, FICHIER_SORTIE)
+@app.post("/predict")
+def predict(data: PredictionInput):
+    # Convertir les données reçues en DataFrame pour le modèle
+    input_df = pd.DataFrame([data.model_dump()])
+    
+    # Faire la prédiction (retourne un tableau, ex: [24.5])
+    prediction = model.predict(input_df)
+    
+    # Retourner le résultat sous forme de float
+    return {"prediction": float(prediction[0])}

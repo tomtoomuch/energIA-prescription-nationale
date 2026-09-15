@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const path = require("path");
+const fs = require("fs");
 const port = process.env.GATEWAY_PORT || 3000;
 const SECURITY_TOKEN = process.env.SECURITY_TOKEN;
 
@@ -32,6 +33,43 @@ const PYTHON_TRAINING_URL = (
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
+// Les graphiques produits par prediction sont montés en lecture seule dans Docker.
+const GRAPHIQUES_DIR = process.env.GRAPHIQUES_DIR || path.join(__dirname, "prediction-graphiques");
+const NOMS_REGIONS = {
+    auvergne_rhone_alpes: "Auvergne-Rhône-Alpes",
+    bourgogne_franche_comte: "Bourgogne-Franche-Comté",
+    bretagne: "Bretagne",
+    centre_val_de_loire: "Centre-Val de Loire",
+    grand_est: "Grand Est",
+    hauts_de_france: "Hauts-de-France",
+    ile_de_france: "Île-de-France",
+    normandie: "Normandie",
+    nouvelle_aquitaine: "Nouvelle-Aquitaine",
+    occitanie: "Occitanie",
+    pays_de_la_loire: "Pays de la Loire",
+    provence_alpes_cote_d_azur: "Provence-Alpes-Côte d’Azur",
+};
+
+app.get("/api/graphiques", (req, res) => {
+    const regions = Object.entries(NOMS_REGIONS).map(([id, nom]) => {
+        const mois = Array.from({ length: 12 }, (_, i) =>
+            `2025-${String(i + 1).padStart(2, "0")}`
+        ).filter((mois) =>
+            ["correlations", "reel_predit"].every((categorie) => {
+                const prefixe = categorie === "correlations" ? "correlation" : "reel_predit";
+                return fs.existsSync(path.join(GRAPHIQUES_DIR, categorie, id, `${prefixe}_${mois}.png`));
+            })
+        );
+        return { id, nom, mois };
+    }).filter((region) => region.mois.length > 0);
+
+    res.json({ regions });
+});
+
+app.use("/graphiques", express.static(GRAPHIQUES_DIR, { fallthrough: false }));
+
+
 
 function pythonHeaders() {
     return { "x-api-key": SECURITY_TOKEN };

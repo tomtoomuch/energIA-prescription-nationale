@@ -5,9 +5,12 @@ services:
       - "${GATEWAY_PORT:-3000}:3000"
     env_file:
       - ./.env
+    volumes:
+      - ./prediction/graphiques:/app/prediction-graphiques:ro
     depends_on:
       - ms-python
       - ms-python-2
+      - prediction-api
       - mcp-server
       - prediction
       - training
@@ -16,21 +19,37 @@ services:
       - energia-net
 
   ms-python:
+    build:
+      context: ./ms-python
+      dockerfile: dockerfile
     image: tomtoomuch/energia-ms-python
     ports:
       - "${PYTHON_PORT:-8000}:8000"
     env_file:
-      - .env
+      - ./.env
     restart: unless-stopped
     networks:
       - energia-net
 
   ms-python-2:
+    build:
+      context: ./ms-python-2
+      dockerfile: dockerfile
     image: tomtoomuch/energia-ms-python-2
     ports:
       - "${PYTHON_PORT_2:-8002}:8002"
     env_file:
-      - .env
+      - ./.env
+    restart: unless-stopped
+
+  prediction:
+    build:
+      context: ./prediction
+      dockerfile: dockerfile
+    image: tomtoomuch/energia-prediction
+    volumes:
+      - ./prediction/modeles:/app/modeles:ro
+      - ./prediction/data:/app/data:ro
     restart: unless-stopped
     networks:
       - energia-net
@@ -41,13 +60,12 @@ services:
       - "11434:11434"
     volumes:
       - ./llm:/root/.ollama
-    pull_policy: always
     restart: unless-stopped
     entrypoint: >
       /bin/sh -c "
-      ollama serve & 
-      sleep 5; 
-      ollama run gemma4:e4b; 
+      ollama serve &
+      sleep 5;
+      ollama run gemma4:e4b;
       wait"
     networks:
       - energia-net
@@ -59,6 +77,7 @@ services:
       - ./.env
     depends_on:
       - ms-python-2
+      - prediction
       - llm
     restart: unless-stopped
     networks:

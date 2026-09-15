@@ -2,6 +2,13 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
+<<<<<<< HEAD
+=======
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+
+>>>>>>> main
 import requests
 
 
@@ -10,7 +17,8 @@ import requests
 RACINE_PROJET = Path(__file__).resolve().parent.parent
 DOSSIER_DATA = RACINE_PROJET / "data"
 
-ANNEE = 2026
+
+ANNEE = 2025
 
 FICHIER_ELECTRICITE = DOSSIER_DATA / "eco2mix-regional.json"
 FICHIER_METEO = DOSSIER_DATA / "meteo-regions.json"
@@ -21,7 +29,8 @@ FICHIER_VACANCES = DOSSIER_DATA / "vacances-scolaires-regions.json"
 # ---------- URL des API ----------
 
 URL_API_ELECTRICITE = (
-    "https://odre.opendatasoft.com/api/records/1.0/search/"
+    "https://odre.opendatasoft.com/api/explore/v2.1/"
+    "catalog/datasets/eco2mix-regional-cons-def/exports/json"
 )
 
 URL_API_METEO = "https://archive-api.open-meteo.com/v1/archive"
@@ -97,25 +106,72 @@ def enregistrer_json(donnees, chemin_fichier):
 # ---------- Électricité ----------
 
 def telecharger_electricite(url, chemin_fichier):
-    print("\nTéléchargement des données électriques régionales...")
+    print(f"\nTéléchargement électrique : janvier à décembre {ANNEE}...")
+    records = []
+    codes_attendus = {region[0] for region in REGIONS}
 
-    params = {
-        "dataset": "eco2mix-regional-tr",
-        "rows": 1000,
-        "sort": "-date_heure",
-        "q": "NOT #null(consommation)",
+    # L'export récupère toutes les lignes de chaque mois, sans limite de 1000.
+    with requests.Session() as session:
+        attente = Retry(
+            total=4,
+            status_forcelist=[429],
+            backoff_factor=10,
+            respect_retry_after_header=True,
+        )
+        session.mount("https://", HTTPAdapter(max_retries=attente))
+        for mois in range(1, 13):
+            debut = date(ANNEE, mois, 1)
+            fin = (
+                date(ANNEE + 1, 1, 1)
+                if mois == 12
+                else date(ANNEE, mois + 1, 1)
+            )
+            params = {
+                "where": f"startswith(date, '{ANNEE}-{mois:02d}')",
+                "order_by": "date_heure ASC, code_insee_region ASC",
+                "limit": -1,
+            }
+            print(f"Téléchargement du mois {mois:02d}/12...", flush=True)
+            reponse = session.get(url, params=params, timeout=(15, 180))
+            reponse.raise_for_status()
+            lignes = reponse.json()
+
+            if not isinstance(lignes, list) or not lignes:
+                raise ValueError(f"Aucune donnée électrique pour {debut:%Y-%m}.")
+
+            # Vérifier la présence de chaque jour pour chaque région.
+            attendus = {
+                (code, (debut + timedelta(days=i)).isoformat())
+                for code in codes_attendus
+                for i in range((fin - debut).days)
+            }
+            presents = {
+                (str(ligne["code_insee_region"]).zfill(2), ligne["date"])
+                for ligne in lignes
+                if ligne.get("consommation") is not None
+            }
+            manquants = attendus - presents
+            if manquants:
+                raise ValueError(
+                    f"Mois {mois:02d} incomplet : {len(manquants)} couples "
+                    f"région/jour sans consommation. Exemples : {sorted(manquants)[:5]}"
+                )
+
+            # Format compatible avec charger_electricite() dans dataframe.py.
+            # Les identifiants de records ne sont pas fournis par cet export.
+            records.extend({
+                "datasetid": "eco2mix-regional-cons-def",
+                "fields": ligne,
+            } for ligne in lignes)
+            print(f"Mois {mois:02d} : {len(lignes)} mesures")
+
+    donnees = {
+        "annee": ANNEE,
+        "source": "eco2mix-regional-cons-def",
+        "nhits": len(records),
+        "records": records,
     }
-
-    reponse = requests.get(url, params=params, timeout=60)
-    reponse.raise_for_status()
-    donnees = reponse.json()
-
-    if not isinstance(donnees, dict) or not donnees.get("records"):
-        raise ValueError("Aucune mesure électrique reçue.")
-
-    print(f"Nombre de mesures : {len(donnees['records'])}")
-
-    # Conserver la réponse complète : records, fields, etc.
+    print(f"Total annuel : {len(records)} mesures")
     return enregistrer_json(donnees, chemin_fichier)
 
 
@@ -148,37 +204,32 @@ def telecharger_meteo(url, chemin_fichier):
 
     print(f"Période demandée : {date_debut} au {date_fin}")
 
-    # 3. Demander la météo des mêmes dates pour les 12 villes.
-    params = {
-        "latitude": ",".join(str(region[3]) for region in REGIONS),
-        "longitude": ",".join(str(region[4]) for region in REGIONS),
-        "start_date": date_debut,
-        "end_date": date_fin,
-        "hourly": "temperature_2m,relative_humidity_2m",
-        "timezone": "UTC",
-    }
-
-    reponse = requests.get(url, params=params, timeout=60)
-    reponse.raise_for_status()
-    resultats = reponse.json()
-
-    if not isinstance(resultats, list) or len(resultats) != len(REGIONS):
-        raise ValueError("Réponse météo inattendue ou incomplète.")
-
-    # 4. Conserver le même format que votre ancien fichier météo.
+    # Une requête annuelle par ville pour limiter la taille de chaque réponse.
     donnees = {"regions": []}
-
-    for region, meteo in zip(REGIONS, resultats):
-        code, nom, ville, latitude, longitude = region
-
-        donnees["regions"].append({
-            "code_insee_region": code,
-            "libelle_region": nom,
-            "ville_reference": ville,
-            "latitude_demandee": latitude,
-            "longitude_demandee": longitude,
-            "meteo": meteo,
-        })
+    with requests.Session() as session:
+        for code, nom, ville, latitude, longitude in REGIONS:
+            print(f"Météo historique : {nom}...", flush=True)
+            params = {
+                "latitude": latitude,
+                "longitude": longitude,
+                "start_date": date_debut,
+                "end_date": date_fin,
+                "hourly": "temperature_2m,relative_humidity_2m",
+                "timezone": "UTC",
+            }
+            reponse = session.get(url, params=params, timeout=(15, 180))
+            reponse.raise_for_status()
+            meteo = reponse.json()
+            if not isinstance(meteo, dict) or not meteo.get("hourly", {}).get("time"):
+                raise ValueError(f"Réponse météo vide pour {nom}.")
+            donnees["regions"].append({
+                "code_insee_region": code,
+                "libelle_region": nom,
+                "ville_reference": ville,
+                "latitude_demandee": latitude,
+                "longitude_demandee": longitude,
+                "meteo": meteo,
+            })
 
     return enregistrer_json(donnees, chemin_fichier)
 

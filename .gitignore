@@ -1,23 +1,20 @@
-.gitignore
-docker-compose.gpu_or_cpu.yml
-docs/brief/**
-ms-python-2/__pycache__/
-llm/**
-gateway/node_modules
-.obsidian/
+# Configuration locale
 .env
+.obsidian/
 docker-compose.yml
 docker-compose.override.yml
-ms-python-2/services/__pycache__/
-ms-python/services/__pycache__/**
-ms-python/app/__pycache__/**
-app/__pycache__/**
-ms-python/data/**
-tests/__pycache__/**
-ms-python-2/services/__pycache__/temporal_engine.cpython-311.pyc
-ms-python-2/services/__pycache__/graph_loader.cpython-311.pyc
-ms-python-2/services/__pycache__/__init__.cpython-311.pyc
-ms-python-2/services/__pycache__
-ms-python-2/tests/__pycache__/
-mcp_server/__pycache__/**
-mcp_server/__pycache__/
+docker-compose.gpu_or_cpu.yml
+
+# Dépendances et fichiers générés
+gateway/node_modules/
+**/__pycache__/
+**/*.py[cod]
+
+# Dossiers locaux
+docs/brief/
+llm/
+ms-python/data/
+prediction/data/
+prediction/graphiques/
+prediction/modeles/
+prediction/predictions/

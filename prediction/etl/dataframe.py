@@ -3,48 +3,53 @@ from pathlib import Path
 
 import pandas as pd
 
-
 RACINE_PROJET = Path(__file__).resolve().parent.parent
 DOSSIER_DATA = RACINE_PROJET / "data"
 
 
+# ---------- Lecture ----------
 def lire_json(nom_fichier):
-    chemin = DOSSIER_DATA / nom_fichier
-
-    with chemin.open("r", encoding="utf-8") as fichier:
+    with (DOSSIER_DATA / nom_fichier).open(
+        "r", encoding="utf-8"
+    ) as fichier:
         return json.load(fichier)
 
+# ---------- Toutes les mesures électriques ----------
 
 def charger_electricite():
     donnees = lire_json("eco2mix-regional.json")
 
-    lignes = [
+    # Conserver tous les enregistrements et tous leurs champs.
+    df = pd.DataFrame([
         record["fields"]
         for record in donnees["records"]
-    ]
-
-    df = pd.DataFrame(lignes)
+    ])
 
     df["code_insee_region"] = (
-        df["code_insee_region"].astype(str).str.zfill(2)
+        df["code_insee_region"].astype("string").str.zfill(2)
     )
 
     df["date_heure"] = pd.to_datetime(
-        df["date_heure"],
-        utc=True,
+        df["date_heure"], utc=True
     )
 
-    # La météo est horaire : 14:15 et 14:30 seront associés à 14:00.
+    # Clé horaire pour la météo.
     df["heure_utc"] = df["date_heure"].dt.floor("h")
 
-    # Le calendrier utilise la date française.
-    df["date_locale"] = (
-        df["date_heure"]
-        .dt.tz_convert("Europe/Paris")
-        .dt.strftime("%Y-%m-%d")
-    )
+    # Date française pour les jours fériés et les vacances.
+    dates_locales = df["date_heure"].dt.tz_convert("Europe/Paris")
+
+    df["date_locale"] = dates_locales.dt.strftime("%Y-%m-%d")
+    df["annee"] = dates_locales.dt.year
+    df["mois"] = dates_locales.dt.month
+    df["jour_semaine"] = dates_locales.dt.dayofweek
+    df["heure_locale"] = dates_locales.dt.hour
+    df["weekend"] = df["jour_semaine"] >= 5
 
     return df
+
+
+# ---------- Météo de toutes les régions ----------
 
 def charger_meteo():
     donnees = lire_json("meteo-regions.json")
@@ -55,57 +60,67 @@ def charger_meteo():
 
         if meteo.get("utc_offset_seconds") != 0:
             raise ValueError(
-                "La météo doit être téléchargée avec timezone=UTC."
+                "Le fichier météo doit utiliser timezone=UTC."
             )
 
-        df_region = pd.DataFrame(meteo["hourly"])
+        tableau = pd.DataFrame(meteo["hourly"])
 
-        df_region["heure_utc"] = pd.to_datetime(
-            df_region["time"],
-            utc=True,
+        tableau["heure_utc"] = pd.to_datetime(
+            tableau.pop("time"), utc=True
         )
 
-        df_region["code_insee_region"] = str(
+        tableau["code_insee_region"] = str(
             region["code_insee_region"]
         ).zfill(2)
 
-        df_region["ville_reference"] = region["ville_reference"]
+        tableau["ville_reference"] = region["ville_reference"]
 
+        tableaux.append(tableau)
+
+    return pd.concat(tableaux, ignore_index=True)
+
+
+# ---------- Calendriers des années présentes ----------
+
+def charger_calendrier(annees):
+    tableaux = []
+
+    for annee in sorted(annees):
+        nom = f"calendrier-{annee}.json"
+
+        if not (DOSSIER_DATA / nom).exists():
+            print(f"Calendrier absent : {nom}")
+            continue
+
+        tableau = pd.DataFrame(lire_json(nom))
+
+        tableau = tableau.rename(columns={
+            "date": "date_locale",
+        })
+
+        # Le week-end est déjà calculé depuis la date électrique.
         tableaux.append(
-            df_region[[
-                "code_insee_region",
-                "heure_utc",
-                "ville_reference",
-                "temperature_2m",
-                "relative_humidity_2m",
-            ]]
+            tableau[["date_locale", "ferie", "nom_ferie"]]
+        )
+
+    if not tableaux:
+        return pd.DataFrame(
+            columns=["date_locale", "ferie", "nom_ferie"]
         )
 
     return pd.concat(tableaux, ignore_index=True)
 
-def charger_calendrier():
-    donnees = lire_json("calendrier-2026.json")
 
-    df = pd.DataFrame(donnees)
-
-    return df.rename(columns={
-        "date": "date_locale",
-    })
-
+# ---------- Vacances par région et par jour ----------
 
 def ajouter_vacances(df):
     vacances = pd.DataFrame(
         lire_json("vacances-scolaires-regions.json")
     )
 
-    # Garder les lignes associées à une région.
     vacances = vacances[
         vacances["libelle_region"].notna()
-    ].copy()
-
-    # Écarter les périodes réservées aux enseignants.
-    vacances = vacances[
-        vacances["population"].fillna("") != "Enseignants"
+        & vacances["population"].fillna("").ne("Enseignants")
     ].copy()
 
     for colonne in ["start_date", "end_date"]:
@@ -115,110 +130,142 @@ def ajouter_vacances(df):
             .dt.strftime("%Y-%m-%d")
         )
 
-    # Un seul calcul par région et par jour.
+    # Éviter de refaire le calcul pour chaque demi-heure.
     jours = df[
         ["libelle_region", "date_locale"]
     ].drop_duplicates()
 
+    periodes_par_region = {
+        region: tableau
+        for region, tableau in vacances.groupby("libelle_region")
+    }
+
     resultats = []
 
     for region, jour in jours.itertuples(index=False, name=None):
-        periodes = vacances[
-            vacances["libelle_region"] == region
-        ]
+        periodes = periodes_par_region.get(region)
+        indicateur = pd.NA
 
-        annee = int(jour[:4])
+        if periodes is not None:
+            annee = int(jour[:4])
 
-        if jour[5:] < "09-01":
-            annee -= 1
+            if jour[5:] < "09-01":
+                annee -= 1
 
-        annee_scolaire = f"{annee}-{annee + 1}"
+            annee_scolaire = f"{annee}-{annee + 1}"
 
-        calendrier_disponible = (
-            periodes["annee_scolaire"] == annee_scolaire
-        ).any()
+            calendrier_disponible = (
+                periodes["annee_scolaire"]
+                .eq(annee_scolaire)
+                .any()
+            )
 
-        actives = periodes[
-            (periodes["start_date"] <= jour)
-            & (jour < periodes["end_date"])
-        ]
+            en_vacances = (
+                (periodes["start_date"] <= jour)
+                & (jour < periodes["end_date"])
+            ).any()
+
+            if en_vacances:
+                indicateur = True
+            elif calendrier_disponible:
+                indicateur = False
 
         resultats.append({
             "libelle_region": region,
             "date_locale": jour,
-            "vacances_au_moins_une_zone": (
-                not actives.empty
-                if calendrier_disponible
-                else pd.NA
-            ),
-            "zones_en_vacances": ", ".join(
-                sorted(actives["zones"].dropna().unique())
-            ),
+            "vacances_scolaires": indicateur,
         })
 
-    df_vacances = pd.DataFrame(resultats)
+    tableau = pd.DataFrame(resultats)
+    tableau["vacances_scolaires"] = (
+        tableau["vacances_scolaires"].astype("boolean")
+    )
 
     return df.merge(
-        df_vacances,
+        tableau,
         on=["libelle_region", "date_locale"],
         how="left",
         validate="many_to_one",
     )
 
-# ----Dataframe-------
+
+# ---------- Fusion ----------
 
 def creer_dataframe():
-    df_electricite = charger_electricite()
-    df_meteo = charger_meteo()
-    df_calendrier = charger_calendrier()
+    df = charger_electricite()
+    nombre_mesures = len(df)
 
-    # Même région ET même heure.
-    df = df_electricite.merge(
-        df_meteo,
+    meteo = charger_meteo()
+    calendrier = charger_calendrier(df["annee"].unique())
+
+    # Garder chaque mesure électrique, même sans météo correspondante.
+    df = df.merge(
+        meteo,
         on=["code_insee_region", "heure_utc"],
         how="left",
         validate="many_to_one",
+        suffixes=("", "_meteo"),
     )
 
-    # Même date française.
     df = df.merge(
-        df_calendrier,
+        calendrier,
         on="date_locale",
         how="left",
         validate="many_to_one",
+        suffixes=("", "_calendrier"),
     )
 
     df = ajouter_vacances(df)
 
-    return df.sort_values(
+    df = df.sort_values(
         ["date_heure", "code_insee_region"]
     ).reset_index(drop=True)
 
+    print(f"\nMesures électriques lues : {nombre_mesures}")
+    print(f"Lignes après fusion : {len(df)}")
+
+    return df
+
+
+# ---------- Exécution ----------
 
 if __name__ == "__main__":
     df = creer_dataframe()
 
+    print("\nPériode couverte en dates françaises :")
+    print(df["date_locale"].min(), "→", df["date_locale"].max())
+
+    print("\nNombre de mesures par région et par mois :")
+    couverture = pd.crosstab(
+        df["libelle_region"],
+        [df["annee"], df["mois"]],
+    )
+    print(couverture.to_string())
+
     colonnes = [
-        "libelle_region",
-        "date_heure",
-        "consommation",
-        "temperature_2m",
-        "relative_humidity_2m",
+          "libelle_region",
+        "annee",
+        "mois",
+        "jour_semaine",
+        "heure_locale",
         "weekend",
         "ferie",
-        "vacances_au_moins_une_zone",
+        "vacances_scolaires",
     ]
 
-    print(df[colonnes].head(10).to_string(index=False))
+    print("\nAperçu :")
 
-    print("\nDimensions :", df.shape)
 
     print("\nValeurs manquantes :")
     print(df[colonnes].isna().sum())
 
-    # Facultatif : sauvegarder le tableau fusionné.
+    fichier_sortie = DOSSIER_DATA / "dataset_final.csv"
+
     df.to_csv(
-        DOSSIER_DATA / "dataset_final.csv",
+        fichier_sortie,
         index=False,
         encoding="utf-8-sig",
     )
+
+    print(f"\nDataset enregistré : {fichier_sortie}")
+
