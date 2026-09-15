@@ -1,13 +1,8 @@
-python-dotenv==1.0.1
+fastapi
+uvicorn
 pandas
 matplotlib
-ollama
-mcp
 scikit-learn
-pathlib
 joblib
-datetime
-unicodedata
-re
 numpy
-zoneinfo
+requests

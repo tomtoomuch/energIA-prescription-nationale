@@ -1,0 +1,79 @@
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    image: energia-gateway
+    ports:
+      - "${GATEWAY_PORT:-3000}:3000"
+    env_file:
+      - ./.env
+    volumes:
+      - ./prediction/graphiques:/app/prediction-graphiques:ro
+    depends_on:
+      - ms-python
+      - ms-python-2
+      - prediction-api
+      - mcp-server
+    restart: unless-stopped
+
+  ms-python:
+    build:
+      context: ./ms-python
+      dockerfile: dockerfile
+    image: energia-ms-python-local
+    ports:
+      - "${PYTHON_PORT:-8000}:8000"
+    env_file:
+      - ./.env
+    restart: unless-stopped
+
+  ms-python-2:
+    build:
+      context: ./ms-python-2
+      dockerfile: dockerfile
+    image: energia-ms-python-2-local
+    ports:
+      - "${PYTHON_PORT_2:-8002}:8002"
+    env_file:
+      - ./.env
+    restart: unless-stopped
+
+  prediction-api:
+    build:
+      context: ./prediction
+      dockerfile: dockerfile
+    image: energia-prediction-api
+    volumes:
+      - ./prediction/modeles:/app/modeles:ro
+      - ./prediction/data:/app/data:ro
+    restart: unless-stopped
+
+  llm:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./llm:/root/.ollama
+    restart: unless-stopped
+    entrypoint: >
+      /bin/sh -c "
+      ollama serve &
+      sleep 5;
+      ollama run gemma4:e4b;
+      wait"
+
+  mcp-server:
+    build:
+      context: ./mcp_server
+      dockerfile: dockerfile
+    image: energia-mcp-server
+    ports:
+      - "${MCP_PORT_3:-8003}:8003"
+    env_file:
+      - ./.env
+    depends_on:
+      - ms-python-2
+      - prediction-api
+      - llm
+    restart: unless-stopped
