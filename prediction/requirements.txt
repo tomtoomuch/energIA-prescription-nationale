@@ -4,8 +4,10 @@ matplotlib
 ollama
 mcp
 scikit-learn
-sklearn
-json
 pathlib
 joblib
 datetime
+unicodedata
+re
+numpy
+zoneinfo

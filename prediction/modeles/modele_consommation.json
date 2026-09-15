@@ -1,0 +1,30 @@
+{
+  "algorithme": "LinearRegression",
+  "colonnes": [
+    "libelle_region",
+    "mois",
+    "jour_semaine",
+    "heure_locale",
+    "minute",
+    "ferie",
+    "vacances_scolaires"
+  ],
+  "regions": [
+    "Auvergne-Rhône-Alpes",
+    "Bourgogne-Franche-Comté",
+    "Bretagne",
+    "Centre-Val de Loire",
+    "Grand Est",
+    "Hauts-de-France",
+    "Normandie",
+    "Nouvelle-Aquitaine",
+    "Occitanie",
+    "Pays de la Loire",
+    "Provence-Alpes-Côte d'Azur",
+    "Île-de-France"
+  ],
+  "date_fin_entrainement": "2025-08-31",
+  "mae_validation": 1175.2319057229201,
+  "pas_predictions_minutes": 15,
+  "precision_15min_evaluee": false
+}
