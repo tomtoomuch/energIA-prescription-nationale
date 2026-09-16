@@ -2,10 +2,6 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
-
-
 import requests
 
 
@@ -13,7 +9,6 @@ import requests
 
 RACINE_PROJET = Path(__file__).resolve().parent.parent
 DOSSIER_DATA = RACINE_PROJET / "data"
-
 
 ANNEE = 2025
 
@@ -109,13 +104,6 @@ def telecharger_electricite(url, chemin_fichier):
 
     # L'export récupère toutes les lignes de chaque mois, sans limite de 1000.
     with requests.Session() as session:
-        attente = Retry(
-            total=4,
-            status_forcelist=[429],
-            backoff_factor=10,
-            respect_retry_after_header=True,
-        )
-        session.mount("https://", HTTPAdapter(max_retries=attente))
         for mois in range(1, 13):
             debut = date(ANNEE, mois, 1)
             fin = (
@@ -300,14 +288,43 @@ def telecharger_vacances(url, chemin_fichier):
 
 
 # ---------- Exécution ----------
-
 if __name__ == "__main__":
     DOSSIER_DATA.mkdir(parents=True, exist_ok=True)
     print(f"Dossier de sortie : {DOSSIER_DATA}")
 
-    telecharger_electricite(URL_API_ELECTRICITE, FICHIER_ELECTRICITE)
-    telecharger_meteo(URL_API_METEO, FICHIER_METEO)
-    telecharger_calendrier(ANNEE, FICHIER_CALENDRIER)
-    telecharger_vacances(URL_API_VACANCES, FICHIER_VACANCES)
+    if FICHIER_ELECTRICITE.exists():
+        print(f"Électricité déjà présente : {FICHIER_ELECTRICITE}")
+    else:
+        try:
+            telecharger_electricite(
+                URL_API_ELECTRICITE,
+                FICHIER_ELECTRICITE,
+            )
+        except requests.exceptions.HTTPError as erreur:
+            if erreur.response is not None and erreur.response.status_code == 429:
+                raise RuntimeError(
+                    "ODRÉ refuse actuellement le téléchargement (erreur 429). "
+                    "Réessayez plus tard ou copiez eco2mix-regional.json "
+                    "dans prediction/data."
+                ) from erreur
+            raise
 
-    print("\nLes quatre fichiers JSON ont été enregistrés.")
+    if FICHIER_METEO.exists():
+        print(f"Météo déjà présente : {FICHIER_METEO}")
+    else:
+        telecharger_meteo(URL_API_METEO, FICHIER_METEO)
+
+    if FICHIER_CALENDRIER.exists():
+        print(f"Calendrier déjà présent : {FICHIER_CALENDRIER}")
+    else:
+        telecharger_calendrier(ANNEE, FICHIER_CALENDRIER)
+
+    if FICHIER_VACANCES.exists():
+        print(f"Vacances déjà présentes : {FICHIER_VACANCES}")
+    else:
+        telecharger_vacances(
+            URL_API_VACANCES,
+            FICHIER_VACANCES,
+        )
+
+    print("\nLes quatre fichiers JSON sont disponibles.")

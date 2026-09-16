@@ -13,8 +13,8 @@ gateway/node_modules/
 # Dossiers locaux
 docs/brief/
 llm/
-ms-python/data/
 prediction/data/
+prediction/data/vacances-scolaires-regions.json
 prediction/graphiques/
 prediction/modeles/
 prediction/predictions/
