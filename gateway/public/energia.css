@@ -57,6 +57,18 @@ body {
 }
 
 
+form {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:stretch;
+    align-content:space-between;
+    height:100%;
+}
+
+form > * {
+    display:block;width:100%;
+}
+
 /* =========================================================
    ACCESSIBILITÉ
    ========================================================= */
@@ -102,11 +114,11 @@ h3 {
 }
 
 h1 {
-    font-size: clamp(2rem, 3vw, 4rem);
+    font-size: clamp(1.5rem, 2vw, 3rem);
 }
 
 h2 {
-    font-size: clamp(1.5rem, 2.5vw, 3rem);
+    font-size: clamp(1rem, 2vw, 2.5rem);
 }
 
 p {
@@ -119,7 +131,7 @@ p {
 }
 
 .section-kicker {
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 
     color: var(--color-electric);
 
@@ -289,7 +301,7 @@ p {
 
     min-height: 100%;
 
-    padding: clamp(2rem, 6vw, 7rem);
+    padding: clamp(1rem, 3vw, 3.5rem);
 
     display: flex;
 
@@ -308,10 +320,11 @@ p {
 
 article {
     width:100%;
+    height:100%;
 }
 
 .section-content {
-    width: min(100%, 1000px);
+    /*width: min(100%, 1000px);*/
 
     /*margin: 0 auto;*/
 
