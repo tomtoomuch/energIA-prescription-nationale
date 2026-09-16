@@ -23,7 +23,3 @@ services:
     build:
       context: ./prediction
       dockerfile: dockerfile
-  training:
-    build:
-      context: ./prediction
-      dockerfile: dockerfile.training

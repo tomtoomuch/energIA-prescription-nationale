@@ -10,10 +10,8 @@ services:
     depends_on:
       - ms-python
       - ms-python-2
-      - prediction-api
-      - mcp-server
       - prediction
-      - training
+      - mcp-server
     restart: unless-stopped
     networks:
       - energia-net
@@ -85,6 +83,9 @@ services:
 
 volumes:
     llm:
+    prediction/modeles:
+    prediction/data:
+    prediction/graphiques:
 
 networks:
   energia-net:
