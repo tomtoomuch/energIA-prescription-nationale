@@ -14,7 +14,10 @@ gateway/node_modules/
 docs/brief/
 llm/
 ms-python/data/
-prediction/data/
+prediction/data/calendrier-2025.json
+prediction/data/dataset_final.csv
+prediction/data/meteo-regions.json
+prediction/data/vacances-scolaires-regions.json
 prediction/graphiques/
 prediction/modeles/
 prediction/predictions/
