@@ -2,7 +2,7 @@ services:
   gateway:
     build:
       context: ./gateway
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     image: energia-gateway
     ports:
       - "${GATEWAY_PORT:-3000}:3000"
