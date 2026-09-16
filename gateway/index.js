@@ -236,14 +236,34 @@ app.post("/assistant", async (req, res) => {
             { question }
         );
 
+        const wantsStream = (
+            req.get("accept") || ""
+        ).includes("text/event-stream");
+
         const response = await axios.post(
             `${PYTHON_MCP_URL}/assistant`,
             { question },
             {
-                headers: pythonHeaders(),
+                headers: {
+                    ...pythonHeaders(),
+                    Accept: wantsStream
+                        ? "text/event-stream"
+                        : "application/json",
+                },
+                responseType: wantsStream ? "stream" : "json",
                 timeout: 180000,
             }
         );
+
+        if (wantsStream) {
+            res.status(200);
+            res.setHeader("Content-Type", "text/event-stream");
+            res.setHeader("Cache-Control", "no-cache");
+            response.data.on("error", () => res.destroy());
+            res.on("close", () => response.data.destroy());
+            response.data.pipe(res);
+            return;
+        }
 
         return res.status(200).json({
             success: true,
