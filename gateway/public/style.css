@@ -574,7 +574,7 @@ select {
     font: inherit;
 }
 
-div.selecteurs select {
+select#region, select#mois {
     color: var(--color-night);
 }
 
