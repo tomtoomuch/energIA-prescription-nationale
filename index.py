@@ -1,4 +1,3 @@
-
 import argparse
 import json
 import subprocess
@@ -8,18 +7,13 @@ import urllib.request
 import webbrowser
 from pathlib import Path
 
+
 RACINE = Path(__file__).resolve().parent
 PREDICTION = RACINE / "prediction"
+DATASET = PREDICTION / "data" / "dataset_final.csv"
 DATA = PREDICTION / "data"
 MODELES = PREDICTION / "modeles"
 GRAPHIQUES = PREDICTION / "graphiques"
-
-JSON_NECESSAIRES = [
-    DATA / "eco2mix-regional.json",
-    DATA / "meteo-regions.json",
-    DATA / "calendrier-2025.json",
-    DATA / "vacances-scolaires-regions.json",
-]
 
 SERVICES = {
     "gateway",
@@ -31,13 +25,77 @@ SERVICES = {
 }
 
 
+def fichier_present(chemin):
+    return chemin.is_file() and chemin.stat().st_size > 0
+
+
+def preparer_donnees():
+    """Crée seulement les JSON absents, puis le CSV si nécessaire."""
+    from prediction.etl import extraction
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    sources = [
+        (
+            extraction.FICHIER_ELECTRICITE,
+            lambda: extraction.telecharger_electricite(
+                extraction.URL_API_ELECTRICITE,
+                extraction.FICHIER_ELECTRICITE,
+            ),
+        ),
+        (
+            extraction.FICHIER_METEO,
+            lambda: extraction.telecharger_meteo(
+                extraction.URL_API_METEO,
+                extraction.FICHIER_METEO,
+            ),
+        ),
+        (
+            extraction.FICHIER_CALENDRIER,
+            lambda: extraction.telecharger_calendrier(
+                extraction.ANNEE,
+                extraction.FICHIER_CALENDRIER,
+            ),
+        ),
+        (
+            extraction.FICHIER_VACANCES,
+            lambda: extraction.telecharger_vacances(
+                extraction.URL_API_VACANCES,
+                extraction.FICHIER_VACANCES,
+            ),
+        ),
+    ]
+
+    source_creee = False
+    for chemin, creer in sources:
+        if fichier_present(chemin):
+            print(f"Source déjà présente : {chemin.name}", flush=True)
+            continue
+        print(f"Création de la source : {chemin.name}", flush=True)
+        creer()
+        if not fichier_present(chemin):
+            raise RuntimeError(f"Source non créée : {chemin}")
+        source_creee = True
+
+    if source_creee or not fichier_present(DATASET):
+        print("\nCréation de dataset_final.csv", flush=True)
+        executer([
+            sys.executable,
+            str(PREDICTION / "etl" / "dataframe.py"),
+        ])
+        if not fichier_present(DATASET):
+            raise RuntimeError(f"Dataset non créé : {DATASET}")
+        return True
+
+    print("\nDataset déjà présent : reconstruction ignorée", flush=True)
+    return False
+
+
 def executer(commande):
     print("\n>", " ".join(commande), flush=True)
     subprocess.run(commande, cwd=RACINE, check=True)
 
 
 def port_gateway():
-
     fichier_env = RACINE / ".env"
 
     if fichier_env.exists():
@@ -73,22 +131,22 @@ def verifier_conteneurs():
         text=True,
     )
 
-    actifs = set()
-
-
     texte = resultat.stdout.strip()
+
     if texte.startswith("["):
-        lignes = json.loads(texte)
+        conteneurs = json.loads(texte)
     else:
-        lignes = [
+        conteneurs = [
             json.loads(ligne)
             for ligne in texte.splitlines()
             if ligne.strip()
         ]
 
-    for conteneur in lignes:
-        if conteneur.get("State", "").lower() == "running":
-            actifs.add(conteneur.get("Service"))
+    actifs = {
+        conteneur.get("Service")
+        for conteneur in conteneurs
+        if conteneur.get("State", "").lower() == "running"
+    }
 
     manquants = SERVICES - actifs
     if manquants:
@@ -102,32 +160,13 @@ def verifier_conteneurs():
     print("Les six services Docker sont démarrés.")
 
 
-def preparer_donnees(force):
-    # construit les JSON et le CSV seulement si nécessaire
-    json_absents = any(not fichier.exists() for fichier in JSON_NECESSAIRES)
-
-    if force or json_absents:
-        print("\n[1/4] Téléchargement des sources 2025")
-        executer([
-            sys.executable,
-            str(PREDICTION / "etl" / "extraction.py"),
-        ])
-    else:
-        print("\n[1/4] JSON déjà présents : téléchargement ignoré")
-
-    dataset = DATA / "dataset_final.csv"
-    if force or json_absents or not dataset.exists():
-        print("\n[2/4] Construction du dataset")
-        executer([
-            sys.executable,
-            str(PREDICTION / "etl" / "dataframe.py"),
-        ])
-    else:
-        print("\n[2/4] Dataset déjà présent : construction ignorée")
-
-
 def entrainer_si_necessaire(force):
-    # entraîne sklearn si les résultats nécessaires sont absents
+    if not DATASET.is_file():
+        raise FileNotFoundError(
+            f"Dataset absent : {DATASET}\n"
+            "Exécutez d'abord extraction.py, puis dataframe.py."
+        )
+
     modele = MODELES / "modele_consommation.joblib"
     informations = MODELES / "modele_consommation.json"
     graphique = (
@@ -138,26 +177,23 @@ def entrainer_si_necessaire(force):
     )
 
     if force or not all(
-        chemin.exists()
-        for chemin in [modele, informations, graphique]
+        chemin.is_file()
+        for chemin in (modele, informations, graphique)
     ):
-        print("\n[3/4] Entraînement et création des graphiques")
+        print("\n[1/2] Entraînement et création des graphiques")
         executer([
             sys.executable,
             str(PREDICTION / "ConsomationML.py"),
         ])
     else:
-        print("\n[3/4] Modèle et graphiques déjà présents : entraînement ignoré")
+        print("\n[1/2] Modèle et graphiques présents : entraînement ignoré")
 
 
 def demarrer_docker():
-   # vérifie Compose puis construit et lance tous les services
-    print("\n[4/4] Démarrage de tous les services")
+    print("\n[2/2] Démarrage des services Docker")
     executer(["docker", "compose", "config", "--quiet"])
     executer(["docker", "compose", "up", "-d", "--build"])
 
-    # conteneur peut s'arrêter juste après  up
-    # on attend, puis on vérifie son état réel
     for tentative in range(10):
         try:
             verifier_conteneurs()
@@ -169,7 +205,6 @@ def demarrer_docker():
 
 
 def verifier_site(port):
-    # connexions du gateway
     base = f"http://localhost:{port}"
 
     attendre_gateway(f"{base}/health")
@@ -183,6 +218,7 @@ def verifier_site(port):
 
     graphiques = lire_json_http(f"{base}/api/graphiques")
     nombre_regions = len(graphiques.get("regions", []))
+
     if nombre_regions == 0:
         raise RuntimeError(
             "Le gateway fonctionne, mais /api/graphiques "
@@ -195,17 +231,12 @@ def verifier_site(port):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Préparer et démarrer tout le projet EnergIA"
-    )
-    parser.add_argument(
-        "--rebuild-data",
-        action="store_true",
-        help="Retélécharger les données, reconstruire le CSV et réentraîner",
+        description="Entraîner si nécessaire et démarrer EnergIA"
     )
     parser.add_argument(
         "--retrain",
         action="store_true",
-        help="Réentraîner sklearn avec le dataset déjà présent",
+        help="Forcer un nouvel entraînement sklearn",
     )
     parser.add_argument(
         "--no-browser",
@@ -215,10 +246,8 @@ def main():
     options = parser.parse_args()
 
     try:
-        preparer_donnees(options.rebuild_data)
-        entrainer_si_necessaire(
-            options.retrain or options.rebuild_data
-        )
+        dataset_reconstruit = preparer_donnees()
+        entrainer_si_necessaire(options.retrain or dataset_reconstruit)
         demarrer_docker()
 
         base = verifier_site(port_gateway())
@@ -229,7 +258,7 @@ def main():
             webbrowser.open(base)
 
     except (OSError, subprocess.CalledProcessError, RuntimeError) as erreur:
-        print(f"\nÉchec de la pipeline : {erreur}", file=sys.stderr)
+        print(f"\nÉchec du démarrage : {erreur}", file=sys.stderr)
         sys.exit(1)
 
 
