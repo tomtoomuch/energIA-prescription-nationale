@@ -1,11 +1,11 @@
+import asyncio
 import json
 import os
 
 from mcp.server.fastmcp import FastMCP
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, StreamingResponse
 from urllib.parse import unquote
-
-from orchestrator import ask_energia
+from orchestrator import ask_energia, validate_question
 
 from tool import (
     get_plants as fetch_plants,
@@ -180,6 +180,58 @@ async def assistant(request):
         "question",
         "",
     )
+
+    if "text/event-stream" in request.headers.get("accept", ""):
+        try:
+            question = validate_question(question)
+        except ValueError as error:
+            return JSONResponse(
+                {"success": False, "error": str(error)},
+                status_code=422,
+            )
+
+        async def events():
+            queue = asyncio.Queue()
+
+            async def publish_first(message):
+                sent = asyncio.Event()
+                await queue.put(("first_response", message, sent))
+                # Attend l'envoi du premier événement avant le second appel.
+                await sent.wait()
+
+            async def run_assistant():
+                try:
+                    result = await ask_energia(
+                        question,
+                        on_first_response=publish_first,
+                    )
+                    await queue.put(("final", {"success": True, **result}, None))
+                except Exception as error:
+                    await queue.put((
+                        "error",
+                        {"error": f"Assistant EnergIA indisponible : {error}"},
+                        None,
+                    ))
+
+            task = asyncio.create_task(run_assistant())
+            try:
+                yield ": connexion ouverte\n\n"
+                while True:
+                    name, data, sent = await queue.get()
+                    payload_text = json.dumps(data, ensure_ascii=False)
+                    yield f"event: {name}\ndata: {payload_text}\n\n"
+                    if sent is not None:
+                        sent.set()
+                    if name in ("final", "error"):
+                        break
+            finally:
+                task.cancel()
+
+        return StreamingResponse(
+            events(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache"},
+        )
 
     try:
         result = await ask_energia(

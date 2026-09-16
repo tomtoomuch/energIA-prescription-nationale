@@ -122,6 +122,19 @@ def attendre_gateway(url):
     raise RuntimeError(f"Le gateway ne répond pas : {url}")
 
 
+def attendre_service(url, nom):
+    """Attend qu'un service soit prêt après le démarrage de son conteneur."""
+    for tentative in range(20):
+        try:
+            return lire_json_http(url)
+        except Exception as erreur:
+            if tentative == 19:
+                raise RuntimeError(
+                    f"{nom} ne répond pas après 40 secondes : {url} ({erreur})"
+                ) from erreur
+            time.sleep(2)
+
+
 def verifier_conteneurs():
     resultat = subprocess.run(
         ["docker", "compose", "ps", "--format", "json"],
@@ -210,10 +223,10 @@ def verifier_site(port):
     attendre_gateway(f"{base}/health")
     print("Gateway : OK")
 
-    lire_json_http(f"{base}/health-ms")
+    attendre_service(f"{base}/health-ms", "ms-python")
     print("Gateway → ms-python : OK")
 
-    lire_json_http(f"{base}/health-ms-2")
+    attendre_service(f"{base}/health-ms-2", "ms-python-2")
     print("Gateway → ms-python-2 : OK")
 
     graphiques = lire_json_http(f"{base}/api/graphiques")

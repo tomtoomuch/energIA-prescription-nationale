@@ -860,6 +860,70 @@
   }
 
 
+  async function fetchAssistantStream(question, onFirstResponse) {
+    const response = await fetch("/assistant", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "text/event-stream",
+      },
+      body: JSON.stringify({ question }),
+    });
+
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      throw new Error(
+        body.error?.message || body.error || `Erreur HTTP ${response.status}`
+      );
+    }
+    if (!response.body) {
+      throw new Error("Le navigateur ne peut pas lire le flux.");
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let finalResult = null;
+
+    function processEvent(block) {
+      const lines = block.split("\n");
+      const name = lines.find((line) => line.startsWith("event: "))?.slice(7);
+      const data = lines
+        .filter((line) => line.startsWith("data: "))
+        .map((line) => line.slice(6))
+        .join("\n");
+      if (!name || !data) return;
+
+      const payload = JSON.parse(data);
+      if (name === "first_response") {
+        onFirstResponse(payload);
+      } else if (name === "final") {
+        finalResult = payload;
+      } else if (name === "error") {
+        throw new Error(payload.error || "Assistant indisponible");
+      }
+    }
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      buffer = buffer.replace(/\r\n/g, "\n");
+
+      let end;
+      while ((end = buffer.indexOf("\n\n")) !== -1) {
+        processEvent(buffer.slice(0, end));
+        buffer = buffer.slice(end + 2);
+      }
+    }
+
+    if (!finalResult) {
+      throw new Error("La réponse finale n'a pas été reçue.");
+    }
+    return finalResult;
+  }
+
+
   async function askAssistant(event) {
     event.preventDefault();
 
@@ -892,6 +956,7 @@
     );
 
     errorBox.textContent = "";
+    errorBox.hidden = true;
 
     processBox.hidden = false;
     processBox.textContent = (
@@ -906,17 +971,20 @@
       "gemma 4 prépare la réponse"
     );
 
+    let firstShown = false;
+
     try {
-      const result = await fetchJSON(
-        "/assistant",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            question,
-          }),
+      const result = await fetchAssistantStream(
+        question,
+        (first) => {
+          firstShown = true;
+          const tools = (first.tool_calls || [])
+            .map((tool) => `${tool.name} ${JSON.stringify(tool.arguments)}`)
+            .join("\n");
+          processBox.textContent =
+            "Première réponse d’Ollama :\n" +
+            (first.content || tools || "Aucun texte retourné.");
+          processBox.hidden = false;
         }
       );
 
@@ -925,10 +993,11 @@
       );
 
     } catch (error) {
-      processBox.hidden = true;
+      processBox.hidden = !firstShown;
       errorBox.textContent = (
         error.message
       );
+      errorBox.hidden = false;
 
     } finally {
       button.disabled = false;

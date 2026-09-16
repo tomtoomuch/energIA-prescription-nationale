@@ -337,10 +337,10 @@ async def ask_model(
     )
 
 
-async def ask_energia(question):
-    """
-    Laisse gemma 4 choisir un ou plusieurs outils MCP
-    puis lui demande de produire la réponse finale
+async def ask_energia(question, on_first_response=None):
+    """Choisit les outils MCP, puis produit la réponse finale.
+
+    Le rappel facultatif publie le premier message avant le tour suivant.
     """
     question = validate_question(
         question
@@ -387,12 +387,24 @@ async def ask_energia(question):
 
             # maximum trois tours pour éviter
             # une boucle infinie du modèle
-            for _ in range(3):
+            for tour in range(3):
                 response = await ask_model(
                     messages=messages,
                     with_tools=True,
                 )
 
+                if tour == 0 and on_first_response is not None:
+                    premier_message = {
+                        "content": (response.message.content or "").strip(),
+                        "tool_calls": [
+                            {
+                                "name": appel.function.name,
+                                "arguments": appel.function.arguments,
+                            }
+                            for appel in (response.message.tool_calls or [])
+                        ],
+                    }
+                    await on_first_response(premier_message)
                 messages.append(
                     response.message
                 )
