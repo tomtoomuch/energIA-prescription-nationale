@@ -13,7 +13,7 @@
         content="EnergIA - Répartition intelligente de la production électrique"
     >
 
-    <title>Application — Boilerplate</title>
+    <title>EnergIA</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="energia.css">
@@ -178,11 +178,8 @@
                     </h2>
 
                     <form id="assistant-form">
-                        <label for="assistant-question">
-                        Saisissez votre question à EnergIA
-                        </label>
 
-                        <textarea
+                        <textarea rows="10" cols="50"
                         id="assistant-question"
                         placeholder="consommation occitanie 18:00"
                         required
@@ -195,9 +192,14 @@
                         >
                         Envoyer la question
                         </button>
+                        <p>
+                            <strong>Quelles centrales sont disponibles ?</strong><br />
+                            <strong>Quelle est la consommation de référence en Occitanie à 18:00 ?</strong><br />
+                            <strong>Simule le scénario evening_peak_occitanie sur 4 quarts d’heure</strong>
+                        </p>
                     </form>
 
-                    <div id="assistant-error"></div>
+                    <div id="assistant-error" hidden></div>
 
                     <div id="assistant-process" hidden></div>
                     
@@ -236,7 +238,7 @@
                             <select id="region"><option value="">Chargement des régions…</option></select>
                         </label>
                         <label for="mois">Mois de 2025
-                            <select id="mois"><option value="">Choisissez une région</option></select>
+                            <select id="mois"><option value="">Choisissez un mois</option></select>
                         </label>
                     </div>
 
@@ -260,7 +262,7 @@
                     <aside>
                         <h2>Évaluation par région</h2>
                         <p>Le fichier d’évaluation actuel regroupe les résultats de validation par région. Ses valeurs ne correspondent pas au mois sélectionné.</p>
-                        <a href="/graphiques/evaluation/erreurs_par_region.csv" download>Télécharger le CSV d’évaluation</a>
+                        <a href="../../prediction/graphiques/evaluation/erreurs_par_region.csv" download>Télécharger le CSV d’évaluation</a>
                     </aside>
 
                 </article>
@@ -397,6 +399,6 @@
     </footer>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./input_checks.js"></script>
-    <script src="./graphismes.js"></script>
+    <script src="./graphiques.js"></script>
 </body>
 </html>
