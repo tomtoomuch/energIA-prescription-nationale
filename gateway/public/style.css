@@ -574,6 +574,10 @@ select {
     font: inherit;
 }
 
+div.selecteurs select {
+    color: var(--color-night);
+}
+
 input::placeholder {
     color: var(--color-muted);
 }
