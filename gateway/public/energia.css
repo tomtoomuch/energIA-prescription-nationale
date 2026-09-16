@@ -63,10 +63,16 @@ form {
     flex-wrap:wrap;
     justify-content:flex-start;
     height:100%;
+    width:35%;
 }
 
 form > * {
     display:block;width:100%;
+}
+
+textarea#assistant-question {
+    border-radius:15px;
+    margin-top:15px;
 }
 
 /* =========================================================

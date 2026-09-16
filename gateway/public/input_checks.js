@@ -349,11 +349,11 @@
       <table>
         <thead>
           <tr>
-            <th>centrale</th>
-            <th>alloué</th>
-            <th>taux final</th>
-            <th>distance</th>
-            <th>pertes</th>
+            <th>Centrale</th>
+            <th>Alloué</th>
+            <th>Taux final</th>
+            <th>Distance</th>
+            <th>Pertes</th>
           </tr>
         </thead>
 
@@ -363,7 +363,7 @@
             `
               <tr>
                 <td colspan="5">
-                  aucune centrale disponible
+                  Aucune centrale disponible
                 </td>
               </tr>
             `

@@ -3,8 +3,6 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 
-from prediction.etl.dataframe import creer_dataframe
-
 app = FastAPI(title="API de Prédiction - Modèle régressif")
 
 # Charger le modèle de régression pré-entraîné au démarrage
