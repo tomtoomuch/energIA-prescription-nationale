@@ -62,8 +62,8 @@ form {
     flex-direction:column;
     flex-wrap:wrap;
     justify-content:flex-start;
-    height:100%;
-    width:25%;
+    height:auto;
+    width:100%;
 }
 
 form > * {
@@ -266,11 +266,11 @@ p {
    ========================================================= */
 
 .site-main {
-    height: calc(100vh - var(--footer-height));
+    min-height: calc(100vh - 80px);
+    height: auto;
 
     padding-top: 80px;
-
-    overflow: hidden;
+    padding-bottom: 2rem;
 }
 
 
@@ -279,12 +279,14 @@ p {
    ========================================================= */
 
 .horizontal-container {
-    height: 100%;
+    min-height: calc(100vh - 80px);
+    height: auto;
 
     display: flex;
 
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
+    align-items: stretch;
 
     scroll-snap-type: x mandatory;
 
@@ -305,7 +307,8 @@ p {
 .content-section {
     flex: 0 0 100%;
 
-    min-height: 100%;
+    min-height: calc(100vh - 80px);
+    height: auto;
 
     padding: clamp(1rem, 3vw, 3.5rem);
 
@@ -326,7 +329,7 @@ p {
 
 article {
     width:100%;
-    height:100%;
+    min-height: 0;
 }
 
 #section-2 > article { display: flex;flex-wrap:wrap;justify-content:flex-start;align-content:flex-start;align-items:flex-start;}
@@ -398,9 +401,8 @@ article {
 }
 
 .section-content {
-    /*width: min(100%, 1000px);*/
-
-    /*margin: 0 auto;*/
+    width: min(100%, 1280px);
+    margin: 0 auto;
 
     border-left:
         4px solid var(--color-electric);
@@ -419,7 +421,14 @@ div.selecteurs > label { display: grid; gap: .4rem; font-weight: 650; min-width:
 div.selecteurs > label > select { font: inherit; padding: .65rem; border: 1px solid #98abc7; border-radius: .5rem; background: white; }
 
 div#resultats > section,
-#section-3 aside { background: white; border-radius: .8rem; padding: 1.25rem; margin-top: 1.25rem; box-shadow: 0 3px 14px #152b4c12; }
+#section-3 aside {
+    color: #24324a;
+    background: var(--color-white);
+    border-radius: .8rem;
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    box-shadow: 0 3px 14px #152b4c12;
+}
 
 div#resultats > section img { display: block; max-width: 100%; height: auto; margin: 1rem auto 0; }
 
@@ -428,28 +437,129 @@ div#resultats > section img { display: block; max-width: 100%; height: auto; mar
 #section-3 > #message { min-height: 1.5em; }
 
 /* =========================================================
+   COMPLETION DE LA MISE EN PAGE
+   ========================================================= */
+
+#section-1 .section-content,
+#section-2 .section-content,
+#section-3 .section-content {
+    padding-top: clamp(1rem, 2vw, 2rem);
+    padding-bottom: clamp(1rem, 2vw, 2rem);
+}
+
+#section-2 .section-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#assistant-form {
+    width: min(100%, 860px);
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+}
+
+#assistant-question {
+    width: 100%;
+    min-height: 10rem;
+    padding: 1rem;
+    resize: vertical;
+    color: var(--color-white);
+    background: var(--color-night);
+    border: 1px solid var(--color-night-lighter);
+    font: inherit;
+}
+
+#assistant-form p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: .95rem;
+}
+
+#assistant-error,
+#assistant-process,
+#assistant-data,
+#assistant-answer {
+    width: min(100%, 1000px);
+    color: var(--color-text);
+    background: var(--color-night-lighter);
+    border-color: rgba(230, 237, 245, .16);
+}
+
+/* =========================================================
    FORMULAIRE SIMULATION
    ========================================================= */
 
 #proto-energia {
-    width:100%;
-    display:flex;
-    flex-wrap:nowrap;
+    width: 100%;
+    min-height: 34rem;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(230, 237, 245, .14);
+    border-radius: var(--radius);
+    background: var(--color-night-light);
 }
 
 #sidebar {
-    max-width: 30%;
-    padding: 10px;
+    flex: 0 1  min(360px, 34%);
+    max-width: 360px;
+    min-width: 280px;
+    padding: 1.25rem;
     background: #111827;
     overflow-y: auto;
     border-right: 1px solid #1f2937;
-    /* In the context of a section, this sidebar should only take up space relative to the section's content flow */
 }
 
 #map {
-    width:70%;
-    /* flex: 1; */
-    /* If sidebar and map are meant to be side-by-side, they should remain siblings inside a flex container within the section. */
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    min-height: 34rem;
+    background: #dbe5ee;
+}
+
+#map .leaflet-container {
+    min-height: 100%;
+}
+
+#sim-form {
+    gap: .6rem;
+}
+
+#sim-form label {
+    margin-top: .35rem;
+    color: var(--color-muted);
+    font-size: .9rem;
+}
+
+#sim-form input,
+#sim-form select {
+    color: var(--color-white);
+    background: var(--color-night);
+}
+
+#results {
+    margin-top: 1rem;
+}
+
+#section-3 .selecteurs {
+    align-items: end;
+}
+
+#section-3 .selecteurs > label {
+    flex: 1 1 260px;
+}
+
+#resultats > section h2,
+#section-3 aside h2 {
+    color: #24324a;
+}
+
+#section-3 aside {
+    max-width: 100%;
+    margin-bottom: 1rem;
 }
 
 /* =========================================================
@@ -715,6 +825,11 @@ select {
         padding-top: 100px;
     }
 
+    .horizontal-container {
+        display: block;
+        overflow: visible;
+    }
+
     .site-footer {
         grid-template-columns: 1fr;
 
@@ -736,6 +851,30 @@ select {
 
     .content-section {
         padding: 2rem 1.25rem;
+        min-height: auto;
+    }
+
+    #proto-energia {
+        min-height: 0;
+        flex-direction: column;
+    }
+
+    #sidebar {
+        flex: none;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        border-right: 0;
+        border-bottom: 1px solid #1f2937;
+    }
+
+    #map {
+        width: 100%;
+        min-height: 24rem;
+    }
+
+    #assistant-form {
+        max-width: none;
     }
 }
 
@@ -759,4 +898,9 @@ select {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
     }
+}
+
+/* Le footer actuel ne contient que des blocs désactivés. */
+.site-footer {
+    display: none;
 }
